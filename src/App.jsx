@@ -13,8 +13,8 @@ const App = () => {
 
   return (
     <Box bg={theme === 'dark' ? 'gray.950' : 'gray.50'} minH="100vh">
-      <Navigation 
-        theme={theme} 
+      <Navigation
+        theme={theme}
         onThemeToggle={toggleTheme}
         teamsOpen={teamsOpen}
         setTeamsOpen={setTeamsOpen}
@@ -27,7 +27,7 @@ const App = () => {
       />
 
       <Box pt="60px">
-        <Hero 
+        <Hero
           theme={theme}
           onTeamsClick={() => setTeamsOpen(true)}
           onPlayersClick={() => { setMembersCategory(null); setMembersOpen(true); }}

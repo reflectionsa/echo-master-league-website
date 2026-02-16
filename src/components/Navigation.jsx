@@ -13,8 +13,8 @@ import RulesView from './RulesView';
 import BotView from './BotView';
 import MediaView from './MediaView';
 
-const Navigation = ({ 
-  theme, 
+const Navigation = ({
+  theme,
   onThemeToggle,
   teamsOpen,
   setTeamsOpen,
