@@ -8,6 +8,7 @@ const App = () => {
   const { theme, toggleTheme } = useTheme();
   const [teamsOpen, setTeamsOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
+  const [membersCategory, setMembersCategory] = useState(null);
   const [standingsOpen, setStandingsOpen] = useState(false);
 
   return (
@@ -19,6 +20,8 @@ const App = () => {
         setTeamsOpen={setTeamsOpen}
         membersOpen={membersOpen}
         setMembersOpen={setMembersOpen}
+        membersCategory={membersCategory}
+        setMembersCategory={setMembersCategory}
         standingsOpen={standingsOpen}
         setStandingsOpen={setStandingsOpen}
       />
@@ -27,8 +30,8 @@ const App = () => {
         <Hero 
           theme={theme}
           onTeamsClick={() => setTeamsOpen(true)}
-          onPlayersClick={() => setMembersOpen(true)}
-          onSubsClick={() => setStandingsOpen(true)}
+          onPlayersClick={() => { setMembersCategory(null); setMembersOpen(true); }}
+          onSubsClick={() => { setMembersCategory('subs'); setMembersOpen(true); }}
         />
       </Box>
     </Box>

@@ -21,10 +21,10 @@ const generateRandomPlayers = (count) => {
   return players;
 };
 
-const MembersView = ({ theme, open, onClose }) => {
+const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const isDark = theme === 'dark';
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory || null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   const activeTeams = teamRosters.filter(t => t.status === 'Active');

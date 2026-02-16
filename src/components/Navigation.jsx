@@ -20,6 +20,8 @@ const Navigation = ({
   setTeamsOpen,
   membersOpen,
   setMembersOpen,
+  membersCategory,
+  setMembersCategory,
   standingsOpen,
   setStandingsOpen
 }) => {
@@ -253,7 +255,7 @@ const Navigation = ({
       <CalendarView theme={theme} open={calendarOpen} onClose={() => setCalendarOpen(false)} />
       <StandingsView theme={theme} open={standingsOpen} onClose={() => setStandingsOpen(false)} />
       <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
-      <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} />
+      <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
       <TeamsView theme={theme} open={teamsOpen} onClose={() => setTeamsOpen(false)} />
       <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
       <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
