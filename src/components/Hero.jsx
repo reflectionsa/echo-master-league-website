@@ -3,7 +3,7 @@ import { Trophy, Zap } from 'lucide-react';
 import { useTeams } from '../hooks/useTeams';
 import { useMemo } from 'react';
 
-const Hero = ({ theme }) => {
+const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
   const isDark = theme === 'dark';
   const { teams, loading } = useTeams();
 
@@ -41,6 +41,12 @@ const Hero = ({ theme }) => {
       leagueSubs: leagueSubs > 0 ? leagueSubs.toString() : '...'
     };
   }, [teams, loading]);
+
+  const statBlocks = [
+    { label: 'Active Teams', value: stats.activeTeams, onClick: onTeamsClick },
+    { label: 'Active Players', value: stats.activePlayers, onClick: onPlayersClick },
+    { label: 'League Subs', value: stats.leagueSubs, onClick: onSubsClick }
+  ];
 
   return (
     <Box
@@ -104,11 +110,7 @@ const Hero = ({ theme }) => {
 
           {/* Stats */}
           <HStack gap="8" flexWrap="wrap" justify="center" mt="6">
-            {[
-              { label: 'Active Teams', value: stats.activeTeams },
-              { label: 'Active Players', value: stats.activePlayers },
-              { label: 'League Subs', value: stats.leagueSubs }
-            ].map(stat => (
+            {statBlocks.map(stat => (
               <Box
                 key={stat.label}
                 bg={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
@@ -119,6 +121,15 @@ const Hero = ({ theme }) => {
                 py="4"
                 rounded="xl"
                 textAlign="center"
+                cursor="pointer"
+                onClick={stat.onClick}
+                transition="all 0.3s ease"
+                _hover={{
+                  transform: 'translateY(-4px)',
+                  borderColor: isDark ? 'orange.400' : 'blue.500',
+                  boxShadow: isDark ? '0 12px 24px rgba(251, 146, 60, 0.2)' : '0 12px 24px rgba(59, 130, 246, 0.2)',
+                  bg: isDark ? 'whiteAlpha.150' : 'blackAlpha.150'
+                }}
               >
                 <Text fontSize="2xl" fontWeight="800" color={isDark ? 'orange.300' : 'blue.600'}>{stat.value}</Text>
                 <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>{stat.label}</Text>

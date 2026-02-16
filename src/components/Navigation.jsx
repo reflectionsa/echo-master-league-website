@@ -13,15 +13,21 @@ import RulesView from './RulesView';
 import BotView from './BotView';
 import MediaView from './MediaView';
 
-const Navigation = ({ theme, onThemeToggle }) => {
+const Navigation = ({ 
+  theme, 
+  onThemeToggle,
+  teamsOpen,
+  setTeamsOpen,
+  membersOpen,
+  setMembersOpen,
+  standingsOpen,
+  setStandingsOpen
+}) => {
   const isDark = theme === 'dark';
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [standingsOpen, setStandingsOpen] = useState(false);
   const [matchesOpen, setMatchesOpen] = useState(false);
-  const [membersOpen, setMembersOpen] = useState(false);
-  const [teamsOpen, setTeamsOpen] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
   const [botOpen, setBotOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
