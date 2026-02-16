@@ -1,5 +1,7 @@
 import { Box, HStack, VStack, Text, Badge, Table, Image } from '@chakra-ui/react';
 import { Trophy, TrendingUp, Minus, TrendingDown } from 'lucide-react';
+import { useState } from 'react';
+import TeamProfileModal from './TeamProfileModal';
 
 const tierColors = {
   Master: 'yellow',
@@ -15,7 +17,9 @@ const tierImages = {
   Gold: 'https://cdn.discordapp.com/attachments/1460754809064784014/1472872310464712775/width240.png?ex=699426bb&is=6992d53b&hm=4e35d0dcaa7ab0d3df98faadaafe3c82b433bebe6456dc44ddd5860c6bd9b1dd&animated=true',
 };
 
-const StandingsTable = ({ teams }) => {
+const StandingsTable = ({ teams, theme }) => {
+  const isDark = theme === 'dark';
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const sortedTeams = [...teams].sort((a, b) => (b.leaguePoints ?? 0) - (a.leaguePoints ?? 0));
 
   const getRankIcon = (index) => {
@@ -26,7 +30,8 @@ const StandingsTable = ({ teams }) => {
   };
 
   return (
-    <Box bg="gray.900" border="1px solid" borderColor="gray.800" rounded="2xl" overflow="hidden">
+    <>
+      <Box bg="gray.900" border="1px solid" borderColor="gray.800" rounded="2xl" overflow="hidden">
       <Box bg="purple.900" px="6" py="4" borderBottom="1px solid" borderColor="purple.800">
         <HStack gap="2">
           <Trophy size={20} color="var(--chakra-colors-purple-300)" />
@@ -69,7 +74,15 @@ const StandingsTable = ({ teams }) => {
                 </HStack>
               </Table.Cell>
               <Table.Cell>
-                <Text fontSize="md" fontWeight="700" color="white">
+                <Text
+                  as="button"
+                  fontSize="md"
+                  fontWeight="700"
+                  color="purple.400"
+                  _hover={{ textDecoration: 'underline', color: 'purple.300' }}
+                  onClick={() => setSelectedTeam(team.name)}
+                  cursor="pointer"
+                >
                   {team.name}
                 </Text>
               </Table.Cell>
@@ -105,7 +118,14 @@ const StandingsTable = ({ teams }) => {
         </Box>
       )}
     </Box>
-  );
+
+    <TeamProfileModal
+      open={!!selectedTeam}
+      onClose={() => setSelectedTeam(null)}
+      teamName={selectedTeam}
+      theme={theme}
+    />
+  </>);
 };
 
 export default StandingsTable;

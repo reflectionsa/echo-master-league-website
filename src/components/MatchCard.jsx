@@ -1,5 +1,7 @@
 import { Box, HStack, VStack, Text, Badge, Card, Button, Separator } from '@chakra-ui/react';
 import { Calendar, ExternalLink, Radio } from 'lucide-react';
+import { useState } from 'react';
+import TeamProfileModal from './TeamProfileModal';
 
 const statusConfig = {
   Scheduled: { color: 'green', icon: Calendar },
@@ -9,7 +11,9 @@ const statusConfig = {
   Forfeit: { color: 'gray', icon: Calendar },
 };
 
-const MatchCard = ({ match }) => {
+const MatchCard = ({ match, theme }) => {
+  const isDark = theme === 'dark';
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const config = statusConfig[match.status] || statusConfig.Scheduled;
   const Icon = config.icon;
 
@@ -24,6 +28,7 @@ const MatchCard = ({ match }) => {
   };
 
   return (
+    <>
     <Card.Root
       bg="gray.900"
       border="1px solid"
@@ -74,7 +79,17 @@ const MatchCard = ({ match }) => {
 
           <HStack justify="space-between" align="center" gap="4">
             <VStack align="end" flex="1" gap="1">
-              <Text fontSize="md" fontWeight="700" color="white" textAlign="right" lineClamp={1}>
+              <Text
+                as="button"
+                fontSize="md"
+                fontWeight="700"
+                color="blue.400"
+                _hover={{ textDecoration: 'underline', color: 'blue.300' }}
+                onClick={() => setSelectedTeam(team1)}
+                cursor="pointer"
+                textAlign="right"
+                lineClamp={1}
+              >
                 {team1}
               </Text>
             </VStack>
@@ -90,7 +105,17 @@ const MatchCard = ({ match }) => {
             )}
 
             <VStack align="start" flex="1" gap="1">
-              <Text fontSize="md" fontWeight="700" color="white" textAlign="left" lineClamp={1}>
+              <Text
+                as="button"
+                fontSize="md"
+                fontWeight="700"
+                color="blue.400"
+                _hover={{ textDecoration: 'underline', color: 'blue.300' }}
+                onClick={() => setSelectedTeam(team2)}
+                cursor="pointer"
+                textAlign="left"
+                lineClamp={1}
+              >
                 {team2}
               </Text>
             </VStack>
@@ -115,6 +140,14 @@ const MatchCard = ({ match }) => {
         </VStack>
       </Card.Body>
     </Card.Root>
+
+    <TeamProfileModal
+      open={!!selectedTeam}
+      onClose={() => setSelectedTeam(null)}
+      teamName={selectedTeam}
+      theme={theme}
+    />
+  </>
   );
 };
 
