@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
     plugins: [react()],
-    base: process.env.NODE_ENV === 'production' ? '/echo-master-league/' : '/',
+    base: process.env.NODE_ENV === 'production' ? '/echo-master-league-website/' : '/',
     server: {
         port: 3000
     }
