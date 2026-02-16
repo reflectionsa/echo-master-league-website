@@ -1,6 +1,7 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badge, Table, CloseButton, Button } from '@chakra-ui/react';
 import { Trophy, Users, Target, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
+import { emlColors } from '../theme/colors';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400' },
@@ -17,19 +18,18 @@ const tierImages = {
 };
 
 const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
-  const isDark = theme === 'dark';
   const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName);
   const tierConfig = tierColors[team?.tier] || tierColors.Gold;
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">
       <Portal>
-        <Dialog.Backdrop bg={isDark ? 'blackAlpha.700' : 'whiteAlpha.700'} backdropFilter="blur(8px)" />
+        <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(8px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgSecondary}
             border="1px solid"
-            borderColor={isDark ? 'purple.800' : 'gray.200'}
+            borderColor={emlColors.accentPurple}
             rounded="2xl"
             maxH="90vh"
             overflow="hidden"
@@ -39,7 +39,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
             </Dialog.CloseTrigger>
 
             {loading ? (
-              <Center py="20"><Spinner size="lg" color={isDark ? 'purple.500' : 'blue.500'} /></Center>
+              <Center py="20"><Spinner size="lg" color={emlColors.accentPurple} /></Center>
             ) : error ? (
               <Box p="8"><Text color="red.500">Failed to load team profile</Text></Box>
             ) : (
@@ -48,10 +48,10 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                   <Box
                     w="100px"
                     h="100px"
-                    bg={isDark ? 'gray.800' : 'gray.100'}
+                    bg={emlColors.bgCard}
                     rounded="xl"
                     border="2px solid"
-                    borderColor={isDark ? 'purple.700' : 'gray.300'}
+                    borderColor={emlColors.accentPurple}
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
@@ -60,20 +60,20 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                     {team?.teamLogo?.url ? (
                       <Image src={team.teamLogo.url} alt={teamName} objectFit="contain" w="full" h="full" p="2" />
                     ) : (
-                      <Users size={40} color={isDark ? 'var(--chakra-colors-gray-600)' : 'var(--chakra-colors-gray-400)'} />
+                      <Users size={40} color={emlColors.textSubtle} />
                     )}
                   </Box>
 
                   <VStack align="start" flex="1" gap="3">
                     <VStack align="start" gap="1">
-                      <Text fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                      <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                         {teamName}
                       </Text>
                       <HStack gap="3">
                         {tierImages[team?.tier] ? (
-                          <HStack gap="2" bg={isDark ? 'gray.800' : 'gray.100'} px="3" py="1.5" rounded="full">
+                          <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
                             <Image src={tierImages[team.tier]} alt={team.tier} w="20px" h="20px" objectFit="contain" />
-                            <Text fontSize="xs" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                            <Text fontSize="xs" fontWeight="800" color={emlColors.textPrimary}>
                               {team.tier}
                             </Text>
                           </HStack>
@@ -95,10 +95,10 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
 
                     <HStack gap="6">
                       <HStack gap="2">
-                        <Target size={16} color={isDark ? 'var(--chakra-colors-purple-400)' : 'var(--chakra-colors-purple-600)'} />
+                        <Target size={16} color={emlColors.accentPurple} />
                         <VStack align="start" gap="0">
-                          <Text fontSize="xs" color={isDark ? 'gray.500' : 'gray.600'}>Points</Text>
-                          <Text fontSize="lg" fontWeight="700" color={isDark ? 'purple.400' : 'purple.600'}>
+                          <Text fontSize="xs" color={emlColors.textMuted}>Points</Text>
+                          <Text fontSize="lg" fontWeight="700" color={emlColors.accentPurple}>
                             {team?.leaguePoints ?? 0}
                           </Text>
                         </VStack>
@@ -108,15 +108,15 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                 </HStack>
 
                 <Box>
-                  <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'} mb="3">
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
                     Team Roster
                   </Text>
                   <Box
                     border="1px solid"
-                    borderColor={isDark ? 'gray.800' : 'gray.200'}
+                    borderColor={emlColors.borderMedium}
                     rounded="xl"
                     p="4"
-                    bg={isDark ? 'gray.850' : 'gray.50'}
+                    bg={emlColors.bgCard}
                   >
                     <VStack align="stretch" gap="3">
                       {/* Captain */}
@@ -125,7 +125,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                           <Box bg="yellow.500" p="1" rounded="md">
                             <Trophy size={12} color="white" />
                           </Box>
-                          <Text fontSize="sm" fontWeight="600" color={isDark ? 'white' : 'gray.900'}>
+                          <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
                             {team?.captain || 'N/A'}
                           </Text>
                         </HStack>
@@ -139,7 +139,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             <Box bg="orange.500" p="1" rounded="md">
                               <Users size={12} color="white" />
                             </Box>
-                            <Text fontSize="sm" fontWeight="600" color={isDark ? 'white' : 'gray.900'}>
+                            <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
                               {team.coCaptain}
                             </Text>
                           </HStack>
@@ -151,10 +151,10 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                       {team?.players?.map((player, idx) => (
                         <HStack key={idx} justify="space-between">
                           <HStack gap="2">
-                            <Box bg={isDark ? 'blue.700' : 'blue.500'} p="1" rounded="md">
+                            <Box bg={emlColors.accentBlue} p="1" rounded="md">
                               <Users size={12} color="white" />
                             </Box>
-                            <Text fontSize="sm" fontWeight="600" color={isDark ? 'white' : 'gray.900'}>
+                            <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
                               {player}
                             </Text>
                           </HStack>
@@ -166,35 +166,35 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                 </Box>
 
                 <Box>
-                  <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'} mb="3">
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
                     Match History
                   </Text>
                   <Box
                     border="1px solid"
-                    borderColor={isDark ? 'gray.800' : 'gray.200'}
+                    borderColor={emlColors.borderMedium}
                     rounded="xl"
                     overflow="hidden"
                   >
                     {matchHistory.length === 0 ? (
                       <Center py="8">
-                        <Text color={isDark ? 'gray.500' : 'gray.600'} fontSize="sm">No matches played yet</Text>
+                        <Text color={emlColors.textMuted} fontSize="sm">No matches played yet</Text>
                       </Center>
                     ) : (
                       <Table.Root size="sm" variant="outline">
-                        <Table.Header bg={isDark ? 'gray.850' : 'gray.50'}>
+                        <Table.Header bg={emlColors.bgCard}>
                           <Table.Row>
-                            <Table.ColumnHeader fontSize="xs" color={isDark ? 'gray.400' : 'gray.600'}>Opponent</Table.ColumnHeader>
-                            <Table.ColumnHeader fontSize="xs" color={isDark ? 'gray.400' : 'gray.600'}>Result</Table.ColumnHeader>
-                            <Table.ColumnHeader fontSize="xs" color={isDark ? 'gray.400' : 'gray.600'}>Date</Table.ColumnHeader>
-                            <Table.ColumnHeader fontSize="xs" color={isDark ? 'gray.400' : 'gray.600'}>Casted</Table.ColumnHeader>
-                            <Table.ColumnHeader fontSize="xs" color={isDark ? 'gray.400' : 'gray.600'}>Votes</Table.ColumnHeader>
+                            <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Opponent</Table.ColumnHeader>
+                            <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Result</Table.ColumnHeader>
+                            <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Date</Table.ColumnHeader>
+                            <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Casted</Table.ColumnHeader>
+                            <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Votes</Table.ColumnHeader>
                           </Table.Row>
                         </Table.Header>
                         <Table.Body>
                           {matchHistory.slice(0, 10).map(match => (
-                            <Table.Row key={match.id} _hover={{ bg: isDark ? 'gray.800' : 'gray.50' }}>
+                            <Table.Row key={match.id} _hover={{ bg: `-color(theme.colors.whiteAlpha.0.08)` }}>
                               <Table.Cell>
-                                <Text fontSize="sm" fontWeight="600" color={isDark ? 'gray.300' : 'gray.700'}>
+                                <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary}>
                                   {match.opponent}
                                 </Text>
                               </Table.Cell>
@@ -211,8 +211,8 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                               </Table.Cell>
                               <Table.Cell>
                                 <HStack gap="1">
-                                  <Calendar size={12} color={isDark ? 'var(--chakra-colors-gray-500)' : 'var(--chakra-colors-gray-400)'} />
-                                  <Text fontSize="xs" color={isDark ? 'gray.500' : 'gray.600'}>
+                                  <Calendar size={12} color={emlColors.textSubtle} />
+                                  <Text fontSize="xs" color={emlColors.textMuted}>
                                     {match.matchDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                                   </Text>
                                 </HStack>
@@ -242,7 +242,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                                 )}
                               </Table.Cell>
                               <Table.Cell>
-                                <Text fontSize="sm" fontWeight="600" color={isDark ? 'purple.400' : 'purple.600'}>
+                                <Text fontSize="sm" fontWeight="600" color={emlColors.accentPurple}>
                                   {match.votes}
                                 </Text>
                               </Table.Cell>

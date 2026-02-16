@@ -3,6 +3,7 @@ import { Users, Shield, Star, Radio, Video, Clock, UserX, Search, ChevronLeft } 
 import { useState } from 'react';
 import { teamRosters } from '../data/teamRosters';
 import PlayerProfileModal from './PlayerProfileModal';
+import { emlColors } from '../theme/colors';
 
 const casters = ['trodd-', 'Dano McFabulous', 'Azalea', 'Cool-Whip', 'Sweetlyfe', 'Phaenom', 'Palidore', 'MyGuyChromium', 'Orthrua', 'Mountainous', 'Martiney_', 'hpenney2'];
 const moderators = ['caroline', 'aaliyah', 'arii', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'krogers', 'Dano McFabulous'];
@@ -22,7 +23,6 @@ const generateRandomPlayers = (count) => {
 };
 
 const MembersView = ({ theme, open, onClose, initialCategory }) => {
-  const isDark = theme === 'dark';
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -152,22 +152,22 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                       onClick={() => setSelectedCategory(null)}
                       alignSelf="flex-start"
                       size="sm"
-                      color={isDark ? 'white' : 'gray.900'}
+                      color={emlColors.textPrimary}
                     >
                       <ChevronLeft size={16} /> Back to Categories
                     </Button>
                   )}
 
                   {!selectedCategory && (
-                    <InputGroup startElement={<Search size={16} color={isDark ? 'white' : undefined} />}>
+                    <InputGroup startElement={<Search size={16} color={emlColors.textPrimary} />}>
                       <Input
                         placeholder="Search players, teams, or roles..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        bg={isDark ? 'gray.850' : 'white'}
-                        borderColor={isDark ? 'gray.700' : 'gray.300'}
-                        color={isDark ? 'white' : 'gray.900'}
-                        _placeholder={{ color: isDark ? 'gray.500' : 'gray.400' }}
+                        bg={emlColors.bgTertiary}
+                        borderColor={emlColors.borderMedium}
+                        color={emlColors.textPrimary}
+                        _placeholder={{ color: emlColors.textMuted }}
                         size="lg"
                       />
                     </InputGroup>
@@ -202,7 +202,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                   {player.role}
                                 </Badge>
                               </HStack>
-                              <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>
+                              <Text fontSize="sm" color={emlColors.textMuted}>
                                 Team: <strong>{player.team}</strong>
                               </Text>
                               <Badge colorPalette={player.status === 'Active' ? 'green' : 'yellow'} size="xs">
@@ -267,8 +267,8 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                 </Table.Cell>
                                 <Table.Cell>
                                   <HStack gap="1">
-                                    <Clock size={14} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-orange-600)'} />
-                                    <Text fontSize="sm" fontWeight="600" color={isDark ? 'orange.400' : 'orange.600'}>
+                                    <Clock size={14} color={emlColors.accentOrange} />
+                                    <Text fontSize="sm" fontWeight="600" color={emlColors.accentOrange}>
                                       2/20/26
                                     </Text>
                                   </HStack>

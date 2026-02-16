@@ -2,29 +2,29 @@ import { Box, Table, Badge, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import PlayerProfileModal from './PlayerProfileModal';
+import { emlColors } from '../theme/colors';
 
 const TeamRosterTable = ({ teams, theme }) => {
-  const isDark = theme === 'dark';
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   return (
     <>
       <Box
-        bg={isDark ? 'gray.900' : 'white'}
+        bg={emlColors.bgSecondary}
         border="1px solid"
-        borderColor={isDark ? 'gray.800' : 'gray.200'}
+        borderColor={emlColors.borderMedium}
         rounded="2xl"
         overflow="hidden"
       >
         <Table.ScrollArea maxW="full" borderRadius="2xl">
           <Table.Root size="md" variant="outline">
             <Table.Header>
-              <Table.Row bg={isDark ? 'gray.800' : 'gray.50'}>
+              <Table.Row bg={emlColors.bgTertiary}>
                 <Table.ColumnHeader
                   minW="180px"
                   fontWeight="700"
-                  color={isDark ? 'gray.400' : 'gray.600'}
+                  color={emlColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -34,7 +34,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="140px"
                   fontWeight="700"
-                  color={isDark ? 'gray.400' : 'gray.600'}
+                  color={emlColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -45,7 +45,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="140px"
                   fontWeight="700"
-                  color={isDark ? 'gray.400' : 'gray.600'}
+                  color={emlColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -58,7 +58,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                     key={num}
                     minW="130px"
                     fontWeight="700"
-                    color={isDark ? 'gray.400' : 'gray.600'}
+                    color={emlColors.textMuted}
                     fontSize="xs"
                     textTransform="uppercase"
                     letterSpacing="wider"
@@ -70,7 +70,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="100px"
                   fontWeight="700"
-                  color={isDark ? 'gray.400' : 'gray.600'}
+                  color={emlColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -83,8 +83,8 @@ const TeamRosterTable = ({ teams, theme }) => {
               {teams.map(team => (
                 <Table.Row
                   key={team.id}
-                  bg={team.status === 'Inactive' ? (isDark ? 'gray.850' : 'gray.100') : 'transparent'}
-                  _hover={{ bg: isDark ? 'gray.800' : 'gray.50' }}
+                  bg={team.status === 'Inactive' ? `${emlColors.bgElevated}80` : 'transparent'}
+                  _hover={{ bg: emlColors.bgHover }}
                   transition="background 0.2s"
                   opacity={team.status === 'Inactive' ? 0.6 : 1}
                 >
@@ -93,8 +93,8 @@ const TeamRosterTable = ({ teams, theme }) => {
                       as="button"
                       fontSize="sm"
                       fontWeight="700"
-                      color={isDark ? 'purple.400' : 'purple.600'}
-                      _hover={{ textDecoration: 'underline', color: isDark ? 'purple.300' : 'purple.700' }}
+                      color={emlColors.accentPurple}
+                      _hover={{ textDecoration: 'underline' }}
                       onClick={() => setSelectedTeam(team.name)}
                       cursor="pointer"
                     >
@@ -106,15 +106,15 @@ const TeamRosterTable = ({ teams, theme }) => {
                       <Text
                         as="button"
                         fontSize="sm"
-                        color={isDark ? 'blue.400' : 'blue.600'}
-                        _hover={{ textDecoration: 'underline', color: isDark ? 'blue.300' : 'blue.700' }}
+                        color={emlColors.accentBlue}
+                        _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.captain)}
                         cursor="pointer"
                       >
                         {team.captain}
                       </Text>
                     ) : (
-                      <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.400'}>—</Text>
+                      <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
                     )}
                   </Table.Cell>
                   <Table.Cell display={{ base: 'none', md: 'table-cell' }}>
@@ -122,15 +122,15 @@ const TeamRosterTable = ({ teams, theme }) => {
                       <Text
                         as="button"
                         fontSize="sm"
-                        color={isDark ? 'blue.400' : 'blue.600'}
-                        _hover={{ textDecoration: 'underline', color: isDark ? 'blue.300' : 'blue.700' }}
+                        color={emlColors.accentBlue}
+                        _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.coCaptain)}
                         cursor="pointer"
                       >
                         {team.coCaptain}
                       </Text>
                     ) : (
-                      <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.400'}>—</Text>
+                      <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
                     )}
                   </Table.Cell>
                   {team.players.map((player, idx) => (
@@ -139,15 +139,15 @@ const TeamRosterTable = ({ teams, theme }) => {
                         <Text
                           as="button"
                           fontSize="sm"
-                          color={isDark ? 'blue.400' : 'blue.600'}
-                          _hover={{ textDecoration: 'underline', color: isDark ? 'blue.300' : 'blue.700' }}
+                          color={emlColors.accentBlue}
+                          _hover={{ textDecoration: 'underline' }}
                           onClick={() => setSelectedPlayer(player)}
                           cursor="pointer"
                         >
                           {player}
                         </Text>
                       ) : (
-                        <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.400'}>—</Text>
+                        <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
                       )}
                     </Table.Cell>
                   ))}

@@ -3,6 +3,7 @@ import { Users, Search } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import TeamRosterTable from './TeamRosterTable';
 import { teamRosters } from '../data/teamRosters';
+import { emlColors } from '../theme/colors';
 
 const statusFilters = createListCollection({
   items: [
@@ -13,7 +14,6 @@ const statusFilters = createListCollection({
 });
 
 const TeamsSection = ({ theme }) => {
-  const isDark = theme === 'dark';
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -33,20 +33,20 @@ const TeamsSection = ({ theme }) => {
   }, [searchQuery, statusFilter]);
 
   return (
-    <Box id="teams" py="20" bg={isDark ? 'gray.900' : 'white'}>
+    <Box id="teams" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="6xl">
         <VStack gap="12">
           <VStack gap="4" textAlign="center">
             <HStack gap="2" justify="center">
-              <Users size={20} color={isDark ? '#fb923c' : '#3b82f6'} />
-              <Text fontSize="sm" fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'} textTransform="uppercase" letterSpacing="wider">
+              <Users size={20} color={emlColors.accentOrange} />
+              <Text fontSize="sm" fontWeight="700" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
                 All Teams
               </Text>
             </HStack>
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
               League Teams
             </Text>
-            <Text fontSize="lg" color={isDark ? 'gray.400' : 'gray.600'} maxW="3xl">
+            <Text fontSize="lg" color={emlColors.textMuted} maxW="3xl">
               Explore all competing teams in the Echo Master League
             </Text>
           </VStack>
@@ -57,8 +57,8 @@ const TeamsSection = ({ theme }) => {
                 placeholder="Search teams, captains, or players..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                bg={isDark ? 'whiteAlpha.50' : 'white'}
-                borderColor={isDark ? 'whiteAlpha.200' : 'blackAlpha.200'}
+                bg={emlColors.bgCard}
+                borderColor={emlColors.borderMedium}
                 rounded="lg"
               />
             </InputGroup>
@@ -70,7 +70,7 @@ const TeamsSection = ({ theme }) => {
               size="md"
             >
               <Select.HiddenSelect />
-              <Select.Control bg={isDark ? 'whiteAlpha.50' : 'white'} rounded="lg">
+              <Select.Control bg={emlColors.bgCard} rounded="lg">
                 <Select.Trigger>
                   <Select.ValueText />
                 </Select.Trigger>
@@ -97,10 +97,10 @@ const TeamsSection = ({ theme }) => {
 
           {filteredTeams.length === 0 && (
             <Box py="12" textAlign="center">
-              <Text fontSize="lg" fontWeight="600" color={isDark ? 'gray.400' : 'gray.600'}>
+              <Text fontSize="lg" fontWeight="600" color={emlColors.textMuted}>
                 No teams found
               </Text>
-              <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.500'} mt="2">
+              <Text fontSize="sm" color={emlColors.textSubtle} mt="2">
                 Try adjusting your search or filter
               </Text>
             </Box>
