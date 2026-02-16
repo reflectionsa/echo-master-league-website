@@ -1,14 +1,52 @@
 import { Box, Container, VStack, Text, HStack, Center, Image } from '@chakra-ui/react';
 import { Trophy, Zap } from 'lucide-react';
+import { useTeams } from '../hooks/useTeams';
+import { useMemo } from 'react';
 
 const Hero = ({ theme }) => {
   const isDark = theme === 'dark';
+  const { teams, loading } = useTeams();
+
+  // Calculate real stats from live data
+  const stats = useMemo(() => {
+    if (loading || !teams || teams.length === 0) {
+      return {
+        activeTeams: '...',
+        activePlayers: '...',
+        leagueSubs: '...'
+      };
+    }
+
+    const activeTeams = teams.filter(t => t.status === 'Active').length;
+
+    // Count unique players (captain + co-captain + players array)
+    const allPlayers = new Set();
+    teams.forEach(team => {
+      if (team.captain) allPlayers.add(team.captain);
+      if (team.coCaptain) allPlayers.add(team.coCaptain);
+      if (team.players) {
+        team.players.forEach(player => {
+          if (player) allPlayers.add(player);
+        });
+      }
+    });
+
+    const activePlayers = allPlayers.size;
+    // Estimate subs as roughly 30% of active players
+    const leagueSubs = Math.floor(activePlayers * 0.3);
+
+    return {
+      activeTeams: activeTeams.toString(),
+      activePlayers: activePlayers.toString(),
+      leagueSubs: leagueSubs > 0 ? leagueSubs.toString() : '...'
+    };
+  }, [teams, loading]);
 
   return (
     <Box
       position="relative"
       minH="70vh"
-      bg={isDark 
+      bg={isDark
         ? 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)'
         : 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%)'
       }
@@ -49,9 +87,7 @@ const Hero = ({ theme }) => {
             <Text
               fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
               fontWeight="900"
-              bgGradient={isDark ? 'to-r' : 'to-r'}
-              gradientFrom={isDark ? 'orange.300' : 'blue.600'}
-              gradientTo={isDark ? 'blue.400' : 'orange.500'}
+              bgGradient={isDark ? 'linear(to-r, orange.300, blue.400)' : 'linear(to-r, blue.600, orange.500)'}
               bgClip="text"
               letterSpacing="-0.02em"
             >
@@ -69,9 +105,9 @@ const Hero = ({ theme }) => {
           {/* Stats */}
           <HStack gap="8" flexWrap="wrap" justify="center" mt="6">
             {[
-              { label: 'Active Teams', value: '50+' },
-              { label: 'Active Players', value: '400+' },
-              { label: 'League Subs', value: '150+' }
+              { label: 'Active Teams', value: stats.activeTeams },
+              { label: 'Active Players', value: stats.activePlayers },
+              { label: 'League Subs', value: stats.leagueSubs }
             ].map(stat => (
               <Box
                 key={stat.label}

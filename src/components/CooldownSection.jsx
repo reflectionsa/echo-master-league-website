@@ -45,9 +45,7 @@ const CooldownSection = ({ theme }) => {
             <Heading
               fontSize={{ base: '2xl', md: '3xl' }}
               fontWeight="800"
-              bgGradient="to-r"
-              gradientFrom={isDark ? 'orange.400' : 'blue.500'}
-              gradientTo={isDark ? 'orange.600' : 'blue.700'}
+              bgGradient={isDark ? 'linear(to-r, orange.400, orange.600)' : 'linear(to-r, blue.500, blue.700)'}
               bgClip="text"
             >
               Player Cooldown List

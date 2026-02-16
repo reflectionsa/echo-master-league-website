@@ -38,7 +38,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
-                  hideBelow="md"
+                  display={{ base: 'none', md: 'table-cell' }}
                 >
                   Captain
                 </Table.ColumnHeader>
@@ -49,7 +49,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
-                  hideBelow="md"
+                  display={{ base: 'none', md: 'table-cell' }}
                 >
                   Co-Captain
                 </Table.ColumnHeader>
@@ -62,7 +62,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                     fontSize="xs"
                     textTransform="uppercase"
                     letterSpacing="wider"
-                    hideBelow="md"
+                    display={{ base: 'none', md: 'table-cell' }}
                   >
                     Player {num}
                   </Table.ColumnHeader>
@@ -101,7 +101,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                       {team.name}
                     </Text>
                   </Table.Cell>
-                  <Table.Cell hideBelow="md">
+                  <Table.Cell display={{ base: 'none', md: 'table-cell' }}>
                     {team.captain ? (
                       <Text
                         as="button"
@@ -117,7 +117,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                       <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.400'}>—</Text>
                     )}
                   </Table.Cell>
-                  <Table.Cell hideBelow="md">
+                  <Table.Cell display={{ base: 'none', md: 'table-cell' }}>
                     {team.coCaptain ? (
                       <Text
                         as="button"
@@ -134,7 +134,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                     )}
                   </Table.Cell>
                   {team.players.map((player, idx) => (
-                    <Table.Cell key={idx} hideBelow="md">
+                    <Table.Cell key={idx} display={{ base: 'none', md: 'table-cell' }}>
                       {player ? (
                         <Text
                           as="button"

@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Box bg={theme === 'dark' ? 'gray.950' : 'gray.50'} minH="100vh">
       <Navigation theme={theme} onThemeToggle={toggleTheme} />
-      
+
       <Box pt="60px">
         <Hero theme={theme} />
       </Box>

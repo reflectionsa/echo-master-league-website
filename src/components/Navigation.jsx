@@ -52,7 +52,7 @@ const Navigation = ({ theme, onThemeToggle }) => {
                   fontSize="xl"
                   color={isDark ? 'white' : 'gray.900'}
                   _hover={{ bg: isDark ? 'whiteAlpha.200' : 'blackAlpha.100' }}
-                  _open={{ 
+                  _open={{
                     color: isDark ? 'orange.400' : 'blue.600',
                     bg: isDark ? 'whiteAlpha.200' : 'blackAlpha.100'
                   }}
@@ -141,7 +141,7 @@ const Navigation = ({ theme, onThemeToggle }) => {
             </Menu.Root>
 
             {/* Main Navigation - Desktop Only */}
-            <HStack gap="2" hideBelow="md">
+            <HStack gap="2" display={{ base: 'none', md: 'flex' }}>
               <Button
                 size="sm"
                 variant="ghost"
@@ -174,14 +174,13 @@ const Navigation = ({ theme, onThemeToggle }) => {
             {/* Right Side Actions */}
             <HStack gap="2">
               {/* Discord Links Dropdown - Desktop */}
-              <Menu.Root positioning={{ placement: 'bottom-end' }} hideBelow="md">
+              <Menu.Root positioning={{ placement: 'bottom-end' }}>
                 <Menu.Trigger asChild>
                   <Button
                     size="sm"
                     variant="ghost"
                     color={isDark ? 'purple.400' : 'purple.600'}
-                    _hover={{ bg: isDark ? 'whiteAlpha.200' : 'blackAlpha.100', color: isDark ? 'purple.300' : 'purple.700' }}
-                  >
+                    _hover={{ bg: isDark ? 'whiteAlpha.200' : 'blackAlpha.100', color: isDark ? 'purple.300' : 'purple.700' }} display={{ base: 'none', md: 'flex' }}                  >
                     <MessageCircle size={14} /> Discord Links <ChevronDown size={14} />
                   </Button>
                 </Menu.Trigger>
@@ -256,7 +255,7 @@ const Navigation = ({ theme, onThemeToggle }) => {
 
       {/* Mobile Bottom Navigation */}
       <Box
-        hideFrom="md"
+        display={{ base: 'block', md: 'none' }}
         position="fixed"
         bottom="0"
         left="0"

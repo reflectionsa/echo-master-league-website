@@ -19,23 +19,41 @@
  */
 
 export const GOOGLE_SHEETS_CONFIG = {
-  // Your Google Sheets API Key
+  // Your Google Sheets API Key (get from Google Cloud Console)
   apiKey: 'YOUR_API_KEY_HERE',
-  
-  // Your Spreadsheet ID (from the URL)
-  spreadsheetId: 'YOUR_SPREADSHEET_ID_HERE',
-  
+
+  // Spreadsheet IDs for different data sources
+  spreadsheets: {
+    // Team rosters and match data
+    roster: '1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc',
+    // Rankings and tournament data
+    tournament: '1jK1FRzc044wq2miNZQbcqDDPoVAA3dR5knd8MZEpKdw',
+  },
+
   // Sheet names and ranges
   ranges: {
-    teams: 'Teams!A:H',      // Team roster data
-    matches: 'Matches!A:G',  // Match schedule
-    standings: 'Standings!A:E', // League standings
+    rosterWide: '_RosterWide!A:Z',        // Complete team roster data
+    upcomingMatches: 'Upcoming Matches!A:Z', // Match schedule
+    rankings: 'NA Pblc Rnkngs!A:Z',       // Public rankings
+    tournament: 'EML NA Season 4 - TOURNAMENT!A:Z', // Tournament standings
   }
 };
 
-// Alternative: Use environment variables (recommended for production)
+// Use environment variables (recommended for production)
 export const getConfig = () => ({
   apiKey: import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || GOOGLE_SHEETS_CONFIG.apiKey,
-  spreadsheetId: import.meta.env.VITE_SPREADSHEET_ID || GOOGLE_SHEETS_CONFIG.spreadsheetId,
+  spreadsheets: GOOGLE_SHEETS_CONFIG.spreadsheets,
   ranges: GOOGLE_SHEETS_CONFIG.ranges,
 });
+
+// Helper functions to get specific spreadsheet configs
+export const getRosterConfig = () => ({
+  apiKey: getConfig().apiKey,
+  spreadsheetId: getConfig().spreadsheets.roster,
+});
+
+export const getTournamentConfig = () => ({
+  apiKey: getConfig().apiKey,
+  spreadsheetId: getConfig().spreadsheets.tournament,
+});
+
