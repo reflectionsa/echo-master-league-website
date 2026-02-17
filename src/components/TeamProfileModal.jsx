@@ -2,7 +2,7 @@ import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badg
 import { Trophy, Users, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
 import { getThemedColors } from '../theme/colors';
-import { getTierImage, getBaseTier } from '../utils/tierUtils';
+import { getTierImage, getBaseTier, getTierImageSize } from '../utils/tierUtils';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400' },
@@ -69,7 +69,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                         <HStack gap="3">
                           {getTierImage(team?.tier) ? (
                             <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
-                              <Image src={getTierImage(team.tier)} alt={team.tier} w="20px" h="20px" minW="20px" minH="20px" />
+                              <Image src={getTierImage(team.tier)} alt={team.tier} w={getTierImageSize(team.tier, 20)} h={getTierImageSize(team.tier, 20)} minW={getTierImageSize(team.tier, 20)} minH={getTierImageSize(team.tier, 20)} />
                               <Text fontSize="xs" fontWeight="800" color={emlColors.textPrimary}>
                                 {team.tier}
                               </Text>
