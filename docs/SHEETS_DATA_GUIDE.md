@@ -4,8 +4,8 @@ This guide explains how the Echo Master League application integrates with your 
 
 ## Sheet Reference
 
-**Spreadsheet ID:** `1jK1FRzc044wq2miNZQbcqDDPoVAA3dR5knd8MZEpKdw`  
-**URL:** [View Spreadsheet](https://docs.google.com/spreadsheets/d/1jK1FRzc044wq2miNZQbcqDDPoVAA3dR5knd8MZEpKdw/edit)
+**Spreadsheet ID:** `1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc`  
+**URL:** [View Spreadsheet](https://docs.google.com/spreadsheets/d/1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc/edit)
 
 ---
 
