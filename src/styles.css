@@ -55,14 +55,14 @@ body {
     /* Enable hardware acceleration */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    
+
     /* Prevent scroll anchoring issues */
     overflow-anchor: none;
-    
+
     /* Control overscroll/bounce behavior */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: auto;
-    
+
     /* Improve paint performance */
     contain: layout style paint;
 }
