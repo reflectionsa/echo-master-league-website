@@ -6,9 +6,9 @@ import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
 
 const seasonChampions = {
-  'Krogers': { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png' },
-  'Jaxxjh': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png' },
-  'mikey': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png' },
+  'Krogers': { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png?ex=69954aa1&is=6993f921&hm=f934706494a58357a5c40c9d9039ee951e3d48b9b5c4e24e8e67b083eb309f58&' },
+  'Jaxxjh': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png?ex=69954c9d&is=6993fb1d&hm=3a04a8036aeef84ae9f7153af8c5644f470b9f493761b7f79795ebd6bdc96cf5&animated=true' },
+  'mikey': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png?ex=69954c9d&is=6993fb1d&hm=3a04a8036aeef84ae9f7153af8c5644f470b9f493761b7f79795ebd6bdc96cf5&animated=true' },
 };
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
@@ -77,9 +77,16 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                           </HStack>
                         </Badge>
                         {seasonChampions[playerName] && (
-                          <HStack gap="1" bg={emlColors.bgCard} px="2" py="1" rounded="full" border="1px solid" borderColor={emlColors.accentOrange}>
-                            <Image src={seasonChampions[playerName].image} alt="Season Champion" w="16px" h="16px" objectFit="contain" />
-                            <Text fontSize="xs" fontWeight="700" color={emlColors.textPrimary}>
+                          <HStack gap="1" bg={emlColors.bgCard} px="2.5" py="1.5" rounded="full" border="2px solid" borderColor={emlColors.accentOrange}>
+                            <Image 
+                              src={seasonChampions[playerName].image} 
+                              alt={`Season ${seasonChampions[playerName].season} Champion`} 
+                              w="20px" 
+                              h="20px" 
+                              objectFit="contain"
+                              fallbackSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%23ff8c42'/%3E%3C/svg%3E"
+                            />
+                            <Text fontSize="xs" fontWeight="800" color={emlColors.accentOrange}>
                               Season {seasonChampions[playerName].season}
                             </Text>
                           </HStack>

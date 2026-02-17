@@ -33,19 +33,20 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
             borderColor={emlColors.accentPurple}
             rounded="2xl"
             maxH="90vh"
-            overflow="hidden"
+            display="flex"
+            flexDirection="column"
           >
-            <Dialog.CloseTrigger asChild position="absolute" top="4" right="4">
+            <Dialog.CloseTrigger asChild position="absolute" top="4" right="4" zIndex="10">
               <CloseButton size="sm" />
             </Dialog.CloseTrigger>
 
-            <Dialog.Body p="0" overflowY="auto" maxH="calc(90vh - 100px)">
+            <Dialog.Body p="8" overflowY="auto" flex="1">
               {loading ? (
                 <Center py="20"><Spinner size="lg" color={emlColors.accentPurple} /></Center>
               ) : error ? (
                 <Box p="8"><Text color="red.500">Failed to load team profile</Text></Box>
               ) : (
-                <VStack align="stretch" gap="6" p="8">
+                <VStack align="stretch" gap="6">
                   <HStack gap="6" align="start">
                     <Box
                       w="100px"
