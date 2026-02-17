@@ -13,10 +13,22 @@ export const useLeagueSubs = () => {
     );
 
     // Transform Google Sheets data to app format
+    // Handle various column formats - could be in any column
     const subs = data
         .map(row => {
-            const playerName = row['Player Name'] || row.Player || row.player || row.name || '';
-            return playerName;
+            // Try to get player name from various possible column names
+            const playerName = 
+                row['Player Name'] || 
+                row['Player'] || 
+                row['player'] || 
+                row['name'] || 
+                row['Name'] ||
+                row['Substitute'] ||
+                row['Sub'] ||
+                // If none of those, get first non-empty value from row
+                Object.values(row).find(val => val && typeof val === 'string' && val.trim()) || '';
+            
+            return playerName.trim();
         })
         .filter(Boolean); // Remove empty entries
 
