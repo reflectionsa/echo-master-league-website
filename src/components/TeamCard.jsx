@@ -36,7 +36,7 @@ const TeamCard = ({ team }) => {
             <Users size={48} color="var(--chakra-colors-gray-700)" />
           </Center>
         )}
-        
+
         <Box position="absolute" top="3" right="3" bg="blackAlpha.600" backdropFilter="blur(8px)" px="3" py="1.5" rounded="full" boxShadow={tierConfig.shadow}>
           {tierImages[team.tier] ? (
             <HStack gap="1.5">
