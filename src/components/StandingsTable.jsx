@@ -3,7 +3,7 @@ import { Trophy, TrendingUp, Minus, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { emlColors } from '../theme/colors';
-import { getTierImage, getBaseTier, getTierImageSize } from '../utils/tierUtils';
+import { getTierImage, getBaseTier } from '../utils/tierUtils';
 
 const tierColors = {
   Master: 'yellow',
@@ -88,7 +88,7 @@ const StandingsTable = ({ teams, theme }) => {
                 </Table.Cell>
                 <Table.Cell>
                   {getTierImage(team.tier) ? (
-                    <Image src={getTierImage(team.tier)} alt={team.tier} w={getTierImageSize(team.tier, 32)} h={getTierImageSize(team.tier, 32)} minW={getTierImageSize(team.tier, 32)} minH={getTierImageSize(team.tier, 32)} />
+                    <Image src={getTierImage(team.tier)} alt={team.tier} w="32px" h="32px" minW="32px" minH="32px" />
                   ) : (
                     <Badge
                       colorPalette={tierColors[getBaseTier(team.tier)] || 'gray'}

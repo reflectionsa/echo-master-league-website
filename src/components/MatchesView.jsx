@@ -77,7 +77,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                                 <Badge colorPalette="purple" size="sm">{match.week}</Badge>
                               </Table.Cell>
                               <Table.Cell>
-                                <Text fontWeight="600" color={emlColors.textPrimary}>{match.team1}</Text>
+                                <Text fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">{match.team1}</Text>
                               </Table.Cell>
                               <Table.Cell textAlign="center">
                                 <HStack justify="center" gap="2">
@@ -102,7 +102,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                                 )}
                               </Table.Cell>
                               <Table.Cell>
-                                <Text fontWeight="600" color={emlColors.textPrimary}>{match.team2}</Text>
+                                <Text fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">{match.team2}</Text>
                               </Table.Cell>
                               <Table.Cell>
                                 <Text fontSize="sm" color={emlColors.textMuted}>{match.matchDate}</Text>

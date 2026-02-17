@@ -107,6 +107,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                         as="button"
                         fontSize="sm"
                         color={emlColors.accentBlue}
+                        textTransform="uppercase"
                         _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.captain)}
                         cursor="pointer"
@@ -123,6 +124,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                         as="button"
                         fontSize="sm"
                         color={emlColors.accentBlue}
+                        textTransform="uppercase"
                         _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.coCaptain)}
                         cursor="pointer"
@@ -140,6 +142,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                           as="button"
                           fontSize="sm"
                           color={emlColors.accentBlue}
+                          textTransform="uppercase"
                           _hover={{ textDecoration: 'underline' }}
                           onClick={() => setSelectedPlayer(player)}
                           cursor="pointer"

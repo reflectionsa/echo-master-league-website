@@ -1,6 +1,6 @@
 import { Box, HStack, VStack, Text, Badge, Card, Image, Center } from '@chakra-ui/react';
 import { Users, Trophy, MapPin } from 'lucide-react';
-import { getTierImage, getBaseTier, getTierImageSize } from '../utils/tierUtils';
+import { getTierImage, getBaseTier } from '../utils/tierUtils';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', shadow: '0 8px 24px rgba(255, 215, 0, 0.4)' },
@@ -34,7 +34,7 @@ const TeamCard = ({ team }) => {
         <Box position="absolute" top="3" right="3" bg="blackAlpha.600" backdropFilter="blur(8px)" px="3" py="1.5" rounded="full" boxShadow={tierConfig.shadow}>
           {getTierImage(team.tier) ? (
             <HStack gap="1.5">
-              <Image src={getTierImage(team.tier)} alt={team.tier} w={getTierImageSize(team.tier, 16)} h={getTierImageSize(team.tier, 16)} minW={getTierImageSize(team.tier, 16)} minH={getTierImageSize(team.tier, 16)} />
+              <Image src={getTierImage(team.tier)} alt={team.tier} w="16px" h="16px" minW="16px" minH="16px" />
               <Text fontSize="xs" fontWeight="800" color="white" textShadow="0 1px 2px rgba(0,0,0,0.3)">
                 {team.tier}
               </Text>

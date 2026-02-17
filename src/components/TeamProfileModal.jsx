@@ -2,7 +2,7 @@ import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badg
 import { Trophy, Users, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
 import { getThemedColors } from '../theme/colors';
-import { getTierImage, getBaseTier, getTierImageSize } from '../utils/tierUtils';
+import { getTierImage, getBaseTier } from '../utils/tierUtils';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400' },
@@ -69,7 +69,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                         <HStack gap="3">
                           {getTierImage(team?.tier) ? (
                             <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
-                              <Image src={getTierImage(team.tier)} alt={team.tier} w={getTierImageSize(team.tier, 20)} h={getTierImageSize(team.tier, 20)} minW={getTierImageSize(team.tier, 20)} minH={getTierImageSize(team.tier, 20)} />
+                              <Image src={getTierImage(team.tier)} alt={team.tier} w="20px" h="20px" minW="20px" minH="20px" />
                               <Text fontSize="xs" fontWeight="800" color={emlColors.textPrimary}>
                                 {team.tier}
                               </Text>
@@ -110,7 +110,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             <Box bg="yellow.500" p="1" rounded="md">
                               <Trophy size={12} color="white" />
                             </Box>
-                            <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
+                            <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                               {team?.captain || 'N/A'}
                             </Text>
                           </HStack>
@@ -124,7 +124,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                               <Box bg="orange.500" p="1" rounded="md">
                                 <Users size={12} color="white" />
                               </Box>
-                              <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
+                              <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                 {team.coCaptain}
                               </Text>
                             </HStack>
@@ -139,7 +139,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                               <Box bg={emlColors.accentBlue} p="1" rounded="md">
                                 <Users size={12} color="white" />
                               </Box>
-                              <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
+                              <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                 {player}
                               </Text>
                             </HStack>
@@ -179,7 +179,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {matchHistory.slice(0, 10).map(match => (
                               <Table.Row key={match.id} _hover={{ bg: `-color(theme.colors.whiteAlpha.0.08)` }}>
                                 <Table.Cell>
-                                  <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary}>
+                                  <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary} textTransform="uppercase">
                                     {match.opponent}
                                   </Text>
                                 </Table.Cell>

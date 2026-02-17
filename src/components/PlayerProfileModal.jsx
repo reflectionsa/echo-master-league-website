@@ -90,7 +90,7 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                     </Box>
 
                     <VStack gap="1">
-                      <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
+                      <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary} textTransform="uppercase">
                         {playerName}
                       </Text>
                       <HStack gap="2">

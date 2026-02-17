@@ -36,19 +36,10 @@ export const getBaseTier = (tier) => {
 };
 
 /**
- * Get display size for a tier image.
- * Master is square (1024x1024) while others are wider-than-tall (~440x400),
- * so Master needs a slightly larger render size to look visually equal.
- * @param {string} tier - The tier string
- * @param {number} baseSize - The base size in px for non-Master tiers
- * @returns {string} - CSS size value like "32px"
+ * Get tier image URL for a given tier
+ * @param {string} tier - The tier string (e.g., "Diamond 4", "Master")
+ * @returns {string|null} - The tier image URL or null if not found
  */
-export const getTierImageSize = (tier, baseSize) => {
-    const baseTier = getBaseTier(tier);
-    // Master is square, others are wider — scale Master up ~15% to match visually
-    const size = baseTier === 'Master' ? Math.round(baseSize * 1.15) : baseSize;
-    return `${size}px`;
-};
 export const getTierImage = (tier) => {
     const baseTier = getBaseTier(tier);
     return tierImages[baseTier] || null;

@@ -95,7 +95,7 @@ const CooldownSection = ({ theme }) => {
                     <Table.Cell>
                       <HStack gap="2">
                         <AlertCircle size={16} color={emlColors.accentOrange} />
-                        <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
+                        <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                           {player.playerName}
                         </Text>
                       </HStack>

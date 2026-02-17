@@ -2,7 +2,7 @@ import { Box, Container, VStack, Text, HStack, Spinner, Center, Image } from '@c
 import { Award, Trophy } from 'lucide-react';
 import { useRankings } from '../hooks/useRankings';
 import { getThemedColors } from '../theme/colors';
-import { getTierImage, getTierImageSize } from '../utils/tierUtils';
+import { getTierImage } from '../utils/tierUtils';
 
 const RankingsSection = ({ theme }) => {
   const { rankings, loading } = useRankings();
@@ -57,7 +57,7 @@ const RankingsSection = ({ theme }) => {
                         <HStack gap="2">
                           {team.tier && getTierImage(team.tier) && (
                             <HStack gap="1">
-                              <Image src={getTierImage(team.tier)} alt={team.tier} w={getTierImageSize(team.tier, 24)} h={getTierImageSize(team.tier, 24)} minW={getTierImageSize(team.tier, 24)} minH={getTierImageSize(team.tier, 24)} />
+                              <Image src={getTierImage(team.tier)} alt={team.tier} w="24px" h="24px" minW="24px" minH="24px" />
                               {team.division && (
                                 <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary}>{team.division}</Text>
                               )}
