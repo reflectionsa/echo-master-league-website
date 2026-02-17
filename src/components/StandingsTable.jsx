@@ -2,7 +2,8 @@ import { Box, HStack, VStack, Text, Badge, Table, Image } from '@chakra-ui/react
 import { Trophy, TrendingUp, Minus, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
-import { emlColors } from '../theme/colors';
+import { useAccessibility } from '../hooks/useAccessibility';
+import { emlColors, getThemedColors } from '../theme/colors';
 import { getTierImage, getBaseTier } from '../utils/tierUtils';
 
 const tierColors = {
@@ -13,6 +14,8 @@ const tierColors = {
 };
 
 const StandingsTable = ({ teams, theme }) => {
+  const { needsColorBlindSupport } = useAccessibility();
+  const themedColors = getThemedColors(theme, needsColorBlindSupport);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const sortedTeams = [...teams].sort((a, b) => (b.leaguePoints ?? 0) - (a.leaguePoints ?? 0));
 
@@ -104,7 +107,7 @@ const StandingsTable = ({ teams, theme }) => {
                 </Table.Cell>
                 <Table.Cell>
                   <Badge
-                    colorPalette={team.active === 'Yes' || team.active === 'Active' || team.active === true ? 'green' : 'red'}
+                    colorPalette={team.active === 'Yes' || team.active === 'Active' || team.active === true ? themedColors.semantic.active : themedColors.semantic.inactive}
                     px="2.5"
                     py="1"
                     rounded="full"

@@ -2,9 +2,12 @@ import { Box, Table, Badge, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import PlayerProfileModal from './PlayerProfileModal';
-import { emlColors } from '../theme/colors';
+import { useAccessibility } from '../hooks/useAccessibility';
+import { emlColors, getThemedColors } from '../theme/colors';
 
 const TeamRosterTable = ({ teams, theme }) => {
+  const { needsColorBlindSupport } = useAccessibility();
+  const themedColors = getThemedColors(theme, needsColorBlindSupport);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -156,7 +159,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                   ))}
                   <Table.Cell>
                     <Badge
-                      colorPalette={team.status === 'Active' ? 'green' : 'red'}
+                      colorPalette={team.status === 'Active' ? themedColors.semantic.active : themedColors.semantic.inactive}
                       px="2.5"
                       py="1"
                       rounded="full"

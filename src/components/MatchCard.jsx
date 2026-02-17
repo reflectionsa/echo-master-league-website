@@ -2,17 +2,22 @@ import { Box, HStack, VStack, Text, Badge, Card, Button, Separator } from '@chak
 import { Calendar, ExternalLink, Radio } from 'lucide-react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
-
-const statusConfig = {
-  Scheduled: { color: 'green', icon: Calendar },
-  Live: { color: 'red', icon: Radio, pulse: true },
-  Completed: { color: 'blue', icon: Calendar },
-  Disputed: { color: 'purple', icon: Calendar },
-  Forfeit: { color: 'gray', icon: Calendar },
-};
+import { useAccessibility } from '../hooks/useAccessibility';
+import { getThemedColors } from '../theme/colors';
 
 const MatchCard = ({ match, theme }) => {
+  const { needsColorBlindSupport } = useAccessibility();
+  const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const [selectedTeam, setSelectedTeam] = useState(null);
+
+  const statusConfig = {
+    Scheduled: { color: needsColorBlindSupport ? 'blue' : 'green', icon: Calendar },
+    Live: { color: needsColorBlindSupport ? 'orange' : 'red', icon: Radio, pulse: true },
+    Completed: { color: 'blue', icon: Calendar },
+    Disputed: { color: 'purple', icon: Calendar },
+    Forfeit: { color: 'gray', icon: Calendar },
+  };
+
   const config = statusConfig[match.status] || statusConfig.Scheduled;
   const Icon = config.icon;
 
@@ -31,7 +36,7 @@ const MatchCard = ({ match, theme }) => {
       <Card.Root
         bg="gray.900"
         border="1px solid"
-        borderColor={match.status === 'Live' ? 'red.600' : 'gray.800'}
+        borderColor={match.status === 'Live' ? (needsColorBlindSupport ? 'orange.600' : 'red.600') : 'gray.800'}
         rounded="xl"
         overflow="hidden"
         _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
@@ -45,7 +50,7 @@ const MatchCard = ({ match, theme }) => {
             left="0"
             right="0"
             h="2px"
-            bg="red.500"
+            bg={needsColorBlindSupport ? 'orange.500' : 'red.500'}
             animationStyle="pulse"
             animationDuration="2s"
             animationIterationCount="infinite"
@@ -99,9 +104,9 @@ const MatchCard = ({ match, theme }) => {
                     {/* Display score with colors - green for winner, red for loser */}
                     {match.team1Score !== undefined && match.team2Score !== undefined ? (
                       <>
-                        <Text as="span" color={match.team1Won ? 'green.400' : 'red.400'}>{match.team1Score}</Text>
+                        <Text as="span" color={match.team1Won ? emlColors.semantic.win : emlColors.semantic.loss}>{match.team1Score}</Text>
                         <Text as="span" color="gray.500" mx="1">-</Text>
-                        <Text as="span" color={match.team2Won ? 'green.400' : 'red.400'}>{match.team2Score}</Text>
+                        <Text as="span" color={match.team2Won ? emlColors.semantic.win : emlColors.semantic.loss}>{match.team2Score}</Text>
                       </>
                     ) : (
                       <Text as="span" color="purple.300">{match.score}</Text>

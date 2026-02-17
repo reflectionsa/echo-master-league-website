@@ -1,6 +1,7 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badge, Table, CloseButton, Button } from '@chakra-ui/react';
 import { Trophy, Users, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
+import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 import { getTierImage, getBaseTier } from '../utils/tierUtils';
 
@@ -13,7 +14,8 @@ const tierColors = {
 
 const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
   const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName);
-  const emlColors = getThemedColors(theme);
+  const { needsColorBlindSupport } = useAccessibility();
+  const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const tierConfig = tierColors[getBaseTier(team?.tier)] || tierColors.Gold;
 
   return (
@@ -38,7 +40,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
               {loading ? (
                 <Center py="20"><Spinner size="lg" color={emlColors.accentPurple} /></Center>
               ) : error ? (
-                <Box p="8"><Text color="red.500">Failed to load team profile</Text></Box>
+                <Box p="8"><Text color={emlColors.semantic.error}>Failed to load team profile</Text></Box>
               ) : (
                 <VStack align="stretch" gap="6">
                   <HStack gap="6" align="start">
@@ -185,7 +187,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                                 </Table.Cell>
                                 <Table.Cell>
                                   <Badge
-                                    colorPalette={match.status === 'Won' ? 'green' : match.status === 'Lost' ? 'red' : 'gray'}
+                                    colorPalette={match.status === 'Won' ? emlColors.semantic.winBadge : match.status === 'Lost' ? emlColors.semantic.lossBadge : 'gray'}
                                     size="sm"
                                     px="2"
                                     py="0.5"
@@ -207,10 +209,10 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                                     <Button
                                       size="xs"
                                       variant="solid"
-                                      colorPalette="green"
+                                      colorPalette={emlColors.semantic.winBadge}
                                       onClick={() => window.open(match.streamLink.url, '_blank')}
                                       _hover={{
-                                        bg: 'green.600',
+                                        bg: `${emlColors.semantic.winBadge}.600`,
                                         transform: 'translateY(-1px)',
                                         boxShadow: 'md'
                                       }}
@@ -219,7 +221,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                                       <Radio size={12} /> Yes <ExternalLink size={12} />
                                     </Button>
                                   ) : match.caster ? (
-                                    <Badge colorPalette="green" size="sm">
+                                    <Badge colorPalette={emlColors.semantic.winBadge} size="sm">
                                       <Radio size={12} /> Yes
                                     </Badge>
                                   ) : (

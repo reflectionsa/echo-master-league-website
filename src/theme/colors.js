@@ -72,9 +72,41 @@ export const emlColorsLight = {
     borderAccent: '#f97316',
 }
 
+/**
+ * Color-blind-friendly semantic colors
+ * Replaces red/green (indistinguishable for ~8% of men) with blue/orange
+ * These are used when the user's OS has accessibility/color filter settings enabled
+ */
+export const colorBlindSemanticColors = {
+    win: '#2563eb',        // Blue (replaces green)
+    loss: '#f97316',       // Orange (replaces red)  
+    winBadge: 'blue',      // Chakra colorPalette for wins
+    lossBadge: 'orange',   // Chakra colorPalette for losses
+    active: 'blue',        // Chakra colorPalette for active status
+    inactive: 'orange',    // Chakra colorPalette for inactive status
+    live: '#f97316',       // Orange (replaces red for live indicator)
+    error: '#f97316',      // Orange error text
+};
+
+/**
+ * Default semantic colors (standard red/green)
+ */
+export const defaultSemanticColors = {
+    win: '#22c55e',        // green.500
+    loss: '#ef4444',       // red.500
+    winBadge: 'green',
+    lossBadge: 'red',
+    active: 'green',
+    inactive: 'red',
+    live: '#ef4444',       // red.500
+    error: '#f87171',      // red.400
+};
+
 // Helper function to get theme-aware colors
-export const getThemedColors = (theme) => {
-    return theme === 'light' ? emlColorsLight : emlColors;
+export const getThemedColors = (theme, colorBlind = false) => {
+    const base = theme === 'light' ? emlColorsLight : emlColors;
+    const semantic = colorBlind ? colorBlindSemanticColors : defaultSemanticColors;
+    return { ...base, semantic };
 }
 
 // Helper function to add opacity to hex colors

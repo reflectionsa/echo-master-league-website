@@ -2,10 +2,12 @@ import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badg
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useSchedule } from '../hooks/useSchedule';
 import { useMatchResults } from '../hooks/useMatchResults';
+import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 
 const MatchesView = ({ theme, open, onClose }) => {
-  const emlColors = getThemedColors(theme);
+  const { needsColorBlindSupport } = useAccessibility();
+  const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const { matches, loading } = useSchedule();
   const { matchResults, loading: resultsLoading } = useMatchResults();
 
@@ -84,7 +86,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                                   <Text
                                     fontSize="md"
                                     fontWeight="800"
-                                    color={match.team1Won ? 'green.400' : 'red.400'}
+                                    color={match.team1Won ? emlColors.semantic.win : emlColors.semantic.loss}
                                   >
                                     {match.team1Score}
                                   </Text>
@@ -92,7 +94,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                                   <Text
                                     fontSize="md"
                                     fontWeight="800"
-                                    color={match.team2Won ? 'green.400' : 'red.400'}
+                                    color={match.team2Won ? emlColors.semantic.win : emlColors.semantic.loss}
                                   >
                                     {match.team2Score}
                                   </Text>

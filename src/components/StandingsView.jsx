@@ -2,12 +2,14 @@ import { Box, Dialog, Portal, Table, Text, HStack, Spinner, Center, Badge, Close
 import { Trophy, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useStandings } from '../hooks/useStandings';
+import { useAccessibility } from '../hooks/useAccessibility';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
 import { getTierImage } from '../utils/tierUtils';
 
 const StandingsView = ({ theme, open, onClose }) => {
-  const emlColors = getThemedColors(theme);
+  const { needsColorBlindSupport } = useAccessibility();
+  const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const { standings, loading, error } = useStandings();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [search, setSearch] = useState('');
@@ -66,7 +68,7 @@ const StandingsView = ({ theme, open, onClose }) => {
                 ) : error ? (
                   <Center py="20">
                     <Box textAlign="center">
-                      <Text color="red.400" fontSize="lg" fontWeight="600" mb="2">
+                      <Text color={emlColors.semantic.error} fontSize="lg" fontWeight="600" mb="2">
                         Error loading standings
                       </Text>
                       <Text color={emlColors.textMuted} fontSize="sm">
@@ -144,10 +146,10 @@ const StandingsView = ({ theme, open, onClose }) => {
                               <Badge colorPalette="cyan" size="sm">{team.region}</Badge>
                             </Table.Cell>
                             <Table.Cell textAlign="center">
-                              <Text fontWeight="700" color="green.500">{team.wins}</Text>
+                              <Text fontWeight="700" color={emlColors.semantic.win}>{team.wins}</Text>
                             </Table.Cell>
                             <Table.Cell textAlign="center">
-                              <Text fontWeight="700" color="red.500">{team.losses}</Text>
+                              <Text fontWeight="700" color={emlColors.semantic.loss}>{team.losses}</Text>
                             </Table.Cell>
                             <Table.Cell textAlign="end">
                               <Text fontWeight="800" fontSize="lg" color={emlColors.accentOrange}>{team.mmr}</Text>

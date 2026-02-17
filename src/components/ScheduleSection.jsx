@@ -1,9 +1,12 @@
 import { Box, Container, VStack, Text, Grid, HStack, Badge, Button, Spinner, Center } from '@chakra-ui/react';
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useSchedule } from '../hooks/useSchedule';
-import { emlColors } from '../theme/colors';
+import { useAccessibility } from '../hooks/useAccessibility';
+import { getThemedColors } from '../theme/colors';
 
 const ScheduleSection = ({ theme }) => {
+  const { needsColorBlindSupport } = useAccessibility();
+  const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const { matches, loading } = useSchedule();
 
   const upcoming = matches.filter(m => m.status === 'Scheduled' || m.status === 'Live').slice(0, 6);
@@ -45,7 +48,7 @@ const ScheduleSection = ({ theme }) => {
                   >
                     <VStack align="stretch" gap="4">
                       <HStack justify="space-between">
-                        <Badge colorPalette={match.status === 'Live' ? 'red' : 'green'} px="3" py="1" rounded="full" fontSize="xs" fontWeight="700">
+                        <Badge colorPalette={match.status === 'Live' ? emlColors.semantic.lossBadge : emlColors.semantic.winBadge} px="3" py="1" rounded="full" fontSize="xs" fontWeight="700">
                           {match.status}
                         </Badge>
                         {match.matchDate && (
