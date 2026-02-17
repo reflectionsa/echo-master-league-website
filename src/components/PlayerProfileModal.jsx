@@ -78,11 +78,11 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                         </Badge>
                         {seasonChampions[playerName] && (
                           <HStack gap="1" bg={emlColors.bgCard} px="2.5" py="1.5" rounded="full" border="2px solid" borderColor={emlColors.accentOrange}>
-                            <Image 
-                              src={seasonChampions[playerName].image} 
-                              alt={`Season ${seasonChampions[playerName].season} Champion`} 
-                              w="20px" 
-                              h="20px" 
+                            <Image
+                              src={seasonChampions[playerName].image}
+                              alt={`Season ${seasonChampions[playerName].season} Champion`}
+                              w="20px"
+                              h="20px"
                               objectFit="contain"
                               fallbackSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%23ff8c42'/%3E%3C/svg%3E"
                             />
