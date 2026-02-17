@@ -28,17 +28,17 @@ export const GOOGLE_SHEETS_CONFIG = {
     roster: '1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc',
   },
 
-  // Sheet names and ranges
+  // Sheet names and ranges (limited to primary data section to avoid duplicate columns)
   ranges: {
-    rosterWide: '_RosterWide!A:Z',        // Complete team roster data (PROTECTED - needs unprotection)
+    rosterWide: '_RosterWide!A:H',        // Team, Captain, Co-Captain (CC) Player, Player×4, Status
     upcomingMatches: 'Upcoming Matches!A:Z', // Match schedule ✓ WORKING
-    rankings: 'Rankings!A:Z',             // Public rankings (PROTECTED - needs unprotection)
-    matches: 'Proposed Match Results!A:Z', // Match results with scoring ✓ WORKING
-    cooldownList: 'Cooldown List!A:Z',    // Players on cooldown ✓ WORKING
-    teamRoles: 'Team Roles!A:Z',          // Team captain and co-captain assignments ✓ WORKING
-    matchResults: 'Match Results!A:Z',    // Completed match results with scores (PROTECTED - needs unprotection)
-    forfeits: 'Forfeits!A:Z',             // Forfeited matches (PROTECTED - needs unprotection)
-    registeredLeagueSubs: 'Registered League Subs!A:Z', // League substitute players ✓ WORKING
+    rankings: 'Rankings!A:D',             // team name, Rating, Rank, Active
+    matches: 'Proposed Match Results!A:J', // Proposed match results (first section)
+    cooldownList: 'Cooldown List!A:C',    // Player Name, Team Left, Expires
+    teamRoles: 'Team Roles!A:D',          // Team Name, Player Name, Captain, Co-Captain
+    matchResults: 'Match Results!A:P',    // Week through Result (first section only)
+    forfeits: 'Forfeits!A:P',             // Forfeited matches (first section only)
+    registeredLeagueSubs: 'Registered League Subs!A:B', // Player Name, Region
   }
 };
 

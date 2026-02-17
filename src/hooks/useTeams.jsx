@@ -10,16 +10,18 @@ export const useTeams = () => {
   );
 
   // Transform Google Sheets data to app format
+  // _RosterWide headers: Team | Captain | Co-Captain (CC) Player | Player | Player | Player | Player | Status
+  // After duplicate-header processing: Player, Player_2, Player_3, Player_4
   const teams = data.map(row => ({
     id: row.id,
-    name: row['Team Name'] || row.Team || row.name || '',
+    name: row['Team Name'] || row['Team'] || row.name || '',
     captain: row['Captain'] || row.captain || '',
-    coCaptain: row['Co-Captain'] || row['Co Captain'] || row.coCaptain || '',
+    coCaptain: (row['Co-Captain (CC) Player'] || row['Co-Captain'] || row['Co Captain'] || row.coCaptain || '').replace(/^\(CC\)\s*/, ''),
     players: [
-      row['Player 1'] || row.player1 || '',
-      row['Player 2'] || row.player2 || '',
-      row['Player 3'] || row.player3 || '',
-      row['Player 4'] || row.player4 || ''
+      row['Player 1'] || row['Player'] || row.player1 || '',
+      row['Player 2'] || row['Player_2'] || row.player2 || '',
+      row['Player 3'] || row['Player_3'] || row.player3 || '',
+      row['Player 4'] || row['Player_4'] || row.player4 || ''
     ].filter(Boolean),
     tier: row['Tier'] || row.tier || '',
     region: row['Region'] || row.region || 'NA',

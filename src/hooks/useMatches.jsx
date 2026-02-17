@@ -14,38 +14,38 @@ export const useMatches = () => {
   );
 
   // Transform Google Sheets data to app format
+  // Proposed Match Results headers: Team Submitting Scores | Team Accepting Scores | Match Status |
+  //   Team A Round 1 | Team B Round 1 | Team A Round 2 | Team B Round 2 | Team A Round 3 | Team B Round 3 | Proposed Result
   const matches = data.map(row => {
-    // Parse date if available
-    let matchDate = null;
-    const dateStr = row['Match Date'] || row['Date'] || row.date || '';
-    if (dateStr) {
-      try {
-        matchDate = new Date(dateStr);
-      } catch (e) {
-        console.warn('Invalid date:', dateStr);
-      }
-    }
+    const team1 = row['Team Submitting Scores'] || row['Team 1'] || row['Home Team'] || row.team1 || '';
+    const team2 = row['Team Accepting Scores'] || row['Team 2'] || row['Away Team'] || row.team2 || '';
+
+    // Parse round scores if available
+    const t1r1 = parseInt(row['Team A Round 1'] || 0);
+    const t1r2 = parseInt(row['Team A Round 2'] || 0);
+    const t1r3 = parseInt(row['Team A Round 3'] || 0);
+    const t2r1 = parseInt(row['Team B Round 1'] || 0);
+    const t2r2 = parseInt(row['Team B Round 2'] || 0);
+    const t2r3 = parseInt(row['Team B Round 3'] || 0);
+    const team1Score = t1r1 + t1r2 + t1r3;
+    const team2Score = t2r1 + t2r2 + t2r3;
 
     return {
       id: row.id,
-      matchDate: matchDate,
-      matchTime: row['Match Time'] || row['Time'] || row.time || '',
-      team1: row['Team 1'] || row['Home Team'] || row.team1 || row.home || '',
-      team2: row['Team 2'] || row['Away Team'] || row.team2 || row.away || '',
-      score: row['Score'] || row['Final Score'] || row.score || '',
-      status: row['Status'] || row.status || 'Scheduled',
+      matchDate: null,
+      matchTime: '',
+      team1,
+      team2,
+      score: (team1Score || team2Score) ? `${team1Score} - ${team2Score}` : '',
+      status: row['Match Status'] || row['Status'] || row.status || 'Pending',
+      matchType: row['Match Type'] || row.matchType || '',
       week: row['Week'] || row.week || '',
       round: row['Round'] || row.round || '',
+      proposedResult: row['Proposed Result'] || '',
       streamLink: {
-        url: row['Stream Link'] || row['Stream URL'] || row.streamLink || '',
-        platform: row['Stream Platform'] || 'Twitch'
+        url: '',
+        platform: 'Twitch'
       },
-      division: row['Division'] || row.division || '',
-      bracket: row['Bracket'] || row.bracket || '',
-      // Additional fields that might be in NA PBLC MATCHES
-      courtAssignment: row['Court'] || row['Court Assignment'] || row.court || '',
-      referee: row['Referee'] || row.referee || '',
-      notes: row['Notes'] || row.notes || '',
     };
   }).filter(match => match.team1 && match.team2); // Filter out empty rows
 

@@ -57,7 +57,7 @@ const RankingsSection = ({ theme }) => {
                         <HStack gap="2">
                           {team.tier && getTierImage(team.tier) && (
                             <HStack gap="1">
-                              <Image src={getTierImage(team.tier)} alt={team.tier} w="24px" h="24px" objectFit="contain" />
+                              <Image src={getTierImage(team.tier)} alt={team.tier} w="24px" h="24px" minW="24px" minH="24px" objectFit="contain" />
                               {team.division && (
                                 <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary}>{team.division}</Text>
                               )}

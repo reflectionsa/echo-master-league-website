@@ -43,12 +43,21 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
       const headers = rows[0];
       const dataRows = rows.slice(1);
 
-      // Handle empty headers by numbering them to prevent overwrites
+      // Handle empty and duplicate headers to prevent overwrites
+      const headerCounts = {};
       const processedHeaders = headers.map((header, index) => {
         if (!header || header.trim() === '') {
           return `_empty_${index}`;
         }
-        return header;
+        // Track duplicates and append suffix for 2nd, 3rd, etc. occurrences
+        const trimmed = header.trim();
+        if (headerCounts[trimmed] === undefined) {
+          headerCounts[trimmed] = 1;
+          return trimmed;
+        } else {
+          headerCounts[trimmed]++;
+          return `${trimmed}_${headerCounts[trimmed]}`;
+        }
       });
 
       const transformedData = dataRows.map((row, index) => {

@@ -53,7 +53,7 @@ export const useTeamRoles = () => {
 
                 // Check Captain/Co-Captain columns (might have trailing space!)
                 const isCaptain = (row['Captain'] || row.captain || '').toString().toLowerCase() === 'yes';
-                const isCoCaptain = (row['Co-Captain '] || row['Co-Captain'] || row['co-captain'] || '').toString().toLowerCase() === 'yes';
+                const isCoCaptain = (row['Co-Captain'] || row['Co-Captain '] || row['co-captain'] || '').toString().toLowerCase() === 'yes';
                 const rank = row['Rank'] || row.rank || '';
 
                 if (!playerName || !teamName) {
