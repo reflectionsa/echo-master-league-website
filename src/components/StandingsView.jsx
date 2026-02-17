@@ -13,7 +13,7 @@ const tierImages = {
 };
 
 const StandingsView = ({ theme, open, onClose }) => {
-  const { standings, loading } = useStandings();
+  const { standings, loading, error } = useStandings();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [search, setSearch] = useState('');
 
@@ -21,6 +21,9 @@ const StandingsView = ({ theme, open, onClose }) => {
     team.team.toLowerCase().includes(search.toLowerCase()) ||
     team.region.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Debug logging
+  console.log('Standings Data:', { standings, loading, error });
 
   return (
     <>
@@ -65,6 +68,35 @@ const StandingsView = ({ theme, open, onClose }) => {
                 </Box>
                 {loading ? (
                   <Center py="20"><Spinner size="xl" color={emlColors.accentOrange} /></Center>
+                ) : error ? (
+                  <Center py="20">
+                    <Box textAlign="center">
+                      <Text color="red.400" fontSize="lg" fontWeight="600" mb="2">
+                        Error loading standings
+                      </Text>
+                      <Text color={emlColors.textMuted} fontSize="sm">
+                        {error}
+                      </Text>
+                      <Text color={emlColors.textMuted} fontSize="xs" mt="4">
+                        Check console for details. Make sure:
+                      </Text>
+                      <Text color={emlColors.textMuted} fontSize="xs">
+                        1. Google Sheets API key is set
+                      </Text>
+                      <Text color={emlColors.textMuted} fontSize="xs">
+                        2. Sheet is publicly accessible
+                      </Text>
+                      <Text color={emlColors.textMuted} fontSize="xs">
+                        3. Tab name matches: "NA Pblc Rnkngs"
+                      </Text>
+                    </Box>
+                  </Center>
+                ) : filtered.length === 0 ? (
+                  <Center py="20">
+                    <Text color={emlColors.textMuted}>
+                      {search ? 'No teams match your search' : 'No standings data available'}
+                    </Text>
+                  </Center>
                 ) : (
                   <Box overflowX="auto">
                     <Table.Root size="md" variant="outline">
