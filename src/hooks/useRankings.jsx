@@ -42,23 +42,23 @@ export const useRankings = () => {
 
   // Transform Google Sheets data to app format
   const rankings = data.map((row, idx) => {
-    const tierInfo = parseRankTier(row['Tier'] || row['Rank'] || row.tier || row.rank);
+    const tierInfo = parseRankTier(row['Rank'] || row['Tier'] || row.tier || row.rank);
 
     return {
       id: row.id,
-      position: parseInt(row['Position'] || row['Rank #'] || idx + 1),
-      name: row['Team'] || row['Team Name'] || row.team || row.name || '',
+      position: idx + 1, // Use index since sheet is already sorted by ranking
+      name: row['team name'] || row['Team'] || row.team || '',
       captain: row['Captain'] || row.captain || '',
       tier: tierInfo.rank,
       division: tierInfo.division,
-      mmr: parseInt(row['MMR'] || row['Rating'] || row.mmr || row.rating || 0),
+      mmr: parseInt(row['Rating'] || row['MMR'] || row.mmr || row.rating || 0),
       region: row['Region'] || row.region || 'North America',
       wins: parseInt(row['Wins'] || row['W'] || row.wins || 0),
       losses: parseInt(row['Losses'] || row['L'] || row.losses || 0),
       active: row['Active'] || row.active || 'Yes',
       teamLogo: {
         url: row['Logo'] || row.logo || 'https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024',
-        label: row['Team'] || row.team || 'Team Logo'
+        label: row['team name'] || row.team || 'Team Logo'
       }
     };
   }).filter(ranking => ranking.name); // Filter out empty rows

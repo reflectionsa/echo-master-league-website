@@ -24,15 +24,15 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
       setError(null);
 
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-      
+
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.statusText}`);
       }
 
       const result = await response.json();
-      
+
       // Transform rows into objects using first row as keys
       const rows = result.values || [];
       if (rows.length === 0) {
@@ -43,9 +43,17 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
       const headers = rows[0];
       const dataRows = rows.slice(1);
 
+      // Handle empty headers by numbering them to prevent overwrites
+      const processedHeaders = headers.map((header, index) => {
+        if (!header || header.trim() === '') {
+          return `_empty_${index}`;
+        }
+        return header;
+      });
+
       const transformedData = dataRows.map((row, index) => {
         const obj = { id: index + 1 };
-        headers.forEach((header, i) => {
+        processedHeaders.forEach((header, i) => {
           obj[header] = row[i] || '';
         });
         return obj;
