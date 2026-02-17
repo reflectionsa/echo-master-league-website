@@ -1,6 +1,8 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
 }
 
 html,
@@ -14,11 +16,14 @@ body {
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
 }
 
-/* Smooth scrollbar styling */
+/* Smooth scrollbar styling - WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -29,6 +34,7 @@ body {
     background: #6e3ff3;
     border-radius: 6px;
     border: 2px solid #0a0118;
+    transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -41,16 +47,29 @@ body {
     scrollbar-color: #6e3ff3 #0a0118;
 }
 
-/* Smooth momentum scrolling for all scrollable elements */
-* {
-    -webkit-overflow-scrolling: touch;
+/* Optimize scrolling performance for all scrollable containers */
+[style*="overflow"],
+[class*="overflow"],
+.chakra-modal__body,
+.chakra-dialog__body {
+    /* Enable hardware acceleration */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    
+    /* Prevent scroll anchoring issues */
+    overflow-anchor: none;
+    
+    /* Control overscroll/bounce behavior */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: auto;
+    
+    /* Improve paint performance */
+    contain: layout style paint;
 }
 
-/* Smooth scrolling for all elements with overflow */
-[style*="overflow-y: auto"],
-[style*="overflowY: auto"],
-div[class*="overflow"],
-.chakra-modal__body {
+/* Smooth scrolling for modal bodies specifically */
+.chakra-modal__body,
+.chakra-dialog__body,
+[data-part="body"] {
     scroll-behavior: smooth;
-    will-change: scroll-position;
 }
