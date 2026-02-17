@@ -122,7 +122,7 @@ const StandingsView = ({ theme, open, onClose }) => {
                             </Table.Cell>
                             <Table.Cell>
                               {getTierImage(team.tier) ? (
-                                <Image src={getTierImage(team.tier)} alt={team.tier} w="32px" h="32px" minW="32px" minH="32px" objectFit="contain" />
+                                <Image src={getTierImage(team.tier)} alt={team.tier} w="32px" h="32px" minW="32px" minH="32px" />
                               ) : (
                                 <Badge colorPalette="gray" size="sm" px="2" py="0.5">
                                   {team.tier}

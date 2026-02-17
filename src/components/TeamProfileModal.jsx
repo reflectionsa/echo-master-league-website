@@ -69,7 +69,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                         <HStack gap="3">
                           {getTierImage(team?.tier) ? (
                             <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
-                              <Image src={getTierImage(team.tier)} alt={team.tier} w="20px" h="20px" minW="20px" minH="20px" objectFit="contain" />
+                              <Image src={getTierImage(team.tier)} alt={team.tier} w="20px" h="20px" minW="20px" minH="20px" />
                               <Text fontSize="xs" fontWeight="800" color={emlColors.textPrimary}>
                                 {team.tier}
                               </Text>
