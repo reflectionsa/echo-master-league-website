@@ -1,60 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useMatchResults } from './useMatchResults';
 import { teamRosters } from '../data/teamRosters';
 
-const generateMatches = () => {
-  const activeTeams = teamRosters.filter(t => t.status === 'Active');
-  const matches = [];
-  const matchCount = 12;
+export const useSchedule = () => {
+  const { matchResults, loading } = useMatchResults();
 
-  for (let i = 0; i < matchCount; i++) {
-    // Pick two random different teams
-    const team1 = activeTeams[Math.floor(Math.random() * activeTeams.length)];
-    let team2 = activeTeams[Math.floor(Math.random() * activeTeams.length)];
-    while (team2.id === team1.id) {
-      team2 = activeTeams[Math.floor(Math.random() * activeTeams.length)];
+  // Transform match results into schedule format
+  const matches = (matchResults || []).map(match => {
+    // Parse date from sheet (format: M/D/YYYY)
+    let matchDate = new Date();
+    if (match.matchDate) {
+      const dateParts = match.matchDate.split('/');
+      if (dateParts.length === 3) {
+        matchDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]);
+      }
     }
 
-    const daysFromNow = i < 6 ? Math.floor(Math.random() * 30) : -Math.floor(Math.random() * 30); // Future or past
-    const matchDate = new Date();
-    matchDate.setDate(matchDate.getDate() + daysFromNow);
+    // Determine status based on match data
+    let status = 'Scheduled';
+    if (match.team1Score > 0 || match.team2Score > 0 || match.isForfeit) {
+      status = 'Completed';
+    } else if (match.matchStatus?.toLowerCase().includes('live')) {
+      status = 'Live';
+    }
 
-    const statuses = ['Scheduled', 'Live', 'Completed'];
-    const status = daysFromNow > 0 ? 'Scheduled' : (Math.random() > 0.9 ? 'Live' : 'Completed');
-    
-    const team1Score = status === 'Completed' ? Math.floor(Math.random() * 4) : null;
-    const team2Score = status === 'Completed' ? Math.floor(Math.random() * 4) : null;
+    // Find team IDs from roster
+    const team1Data = teamRosters.find(t => t.name === match.team1);
+    const team2Data = teamRosters.find(t => t.name === match.team2);
 
-    matches.push({
-      id: `match-${i}`,
-      name: `${team1.name} vs ${team2.name}`,
+    return {
+      id: match.id || `match-${match.week}`,
+      name: `${match.team1} vs ${match.team2}`,
       matchDate,
       status,
-      score: team1Score !== null ? `${team1Score} - ${team2Score}` : null,
-      streamLink: Math.random() > 0.3 ? { url: 'https://www.twitch.tv/echomasterleague', label: 'Watch' } : null,
+      score: status === 'Completed' ? `${match.team1Score} - ${match.team2Score}` : null,
+      streamLink: { url: 'https://www.twitch.tv/echomasterleague', label: 'Watch' },
+      week: match.week,
+      matchType: match.matchType,
       participatingTeams: {
         linkedItems: [
-          { id: team1.id, name: team1.name },
-          { id: team2.id, name: team2.name }
+          { id: team1Data?.id || match.team1, name: match.team1 },
+          { id: team2Data?.id || match.team2, name: match.team2 }
         ]
       }
-    });
-  }
-
-  return matches.sort((a, b) => a.matchDate - b.matchDate);
-};
-
-export const useSchedule = () => {
-  const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    // Simulate async delay
-    setTimeout(() => {
-      setMatches(generateMatches());
-      setLoading(false);
-    }, 300);
-  }, []);
+    };
+  }).sort((a, b) => a.matchDate - b.matchDate);
 
   return { matches, loading };
 };

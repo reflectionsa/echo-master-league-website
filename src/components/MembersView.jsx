@@ -8,19 +8,11 @@ import { getThemedColors } from '../theme/colors';
 const casters = ['trodd-', 'Dano McFabulous', 'Azalea', 'Cool-Whip', 'Sweetlyfe', 'Phaenom', 'Palidore', 'MyGuyChromium', 'Orthrua', 'Mountainous', 'Martiney_', 'hpenney2'];
 const moderators = ['caroline', 'aaliyah', 'arii', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'krogers', 'Dano McFabulous'];
 
-const generateRandomPlayers = (count) => {
-  const firstNames = ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Skyler', 'Quinn', 'Avery', 'Drew', 'Phoenix', 'River'];
-  const lastNames = ['Storm', 'Blade', 'Echo', 'Nova', 'Frost', 'Ace', 'Viper', 'Shadow', 'Blaze', 'Knight'];
-  const players = [];
-
-  for (let i = 0; i < count; i++) {
-    const first = firstNames[Math.floor(Math.random() * firstNames.length)];
-    const last = lastNames[Math.floor(Math.random() * lastNames.length)];
-    players.push(`${first}${last}${Math.floor(Math.random() * 99)}`);
-  }
-
-  return players;
-};
+// Actual player lists from EML data
+const subs = [];
+const creators = [];
+const connoisseurs = [];
+const cooldownPlayers = [];
 
 const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const colors = getThemedColors(theme);
@@ -30,13 +22,9 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
 
   const activeTeams = teamRosters.filter(t => t.status === 'Active');
   const activePlayers = activeTeams.reduce((acc, t) => acc + 1 + (t.coCaptain ? 1 : 0) + t.players.filter(Boolean).length, 0);
-  const subs = generateRandomPlayers(Math.floor(activePlayers * 0.3));
-  const creators = generateRandomPlayers(15);
-  const connoisseurs = generateRandomPlayers(10);
 
   const inactiveTeams = teamRosters.filter(t => t.status === 'Inactive');
   const inactivePlayers = inactiveTeams.reduce((acc, t) => acc + 1 + (t.coCaptain ? 1 : 0) + t.players.filter(Boolean).length, 0);
-  const cooldownPlayers = generateRandomPlayers(7);
 
   // Build player database by category
   const playersByCategory = {

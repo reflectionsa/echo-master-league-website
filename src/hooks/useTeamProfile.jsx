@@ -1,39 +1,49 @@
 import { useState, useEffect } from 'react';
 import { teamRosters } from '../data/teamRosters';
 import { useStandings } from './useStandings';
+import { useMatchResults } from './useMatchResults';
 
-// Generate random match history
-const generateMatchHistory = (teamName) => {
-  const matchCount = Math.floor(Math.random() * 6) + 5; // 5-10 matches
-  const otherTeams = teamRosters.filter(t => t.name !== teamName && t.status === 'Active');
-  const matches = [];
+// Get actual match history from Google Sheets for a specific team
+const getTeamMatchHistory = (teamName, matchResults) => {
+  if (!matchResults || !teamName) return [];
 
-  for (let i = 0; i < matchCount; i++) {
-    const opponent = otherTeams[Math.floor(Math.random() * otherTeams.length)];
-    const teamScore = Math.floor(Math.random() * 4); // 0-3
-    const opponentScore = Math.floor(Math.random() * 4);
-    const daysAgo = Math.floor(Math.random() * 90); // Last 90 days
-    const matchDate = new Date();
-    matchDate.setDate(matchDate.getDate() - daysAgo);
+  const teamMatches = matchResults
+    .filter(match => match.team1 === teamName || match.team2 === teamName)
+    .map(match => {
+      const isTeam1 = match.team1 === teamName;
+      const teamScore = isTeam1 ? match.team1Score : match.team2Score;
+      const opponentScore = isTeam1 ? match.team2Score : match.team1Score;
+      const opponent = isTeam1 ? match.team2 : match.team1;
 
-    const isCasted = Math.random() > 0.6;
+      // Parse date from sheet (format: M/D/YYYY)
+      let matchDate = new Date();
+      if (match.matchDate) {
+        const dateParts = match.matchDate.split('/');
+        if (dateParts.length === 3) {
+          matchDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]);
+        }
+      }
 
-    matches.push({
-      id: `match-${teamName}-${i}`,
-      opponent: opponent.name,
-      score: `${teamScore} - ${opponentScore}`,
-      status: teamScore > opponentScore ? 'Won' : teamScore < opponentScore ? 'Lost' : 'Draw',
-      matchDate,
-      caster: isCasted ? 'CasterName' : null,
-      streamLink: isCasted ? {
-        url: 'https://www.twitch.tv/echomasterleague',
-        label: 'Twitch VOD'
-      } : null,
-      votes: Math.floor(Math.random() * 51), // 0-50 votes
+      return {
+        id: match.id || `match-${teamName}-${match.week}`,
+        opponent: opponent,
+        score: `${teamScore} - ${opponentScore}`,
+        status: match.isForfeit 
+          ? (teamScore > opponentScore ? 'FF Win' : 'FF Loss')
+          : (teamScore > opponentScore ? 'Won' : teamScore < opponentScore ? 'Lost' : 'Draw'),
+        matchDate,
+        matchType: match.matchType || 'Regular',
+        week: match.week,
+        caster: null,
+        streamLink: {
+          url: 'https://www.twitch.tv/echomasterleague',
+          label: 'Twitch VOD'
+        },
+        votes: 0,
+      };
     });
-  }
 
-  return matches.sort((a, b) => b.matchDate - a.matchDate);
+  return teamMatches.sort((a, b) => b.matchDate - a.matchDate);
 };
 
 export const useTeamProfile = (teamName) => {
@@ -43,6 +53,7 @@ export const useTeamProfile = (teamName) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { standings, loading: standingsLoading } = useStandings();
+  const { matchResults, loading: matchResultsLoading } = useMatchResults();
 
   useEffect(() => {
     if (!teamName) {
@@ -50,7 +61,7 @@ export const useTeamProfile = (teamName) => {
       return;
     }
 
-    if (standingsLoading) {
+    if (standingsLoading || matchResultsLoading) {
       setLoading(true);
       return;
     }
@@ -93,9 +104,9 @@ export const useTeamProfile = (teamName) => {
 
     setTeam(teamData);
     setMMR(standingsData?.mmr || 800);
-    setMatchHistory(generateMatchHistory(teamName));
+    setMatchHistory(getTeamMatchHistory(teamName, matchResults));
     setLoading(false);
-  }, [teamName, standings, standingsLoading]);
+  }, [teamName, standings, standingsLoading, matchResults, matchResultsLoading]);
 
   return { team, matchHistory, mmr, loading, error };
 };
