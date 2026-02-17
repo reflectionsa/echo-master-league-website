@@ -52,11 +52,19 @@ export function useHistoricalData() {
   };
 
   /**
-   * Get all seasons
+   * Get all seasons sorted properly (handles numeric season numbers)
    */
   const getSeasons = () => {
     const seasons = [...new Set(history.map(record => record.season))];
-    return seasons.sort().reverse(); // Most recent first
+    // Sort seasons numerically if they contain numbers
+    return seasons.sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || 0);
+      const numB = parseInt(b.match(/\d+/)?.[0] || 0);
+      if (numA && numB) {
+        return numB - numA; // Most recent first (higher number)
+      }
+      return b.localeCompare(a); // Fallback to alphabetical
+    });
   };
 
   return {

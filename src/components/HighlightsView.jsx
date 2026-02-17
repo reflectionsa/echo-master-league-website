@@ -35,6 +35,16 @@ const HighlightsView = ({ theme, open, onClose }) => {
     return match ? (match[1] || match[2]) : null;
   };
 
+  // Get allowed parent domains for Twitch embeds
+  const getTwitchParent = () => {
+    // Use production domain if available, otherwise localhost
+    const hostname = window.location.hostname;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'localhost'; // Twitch allows localhost in development
+    }
+    return hostname; // Use actual hostname in production
+  };
+
   const renderVideoPlayer = (highlight) => {
     const platform = highlight.platform.toLowerCase();
     
@@ -59,7 +69,7 @@ const HighlightsView = ({ theme, open, onClose }) => {
         return (
           <AspectRatio ratio={16 / 9}>
             <iframe
-              src={`https://clips.twitch.tv/embed?clip=${clipId}&parent=${window.location.hostname}`}
+              src={`https://clips.twitch.tv/embed?clip=${clipId}&parent=${getTwitchParent()}`}
               title={highlight.title}
               allowFullScreen
               style={{ border: 'none', borderRadius: '12px' }}

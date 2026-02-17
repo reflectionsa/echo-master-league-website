@@ -37,8 +37,18 @@ export function useAnnouncements() {
       };
     });
 
-    // Sort by date (most recent first)
-    parsedAnnouncements.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort by date (most recent first), handling invalid dates
+    parsedAnnouncements.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      
+      // Check for invalid dates
+      if (isNaN(dateA.getTime()) && isNaN(dateB.getTime())) return 0;
+      if (isNaN(dateA.getTime())) return 1; // Invalid dates go to end
+      if (isNaN(dateB.getTime())) return -1;
+      
+      return dateB - dateA;
+    });
 
     setAnnouncements(parsedAnnouncements);
   }, [data]);
