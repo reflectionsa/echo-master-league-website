@@ -1,5 +1,5 @@
 import { Box, Container, VStack, Text, HStack, Center, Image } from '@chakra-ui/react';
-import { Trophy, Zap } from 'lucide-react';
+// lucide-react icons (unused removed)
 import { useTeamRoles } from '../hooks/useTeamRoles';
 import { useLeagueSubs } from '../hooks/useLeagueSubs';
 import { useMemo } from 'react';
@@ -102,8 +102,9 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
             <Text
               fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
               fontWeight="900"
-              bgGradient={`linear(to-r, ${colors.accentOrange}, ${colors.accentBlue})`}
+              bg={`linear-gradient(to right, ${colors.accentOrange}, ${colors.accentBlue})`}
               bgClip="text"
+              color="transparent"
               letterSpacing="-0.02em"
             >
               Echo Master League

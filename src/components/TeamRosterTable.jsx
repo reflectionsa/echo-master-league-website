@@ -3,7 +3,7 @@ import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import PlayerProfileModal from './PlayerProfileModal';
 import { useAccessibility } from '../hooks/useAccessibility';
-import { emlColors, getThemedColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const TeamRosterTable = ({ teams, theme }) => {
   const { needsColorBlindSupport } = useAccessibility();
@@ -11,23 +11,30 @@ const TeamRosterTable = ({ teams, theme }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
+  // Pad players array to exactly 4 slots to match header columns
+  const padPlayers = (players) => {
+    const padded = [...(players || [])];
+    while (padded.length < 4) padded.push(null);
+    return padded.slice(0, 4);
+  };
+
   return (
     <>
       <Box
-        bg={emlColors.bgSecondary}
+        bg={themedColors.bgSecondary}
         border="1px solid"
-        borderColor={emlColors.borderMedium}
+        borderColor={themedColors.borderMedium}
         rounded="2xl"
         overflow="hidden"
       >
         <Table.ScrollArea maxW="full" borderRadius="2xl">
           <Table.Root size="md" variant="outline">
             <Table.Header>
-              <Table.Row bg={emlColors.bgTertiary}>
+              <Table.Row bg={themedColors.bgTertiary}>
                 <Table.ColumnHeader
                   minW="180px"
                   fontWeight="700"
-                  color={emlColors.textMuted}
+                  color={themedColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -37,7 +44,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="140px"
                   fontWeight="700"
-                  color={emlColors.textMuted}
+                  color={themedColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -48,7 +55,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="140px"
                   fontWeight="700"
-                  color={emlColors.textMuted}
+                  color={themedColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -61,7 +68,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                     key={num}
                     minW="130px"
                     fontWeight="700"
-                    color={emlColors.textMuted}
+                    color={themedColors.textMuted}
                     fontSize="xs"
                     textTransform="uppercase"
                     letterSpacing="wider"
@@ -73,7 +80,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                 <Table.ColumnHeader
                   minW="100px"
                   fontWeight="700"
-                  color={emlColors.textMuted}
+                  color={themedColors.textMuted}
                   fontSize="xs"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -86,8 +93,8 @@ const TeamRosterTable = ({ teams, theme }) => {
               {teams.map(team => (
                 <Table.Row
                   key={team.id}
-                  bg={team.status === 'Inactive' ? `${emlColors.bgElevated}80` : 'transparent'}
-                  _hover={{ bg: emlColors.bgHover }}
+                  bg={team.status === 'Inactive' ? `${themedColors.bgElevated}80` : 'transparent'}
+                  _hover={{ bg: themedColors.bgHover }}
                   transition="background 0.2s"
                   opacity={team.status === 'Inactive' ? 0.6 : 1}
                 >
@@ -96,7 +103,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                       as="button"
                       fontSize="sm"
                       fontWeight="700"
-                      color={emlColors.accentPurple}
+                      color={themedColors.accentPurple}
                       _hover={{ textDecoration: 'underline' }}
                       onClick={() => setSelectedTeam(team.name)}
                       cursor="pointer"
@@ -109,7 +116,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                       <Text
                         as="button"
                         fontSize="sm"
-                        color={emlColors.accentBlue}
+                        color={themedColors.accentBlue}
                         textTransform="uppercase"
                         _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.captain)}
@@ -118,7 +125,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                         {team.captain}
                       </Text>
                     ) : (
-                      <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
+                      <Text fontSize="sm" color={themedColors.textSubtle}>—</Text>
                     )}
                   </Table.Cell>
                   <Table.Cell display={{ base: 'none', md: 'table-cell' }}>
@@ -126,7 +133,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                       <Text
                         as="button"
                         fontSize="sm"
-                        color={emlColors.accentBlue}
+                        color={themedColors.accentBlue}
                         textTransform="uppercase"
                         _hover={{ textDecoration: 'underline' }}
                         onClick={() => setSelectedPlayer(team.coCaptain)}
@@ -135,16 +142,16 @@ const TeamRosterTable = ({ teams, theme }) => {
                         {team.coCaptain}
                       </Text>
                     ) : (
-                      <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
+                      <Text fontSize="sm" color={themedColors.textSubtle}>—</Text>
                     )}
                   </Table.Cell>
-                  {team.players.map((player, idx) => (
+                  {padPlayers(team.players).map((player, idx) => (
                     <Table.Cell key={idx} display={{ base: 'none', md: 'table-cell' }}>
                       {player ? (
                         <Text
                           as="button"
                           fontSize="sm"
-                          color={emlColors.accentBlue}
+                          color={themedColors.accentBlue}
                           textTransform="uppercase"
                           _hover={{ textDecoration: 'underline' }}
                           onClick={() => setSelectedPlayer(player)}
@@ -153,7 +160,7 @@ const TeamRosterTable = ({ teams, theme }) => {
                           {player}
                         </Text>
                       ) : (
-                        <Text fontSize="sm" color={emlColors.textSubtle}>—</Text>
+                        <Text fontSize="sm" color={themedColors.textSubtle}>—</Text>
                       )}
                     </Table.Cell>
                   ))}

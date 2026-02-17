@@ -1,6 +1,5 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Grid, Center } from '@chakra-ui/react';
-import { Video } from 'lucide-react';
-import { Youtube, Music2 } from 'lucide-react';
+import { Video, Youtube, Music2 } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 const MediaView = ({ theme, open, onClose }) => {

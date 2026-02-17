@@ -63,7 +63,7 @@ const RankingsSection = ({ theme }) => {
                               )}
                             </HStack>
                           )}
-                          {team.region && team.region[0] && <Text fontSize="xs" color={emlColors.textMuted}>{team.region[0]}</Text>}
+                          {team.region && <Text fontSize="xs" color={emlColors.textMuted}>{team.region}</Text>}
                         </HStack>
                       </VStack>
                     </HStack>

@@ -1,4 +1,4 @@
-import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Accordion, Code } from '@chakra-ui/react';
+import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Accordion } from '@chakra-ui/react';
 import { FileText, Shield, AlertTriangle, ExternalLink } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 

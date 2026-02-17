@@ -179,7 +179,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                           </Table.Header>
                           <Table.Body>
                             {matchHistory.slice(0, 10).map(match => (
-                              <Table.Row key={match.id} _hover={{ bg: `-color(theme.colors.whiteAlpha.0.08)` }}>
+                              <Table.Row key={match.id} _hover={{ bg: `${emlColors.textPrimary}14` }}>
                                 <Table.Cell>
                                   <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary} textTransform="uppercase">
                                     {match.opponent}

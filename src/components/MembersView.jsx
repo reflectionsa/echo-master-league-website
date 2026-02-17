@@ -291,7 +291,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                 {player.name}
                               </Text>
                               {player.subtitle && (
-                                <Text fontSize="xs" color={colors.accentYellow} fontWeight="600">
+                                <Text fontSize="xs" color={colors.accentOrange} fontWeight="600">
                                   {player.subtitle}
                                 </Text>
                               )}

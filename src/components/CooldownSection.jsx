@@ -21,8 +21,9 @@ const CooldownSection = ({ theme }) => {
             <Heading
               fontSize={{ base: '2xl', md: '3xl' }}
               fontWeight="800"
-              bgGradient={`linear(to-r, ${emlColors.accentOrange}, ${emlColors.accentRose})`}
+              bg={`linear-gradient(to right, ${emlColors.accentOrange}, ${emlColors.accentRose})`}
               bgClip="text"
+              color="transparent"
             >
               Player Cooldown List
             </Heading>
