@@ -9,6 +9,7 @@ const playerProfilePictures = {
   'Krogers': 'https://static-cdn.jtvnw.net/jtv_user_pictures/424d11c2-415c-46c8-907a-d7cad7af2e96-profile_image-300x300.png',
   'Jaxxjh': 'https://cdn.discordapp.com/avatars/726952425012985906/d34d67b61edf0bac3783d93c30d8b1bb.webp?size=1024',
   'mikey': 'https://cdn.discordapp.com/avatars/841766167357816863/fbd3a5766f97a634f11fd8aa1e5db409.webp?size=1024',
+  'Zu-Ko': 'https://cdn.discordapp.com/avatars/992867075657830400/7cbfc052ae88f6b7995d45c4bb94aa30.webp?size=1024',
 };
 
 const seasonChampions = {
