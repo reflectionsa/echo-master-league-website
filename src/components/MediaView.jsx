@@ -1,9 +1,10 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Grid, Center } from '@chakra-ui/react';
 import { Video } from 'lucide-react';
 import { Youtube, Music2 } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const MediaView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
 
   const platforms = [
     { icon: Video, label: 'Twitch Streams', desc: 'Watch live matches & VODs', color: '#9146FF', url: 'https://www.twitch.tv/echomasterleague' },

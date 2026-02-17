@@ -1,8 +1,10 @@
 import { Box, Dialog, Portal, CloseButton, HStack, Image } from '@chakra-ui/react';
 import { Calendar } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const CalendarView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
+  
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
       <Portal>

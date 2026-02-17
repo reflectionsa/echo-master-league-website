@@ -3,7 +3,7 @@ import { Trophy, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useStandings } from '../hooks/useStandings';
 import TeamProfileModal from './TeamProfileModal';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const tierImages = {
   Master: 'https://media.discordapp.net/attachments/1241825775414677536/1473148628246986773/Untitled_design.png?ex=69952812&is=6993d692&hm=cb884e6b000e496a4fd0f5d2dd2ae10745cb2f05165b23616bed6b3a16c00ac2&animated=true',
@@ -13,6 +13,7 @@ const tierImages = {
 };
 
 const StandingsView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
   const { standings, loading, error } = useStandings();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [search, setSearch] = useState('');

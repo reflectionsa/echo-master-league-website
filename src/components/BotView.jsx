@@ -1,6 +1,6 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Accordion, Code, Grid } from '@chakra-ui/react';
 import { Bot, Zap, Terminal, ExternalLink, Calendar, Users, Trophy, Search } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const commandCategories = [
   {
@@ -53,6 +53,7 @@ const commandCategories = [
 ];
 
 const BotView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">

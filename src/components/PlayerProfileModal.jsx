@@ -3,10 +3,11 @@ import { User, Users, Shield, Award } from 'lucide-react';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
   const { team, playerRole, loading } = usePlayerProfile(playerName);
+  const emlColors = getThemedColors(theme);
   const [teamModalOpen, setTeamModalOpen] = useState(false);
 
   const getRoleIcon = () => {

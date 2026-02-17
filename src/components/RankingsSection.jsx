@@ -1,7 +1,7 @@
-import { Box, Container, VStack, Text, HStack, Badge, Spinner, Center, Image } from '@chakra-ui/react';
+import { Box, Container, VStack, Text, HStack, Spinner, Center, Image } from '@chakra-ui/react';
 import { Award, Trophy } from 'lucide-react';
 import { useRankings } from '../hooks/useRankings';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const tierImages = {
   Master: 'https://media.discordapp.net/attachments/1241825775414677536/1473148628246986773/Untitled_design.png?ex=69952812&is=6993d692&hm=cb884e6b000e496a4fd0f5d2dd2ae10745cb2f05165b23616bed6b3a16c00ac2&animated=true',
@@ -12,6 +12,7 @@ const tierImages = {
 
 const RankingsSection = ({ theme }) => {
   const { rankings, loading } = useRankings();
+  const emlColors = getThemedColors(theme);
 
   const topTeams = (rankings || []).slice(0, 10);
 
@@ -60,18 +61,14 @@ const RankingsSection = ({ theme }) => {
                       <VStack align="start" gap="0">
                         <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{team.name}</Text>
                         <HStack gap="2">
-                          {team.tier && tierImages[team.tier] ? (
+                          {team.tier && tierImages[team.tier] && (
                             <HStack gap="1">
                               <Image src={tierImages[team.tier]} alt={team.tier} w="24px" h="24px" objectFit="contain" />
                               {team.division && (
                                 <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary}>{team.division}</Text>
                               )}
                             </HStack>
-                          ) : team.tier ? (
-                            <Badge colorPalette="purple" size="sm">
-                              {team.tier}{team.division ? ` ${team.division}` : ''}
-                            </Badge>
-                          ) : null}
+                          )}
                           {team.region && team.region[0] && <Text fontSize="xs" color={emlColors.textMuted}>{team.region[0]}</Text>}
                         </HStack>
                       </VStack>

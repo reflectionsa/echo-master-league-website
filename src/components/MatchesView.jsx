@@ -2,9 +2,10 @@ import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badg
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useSchedule } from '../hooks/useSchedule';
 import { useMatchResults } from '../hooks/useMatchResults';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const MatchesView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
   const { matches, loading } = useSchedule();
   const { matchResults, loading: resultsLoading } = useMatchResults();
 

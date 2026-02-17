@@ -17,7 +17,6 @@ const generateMatchHistory = (teamName) => {
     matchDate.setDate(matchDate.getDate() - daysAgo);
 
     const isCasted = Math.random() > 0.6;
-    const streamPlatform = Math.random() > 0.5 ? 'twitch' : 'youtube';
 
     matches.push({
       id: `match-${teamName}-${i}`,
@@ -27,10 +26,8 @@ const generateMatchHistory = (teamName) => {
       matchDate,
       caster: isCasted ? 'CasterName' : null,
       streamLink: isCasted ? {
-        url: streamPlatform === 'twitch'
-          ? 'https://www.twitch.tv/echomasterleague'
-          : 'https://www.youtube.com/@EchoMasterLeague',
-        label: streamPlatform === 'twitch' ? 'Twitch VOD' : 'YouTube VOD'
+        url: 'https://www.twitch.tv/echomasterleague',
+        label: 'Twitch VOD'
       } : null,
       votes: Math.floor(Math.random() * 51), // 0-50 votes
     });

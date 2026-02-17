@@ -1,8 +1,9 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge, Image, Separator } from '@chakra-ui/react';
 import { Bell, Calendar, AlertCircle } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const AnnouncementsView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">

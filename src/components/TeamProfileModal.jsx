@@ -1,7 +1,7 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badge, Table, CloseButton, Button } from '@chakra-ui/react';
 import { Trophy, Users, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400' },
@@ -19,6 +19,7 @@ const tierImages = {
 
 const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
   const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName);
+  const emlColors = getThemedColors(theme);
   const tierConfig = tierColors[team?.tier] || tierColors.Gold;
 
   return (

@@ -1,6 +1,6 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Accordion, Code } from '@chakra-ui/react';
 import { FileText, Shield, AlertTriangle, ExternalLink } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const rules = [
   { title: 'Match Format', content: 'All matches are best of 3 games. Teams must have minimum 3 players present.' },
@@ -17,6 +17,7 @@ const conduct = [
 ];
 
 const RulesView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">

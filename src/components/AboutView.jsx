@@ -1,8 +1,9 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Grid, Heading } from '@chakra-ui/react';
 import { Info, Users, Trophy, Zap, Target } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const AboutView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
 
   const features = [
     { icon: Target, title: 'Competitive Excellence', desc: 'Face the best teams in structured tournaments with professional casters' },

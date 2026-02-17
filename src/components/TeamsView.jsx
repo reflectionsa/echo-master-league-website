@@ -3,9 +3,10 @@ import { Users, Search } from 'lucide-react';
 import { useState } from 'react';
 import TeamRosterTable from './TeamRosterTable';
 import { teamRosters } from '../data/teamRosters';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const TeamsView = ({ theme, open, onClose }) => {
+  const emlColors = getThemedColors(theme);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTeams = teamRosters.filter(team =>
