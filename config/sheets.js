@@ -20,7 +20,7 @@
 
 export const GOOGLE_SHEETS_CONFIG = {
   // Your Google Sheets API Key (get from Google Cloud Console)
-  apiKey: 'YOUR_API_KEY_HERE',
+  apiKey: 'AIzaSyBASNrr1R2CIXcyEFDQNpcRVdJ9-SU54Kc',
 
   // Spreadsheet ID - all data comes from this one sheet
   spreadsheets: {
@@ -30,15 +30,14 @@ export const GOOGLE_SHEETS_CONFIG = {
 
   // Sheet names and ranges
   ranges: {
-    rosterWide: '_RosterWide!A:Z',        // Complete team roster data
-    upcomingMatches: 'Upcoming Matches!A:Z', // Match schedule
-    rankings: 'NA Pblc Rnkngs!A:Z',       // Public rankings
-    matches: 'NA PBLC MATCHES!A:Z',       // NA Public matches with assignments
-    tournament: 'EML NA Season 4 - TOURNAMENT!A:Z', // Tournament standings
-    cooldownList: 'Cooldown List!A:Z',    // Players on cooldown
-    teamRoles: 'Team Roles!A:Z',          // Team captain and co-captain assignments
-    matchResults: 'Match Results!A:Z',    // Completed match results with scores
-    forfeits: 'Forfeits!A:Z',             // Forfeited matches
+    rosterWide: '_RosterWide!A:Z',        // Complete team roster data (PROTECTED - needs unprotection)
+    upcomingMatches: 'Upcoming Matches!A:Z', // Match schedule ✓ WORKING
+    rankings: 'Rankings!A:Z',             // Public rankings (PROTECTED - needs unprotection)
+    matches: 'Proposed Match Results!A:Z', // Match results with scoring ✓ WORKING
+    cooldownList: 'Cooldown List!A:Z',    // Players on cooldown ✓ WORKING
+    teamRoles: 'Team Roles!A:Z',          // Team captain and co-captain assignments ✓ WORKING
+    matchResults: 'Match Results!A:Z',    // Completed match results with scores (PROTECTED - needs unprotection)
+    forfeits: 'Forfeits!A:Z',             // Forfeited matches (PROTECTED - needs unprotection)
   }
 };
 
