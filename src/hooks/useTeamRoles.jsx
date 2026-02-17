@@ -23,12 +23,12 @@ export const useTeamRoles = () => {
 
         // Group players by team name
         const teamMap = new Map();
-        
+
         data.forEach(row => {
             const playerName = row['Player Name'] || row.Player || row.player || '';
             const teamName = row['Team Name'] || row.Team || row.team || '';
             const role = row['Role'] || row.role || 'Player';
-            
+
             if (!playerName || !teamName) return;
 
             if (!teamMap.has(teamName)) {
@@ -41,7 +41,7 @@ export const useTeamRoles = () => {
             }
 
             const team = teamMap.get(teamName);
-            
+
             if (role.toLowerCase().includes('captain') && !role.toLowerCase().includes('co')) {
                 team.captain = playerName;
             } else if (role.toLowerCase().includes('co-captain') || role.toLowerCase().includes('co captain')) {
