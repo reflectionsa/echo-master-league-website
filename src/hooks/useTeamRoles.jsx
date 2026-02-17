@@ -4,7 +4,8 @@ import { useMemo } from 'react';
 
 /**
  * Hook to fetch team roster data from Team Roles sheet
- * Groups players by team - ALL teams show as Active
+ * Cross-references with Rankings sheet to determine Active/Inactive status
+ * Teams in Rankings = Active, Teams not in Rankings = Inactive
  */
 export const useTeamRoles = () => {
     const config = getRosterConfig();
@@ -14,8 +15,26 @@ export const useTeamRoles = () => {
         config.apiKey
     );
 
+    // Also fetch Rankings data to determine active status
+    const { data: rankingsData, loading: rankingsLoading } = useGoogleSheets(
+        config.spreadsheetId,
+        GOOGLE_SHEETS_CONFIG.ranges.rankings,
+        config.apiKey
+    );
+
     const teams = useMemo(() => {
         if (!data || data.length === 0) return [];
+
+        // Get list of active team names from Rankings sheet
+        const activeTeamNames = new Set();
+        if (rankingsData && rankingsData.length > 0) {
+            rankingsData.forEach(row => {
+                const teamName = row['team name'] || row['Team'] || row.team || '';
+                if (teamName) {
+                    activeTeamNames.add(teamName.toLowerCase().trim());
+                }
+            });
+        }
 
         // Group players by team name
         const teamMap = new Map();
@@ -24,6 +43,7 @@ export const useTeamRoles = () => {
             const playerName = row['Player Name'] || row.Player || row.player || '';
             const teamName = row['Team Name'] || row.Team || row.team || '';
             const role = row['Role'] || row.role || 'Player';
+            const rank = row['Rank'] || row.rank || ''; // Get rank if available
 
             if (!playerName || !teamName) return;
 
@@ -33,6 +53,7 @@ export const useTeamRoles = () => {
                     captain: '',
                     coCaptain: '',
                     players: [],
+                    ranks: [], // Store all player ranks
                 });
             }
 
@@ -45,9 +66,14 @@ export const useTeamRoles = () => {
             } else {
                 team.players.push(playerName);
             }
+
+            // Collect ranks
+            if (rank) {
+                team.ranks.push(rank);
+            }
         });
 
-        // Convert map to array and add status
+        // Convert map to array and determine status
         const teamsArray = Array.from(teamMap.values()).map((team, index) => {
             const totalPlayers = [
                 team.captain,
@@ -55,8 +81,9 @@ export const useTeamRoles = () => {
                 ...team.players
             ].filter(Boolean).length;
 
-            // All teams are Active
-            const status = 'Active';
+            // Determine status: Active if team is in Rankings sheet
+            const isInRankings = activeTeamNames.has(team.name.toLowerCase().trim());
+            const status = isInRankings ? 'Active' : 'Inactive';
 
             return {
                 id: index + 1,
@@ -66,12 +93,13 @@ export const useTeamRoles = () => {
                 players: team.players.filter(Boolean),
                 status,
                 totalPlayers,
+                ranks: team.ranks, // Include rank data
             };
         });
 
         // Sort by name
         return teamsArray.sort((a, b) => a.name.localeCompare(b.name));
-    }, [data]);
+    }, [data, rankingsData]);
 
-    return { teams, loading, error, refetch };
+    return { teams, loading: loading || rankingsLoading, error, refetch };
 };
