@@ -5,6 +5,10 @@ import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
 
+const playerProfilePictures = {
+  'Krogers': 'https://static-cdn.jtvnw.net/jtv_user_pictures/424d11c2-415c-46c8-907a-d7cad7af2e96-profile_image-300x300.png',
+};
+
 const seasonChampions = {
   'Krogers': [
     { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png?ex=69954aa1&is=6993f921&hm=f934706494a58357a5c40c9d9039ee951e3d48b9b5c4e24e8e67b083eb309f58&' },
@@ -70,8 +74,19 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                       justifyContent="center"
                       border="3px solid"
                       borderColor={emlColors.accentPurple}
+                      overflow="hidden"
                     >
-                      <User size={36} color={emlColors.accentPurple} />
+                      {playerProfilePictures[playerName] ? (
+                        <Image
+                          src={playerProfilePictures[playerName]}
+                          alt={playerName}
+                          w="80px"
+                          h="80px"
+                          objectFit="cover"
+                        />
+                      ) : (
+                        <User size={36} color={emlColors.accentPurple} />
+                      )}
                     </Box>
 
                     <VStack gap="1">
