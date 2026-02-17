@@ -1,8 +1,9 @@
 import { useMatchResults } from './useMatchResults';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from './useTeamRoles';
 
 export const useSchedule = () => {
   const { matchResults, loading } = useMatchResults();
+  const { teams } = useTeamRoles();
 
   // Transform match results into schedule format
   const matches = (matchResults || []).map(match => {
@@ -24,8 +25,8 @@ export const useSchedule = () => {
     }
 
     // Find team IDs from roster
-    const team1Data = teamRosters.find(t => t.name === match.team1);
-    const team2Data = teamRosters.find(t => t.name === match.team2);
+    const team1Data = teams.find(t => t.name === match.team1);
+    const team2Data = teams.find(t => t.name === match.team2);
 
     return {
       id: match.id || `match-${match.week}`,

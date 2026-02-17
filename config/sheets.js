@@ -38,6 +38,7 @@ export const GOOGLE_SHEETS_CONFIG = {
     teamRoles: 'Team Roles!A:Z',          // Team captain and co-captain assignments ✓ WORKING
     matchResults: 'Match Results!A:Z',    // Completed match results with scores (PROTECTED - needs unprotection)
     forfeits: 'Forfeits!A:Z',             // Forfeited matches (PROTECTED - needs unprotection)
+    registeredLeagueSubs: 'Registered League Subs!A:Z', // League substitute players ✓ WORKING
   }
 };
 

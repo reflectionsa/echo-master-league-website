@@ -2,14 +2,15 @@ import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Input } from '@
 import { Users, Search } from 'lucide-react';
 import { useState } from 'react';
 import TeamRosterTable from './TeamRosterTable';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from '../hooks/useTeamRoles';
 import { getThemedColors } from '../theme/colors';
 
 const TeamsView = ({ theme, open, onClose }) => {
   const emlColors = getThemedColors(theme);
   const [searchQuery, setSearchQuery] = useState('');
+  const { teams } = useTeamRoles();
 
-  const filteredTeams = teamRosters.filter(team =>
+  const filteredTeams = teams.filter(team =>
     team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     team.captain.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (team.coCaptain && team.coCaptain.toLowerCase().includes(searchQuery.toLowerCase())) ||

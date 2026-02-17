@@ -2,7 +2,7 @@ import { Box, Container, VStack, Text, HStack, Input, InputGroup, createListColl
 import { Users, Search } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import TeamRosterTable from './TeamRosterTable';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from '../hooks/useTeamRoles';
 import { emlColors } from '../theme/colors';
 
 const statusFilters = createListCollection({
@@ -16,9 +16,10 @@ const statusFilters = createListCollection({
 const TeamsSection = ({ theme }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const { teams } = useTeamRoles();
 
   const filteredTeams = useMemo(() => {
-    return teamRosters.filter(team => {
+    return teams.filter(team => {
       const searchLower = searchQuery.toLowerCase();
       const matchesSearch =
         team.name.toLowerCase().includes(searchLower) ||
@@ -30,7 +31,7 @@ const TeamsSection = ({ theme }) => {
 
       return matchesSearch && matchesStatus;
     });
-  }, [searchQuery, statusFilter]);
+  }, [searchQuery, statusFilter, teams]);
 
   return (
     <Box id="teams" py="20" bg={emlColors.bgPrimary}>

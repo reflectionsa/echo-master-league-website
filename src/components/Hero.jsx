@@ -1,16 +1,18 @@
 import { Box, Container, VStack, Text, HStack, Center, Image } from '@chakra-ui/react';
 import { Trophy, Zap } from 'lucide-react';
-import { useTeams } from '../hooks/useTeams';
+import { useTeamRoles } from '../hooks/useTeamRoles';
+import { useLeagueSubs } from '../hooks/useLeagueSubs';
 import { useMemo } from 'react';
 import { getThemedColors } from '../theme/colors';
 
 const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
-  const { teams, loading } = useTeams();
+  const { teams, loading: teamsLoading } = useTeamRoles();
+  const { count: subsCount, loading: subsLoading } = useLeagueSubs();
   const colors = getThemedColors(theme);
 
   // Calculate real stats from live data
   const stats = useMemo(() => {
-    if (loading || !teams || teams.length === 0) {
+    if (teamsLoading || !teams || teams.length === 0) {
       return {
         activeTeams: '...',
         activePlayers: '...',
@@ -18,30 +20,31 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
       };
     }
 
+    // Only count active teams (4+ players)
     const activeTeams = teams.filter(t => t.status === 'Active').length;
 
-    // Count unique players (captain + co-captain + players array)
+    // Count only players from active teams
     const allPlayers = new Set();
     teams.forEach(team => {
-      if (team.captain) allPlayers.add(team.captain);
-      if (team.coCaptain) allPlayers.add(team.coCaptain);
-      if (team.players) {
-        team.players.forEach(player => {
-          if (player) allPlayers.add(player);
-        });
+      if (team.status === 'Active') {
+        if (team.captain) allPlayers.add(team.captain);
+        if (team.coCaptain) allPlayers.add(team.coCaptain);
+        if (team.players) {
+          team.players.forEach(player => {
+            if (player) allPlayers.add(player);
+          });
+        }
       }
     });
 
     const activePlayers = allPlayers.size;
-    // Estimate subs as roughly 30% of active players
-    const leagueSubs = Math.floor(activePlayers * 0.3);
 
     return {
       activeTeams: activeTeams.toString(),
       activePlayers: activePlayers.toString(),
-      leagueSubs: leagueSubs > 0 ? leagueSubs.toString() : '...'
+      leagueSubs: subsLoading ? '...' : subsCount.toString()
     };
-  }, [teams, loading]);
+  }, [teams, teamsLoading, subsCount, subsLoading]);
 
   const statBlocks = [
     { label: 'Active Teams', value: stats.activeTeams, onClick: onTeamsClick },

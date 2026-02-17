@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from './useTeamRoles';
 import { useStandings } from './useStandings';
 import { useMatchResults } from './useMatchResults';
 
@@ -52,6 +52,7 @@ export const useTeamProfile = (teamName) => {
   const [mmr, setMMR] = useState(800);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { teams, loading: teamsLoading } = useTeamRoles();
   const { standings, loading: standingsLoading } = useStandings();
   const { matchResults, loading: matchResultsLoading } = useMatchResults();
 
@@ -61,7 +62,7 @@ export const useTeamProfile = (teamName) => {
       return;
     }
 
-    if (standingsLoading || matchResultsLoading) {
+    if (standingsLoading || matchResultsLoading || teamsLoading) {
       setLoading(true);
       return;
     }
@@ -70,7 +71,7 @@ export const useTeamProfile = (teamName) => {
     setError(null);
 
     // Find team in roster data
-    const foundTeam = teamRosters.find(t => t.name === teamName);
+    const foundTeam = teams.find(t => t.name === teamName);
 
     if (!foundTeam) {
       setError('Team not found');
@@ -106,7 +107,7 @@ export const useTeamProfile = (teamName) => {
     setMMR(standingsData?.mmr || 800);
     setMatchHistory(getTeamMatchHistory(teamName, matchResults));
     setLoading(false);
-  }, [teamName, standings, standingsLoading, matchResults, matchResultsLoading]);
+  }, [teamName, standings, standingsLoading, matchResults, matchResultsLoading, teams, teamsLoading]);
 
   return { team, matchHistory, mmr, loading, error };
 };

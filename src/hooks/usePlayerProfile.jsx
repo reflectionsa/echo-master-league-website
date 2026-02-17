@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from './useTeamRoles';
 
 export const usePlayerProfile = (playerName) => {
   const [team, setTeam] = useState(null);
   const [playerRole, setPlayerRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { teams, loading: teamsLoading } = useTeamRoles();
 
   useEffect(() => {
-    if (!playerName) {
-      setLoading(false);
+    if (!playerName || teamsLoading) {
+      setLoading(teamsLoading);
       return;
     }
 
     setLoading(true);
 
     // Search for player in roster data
-    const foundTeam = teamRosters.find(t => {
+    const foundTeam = teams.find(t => {
       if (t.captain === playerName) {
         setPlayerRole('Captain');
         return true;
@@ -33,7 +34,7 @@ export const usePlayerProfile = (playerName) => {
 
     setTeam(foundTeam);
     setLoading(false);
-  }, [playerName]);
+  }, [playerName, teams, teamsLoading]);
 
   return { team, playerRole, loading };
 };

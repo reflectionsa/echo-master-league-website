@@ -1,8 +1,14 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useMemo } from 'react';
 
 /**
- * Hook to fetch team roles (captains and co-captains) from Google Sheets
+ * Hook to fetch team roster data from Team Roles sheet
+ * Groups players by team and determines team status based on player count
+ * Rules:
+ * - Teams with < 4 players = Inactive
+ * - Teams with only 1 player = Inactive
+ * - Teams with 4+ players = Active
  */
 export const useTeamRoles = () => {
     const config = getRosterConfig();
@@ -12,15 +18,67 @@ export const useTeamRoles = () => {
         config.apiKey
     );
 
-    // Transform Google Sheets data to app format
-    const teamRoles = data.map(row => ({
-        id: row.id,
-        teamName: row['Team Name'] || row['Team'] || row.teamName || row.team || '',
-        captain: row['Captain'] || row.captain || '',
-        coCaptain: row['Co-Captain'] || row['Co Captain'] || row.coCaptain || '',
-        tier: row['Tier'] || row.tier || '',
-        region: row['Region'] || row.region || 'NA',
-    })).filter(team => team.teamName); // Filter out empty rows
+    const teams = useMemo(() => {
+        if (!data || data.length === 0) return [];
 
-    return { teamRoles, loading, error, refetch };
+        // Group players by team name
+        const teamMap = new Map();
+        
+        data.forEach(row => {
+            const playerName = row['Player Name'] || row.Player || row.player || '';
+            const teamName = row['Team Name'] || row.Team || row.team || '';
+            const role = row['Role'] || row.role || 'Player';
+            
+            if (!playerName || !teamName) return;
+
+            if (!teamMap.has(teamName)) {
+                teamMap.set(teamName, {
+                    name: teamName,
+                    captain: '',
+                    coCaptain: '',
+                    players: [],
+                });
+            }
+
+            const team = teamMap.get(teamName);
+            
+            if (role.toLowerCase().includes('captain') && !role.toLowerCase().includes('co')) {
+                team.captain = playerName;
+            } else if (role.toLowerCase().includes('co-captain') || role.toLowerCase().includes('co captain')) {
+                team.coCaptain = playerName;
+            } else {
+                team.players.push(playerName);
+            }
+        });
+
+        // Convert map to array and calculate status
+        const teamsArray = Array.from(teamMap.values()).map((team, index) => {
+            const totalPlayers = [
+                team.captain,
+                team.coCaptain,
+                ...team.players
+            ].filter(Boolean).length;
+
+            // Determine status based on player count
+            let status = 'Inactive';
+            if (totalPlayers >= 4) {
+                status = 'Active';
+            }
+
+            return {
+                id: index + 1,
+                name: team.name,
+                captain: team.captain,
+                coCaptain: team.coCaptain,
+                players: team.players.filter(Boolean),
+                status,
+                totalPlayers,
+            };
+        });
+
+        // Sort by name
+        return teamsArray.sort((a, b) => a.name.localeCompare(b.name));
+    }, [data]);
+
+    return { teams, loading, error, refetch };
 };

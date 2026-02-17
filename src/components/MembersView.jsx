@@ -1,7 +1,8 @@
 import { Box, Dialog, Portal, Text, HStack, VStack, Badge, CloseButton, SimpleGrid, Input, InputGroup, Button, Table } from '@chakra-ui/react';
 import { Users, Shield, Star, Radio, Video, Clock, UserX, Search, ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
-import { teamRosters } from '../data/teamRosters';
+import { useTeamRoles } from '../hooks/useTeamRoles';
+import { useLeagueSubs } from '../hooks/useLeagueSubs';
 import PlayerProfileModal from './PlayerProfileModal';
 import { getThemedColors } from '../theme/colors';
 
@@ -19,11 +20,13 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const { teams } = useTeamRoles();
+  const { subs: leagueSubs } = useLeagueSubs();
 
-  const activeTeams = teamRosters.filter(t => t.status === 'Active');
+  const activeTeams = teams.filter(t => t.status === 'Active');
   const activePlayers = activeTeams.reduce((acc, t) => acc + 1 + (t.coCaptain ? 1 : 0) + t.players.filter(Boolean).length, 0);
 
-  const inactiveTeams = teamRosters.filter(t => t.status === 'Inactive');
+  const inactiveTeams = teams.filter(t => t.status === 'Inactive');
   const inactivePlayers = inactiveTeams.reduce((acc, t) => acc + 1 + (t.coCaptain ? 1 : 0) + t.players.filter(Boolean).length, 0);
 
   // Build player database by category
@@ -67,7 +70,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
   });
 
   playersByCategory.moderators = moderatorPlayers;
-  subs.forEach(name => playersByCategory.subs.push({ name, team: 'Substitute Pool', role: 'Substitute', status: 'Active' }));
+  leagueSubs.forEach(name => playersByCategory.subs.push({ name, team: 'Substitute Pool', role: 'Substitute', status: 'Active' }));
   creators.forEach(name => playersByCategory.creators.push({ name, team: 'Content Team', role: 'Creator', status: 'Active' }));
   connoisseurs.forEach(name => playersByCategory.connoisseurs.push({ name, team: 'Advisory Board', role: 'Connoisseur', status: 'Active' }));
   cooldownPlayers.forEach(name => playersByCategory.cooldown.push({ name, team: 'Transfer Cooldown', role: 'Player', status: 'Cooldown' }));
