@@ -13,12 +13,13 @@ const parseRankTier = (tierString) => {
 
   const str = String(tierString).trim();
 
-  // Match patterns like "Diamond 1", "D1", "Diamond1"
-  const match = str.match(/^(Diamond|D|Platinum|P|Gold|G|Silver|S|Bronze|B)\s*(\d)?/i);
+  // Match patterns like "Diamond 1", "D1", "Diamond1", "Master"
+  const match = str.match(/^(Master|M|Diamond|D|Platinum|P|Gold|G|Silver|S|Bronze|B)\s*(\d)?/i);
 
   if (!match) return { rank: str, division: null };
 
   const rankMap = {
+    'M': 'Master', 'MASTER': 'Master',
     'D': 'Diamond', 'DIAMOND': 'Diamond',
     'P': 'Platinum', 'PLATINUM': 'Platinum',
     'G': 'Gold', 'GOLD': 'Gold',

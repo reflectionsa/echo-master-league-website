@@ -38,7 +38,7 @@ const MediaView = ({ theme, open, onClose }) => {
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
-            <Dialog.Body p="6">
+            <Dialog.Body p="6" overflowY="auto">
               <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="6">
                 {platforms.map(item => (
                   <Box

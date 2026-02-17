@@ -1,9 +1,15 @@
-import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Badge, CloseButton } from '@chakra-ui/react';
+import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Badge, CloseButton, Image } from '@chakra-ui/react';
 import { User, Users, Shield, Award } from 'lucide-react';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
+
+const seasonChampions = {
+  'Krogers': { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png' },
+  'Jaxxjh': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png' },
+  'mikey': { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png' },
+};
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
   const { team, playerRole, loading } = usePlayerProfile(playerName);
@@ -63,12 +69,22 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                       <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                         {playerName}
                       </Text>
-                      <Badge colorPalette={getRoleColor()} px="3" py="1" rounded="full" fontSize="xs">
-                        <HStack gap="1">
-                          {getRoleIcon()}
-                          <Text>{playerRole}</Text>
-                        </HStack>
-                      </Badge>
+                      <HStack gap="2">
+                        <Badge colorPalette={getRoleColor()} px="3" py="1" rounded="full" fontSize="xs">
+                          <HStack gap="1">
+                            {getRoleIcon()}
+                            <Text>{playerRole}</Text>
+                          </HStack>
+                        </Badge>
+                        {seasonChampions[playerName] && (
+                          <HStack gap="1" bg={emlColors.bgCard} px="2" py="1" rounded="full" border="1px solid" borderColor={emlColors.accentOrange}>
+                            <Image src={seasonChampions[playerName].image} alt="Season Champion" w="16px" h="16px" objectFit="contain" />
+                            <Text fontSize="xs" fontWeight="700" color={emlColors.textPrimary}>
+                              Season {seasonChampions[playerName].season}
+                            </Text>
+                          </HStack>
+                        )}
+                      </HStack>
                     </VStack>
                   </VStack>
 

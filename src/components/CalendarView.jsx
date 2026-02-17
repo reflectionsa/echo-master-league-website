@@ -4,7 +4,7 @@ import { getThemedColors } from '../theme/colors';
 
 const CalendarView = ({ theme, open, onClose }) => {
   const emlColors = getThemedColors(theme);
-  
+
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
       <Portal>
