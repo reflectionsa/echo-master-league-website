@@ -2,10 +2,11 @@ import { Box, Container, VStack, Text, HStack, Center, Image } from '@chakra-ui/
 import { Trophy, Zap } from 'lucide-react';
 import { useTeams } from '../hooks/useTeams';
 import { useMemo } from 'react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
   const { teams, loading } = useTeams();
+  const colors = getThemedColors(theme);
 
   // Calculate real stats from live data
   const stats = useMemo(() => {
@@ -52,12 +53,12 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
     <Box
       position="relative"
       minH="70vh"
-      bg={`linear-gradient(135deg, ${emlColors.bgPrimary} 0%, ${emlColors.bgSecondary} 50%, ${emlColors.bgTertiary} 100%)`}
+      bg={`linear-gradient(135deg, ${colors.bgPrimary} 0%, ${colors.bgSecondary} 50%, ${colors.bgTertiary} 100%)`}
       overflow="hidden"
     >
       {/* Animated background elements */}
-      <Box position="absolute" top="10%" left="10%" w="300px" h="300px" bg={`${emlColors.accentOrange}20`} rounded="full" filter="blur(80px)" />
-      <Box position="absolute" bottom="10%" right="10%" w="400px" h="400px" bg={`${emlColors.accentBlue}20`} rounded="full" filter="blur(100px)" />
+      <Box position="absolute" top="10%" left="10%" w="300px" h="300px" bg={`${colors.accentOrange}20`} rounded="full" filter="blur(80px)" />
+      <Box position="absolute" bottom="10%" right="10%" w="400px" h="400px" bg={`${colors.accentBlue}20`} rounded="full" filter="blur(100px)" />
 
       <Container maxW="6xl" py={{ base: '16', md: '24' }} position="relative" zIndex="1">
         <VStack gap="8" textAlign="center">
@@ -65,12 +66,12 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
           <Box
             w="200px"
             h="200px"
-            bg={`${emlColors.bgElevated}99`}
+            bg={`${colors.bgElevated}99`}
             backdropFilter="blur(20px)"
             border="3px solid"
-            borderColor={emlColors.accentOrange}
+            borderColor={colors.accentOrange}
             rounded="3xl"
-            boxShadow={`0 8px 32px ${emlColors.accentOrange}66`}
+            boxShadow={`0 8px 32px ${colors.accentOrange}66`}
             _hover={{ transform: 'scale(1.05)', boxShadow: 'xl' }}
             transition="all 0.3s"
             overflow="hidden"
@@ -90,7 +91,7 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
             <Text
               fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
               fontWeight="900"
-              bgGradient={`linear(to-r, ${emlColors.accentOrange}, ${emlColors.accentBlue})`}
+              bgGradient={`linear(to-r, ${colors.accentOrange}, ${colors.accentBlue})`}
               bgClip="text"
               letterSpacing="-0.02em"
             >
@@ -98,7 +99,7 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
             </Text>
             <Text
               fontSize={{ base: 'lg', md: 'xl' }}
-              color={emlColors.textMuted}
+              color={colors.textMuted}
               maxW="2xl"
             >
               The Future of Competitive Echo VR
@@ -110,10 +111,10 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
             {statBlocks.map(stat => (
               <Box
                 key={stat.label}
-                bg={`${emlColors.bgElevated}80`}
+                bg={`${colors.bgElevated}80`}
                 backdropFilter="blur(10px)"
                 border="1px solid"
-                borderColor={emlColors.borderMedium}
+                borderColor={colors.borderMedium}
                 px="6"
                 py="4"
                 rounded="xl"
@@ -123,13 +124,13 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
                 transition="all 0.3s ease"
                 _hover={{
                   transform: 'translateY(-4px)',
-                  borderColor: emlColors.accentOrange,
-                  boxShadow: `0 12px 24px ${emlColors.accentOrange}40`,
-                  bg: `${emlColors.bgElevated}99`
+                  borderColor: colors.accentOrange,
+                  boxShadow: `0 12px 24px ${colors.accentOrange}40`,
+                  bg: `${colors.bgElevated}99`
                 }}
               >
-                <Text fontSize="2xl" fontWeight="800" color={emlColors.accentOrange}>{stat.value}</Text>
-                <Text fontSize="sm" color={emlColors.textMuted}>{stat.label}</Text>
+                <Text fontSize="2xl" fontWeight="800" color={colors.accentOrange}>{stat.value}</Text>
+                <Text fontSize="sm" color={colors.textMuted}>{stat.label}</Text>
               </Box>
             ))}
           </HStack>

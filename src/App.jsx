@@ -12,7 +12,7 @@ const App = () => {
   const [standingsOpen, setStandingsOpen] = useState(false);
 
   return (
-    <Box bg="eml.bg.primary" minH="100vh">
+    <Box bg={theme === 'dark' ? 'gray.950' : 'gray.50'} minH="100vh">
       <Navigation
         theme={theme}
         onThemeToggle={toggleTheme}

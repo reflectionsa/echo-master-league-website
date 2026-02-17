@@ -63,7 +63,8 @@ The application is configured to pull from these Google Sheets:
 
 - **Sheet ID**: `1jK1FRzc044wq2miNZQbcqDDPoVAA3dR5knd8MZEpKdw`
 - **Sheets**:
-  - `NA Pblc Rnkngs` - Public rankings
+  - `NA Pblc Rnkngs` - Public rankings with MMR and tier information
+  - `NA PBLC MATCHES` - Match assignments and schedules
   - `EML NA Season 4 - TOURNAMENT` - Tournament standings
 
 ## Expected Data Format
@@ -102,14 +103,44 @@ Columns:
 
 Columns:
 
-- Position / Rank
+- Position / Rank / Rank #
 - Team / Team Name
-- Tier
+- Tier (supports formats like "Diamond 1", "D1", "Platinum 2", "P2", etc.)
 - Region
 - Wins / W
 - Losses / L
 - MMR / Rating
 - Points / League Points
+- Captain (optional)
+- Logo (optional - team logo URL)
+
+**Tier Format Examples:**
+
+- Full format: `Diamond 1`, `Platinum 2`, `Gold 3`, `Silver 4`
+- Short format: `D1`, `P2`, `G3`, `S4`
+- No division: `Diamond`, `Platinum`, `Gold`
+
+The system will automatically parse these formats and display them correctly.
+
+### Matches (NA PBLC MATCHES sheet)
+
+Columns:
+
+- Match Date / Date
+- Match Time / Time  
+- Team 1 / Home Team
+- Team 2 / Away Team
+- Score / Final Score
+- Status (Scheduled, Live, Completed)
+- Week
+- Round
+- Stream Link / Stream URL
+- Stream Platform (optional, defaults to Twitch)
+- Division
+- Bracket (optional)
+- Court / Court Assignment (optional)
+- Referee (optional)
+- Notes (optional)
 
 ## Troubleshooting
 

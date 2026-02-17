@@ -1,22 +1,24 @@
 import { IconButton } from '@chakra-ui/react';
 import { Sun, Moon } from 'lucide-react';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 
 const ThemeToggle = ({ theme, onToggle }) => {
+  const colors = getThemedColors(theme);
+
   return (
     <IconButton
       onClick={onToggle}
       rounded="full"
       size="sm"
-      bg={`${emlColors.bgElevated}80`}
+      bg={`${colors.bgElevated}80`}
       backdropFilter="blur(10px)"
       border="1px solid"
-      borderColor={emlColors.borderMedium}
-      color={emlColors.accentOrange}
+      borderColor={colors.borderMedium}
+      color={colors.accentOrange}
       _hover={{
-        bg: `${emlColors.bgElevated}99`,
+        bg: `${colors.bgElevated}99`,
         transform: 'rotate(180deg)',
-        borderColor: emlColors.accentOrange
+        borderColor: colors.accentOrange
       }}
       transition="all 0.4s ease"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}

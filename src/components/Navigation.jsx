@@ -2,7 +2,7 @@ import { Box, Container, HStack, Button, Menu, Portal, Image, Text } from '@chak
 import { ChevronDown, Trophy, Calendar, Users, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
-import { emlColors } from '../theme/colors';
+import { getThemedColors } from '../theme/colors';
 import AnnouncementsView from './AnnouncementsView';
 import AboutView from './AboutView';
 import CalendarView from './CalendarView';
@@ -26,6 +26,7 @@ const Navigation = ({
   standingsOpen,
   setStandingsOpen
 }) => {
+  const colors = getThemedColors(theme);
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -42,11 +43,11 @@ const Navigation = ({
         left="0"
         right="0"
         zIndex="sticky"
-        bg={`${emlColors.bgPrimary}99`}
+        bg={`${colors.bgPrimary}99`}
         backdropFilter="blur(20px)"
         borderBottom="1px solid"
-        borderColor={emlColors.borderMedium}
-        boxShadow={`0 8px 32px ${emlColors.bgPrimary}80`}
+        borderColor={colors.borderMedium}
+        boxShadow={`0 8px 32px ${colors.bgPrimary}80`}
       >
         <Container maxW="7xl" py="3">
           <HStack justify="space-between" gap="4">
@@ -58,11 +59,11 @@ const Navigation = ({
                   variant="ghost"
                   fontWeight="800"
                   fontSize="xl"
-                  color={emlColors.textPrimary}
-                  _hover={{ bg: emlColors.bgHover }}
+                  color={colors.textPrimary}
+                  _hover={{ bg: colors.bgHover }}
                   _open={{
-                    color: emlColors.accentOrange,
-                    bg: emlColors.bgHover
+                    color: colors.accentOrange,
+                    bg: colors.bgHover
                   }}
                 >
                   EML <ChevronDown size={18} />
@@ -72,9 +73,9 @@ const Navigation = ({
                 <Menu.Positioner>
                   <Menu.Content
                     minW="200px"
-                    bg={emlColors.bgSecondary}
+                    bg={colors.bgSecondary}
                     border="1px solid"
-                    borderColor={emlColors.borderMedium}
+                    borderColor={colors.borderMedium}
                     rounded="xl"
                     boxShadow="2xl"
                     p="2"
@@ -82,8 +83,8 @@ const Navigation = ({
                     <Menu.Item
                       value="announcements"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setAnnouncementsOpen(true)}
                     >
                       Announcements & Updates
@@ -91,8 +92,8 @@ const Navigation = ({
                     <Menu.Item
                       value="about"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setAboutOpen(true)}
                     >
                       About EML
@@ -100,8 +101,8 @@ const Navigation = ({
                     <Menu.Item
                       value="calendar"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setCalendarOpen(true)}
                     >
                       Calendar
@@ -110,8 +111,8 @@ const Navigation = ({
                     <Menu.Item
                       value="teams"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setTeamsOpen(true)}
                     >
                       League Teams
@@ -119,8 +120,8 @@ const Navigation = ({
                     <Menu.Item
                       value="rules"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setRulesOpen(true)}
                     >
                       League Rules
@@ -128,8 +129,8 @@ const Navigation = ({
                     <Menu.Item
                       value="bot"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setBotOpen(true)}
                     >
                       EML Discord Bot
@@ -137,8 +138,8 @@ const Navigation = ({
                     <Menu.Item
                       value="media"
                       rounded="lg"
-                      color={emlColors.textPrimary}
-                      _hover={{ bg: emlColors.bgHover }}
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
                       onClick={() => setMediaOpen(true)}
                     >
                       Highlights & Content
@@ -154,8 +155,8 @@ const Navigation = ({
                 size="sm"
                 variant="ghost"
                 onClick={() => setStandingsOpen(true)}
-                color={emlColors.textSecondary}
-                _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+                color={colors.textSecondary}
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
               >
                 <Trophy size={14} /> Standings
               </Button>
@@ -163,8 +164,8 @@ const Navigation = ({
                 size="sm"
                 variant="ghost"
                 onClick={() => setMatchesOpen(true)}
-                color={emlColors.textSecondary}
-                _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+                color={colors.textSecondary}
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
               >
                 <Calendar size={14} /> Matches
               </Button>
@@ -172,8 +173,8 @@ const Navigation = ({
                 size="sm"
                 variant="ghost"
                 onClick={() => setMembersOpen(true)}
-                color={emlColors.textSecondary}
-                _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+                color={colors.textSecondary}
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
               >
                 <Users size={14} /> Members
               </Button>
@@ -187,8 +188,8 @@ const Navigation = ({
                   <Button
                     size="sm"
                     variant="ghost"
-                    color={emlColors.accentPurple}
-                    _hover={{ bg: emlColors.bgHover, color: emlColors.accentBlue }}
+                    color={colors.accentPurple}
+                    _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
                     display={{ base: 'none', md: 'flex' }}
                   >
                     <MessageCircle size={14} /> Discord Links <ChevronDown size={14} />
@@ -198,9 +199,9 @@ const Navigation = ({
                   <Menu.Positioner>
                     <Menu.Content
                       minW="220px"
-                      bg={emlColors.bgSecondary}
+                      bg={colors.bgSecondary}
                       border="1px solid"
-                      borderColor={emlColors.borderMedium}
+                      borderColor={colors.borderMedium}
                       rounded="xl"
                       boxShadow="2xl"
                       p="2"
@@ -208,8 +209,8 @@ const Navigation = ({
                       <Menu.Item
                         value="eml-discord"
                         rounded="lg"
-                        color={emlColors.textPrimary}
-                        _hover={{ bg: emlColors.bgHover }}
+                        color={colors.textPrimary}
+                        _hover={{ bg: colors.bgHover }}
                         onClick={() => window.open('https://discord.gg/YhKGzPhaUw', '_blank')}
                       >
                         <HStack gap="3">
@@ -226,8 +227,8 @@ const Navigation = ({
                       <Menu.Item
                         value="lounge-discord"
                         rounded="lg"
-                        color={emlColors.textPrimary}
-                        _hover={{ bg: emlColors.bgHover }}
+                        color={colors.textPrimary}
+                        _hover={{ bg: colors.bgHover }}
                         onClick={() => window.open('https://discord.gg/yG6speErHC', '_blank')}
                       >
                         <HStack gap="3">
@@ -271,11 +272,11 @@ const Navigation = ({
         left="0"
         right="0"
         zIndex="sticky"
-        bg={`${emlColors.bgPrimary}99`}
+        bg={`${colors.bgPrimary}99`}
         backdropFilter="blur(20px)"
         borderTop="1px solid"
-        borderColor={emlColors.borderMedium}
-        boxShadow={`0 -8px 32px ${emlColors.bgPrimary}80`}
+        borderColor={colors.borderMedium}
+        boxShadow={`0 -8px 32px ${colors.bgPrimary}80`}
         pb="env(safe-area-inset-bottom)"
       >
         <Container maxW="full" px="4" py="2">
@@ -288,8 +289,8 @@ const Navigation = ({
               py="2"
               px="4"
               onClick={() => setStandingsOpen(true)}
-              color={emlColors.textSecondary}
-              _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Trophy size={20} />
               <Box fontSize="xs" mt="1">Standings</Box>
@@ -302,8 +303,8 @@ const Navigation = ({
               py="2"
               px="4"
               onClick={() => setMatchesOpen(true)}
-              color={emlColors.textSecondary}
-              _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Calendar size={20} />
               <Box fontSize="xs" mt="1">Matches</Box>
@@ -316,8 +317,8 @@ const Navigation = ({
               py="2"
               px="4"
               onClick={() => setMembersOpen(true)}
-              color={emlColors.textSecondary}
-              _hover={{ bg: emlColors.bgHover, color: emlColors.accentOrange }}
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Users size={20} />
               <Box fontSize="xs" mt="1">Members</Box>

@@ -53,7 +53,11 @@ const RankingsSection = ({ theme }) => {
                       <VStack align="start" gap="0">
                         <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{team.name}</Text>
                         <HStack gap="2">
-                          {team.tier && <Badge colorPalette="purple" size="sm">{team.tier}</Badge>}
+                          {team.tier && (
+                            <Badge colorPalette="purple" size="sm">
+                              {team.tier}{team.division ? ` ${team.division}` : ''}
+                            </Badge>
+                          )}
                           {team.region && team.region[0] && <Text fontSize="xs" color={emlColors.textMuted}>{team.region[0]}</Text>}
                         </HStack>
                       </VStack>

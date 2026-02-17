@@ -36,6 +36,47 @@ export const emlColors = {
     borderAccent: '#ff8c42',
 }
 
+// Light mode color overrides
+export const emlColorsLight = {
+    // Backgrounds
+    bgPrimary: '#f8fafc',      // Very light blue-gray
+    bgSecondary: '#e0e7ff',    // Light indigo
+    bgTertiary: '#c7d2fe',     // Mid indigo
+    bgCard: '#ffffff',         // Pure white cards
+    bgElevated: '#f1f5f9',     // Slightly elevated
+    bgHover: '#e2e8f0',        // Hover states
+
+    // Gradient Accents (same vibrant colors work in light mode)
+    accentOrange: '#f97316',   // Slightly darker orange
+    accentPink: '#ec4899',     // Slightly darker pink
+    accentRose: '#ef4444',     // Rose/red
+    accentBlue: '#0ea5e9',     // Slightly darker blue
+    accentCyan: '#06b6d4',     // Cyan
+    accentPurple: '#9333ea',   // Slightly darker purple
+
+    // Text
+    textPrimary: '#0f172a',    // Dark navy
+    textSecondary: '#334155',  // Medium slate
+    textMuted: '#64748b',      // Slate gray
+    textSubtle: '#94a3b8',     // Light slate
+
+    // Status Colors (same as dark mode)
+    statusLive: '#ef4444',
+    statusScheduled: '#10b981',
+    statusCompleted: '#3b82f6',
+    statusDisputed: '#a855f7',
+
+    // Borders
+    borderLight: 'rgba(0, 0, 0, 0.1)',
+    borderMedium: 'rgba(0, 0, 0, 0.15)',
+    borderAccent: '#f97316',
+}
+
+// Helper function to get theme-aware colors
+export const getThemedColors = (theme) => {
+    return theme === 'light' ? emlColorsLight : emlColors;
+}
+
 // Helper function to add opacity to hex colors
 export const withOpacity = (color, opacity) => {
     if (color.startsWith('rgba')) {
