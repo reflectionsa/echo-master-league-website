@@ -18,7 +18,7 @@ const generateMatchHistory = (teamName) => {
 
     const isCasted = Math.random() > 0.6;
     const streamPlatform = Math.random() > 0.5 ? 'twitch' : 'youtube';
-    
+
     matches.push({
       id: `match-${teamName}-${i}`,
       opponent: opponent.name,
@@ -27,8 +27,8 @@ const generateMatchHistory = (teamName) => {
       matchDate,
       caster: isCasted ? 'CasterName' : null,
       streamLink: isCasted ? {
-        url: streamPlatform === 'twitch' 
-          ? 'https://www.twitch.tv/echomasterleague' 
+        url: streamPlatform === 'twitch'
+          ? 'https://www.twitch.tv/echomasterleague'
           : 'https://www.youtube.com/@EchoMasterLeague',
         label: streamPlatform === 'twitch' ? 'Twitch VOD' : 'YouTube VOD'
       } : null,
@@ -72,7 +72,7 @@ export const useTeamProfile = (teamName) => {
 
     // Get actual tier and MMR from standings data
     const standingsData = standings.find(s => s.team === teamName);
-    
+
     // Parse tier from standings (e.g., "Diamond 1" -> "Diamond")
     let tier = 'Unranked';
     if (standingsData?.tier) {
