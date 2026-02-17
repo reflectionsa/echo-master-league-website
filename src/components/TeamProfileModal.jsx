@@ -1,5 +1,5 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badge, Table, CloseButton, Button } from '@chakra-ui/react';
-import { Trophy, Users, Target, Calendar, Radio, ExternalLink } from 'lucide-react';
+import { Trophy, Users, Calendar, Radio, ExternalLink } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
 import { emlColors } from '../theme/colors';
 
@@ -92,18 +92,6 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                         </Badge>
                       </HStack>
                     </VStack>
-
-                    <HStack gap="6">
-                      <HStack gap="2">
-                        <Target size={16} color={emlColors.accentPurple} />
-                        <VStack align="start" gap="0">
-                          <Text fontSize="xs" color={emlColors.textMuted}>Points</Text>
-                          <Text fontSize="lg" fontWeight="700" color={emlColors.accentPurple}>
-                            {team?.leaguePoints ?? 0}
-                          </Text>
-                        </VStack>
-                      </HStack>
-                    </HStack>
                   </VStack>
                 </HStack>
 

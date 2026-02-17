@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { teamRosters } from '../data/teamRosters';
-
-// Generate random MMR between 800-900
-const generateMMR = () => Math.floor(Math.random() * 101) + 800;
+import { useStandings } from './useStandings';
 
 // Generate random match history
 const generateMatchHistory = (teamName) => {
@@ -47,6 +45,7 @@ export const useTeamProfile = (teamName) => {
   const [mmr, setMMR] = useState(800);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { standings, loading: standingsLoading } = useStandings();
 
   useEffect(() => {
     if (!teamName) {
@@ -54,40 +53,52 @@ export const useTeamProfile = (teamName) => {
       return;
     }
 
+    if (standingsLoading) {
+      setLoading(true);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    // Simulate async delay
-    setTimeout(() => {
-      const foundTeam = teamRosters.find(t => t.name === teamName);
+    // Find team in roster data
+    const foundTeam = teamRosters.find(t => t.name === teamName);
 
-      if (!foundTeam) {
-        setError('Team not found');
-        setLoading(false);
-        return;
-      }
-
-      // Mock team data structure matching board schema
-      const teamData = {
-        id: foundTeam.id.toString(),
-        name: foundTeam.name,
-        tier: ['Master', 'Diamond', 'Platinum', 'Gold'][Math.floor(Math.random() * 4)],
-        leaguePoints: Math.floor(Math.random() * 2000),
-        captain: foundTeam.captain,
-        coCaptain: foundTeam.coCaptain,
-        players: foundTeam.players,
-        teamLogo: {
-          url: 'https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024',
-          label: 'EML Logo'
-        }
-      };
-
-      setTeam(teamData);
-      setMMR(generateMMR());
-      setMatchHistory(generateMatchHistory(teamName));
+    if (!foundTeam) {
+      setError('Team not found');
       setLoading(false);
-    }, 300);
-  }, [teamName]);
+      return;
+    }
+
+    // Get actual tier and MMR from standings data
+    const standingsData = standings.find(s => s.team === teamName);
+    
+    // Parse tier from standings (e.g., "Diamond 1" -> "Diamond")
+    let tier = 'Unranked';
+    if (standingsData?.tier) {
+      const tierMatch = standingsData.tier.match(/^(Master|Diamond|Platinum|Gold|Silver|Bronze)/i);
+      tier = tierMatch ? tierMatch[1] : standingsData.tier;
+    }
+
+    // Team data structure
+    const teamData = {
+      id: foundTeam.id.toString(),
+      name: foundTeam.name,
+      tier: tier,
+      captain: foundTeam.captain,
+      coCaptain: foundTeam.coCaptain,
+      players: foundTeam.players,
+      teamLogo: {
+        url: 'https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024',
+        label: 'EML Logo'
+      }
+    };
+
+    setTeam(teamData);
+    setMMR(standingsData?.mmr || 800);
+    setMatchHistory(generateMatchHistory(teamName));
+    setLoading(false);
+  }, [teamName, standings, standingsLoading]);
 
   return { team, matchHistory, mmr, loading, error };
 };
