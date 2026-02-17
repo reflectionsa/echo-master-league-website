@@ -3,9 +3,9 @@ import { User, Users, Shield, Award } from 'lucide-react';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
+import { emlColors } from '../theme/colors';
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
-  const isDark = theme === 'dark';
   const { team, playerRole, loading } = usePlayerProfile(playerName);
   const [teamModalOpen, setTeamModalOpen] = useState(false);
 
@@ -25,12 +25,12 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
     <>
       <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="md">
         <Portal>
-          <Dialog.Backdrop bg={isDark ? 'blackAlpha.700' : 'whiteAlpha.700'} backdropFilter="blur(8px)" />
+          <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(8px)" />
           <Dialog.Positioner>
             <Dialog.Content
-              bg={isDark ? 'gray.900' : 'white'}
+              bg={emlColors.bgSecondary}
               border="1px solid"
-              borderColor={isDark ? 'purple.800' : 'gray.200'}
+              borderColor={emlColors.accentPurple}
               rounded="2xl"
             >
               <Dialog.CloseTrigger asChild position="absolute" top="4" right="4">
@@ -38,28 +38,28 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
               </Dialog.CloseTrigger>
 
               {loading ? (
-                <Center py="20"><Spinner size="lg" color={isDark ? 'purple.500' : 'blue.500'} /></Center>
+                <Center py="20"><Spinner size="lg" color={emlColors.accentPurple} /></Center>
               ) : !team ? (
-                <Box p="8"><Text color={isDark ? 'gray.500' : 'gray.600'}>Player not found</Text></Box>
+                <Box p="8"><Text color={emlColors.textMuted}>Player not found</Text></Box>
               ) : (
                 <VStack align="stretch" gap="6" p="8">
                   <VStack align="center" gap="3">
                     <Box
                       w="80px"
                       h="80px"
-                      bg={isDark ? 'purple.900' : 'purple.100'}
+                      bg={`${emlColors.accentPurple}19`}
                       rounded="full"
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
                       border="3px solid"
-                      borderColor={isDark ? 'purple.700' : 'purple.300'}
+                      borderColor={emlColors.accentPurple}
                     >
-                      <User size={36} color={isDark ? 'var(--chakra-colors-purple-400)' : 'var(--chakra-colors-purple-600)'} />
+                      <User size={36} color={emlColors.accentPurple} />
                     </Box>
 
                     <VStack gap="1">
-                      <Text fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                      <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                         {playerName}
                       </Text>
                       <Badge colorPalette={getRoleColor()} px="3" py="1" rounded="full" fontSize="xs">
@@ -72,16 +72,16 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                   </VStack>
 
                   <Box
-                    bg={isDark ? 'gray.850' : 'gray.50'}
+                    bg={emlColors.bgCard}
                     border="1px solid"
-                    borderColor={isDark ? 'gray.800' : 'gray.200'}
+                    borderColor={emlColors.borderMedium}
                     rounded="xl"
                     p="4"
                   >
                     <VStack align="start" gap="3">
                       <HStack gap="2">
-                        <Users size={16} color={isDark ? 'var(--chakra-colors-purple-400)' : 'var(--chakra-colors-purple-600)'} />
-                        <Text fontSize="sm" fontWeight="700" color={isDark ? 'gray.400' : 'gray.600'}>
+                        <Users size={16} color={emlColors.accentPurple} />
+                        <Text fontSize="sm" fontWeight="700" color={emlColors.textMuted}>
                           Team
                         </Text>
                       </HStack>
@@ -90,23 +90,23 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                         w="full"
                         textAlign="left"
                         p="3"
-                        bg={isDark ? 'gray.900' : 'white'}
+                        bg={emlColors.bgSecondary}
                         border="1px solid"
-                        borderColor={isDark ? 'purple.800' : 'gray.200'}
+                        borderColor={emlColors.accentPurple}
                         rounded="lg"
-                        _hover={{ borderColor: isDark ? 'purple.600' : 'purple.400', transform: 'translateY(-1px)' }}
+                        _hover={{ borderColor: emlColors.accentPurple, transform: 'translateY(-1px)' }}
                         transition="all 0.2s"
                         onClick={() => setTeamModalOpen(true)}
                       >
                         <VStack align="start" gap="1">
-                          <Text fontSize="md" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>
+                          <Text fontSize="md" fontWeight="700" color={emlColors.textPrimary}>
                             {team.name}
                           </Text>
                           <HStack gap="2">
                             <Badge colorPalette="purple" size="sm">
                               {team.status}
                             </Badge>
-                            <Text fontSize="xs" color={isDark ? 'gray.500' : 'gray.600'}>
+                            <Text fontSize="xs" color={emlColors.textMuted}>
                               Click to view team profile
                             </Text>
                           </HStack>
@@ -116,7 +116,7 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                   </Box>
 
                   <Box textAlign="center">
-                    <Text fontSize="xs" color={isDark ? 'gray.600' : 'gray.500'}>
+                    <Text fontSize="xs" color={emlColors.textSubtle}>
                       MMR starts at 800 for all players
                     </Text>
                   </Box>

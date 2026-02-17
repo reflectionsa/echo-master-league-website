@@ -1,8 +1,8 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Grid, Heading } from '@chakra-ui/react';
 import { Info, Users, Trophy, Zap, Target } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const AboutView = ({ theme, open, onClose }) => {
-  const isDark = theme === 'dark';
 
   const features = [
     { icon: Target, title: 'Competitive Excellence', desc: 'Face the best teams in structured tournaments with professional casters' },
@@ -19,17 +19,17 @@ const AboutView = ({ theme, open, onClose }) => {
           <Dialog.Content
             maxW="900px"
             maxH="90vh"
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgPrimary}
             border="1px solid"
-            borderColor={isDark ? 'gray.700' : 'gray.200'}
+            borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <Info size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                  <Info size={24} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                     About EML
                   </Dialog.Title>
                 </HStack>
@@ -41,13 +41,13 @@ const AboutView = ({ theme, open, onClose }) => {
             <Dialog.Body p="6" overflowY="auto">
               <VStack align="stretch" gap="8">
                 <VStack align="center" gap="4" textAlign="center">
-                  <Heading fontSize={{ base: '3xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+                  <Heading fontSize={{ base: '3xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
                     Season 4
                   </Heading>
-                  <Text fontSize="lg" color={isDark ? 'gray.400' : 'gray.600'} maxW="600px">
+                  <Text fontSize="lg" color={emlColors.textMuted} maxW="600px">
                     Echo Master League is the premier competitive Echo Arena league and runs multiple MMR-based tournaments per year.
                   </Text>
-                  <Text fontSize="md" color={isDark ? 'gray.500' : 'gray.600'} maxW="600px">
+                  <Text fontSize="md" color={emlColors.textMuted} maxW="600px">
                     Founded by players, for players. We're building the most competitive VR esports experience.
                   </Text>
                 </VStack>
@@ -56,22 +56,22 @@ const AboutView = ({ theme, open, onClose }) => {
                   {features.map((feature, idx) => (
                     <Box
                       key={idx}
-                      bg={isDark ? 'whiteAlpha.50' : 'white'}
+                      bg={emlColors.bgElevated}
                       p="6"
                       rounded="2xl"
                       border="1px solid"
-                      borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                      _hover={{ transform: 'translateY(-4px)', borderColor: isDark ? 'orange.500' : 'blue.500' }}
+                      borderColor={emlColors.borderMedium}
+                      _hover={{ transform: 'translateY(-4px)', borderColor: emlColors.accentOrange }}
                       transition="all 0.3s"
                     >
                       <VStack align="start" gap="3">
-                        <Box p="3" bg={isDark ? 'orange.500/10' : 'blue.500/10'} rounded="xl">
-                          <feature.icon size={24} color={isDark ? '#fb923c' : '#3b82f6'} />
+                        <Box p="3" bg={`${emlColors.accentOrange}1a`} rounded="xl">
+                          <feature.icon size={24} color={emlColors.accentOrange} />
                         </Box>
-                        <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>
+                        <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>
                           {feature.title}
                         </Text>
-                        <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'} lineHeight="1.6">
+                        <Text fontSize="sm" color={emlColors.textMuted} lineHeight="1.6">
                           {feature.desc}
                         </Text>
                       </VStack>

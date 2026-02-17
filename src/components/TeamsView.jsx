@@ -6,7 +6,6 @@ import { teamRosters } from '../data/teamRosters';
 import { emlColors } from '../theme/colors';
 
 const TeamsView = ({ theme, open, onClose }) => {
-  const isDark = theme === 'dark';
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTeams = teamRosters.filter(team =>

@@ -12,7 +12,6 @@ const statusConfig = {
 };
 
 const MatchCard = ({ match, theme }) => {
-  const isDark = theme === 'dark';
   const [selectedTeam, setSelectedTeam] = useState(null);
   const config = statusConfig[match.status] || statusConfig.Scheduled;
   const Icon = config.icon;

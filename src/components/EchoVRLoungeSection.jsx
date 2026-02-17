@@ -1,35 +1,31 @@
 import { Box, Container, VStack, Text, Button, HStack, Grid, Center } from '@chakra-ui/react';
 import { Users, Gamepad2, ArrowRight, Zap } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const EchoVRLoungeSection = ({ theme }) => {
-  const isDark = theme === 'dark';
-
   return (
-    <Box id="lounge" py="20" bg={isDark ? 'gray.950' : 'gray.50'}>
+    <Box id="lounge" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="6xl">
         <VStack gap="12">
           <VStack gap="4" textAlign="center">
             <HStack gap="2" justify="center">
-              <Gamepad2 size={20} color={isDark ? '#fb923c' : '#3b82f6'} />
-              <Text fontSize="sm" fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'} textTransform="uppercase" letterSpacing="wider">
+              <Gamepad2 size={20} color={emlColors.accentOrange} />
+              <Text fontSize="sm" fontWeight="700" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
                 Echo VR Community
               </Text>
             </HStack>
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
               Join the Echo VR Lounge
             </Text>
-            <Text fontSize="lg" color={isDark ? 'gray.400' : 'gray.600'} maxW="3xl">
-              The main community server where Echo VR comes alive. Connect with thousands of players, 
+            <Text fontSize="lg" color={emlColors.textMuted} maxW="3xl">
+              The main community server where Echo VR comes alive. Connect with thousands of players,
               find teammates, and access everything you need to play Echo VR.
             </Text>
           </VStack>
 
           <Box
             w="full"
-            bg={isDark 
-              ? 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)' 
-              : 'linear-gradient(135deg, #8b5cf6 0%, #14b8a6 100%)'
-            }
+            bg="linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)"
             p={{ base: '8', md: '12' }}
             rounded="3xl"
             position="relative"

@@ -17,7 +17,7 @@ const StandingsView = ({ theme, open, onClose }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [search, setSearch] = useState('');
 
-  const filtered = standings.filter(team => 
+  const filtered = standings.filter(team =>
     team.team.toLowerCase().includes(search.toLowerCase()) ||
     team.region.toLowerCase().includes(search.toLowerCase())
   );
@@ -64,7 +64,7 @@ const StandingsView = ({ theme, open, onClose }) => {
                   </InputGroup>
                 </Box>
                 {loading ? (
-                  <Center py="20"><Spinner size="xl" color={isDark ? 'orange.500' : 'blue.500'} /></Center>
+                  <Center py="20"><Spinner size="xl" color={emlColors.accentOrange} /></Center>
                 ) : (
                   <Box overflowX="auto">
                     <Table.Root size="md" variant="outline">

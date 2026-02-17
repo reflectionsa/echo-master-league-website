@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useTheme } from './hooks/useTheme';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import { emlColors } from './theme/colors';
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
@@ -13,7 +12,7 @@ const App = () => {
   const [standingsOpen, setStandingsOpen] = useState(false);
 
   return (
-    <Box bg={emlColors.bgPrimary} minH="100vh">
+    <Box bg="eml.bg.primary" minH="100vh">
       <Navigation
         theme={theme}
         onThemeToggle={toggleTheme}

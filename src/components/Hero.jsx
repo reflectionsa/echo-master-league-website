@@ -5,7 +5,6 @@ import { useMemo } from 'react';
 import { emlColors } from '../theme/colors';
 
 const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
-  const isDark = theme === 'dark';
   const { teams, loading } = useTeams();
 
   // Calculate real stats from live data

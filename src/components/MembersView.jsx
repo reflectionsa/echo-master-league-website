@@ -120,22 +120,22 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
     <>
       <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">
         <Portal>
-          <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
+          <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(10px)" />
           <Dialog.Positioner>
             <Dialog.Content
               maxW="1200px"
               maxH="90vh"
-              bg={isDark ? 'gray.900' : 'white'}
+              bg={emlColors.bgSecondary}
               border="1px solid"
-              borderColor={isDark ? 'gray.700' : 'gray.200'}
+              borderColor={emlColors.borderMedium}
               rounded="2xl"
               overflow="hidden"
             >
-              <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+              <Dialog.Header bg={emlColors.bgTertiary} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
                 <HStack justify="space-between">
                   <HStack gap="2">
-                    <Users size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                    <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                    <Users size={24} color={emlColors.accentOrange} />
+                    <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                       {selectedCategory ? currentCategory?.label : 'Members Directory'}
                     </Dialog.Title>
                   </HStack>
@@ -175,7 +175,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
 
                   {search && !selectedCategory ? (
                     <VStack align="stretch" gap="2">
-                      <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'} fontWeight="600">
+                      <Text fontSize="sm" color={emlColors.textMuted} fontWeight="600">
                         {filtered.length} results found
                       </Text>
                       <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">
@@ -184,18 +184,18 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             key={idx}
                             as="button"
                             onClick={() => setSelectedPlayer(player.name)}
-                            bg={isDark ? 'whiteAlpha.50' : 'gray.50'}
+                            bg={`${emlColors.textPrimary}0a`}
                             border="1px solid"
-                            borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                            borderColor={emlColors.borderMedium}
                             p="4"
                             rounded="xl"
                             textAlign="left"
-                            _hover={{ borderColor: isDark ? 'orange.500' : 'blue.500', transform: 'translateY(-2px)' }}
+                            _hover={{ borderColor: emlColors.accentOrange, transform: 'translateY(-2px)' }}
                             transition="all 0.2s"
                           >
                             <VStack align="start" gap="2">
                               <HStack justify="space-between" w="full">
-                                <Text fontWeight="700" fontSize="md" color={isDark ? 'white' : 'gray.900'}>
+                                <Text fontWeight="700" fontSize="md" color={emlColors.textPrimary}>
                                   {player.name}
                                 </Text>
                                 <Badge colorPalette={player.role === 'Captain' ? 'yellow' : player.role === 'Co-Captain' ? 'orange' : player.role === 'Caster' ? 'purple' : player.role === 'Moderator' ? 'red' : 'blue'} size="sm">
@@ -217,38 +217,38 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                     selectedCategory === 'cooldown' ? (
                       <Box
                         w="full"
-                        bg={isDark ? 'gray.850' : 'white'}
+                        bg={emlColors.bgCard}
                         border="1px solid"
-                        borderColor={isDark ? 'gray.700' : 'gray.200'}
+                        borderColor={emlColors.borderMedium}
                         rounded="xl"
                         overflow="hidden"
                       >
                         <Table.Root size="md" variant="outline">
                           <Table.Header>
-                            <Table.Row bg={isDark ? 'gray.800' : 'gray.50'}>
-                              <Table.ColumnHeader fontWeight="700" color={isDark ? 'gray.400' : 'gray.600'} fontSize="xs" textTransform="uppercase">
+                            <Table.Row bg={emlColors.bgTertiary}>
+                              <Table.ColumnHeader fontWeight="700" color={emlColors.textMuted} fontSize="xs" textTransform="uppercase">
                                 Player Name
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={isDark ? 'gray.400' : 'gray.600'} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={emlColors.textMuted} fontSize="xs" textTransform="uppercase">
                                 Previous Team
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={isDark ? 'gray.400' : 'gray.600'} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={emlColors.textMuted} fontSize="xs" textTransform="uppercase">
                                 Status
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={isDark ? 'gray.400' : 'gray.600'} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={emlColors.textMuted} fontSize="xs" textTransform="uppercase">
                                 Expires
                               </Table.ColumnHeader>
                             </Table.Row>
                           </Table.Header>
                           <Table.Body>
                             {categoryPlayers.map((player, idx) => (
-                              <Table.Row key={idx} _hover={{ bg: isDark ? 'gray.800' : 'gray.50' }}>
+                              <Table.Row key={idx} _hover={{ bg: emlColors.bgElevated }}>
                                 <Table.Cell>
                                   <Text
                                     as="button"
                                     fontSize="sm"
                                     fontWeight="600"
-                                    color={isDark ? 'blue.400' : 'blue.600'}
+                                    color={emlColors.accentBlue}
                                     _hover={{ textDecoration: 'underline' }}
                                     onClick={() => setSelectedPlayer(player.name)}
                                   >
@@ -256,7 +256,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                   </Text>
                                 </Table.Cell>
                                 <Table.Cell>
-                                  <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>
+                                  <Text fontSize="sm" color={emlColors.textMuted}>
                                     {player.team}
                                   </Text>
                                 </Table.Cell>
@@ -285,25 +285,25 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             key={idx}
                             as="button"
                             onClick={() => setSelectedPlayer(player.name)}
-                            bg={isDark ? 'whiteAlpha.50' : 'gray.50'}
+                            bg={emlColors.bgElevated}
                             border="1px solid"
-                            borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                            borderColor={emlColors.borderMedium}
                             p="4"
                             rounded="xl"
                             textAlign="left"
-                            _hover={{ borderColor: isDark ? `${currentCategory.color}.500` : `${currentCategory.color}.500`, transform: 'translateY(-2px)' }}
+                            _hover={{ borderColor: emlColors.accentOrange, transform: 'translateY(-2px)' }}
                             transition="all 0.2s"
                           >
                             <VStack align="start" gap="2">
-                              <Text fontWeight="700" fontSize="md" color={isDark ? 'white' : 'gray.900'}>
+                              <Text fontWeight="700" fontSize="md" color={emlColors.textPrimary}>
                                 {player.name}
                               </Text>
                               {player.subtitle && (
-                                <Text fontSize="xs" color={isDark ? 'yellow.400' : 'yellow.600'} fontWeight="600">
+                                <Text fontSize="xs" color={emlColors.accentYellow} fontWeight="600">
                                   {player.subtitle}
                                 </Text>
                               )}
-                              <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>
+                              <Text fontSize="sm" color={emlColors.textMuted}>
                                 {player.team}
                               </Text>
                               <Badge colorPalette={currentCategory.color} size="xs">
@@ -322,21 +322,21 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             key={category.id}
                             as="button"
                             onClick={() => setSelectedCategory(category.id)}
-                            bg={isDark ? 'whiteAlpha.50' : 'gray.50'}
+                            bg={emlColors.bgElevated}
                             border="1px solid"
-                            borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                            borderColor={emlColors.borderMedium}
                             p="5"
                             rounded="xl"
                             textAlign="left"
-                            _hover={{ borderColor: isDark ? 'orange.500' : 'blue.500', transform: 'translateY(-2px)' }}
+                            _hover={{ borderColor: emlColors.accentOrange, transform: 'translateY(-2px)' }}
                             transition="all 0.2s"
                           >
                             <HStack justify="space-between" mb="2">
                               <HStack gap="3">
-                                <Box bg={`${category.color}.${isDark ? '900' : '100'}`} p="2" rounded="lg">
-                                  <category.icon size={20} color={`var(--chakra-colors-${category.color}-${isDark ? '400' : '600'})`} />
+                                <Box bg={`${emlColors.bgTertiary}`} p="2" rounded="lg">
+                                  <category.icon size={20} color={emlColors.accentOrange} />
                                 </Box>
-                                <Text fontWeight="700" fontSize="md" color={isDark ? 'white' : 'gray.900'}>
+                                <Text fontWeight="700" fontSize="md" color={emlColors.textPrimary}>
                                   {category.label}
                                 </Text>
                               </HStack>
@@ -344,7 +344,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                 {category.count}
                               </Badge>
                             </HStack>
-                            <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>
+                            <Text fontSize="sm" color={emlColors.textMuted}>
                               {category.id === 'active' && 'Current roster players across all teams'}
                               {category.id === 'subs' && 'Registered substitute players'}
                               {category.id === 'cooldown' && 'Players in transfer cooldown period'}
@@ -359,21 +359,21 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             key={category.id}
                             as="button"
                             onClick={() => setSelectedCategory(category.id)}
-                            bg={isDark ? 'whiteAlpha.50' : 'gray.50'}
+                            bg={emlColors.bgElevated}
                             border="1px solid"
-                            borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                            borderColor={emlColors.borderMedium}
                             p="5"
                             rounded="xl"
                             textAlign="left"
-                            _hover={{ borderColor: isDark ? 'orange.500' : 'blue.500', transform: 'translateY(-2px)' }}
+                            _hover={{ borderColor: emlColors.accentOrange, transform: 'translateY(-2px)' }}
                             transition="all 0.2s"
                           >
                             <HStack justify="space-between" mb="2">
                               <HStack gap="3">
-                                <Box bg={`${category.color}.${isDark ? '900' : '100'}`} p="2" rounded="lg">
-                                  <category.icon size={20} color={`var(--chakra-colors-${category.color}-${isDark ? '400' : '600'})`} />
+                                <Box bg={`${category.color}.900`} p="2" rounded="lg">
+                                  <category.icon size={20} color={`var(--chakra-colors-${category.color}-400)`} />
                                 </Box>
-                                <Text fontWeight="700" fontSize="md" color={isDark ? 'white' : 'gray.900'}>
+                                <Text fontWeight="700" fontSize="md" color={emlColors.textPrimary}>
                                   {category.label}
                                 </Text>
                               </HStack>
@@ -381,7 +381,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                 {category.count}
                               </Badge>
                             </HStack>
-                            <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>
+                            <Text fontSize="sm" color={emlColors.textMuted}>
                               {category.id === 'connoisseurs' && 'Expert community advisors'}
                               {category.id === 'casters' && 'Official match commentators'}
                               {category.id === 'creators' && 'Content creators and streamers'}

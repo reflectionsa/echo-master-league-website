@@ -17,17 +17,17 @@ const MatchesView = ({ theme, open, onClose }) => {
           <Dialog.Content
             maxW="90vw"
             maxH="90vh"
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgPrimary}
             border="1px solid"
-            borderColor={isDark ? 'gray.700' : 'gray.200'}
+            borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+            <Dialog.Header bg={emlColors.bgSecondary} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <Calendar size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                  <Calendar size={24} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                     Match Schedule
                   </Dialog.Title>
                 </HStack>
@@ -104,32 +104,32 @@ const MatchesView = ({ theme, open, onClose }) => {
                   <Tabs.Content value="scheduled">
                     <Box overflowX="auto">
                       <Table.Root size="md" variant="outline">
-                        <Table.Header bg={isDark ? 'gray.850' : 'gray.50'}>
+                        <Table.Header bg={emlColors.bgSecondary}>
                           <Table.Row>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={isDark ? 'gray.400' : 'gray.600'}>SCHEDULED</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={isDark ? 'gray.400' : 'gray.600'}>HOME</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={isDark ? 'gray.400' : 'gray.600'} textAlign="center">SCORE</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={isDark ? 'gray.400' : 'gray.600'}>AWAY</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={isDark ? 'gray.400' : 'gray.600'}>VOD</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>SCHEDULED</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>HOME</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted} textAlign="center">SCORE</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>AWAY</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>VOD</Table.ColumnHeader>
                           </Table.Row>
                         </Table.Header>
                         <Table.Body>
                           {scheduled.map(match => {
                             const teams = match.participatingTeams?.linkedItems || [];
                             return (
-                              <Table.Row key={match.id} _hover={{ bg: isDark ? 'whiteAlpha.50' : 'gray.50' }}>
+                              <Table.Row key={match.id} _hover={{ bg: emlColors.bgElevated }}>
                                 <Table.Cell>
-                                  <Text fontSize="sm" fontWeight="600" color={isDark ? 'white' : 'gray.900'}>
+                                  <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
                                     {match.matchDate?.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                   </Text>
                                 </Table.Cell>
-                                <Table.Cell><Text fontWeight="600" color={isDark ? 'white' : 'gray.900'}>{teams[0]?.name || 'TBA'}</Text></Table.Cell>
+                                <Table.Cell><Text fontWeight="600" color={emlColors.textPrimary}>{teams[0]?.name || 'TBA'}</Text></Table.Cell>
                                 <Table.Cell textAlign="center">
-                                  <Text fontSize="sm" color={isDark ? 'gray.500' : 'gray.600'} fontWeight="700">—</Text>
+                                  <Text fontSize="sm" color={emlColors.textMuted} fontWeight="700">—</Text>
                                 </Table.Cell>
-                                <Table.Cell><Text fontWeight="600" color={isDark ? 'white' : 'gray.900'}>{teams[1]?.name || 'TBA'}</Text></Table.Cell>
+                                <Table.Cell><Text fontWeight="600" color={emlColors.textPrimary}>{teams[1]?.name || 'TBA'}</Text></Table.Cell>
                                 <Table.Cell>
-                                  <Text fontSize="xs" color={isDark ? 'gray.600' : 'gray.400'}>Upcoming</Text>
+                                  <Text fontSize="xs" color={emlColors.textMuted}>Upcoming</Text>
                                 </Table.Cell>
                               </Table.Row>
                             );

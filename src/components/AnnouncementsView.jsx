@@ -1,5 +1,6 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Grid, Badge } from '@chakra-ui/react';
 import { Bell, Calendar } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const announcements = [
   { id: 1, category: 'Tournament', title: 'Season 4 Registration Open', date: 'Feb 1, 2026', summary: 'Sign up your team for the upcoming season. New format and expanded competition.' },
@@ -9,7 +10,6 @@ const announcements = [
 ];
 
 const AnnouncementsView = ({ theme, open, onClose }) => {
-  const isDark = theme === 'dark';
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">
@@ -19,17 +19,17 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
           <Dialog.Content
             maxW="900px"
             maxH="90vh"
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgPrimary}
             border="1px solid"
-            borderColor={isDark ? 'gray.700' : 'gray.200'}
+            borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <Bell size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                  <Bell size={24} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                     Announcements & Updates
                   </Dialog.Title>
                 </HStack>
@@ -43,24 +43,24 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                 {announcements.map(item => (
                   <Box
                     key={item.id}
-                    bg={isDark ? 'whiteAlpha.50' : 'white'}
+                    bg={emlColors.bgElevated}
                     p="6"
                     rounded="2xl"
                     border="1px solid"
-                    borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                    _hover={{ transform: 'translateY(-4px)', borderColor: isDark ? 'orange.500' : 'blue.500' }}
+                    borderColor={emlColors.borderMedium}
+                    _hover={{ transform: 'translateY(-4px)', borderColor: emlColors.accentOrange }}
                     transition="all 0.3s"
                   >
                     <VStack align="start" gap="3">
                       <HStack justify="space-between" w="full">
-                        <Badge colorPalette={isDark ? 'orange' : 'blue'} size="sm">{item.category}</Badge>
-                        <HStack gap="1" fontSize="xs" color={isDark ? 'gray.500' : 'gray.600'}>
+                        <Badge colorPalette="orange" size="sm">{item.category}</Badge>
+                        <HStack gap="1" fontSize="xs" color={emlColors.textMuted}>
                           <Calendar size={12} />
                           <Text>{item.date}</Text>
                         </HStack>
                       </HStack>
-                      <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>{item.title}</Text>
-                      <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'} lineHeight="1.6">
+                      <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{item.title}</Text>
+                      <Text fontSize="sm" color={emlColors.textMuted} lineHeight="1.6">
                         {item.summary}
                       </Text>
                     </VStack>

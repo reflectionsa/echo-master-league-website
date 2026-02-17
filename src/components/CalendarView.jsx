@@ -1,9 +1,8 @@
 import { Box, Dialog, Portal, CloseButton, HStack, Image } from '@chakra-ui/react';
 import { Calendar } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const CalendarView = ({ theme, open, onClose }) => {
-  const isDark = theme === 'dark';
-
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
       <Portal>
@@ -12,17 +11,17 @@ const CalendarView = ({ theme, open, onClose }) => {
           <Dialog.Content
             maxW="95vw"
             maxH="90vh"
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgPrimary}
             border="1px solid"
-            borderColor={isDark ? 'gray.700' : 'gray.200'}
+            borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <Calendar size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                  <Calendar size={24} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                     League Calendar
                   </Dialog.Title>
                 </HStack>
@@ -35,19 +34,15 @@ const CalendarView = ({ theme, open, onClose }) => {
               <Box
                 maxW="700px"
                 w="full"
-                bg={isDark ? 'whiteAlpha.50' : 'white'}
+                bg={emlColors.bgElevated}
                 border="3px solid"
-                borderColor={isDark ? 'orange.500' : 'blue.500'}
+                borderColor={emlColors.accentOrange}
                 rounded="2xl"
                 overflow="hidden"
-                boxShadow={isDark 
-                  ? '0 0 40px rgba(251, 146, 60, 0.6), 0 0 80px rgba(251, 146, 60, 0.3)' 
-                  : '0 0 40px rgba(59, 130, 246, 0.6), 0 0 80px rgba(59, 130, 246, 0.3)'}
-                _hover={{ 
+                boxShadow={`0 0 40px ${emlColors.accentOrange}99, 0 0 80px ${emlColors.accentOrange}4d`}
+                _hover={{
                   transform: 'scale(1.02)',
-                  boxShadow: isDark 
-                    ? '0 0 50px rgba(251, 146, 60, 0.8), 0 0 100px rgba(251, 146, 60, 0.4)' 
-                    : '0 0 50px rgba(59, 130, 246, 0.8), 0 0 100px rgba(59, 130, 246, 0.4)'
+                  boxShadow: `0 0 50px ${emlColors.accentOrange}cc, 0 0 100px ${emlColors.accentOrange}66`
                 }}
                 transition="all 0.3s"
               >

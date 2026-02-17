@@ -224,8 +224,8 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                                     variant="solid"
                                     colorPalette="green"
                                     onClick={() => window.open(match.streamLink.url, '_blank')}
-                                    _hover={{ 
-                                      bg: 'green.600', 
+                                    _hover={{
+                                      bg: 'green.600',
                                       transform: 'translateY(-1px)',
                                       boxShadow: 'md'
                                     }}

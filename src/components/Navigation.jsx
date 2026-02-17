@@ -26,7 +26,6 @@ const Navigation = ({
   standingsOpen,
   setStandingsOpen
 }) => {
-  const isDark = theme === 'dark';
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);

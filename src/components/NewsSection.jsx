@@ -1,5 +1,6 @@
 import { Box, Container, VStack, Text, HStack, Badge, Grid } from '@chakra-ui/react';
 import { Newspaper, Clock } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const news = [
   { title: 'Season 12 Registration Now Open', date: 'Feb 10, 2024', category: 'Announcement', summary: 'Sign up your team for the most competitive season yet. New format and expanded competition.' },
@@ -9,20 +10,18 @@ const news = [
 ];
 
 const NewsSection = ({ theme }) => {
-  const isDark = theme === 'dark';
-
   return (
-    <Box id="news" py="20" bg={isDark ? 'gray.900' : 'white'}>
+    <Box id="news" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="6xl">
         <VStack gap="12">
           <VStack gap="4" textAlign="center">
             <HStack gap="2" justify="center">
-              <Newspaper size={20} color={isDark ? '#fb923c' : '#3b82f6'} />
-              <Text fontSize="sm" fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'} textTransform="uppercase" letterSpacing="wider">
+              <Newspaper size={20} color={emlColors.accentOrange} />
+              <Text fontSize="sm" fontWeight="700" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
                 Latest News
               </Text>
             </HStack>
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
               Announcements & Updates
             </Text>
           </VStack>
@@ -31,30 +30,30 @@ const NewsSection = ({ theme }) => {
             {news.map((item, idx) => (
               <Box
                 key={idx}
-                bg={isDark ? 'whiteAlpha.50' : 'gray.50'}
+                bg={emlColors.bgElevated}
                 backdropFilter="blur(10px)"
                 border="1px solid"
-                borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                borderColor={emlColors.borderMedium}
                 p="6"
                 rounded="2xl"
                 cursor="pointer"
                 _hover={{
                   transform: 'translateY(-4px)',
-                  borderColor: isDark ? 'orange.500' : 'blue.500',
+                  borderColor: emlColors.accentOrange,
                   boxShadow: 'lg'
                 }}
                 transition="all 0.3s"
               >
                 <VStack align="start" gap="3">
                   <HStack justify="space-between" w="full">
-                    <Badge colorPalette={isDark ? 'orange' : 'blue'} size="sm" px="2" py="1">{item.category}</Badge>
-                    <HStack gap="1" fontSize="xs" color={isDark ? 'gray.500' : 'gray.600'}>
+                    <Badge colorPalette="orange" size="sm" px="2" py="1">{item.category}</Badge>
+                    <HStack gap="1" fontSize="xs" color={emlColors.textMuted}>
                       <Clock size={12} />
                       <Text>{item.date}</Text>
                     </HStack>
                   </HStack>
-                  <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>{item.title}</Text>
-                  <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>{item.summary}</Text>
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{item.title}</Text>
+                  <Text fontSize="sm" color={emlColors.textMuted}>{item.summary}</Text>
                 </VStack>
               </Box>
             ))}

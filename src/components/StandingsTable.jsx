@@ -2,6 +2,7 @@ import { Box, HStack, VStack, Text, Badge, Table, Image } from '@chakra-ui/react
 import { Trophy, TrendingUp, Minus, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
+import { emlColors } from '../theme/colors';
 
 const tierColors = {
   Master: 'yellow',
@@ -18,40 +19,39 @@ const tierImages = {
 };
 
 const StandingsTable = ({ teams, theme }) => {
-  const isDark = theme === 'dark';
   const [selectedTeam, setSelectedTeam] = useState(null);
   const sortedTeams = [...teams].sort((a, b) => (b.leaguePoints ?? 0) - (a.leaguePoints ?? 0));
 
   const getRankIcon = (index) => {
-    if (index === 0) return <Trophy size={18} color="var(--chakra-colors-yellow-400)" />;
-    if (index === 1) return <Trophy size={18} color="var(--chakra-colors-gray-400)" />;
-    if (index === 2) return <Trophy size={18} color="var(--chakra-colors-orange-600)" />;
+    if (index === 0) return <Trophy size={18} color="#fbbf24" />;
+    if (index === 1) return <Trophy size={18} color="#d1d5db" />;
+    if (index === 2) return <Trophy size={18} color="#cd7f32" />;
     return null;
   };
 
   return (
     <>
-      <Box bg="gray.900" border="1px solid" borderColor="gray.800" rounded="2xl" overflow="hidden">
-        <Box bg="purple.900" px="6" py="4" borderBottom="1px solid" borderColor="purple.800">
+      <Box bg={emlColors.bgSecondary} border="1px solid" borderColor={emlColors.borderMedium} rounded="2xl" overflow="hidden">
+        <Box bg={emlColors.bgTertiary} px="6" py="4" borderBottom="1px solid" borderColor={emlColors.borderMedium}>
           <HStack gap="2">
-            <Trophy size={20} color="var(--chakra-colors-purple-300)" />
-            <Text fontSize="lg" fontWeight="800" color="white">League Standings</Text>
+            <Trophy size={20} color={emlColors.accentPurple} />
+            <Text fontSize="lg" fontWeight="800" color={emlColors.textPrimary}>League Standings</Text>
           </HStack>
         </Box>
 
         <Table.Root size="lg" variant="outline">
-          <Table.Header bg="gray.800">
+          <Table.Header bg={emlColors.bgCard}>
             <Table.Row>
-              <Table.ColumnHeader color="gray.400" fontWeight="700" fontSize="xs" textTransform="uppercase">
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
                 Rank
               </Table.ColumnHeader>
-              <Table.ColumnHeader color="gray.400" fontWeight="700" fontSize="xs" textTransform="uppercase">
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
                 Team
               </Table.ColumnHeader>
-              <Table.ColumnHeader color="gray.400" fontWeight="700" fontSize="xs" textTransform="uppercase">
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
                 Tier
               </Table.ColumnHeader>
-              <Table.ColumnHeader color="gray.400" fontWeight="700" fontSize="xs" textTransform="uppercase" textAlign="right">
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase" textAlign="right">
                 Points
               </Table.ColumnHeader>
             </Table.Row>
@@ -60,14 +60,14 @@ const StandingsTable = ({ teams, theme }) => {
             {sortedTeams.map((team, index) => (
               <Table.Row
                 key={team.id}
-                bg={index < 3 ? 'gray.850' : 'transparent'}
-                _hover={{ bg: 'gray.800' }}
+                bg={index < 3 ? `${emlColors.textPrimary}08` : 'transparent'}
+                _hover={{ bg: `${emlColors.textPrimary}0c` }}
                 transition="background 0.2s"
               >
                 <Table.Cell>
                   <HStack gap="2">
                     {getRankIcon(index) || (
-                      <Text fontSize="md" fontWeight="700" color="gray.500" w="18px" textAlign="center">
+                      <Text fontSize="md" fontWeight="700" color={emlColors.textSubtle} w="18px" textAlign="center">
                         {index + 1}
                       </Text>
                     )}
@@ -78,8 +78,8 @@ const StandingsTable = ({ teams, theme }) => {
                     as="button"
                     fontSize="md"
                     fontWeight="700"
-                    color="purple.400"
-                    _hover={{ textDecoration: 'underline', color: 'purple.300' }}
+                    color={emlColors.accentPurple}
+                    _hover={{ textDecoration: 'underline', color: emlColors.accentOrange }}
                     onClick={() => setSelectedTeam(team.name)}
                     cursor="pointer"
                   >
@@ -103,7 +103,7 @@ const StandingsTable = ({ teams, theme }) => {
                   )}
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  <Text fontSize="lg" fontWeight="800" color="purple.400">
+                  <Text fontSize="lg" fontWeight="800" color={emlColors.accentPurple}>
                     {team.leaguePoints ?? 0}
                   </Text>
                 </Table.Cell>
@@ -114,7 +114,7 @@ const StandingsTable = ({ teams, theme }) => {
 
         {sortedTeams.length === 0 && (
           <Box py="12" textAlign="center">
-            <Text color="gray.500">No teams to display</Text>
+            <Text color={emlColors.textMuted}>No teams to display</Text>
           </Box>
         )}
       </Box>

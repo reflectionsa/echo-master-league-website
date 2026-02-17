@@ -1,5 +1,6 @@
 import { Box, Container, VStack, Text, Accordion, HStack, Button } from '@chakra-ui/react';
 import { FileText, Shield, AlertTriangle, ExternalLink } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const rules = [
   { title: 'Eligibility', content: 'All players must be registered members with verified accounts. Teams must maintain minimum 5 active players.' },
@@ -17,25 +18,23 @@ const conduct = [
 ];
 
 const RulesSection = ({ theme }) => {
-  const isDark = theme === 'dark';
-
   return (
-    <Box id="rules" py="20" bg={isDark ? 'gray.900' : 'white'}>
+    <Box id="rules" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="5xl">
         <VStack gap="12">
           <VStack gap="4" textAlign="center">
             <HStack gap="2" justify="center">
-              <FileText size={20} color={isDark ? '#fb923c' : '#3b82f6'} />
-              <Text fontSize="sm" fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'} textTransform="uppercase" letterSpacing="wider">
+              <FileText size={20} color={emlColors.accentOrange} />
+              <Text fontSize="sm" fontWeight="700" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
                 Rules & Guidelines
               </Text>
             </HStack>
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
               League Rules
             </Text>
             <Button
               size="sm"
-              colorPalette={isDark ? 'orange' : 'blue'}
+              colorPalette="orange"
               onClick={() => window.open('https://echomasterleague.com/eml-league-rules/', '_blank')}
             >
               <ExternalLink size={14} />
@@ -43,15 +42,15 @@ const RulesSection = ({ theme }) => {
             </Button>
           </VStack>
 
-          <Box w="full" bg={isDark ? 'whiteAlpha.50' : 'gray.50'} p="6" rounded="2xl" border="1px solid" borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}>
+          <Box w="full" bg={emlColors.bgElevated} p="6" rounded="2xl" border="1px solid" borderColor={emlColors.borderMedium}>
             <Accordion.Root collapsible>
               {rules.map((rule, idx) => (
-                <Accordion.Item key={idx} value={`rule-${idx}`} borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}>
-                  <Accordion.ItemTrigger py="4" color={isDark ? 'white' : 'gray.900'} fontWeight="600">
+                <Accordion.Item key={idx} value={`rule-${idx}`} borderColor={emlColors.borderMedium}>
+                  <Accordion.ItemTrigger py="4" color={emlColors.textPrimary} fontWeight="600">
                     {rule.title}
                     <Accordion.ItemIndicator />
                   </Accordion.ItemTrigger>
-                  <Accordion.ItemContent pb="4" color={isDark ? 'gray.400' : 'gray.600'}>
+                  <Accordion.ItemContent pb="4" color={emlColors.textMuted}>
                     {rule.content}
                   </Accordion.ItemContent>
                 </Accordion.Item>
@@ -59,16 +58,16 @@ const RulesSection = ({ theme }) => {
             </Accordion.Root>
           </Box>
 
-          <Box w="full" bg={isDark ? 'orange.500/10' : 'blue.500/10'} p="6" rounded="2xl" border="1px solid" borderColor={isDark ? 'orange.400' : 'blue.400'}>
+          <Box w="full" bg={`${emlColors.accentOrange}19`} p="6" rounded="2xl" border="1px solid" borderColor={emlColors.accentOrange}>
             <HStack gap="3" mb="4">
-              <Shield size={24} color={isDark ? '#fb923c' : '#3b82f6'} />
-              <Text fontSize="xl" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>Code of Conduct</Text>
+              <Shield size={24} color={emlColors.accentOrange} />
+              <Text fontSize="xl" fontWeight="700" color={emlColors.textPrimary}>Code of Conduct</Text>
             </HStack>
             <VStack align="start" gap="2">
               {conduct.map((item, idx) => (
                 <HStack key={idx} gap="2" align="start">
-                  <AlertTriangle size={16} color={isDark ? '#fb923c' : '#3b82f6'} style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <Text fontSize="sm" color={isDark ? 'gray.300' : 'gray.700'}>{item}</Text>
+                  <AlertTriangle size={16} color={emlColors.accentOrange} style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <Text fontSize="sm" color={emlColors.textSecondary}>{item}</Text>
                 </HStack>
               ))}
             </VStack>

@@ -20,14 +20,14 @@ const TeamsSection = ({ theme }) => {
   const filteredTeams = useMemo(() => {
     return teamRosters.filter(team => {
       const searchLower = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         team.name.toLowerCase().includes(searchLower) ||
         team.captain.toLowerCase().includes(searchLower) ||
         team.coCaptain.toLowerCase().includes(searchLower) ||
         team.players.some(p => p.toLowerCase().includes(searchLower));
-      
+
       const matchesStatus = statusFilter === 'all' || team.status === statusFilter;
-      
+
       return matchesSearch && matchesStatus;
     });
   }, [searchQuery, statusFilter]);

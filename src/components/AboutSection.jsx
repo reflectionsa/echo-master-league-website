@@ -1,5 +1,6 @@
 import { Box, Container, VStack, Text, Grid, HStack, Center } from '@chakra-ui/react';
 import { Target, Users, Trophy, Zap } from 'lucide-react';
+import { emlColors } from '../theme/colors';
 
 const features = [
   { icon: Target, title: 'Competitive Excellence', desc: 'Elite tournaments with professional-grade competition and fair play standards.' },
@@ -9,25 +10,23 @@ const features = [
 ];
 
 const AboutSection = ({ theme }) => {
-  const isDark = theme === 'dark';
-
   return (
-    <Box id="about" py="20" bg={isDark ? 'gray.950' : 'gray.50'}>
+    <Box id="about" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="6xl">
         <VStack gap="12">
           <VStack gap="4" textAlign="center">
-            <Text fontSize="sm" fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'} textTransform="uppercase" letterSpacing="wider">About EML</Text>
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={isDark ? 'white' : 'gray.900'}>
+            <Text fontSize="sm" fontWeight="700" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">About EML</Text>
+            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={emlColors.textPrimary}>
               The Premier Echo VR League
             </Text>
-            <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={isDark ? 'orange.400' : 'blue.600'}>
+            <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={emlColors.accentOrange}>
               Season 4
             </Text>
-            <Text fontSize="lg" color={isDark ? 'gray.400' : 'gray.600'} maxW="3xl">
+            <Text fontSize="lg" color={emlColors.textMuted} maxW="3xl">
               Echo Master League is the premier competitive Echo Arena league and runs multiple MMR-based tournaments per year.
             </Text>
-            <Text fontSize="md" color={isDark ? 'gray.500' : 'gray.600'} maxW="3xl">
-              Founded by players, for players, EML is a community-driven competitive platform dedicated to fostering 
+            <Text fontSize="md" color={emlColors.textMuted} maxW="3xl">
+              Founded by players, for players, EML is a community-driven competitive platform dedicated to fostering
               the highest level of Echo VR gameplay.
             </Text>
           </VStack>
@@ -36,16 +35,16 @@ const AboutSection = ({ theme }) => {
             {features.map(feature => (
               <Box
                 key={feature.title}
-                bg={isDark ? 'whiteAlpha.50' : 'white'}
+                bg={emlColors.bgElevated}
                 backdropFilter="blur(10px)"
                 border="1px solid"
-                borderColor={isDark ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                borderColor={emlColors.borderMedium}
                 p="6"
                 rounded="2xl"
                 _hover={{
                   transform: 'translateY(-4px)',
-                  borderColor: isDark ? 'orange.500' : 'blue.500',
-                  boxShadow: isDark ? '0 8px 24px rgba(251, 146, 60, 0.2)' : '0 8px 24px rgba(59, 130, 246, 0.2)'
+                  borderColor: emlColors.accentOrange,
+                  boxShadow: `0 8px 24px ${emlColors.accentOrange}33`
                 }}
                 transition="all 0.3s"
               >
@@ -53,15 +52,15 @@ const AboutSection = ({ theme }) => {
                   <Center
                     w="12"
                     h="12"
-                    bg={isDark ? 'orange.500/20' : 'blue.500/20'}
+                    bg={`${emlColors.accentOrange}33`}
                     rounded="xl"
                     flexShrink={0}
                   >
-                    <feature.icon size={24} color={isDark ? '#fb923c' : '#3b82f6'} />
+                    <feature.icon size={24} color={emlColors.accentOrange} />
                   </Center>
                   <VStack align="start" gap="2">
-                    <Text fontSize="lg" fontWeight="700" color={isDark ? 'white' : 'gray.900'}>{feature.title}</Text>
-                    <Text fontSize="sm" color={isDark ? 'gray.400' : 'gray.600'}>{feature.desc}</Text>
+                    <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{feature.title}</Text>
+                    <Text fontSize="sm" color={emlColors.textMuted}>{feature.desc}</Text>
                   </VStack>
                 </HStack>
               </Box>

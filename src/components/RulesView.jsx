@@ -21,22 +21,22 @@ const RulesView = ({ theme, open, onClose }) => {
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
       <Portal>
-        <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
+        <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(10px)" />
         <Dialog.Positioner>
           <Dialog.Content
             maxW="800px"
             maxH="90vh"
-            bg={isDark ? 'gray.900' : 'white'}
+            bg={emlColors.bgSecondary}
             border="1px solid"
-            borderColor={isDark ? 'gray.700' : 'gray.200'}
+            borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={isDark ? 'gray.850' : 'gray.50'} borderBottom="1px solid" borderColor={isDark ? 'gray.700' : 'gray.200'}>
+            <Dialog.Header bg={emlColors.bgTertiary} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <FileText size={24} color={isDark ? 'var(--chakra-colors-orange-400)' : 'var(--chakra-colors-blue-600)'} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={isDark ? 'white' : 'gray.900'}>
+                  <FileText size={24} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
                     League Rules
                   </Dialog.Title>
                 </HStack>
