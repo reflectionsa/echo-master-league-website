@@ -1,12 +1,12 @@
 import { useGoogleSheets } from './useGoogleSheets';
-import { getTournamentConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
 
 /**
  * Hook to fetch matches from the NA PBLC MATCHES sheet
  * This sheet contains match assignments with team rankings
  */
 export const useMatches = () => {
-  const config = getTournamentConfig();
+  const config = getRosterConfig();
   const { data, loading, error, refetch } = useGoogleSheets(
     config.spreadsheetId,
     GOOGLE_SHEETS_CONFIG.ranges.matches, // Using the new NA PBLC MATCHES range

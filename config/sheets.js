@@ -22,12 +22,10 @@ export const GOOGLE_SHEETS_CONFIG = {
   // Your Google Sheets API Key (get from Google Cloud Console)
   apiKey: 'YOUR_API_KEY_HERE',
 
-  // Spreadsheet IDs for different data sources
+  // Spreadsheet ID - all data comes from this one sheet
   spreadsheets: {
-    // Team rosters and match data
+    // Main EML data spreadsheet (contains all tabs)
     roster: '1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc',
-    // Rankings and tournament data
-    tournament: '1jK1FRzc044wq2miNZQbcqDDPoVAA3dR5knd8MZEpKdw',
   },
 
   // Sheet names and ranges
@@ -53,8 +51,9 @@ export const getRosterConfig = () => ({
   spreadsheetId: getConfig().spreadsheets.roster,
 });
 
+// Alias for getTournamentConfig - now points to same spreadsheet
 export const getTournamentConfig = () => ({
   apiKey: getConfig().apiKey,
-  spreadsheetId: getConfig().spreadsheets.tournament,
+  spreadsheetId: getConfig().spreadsheets.roster,
 });
 

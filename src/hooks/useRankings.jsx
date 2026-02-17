@@ -1,5 +1,5 @@
 import { useGoogleSheets } from './useGoogleSheets';
-import { getTournamentConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
 
 /**
  * Parse rank tier from various formats:
@@ -33,7 +33,7 @@ const parseRankTier = (tierString) => {
 };
 
 export const useRankings = () => {
-  const config = getTournamentConfig();
+  const config = getRosterConfig();
   const { data, loading, error, refetch } = useGoogleSheets(
     config.spreadsheetId,
     GOOGLE_SHEETS_CONFIG.ranges.rankings,
