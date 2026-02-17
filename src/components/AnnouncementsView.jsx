@@ -58,7 +58,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                       <Text>Feb 16, 2026</Text>
                     </HStack>
                   </HStack>
-                  
+
                   <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="800" color={emlColors.textPrimary}>
                     Week Three Matches for Season 4 are Posted!
                   </Text>
@@ -93,7 +93,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                         </Text>
                       </HStack>
                       <Text fontSize="sm" color={emlColors.textSecondary}>
-                        League rules require matches be scheduled by Friday at noon EDT. As always they can be played through Sunday night. 
+                        League rules require matches be scheduled by Friday at noon EDT. As always they can be played through Sunday night.
                         Forfeits are determined by the mod team using a variety of factors.
                       </Text>
                     </Box>
@@ -107,7 +107,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                         </Text>
                       </HStack>
                       <Text fontSize="sm" color={emlColors.textSecondary}>
-                        Players can leave a team and join another, or register as a League Substitute, but players will be on cooldown for leaving a team 
+                        Players can leave a team and join another, or register as a League Substitute, but players will be on cooldown for leaving a team
                         and cannot participate in any EML match until the next matches are generated on the following Monday. No cooldowns will be waived.
                       </Text>
                     </Box>
