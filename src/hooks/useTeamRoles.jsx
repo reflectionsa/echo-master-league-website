@@ -28,37 +28,37 @@ export const useTeamRoles = () => {
         // Get list of active team names from Rankings sheet
         const activeTeamNames = new Set();
         if (rankingsData && rankingsData.length > 0) {
-            console.log('Rankings data sample:', rankingsData[0]); // DEBUG
             rankingsData.forEach(row => {
                 // Try all possible column names from Rankings sheet
-                const teamName = row['Team'] || row['team name'] || row['Team Name'] || row.team || row['team'] || 
-                                 Object.values(row)[0]; // Fallback to first column
+                const teamName = row['Team'] || row['team name'] || row['Team Name'] || row.team || row['team'] ||
+                    Object.values(row)[0]; // Fallback to first column
                 if (teamName && String(teamName).trim()) {
                     activeTeamNames.add(String(teamName).toLowerCase().trim());
                 }
             });
-            console.log('Active team names from Rankings:', Array.from(activeTeamNames)); // DEBUG
         }
 
         // Detect data format - check if first row has "Player Name" column (row-per-player)
         // or if it's row-per-team format
         const firstRow = data[0] || {};
-        console.log('Team Roles data sample:', firstRow); // DEBUG
-        console.log('Column names:', Object.keys(firstRow)); // DEBUG
         const hasPlayerNameColumn = 'Player Name' in firstRow || 'Player' in firstRow || 'player' in firstRow;
 
         const teamMap = new Map();
 
         if (hasPlayerNameColumn) {
-            console.log('Using ROW-PER-PLAYER format'); // DEBUG
             // ROW-PER-PLAYER FORMAT (Player Name | Team Name | Role)
-            data.forEach(row => {
+            data.forEach((row, idx) => {
                 const playerName = row['Player Name'] || row.Player || row.player || '';
                 const teamName = row['Team Name'] || row.Team || row.team || '';
-                const role = row['Role'] || row.role || 'Player';
+
+                // Check Captain/Co-Captain columns (might have trailing space!)
+                const isCaptain = (row['Captain'] || row.captain || '').toString().toLowerCase() === 'yes';
+                const isCoCaptain = (row['Co-Captain '] || row['Co-Captain'] || row['co-captain'] || '').toString().toLowerCase() === 'yes';
                 const rank = row['Rank'] || row.rank || '';
 
-                if (!playerName || !teamName) return;
+                if (!playerName || !teamName) {
+                    return;
+                }
 
                 if (!teamMap.has(teamName)) {
                     teamMap.set(teamName, {
@@ -72,9 +72,9 @@ export const useTeamRoles = () => {
 
                 const team = teamMap.get(teamName);
 
-                if (role.toLowerCase().includes('captain') && !role.toLowerCase().includes('co')) {
+                if (isCaptain) {
                     team.captain = playerName;
-                } else if (role.toLowerCase().includes('co-captain') || role.toLowerCase().includes('co captain')) {
+                } else if (isCoCaptain) {
                     team.coCaptain = playerName;
                 } else {
                     team.players.push(playerName);
@@ -84,13 +84,12 @@ export const useTeamRoles = () => {
             });
         } else {
             // ROW-PER-TEAM FORMAT (Team | Player1 | Player2 | ... | Status)
-            console.log('Using ROW-PER-TEAM format'); // DEBUG
             data.forEach(row => {
                 // Get all values from the row, excluding the 'id' field added by useGoogleSheets
                 const values = Object.entries(row)
                     .filter(([key, val]) => key !== 'id' && val && String(val).trim())
                     .map(([_, val]) => val);
-                
+
                 if (values.length === 0) return;
 
                 const teamName = String(values[0]).trim();
@@ -150,12 +149,9 @@ export const useTeamRoles = () => {
             ].filter(Boolean).length;
 
             // Determine status: Active if team is in Rankings sheet
-            const isInRankings = activeTeamNames.has(team.name.toLowerCase().trim());
+            const normalizedTeamName = team.name.toLowerCase().trim();
+            const isInRankings = activeTeamNames.has(normalizedTeamName);
             const status = isInRankings ? 'Active' : 'Inactive';
-
-            if (index < 3) { // DEBUG: Log first 3 teams
-                console.log(`Team: ${team.name}, In Rankings: ${isInRankings}, Status: ${status}, Players: ${totalPlayers}`);
-            }
 
             return {
                 id: index + 1,
