@@ -207,7 +207,7 @@ const PlayerLeaderboardView = ({ theme, open, onClose }) => {
                                     transition="background 0.2s"
                                   >
                                     <Table.Cell>
-                                      <Text fontWeight="700" color={emlColors.textPrimary}>#{index() + 1}</Table.Cell>
+                                      <Text fontWeight="700" color={emlColors.textPrimary}>#{index() + 1}</Text>
                                     </Table.Cell>
                                     <Table.Cell>
                                       <Text
