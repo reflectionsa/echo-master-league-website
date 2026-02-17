@@ -28,7 +28,7 @@ const getTeamMatchHistory = (teamName, matchResults) => {
         id: match.id || `match-${teamName}-${match.week}`,
         opponent: opponent,
         score: `${teamScore} - ${opponentScore}`,
-        status: match.isForfeit 
+        status: match.isForfeit
           ? (teamScore > opponentScore ? 'FF Win' : 'FF Loss')
           : (teamScore > opponentScore ? 'Won' : teamScore < opponentScore ? 'Lost' : 'Draw'),
         matchDate,
