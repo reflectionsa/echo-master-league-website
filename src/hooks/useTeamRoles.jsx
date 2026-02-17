@@ -28,22 +28,29 @@ export const useTeamRoles = () => {
         // Get list of active team names from Rankings sheet
         const activeTeamNames = new Set();
         if (rankingsData && rankingsData.length > 0) {
+            console.log('Rankings data sample:', rankingsData[0]); // DEBUG
             rankingsData.forEach(row => {
-                const teamName = row['team name'] || row['Team'] || row.team || '';
-                if (teamName) {
-                    activeTeamNames.add(teamName.toLowerCase().trim());
+                // Try all possible column names from Rankings sheet
+                const teamName = row['Team'] || row['team name'] || row['Team Name'] || row.team || row['team'] || 
+                                 Object.values(row)[0]; // Fallback to first column
+                if (teamName && String(teamName).trim()) {
+                    activeTeamNames.add(String(teamName).toLowerCase().trim());
                 }
             });
+            console.log('Active team names from Rankings:', Array.from(activeTeamNames)); // DEBUG
         }
 
         // Detect data format - check if first row has "Player Name" column (row-per-player)
         // or if it's row-per-team format
         const firstRow = data[0] || {};
+        console.log('Team Roles data sample:', firstRow); // DEBUG
+        console.log('Column names:', Object.keys(firstRow)); // DEBUG
         const hasPlayerNameColumn = 'Player Name' in firstRow || 'Player' in firstRow || 'player' in firstRow;
 
         const teamMap = new Map();
 
         if (hasPlayerNameColumn) {
+            console.log('Using ROW-PER-PLAYER format'); // DEBUG
             // ROW-PER-PLAYER FORMAT (Player Name | Team Name | Role)
             data.forEach(row => {
                 const playerName = row['Player Name'] || row.Player || row.player || '';
@@ -77,13 +84,16 @@ export const useTeamRoles = () => {
             });
         } else {
             // ROW-PER-TEAM FORMAT (Team | Player1 | Player2 | ... | Status)
-            // First column is team name, remaining columns are players
+            console.log('Using ROW-PER-TEAM format'); // DEBUG
             data.forEach(row => {
-                // Get all values from the row
-                const values = Object.values(row).filter(v => v && String(v).trim());
+                // Get all values from the row, excluding the 'id' field added by useGoogleSheets
+                const values = Object.entries(row)
+                    .filter(([key, val]) => key !== 'id' && val && String(val).trim())
+                    .map(([_, val]) => val);
+                
                 if (values.length === 0) return;
 
-                const teamName = values[0];
+                const teamName = String(values[0]).trim();
                 if (!teamName || teamName === 'Active' || teamName === 'Inactive') return;
 
                 const playerValues = values.slice(1).filter(v =>
@@ -142,6 +152,10 @@ export const useTeamRoles = () => {
             // Determine status: Active if team is in Rankings sheet
             const isInRankings = activeTeamNames.has(team.name.toLowerCase().trim());
             const status = isInRankings ? 'Active' : 'Inactive';
+
+            if (index < 3) { // DEBUG: Log first 3 teams
+                console.log(`Team: ${team.name}, In Rankings: ${isInRankings}, Status: ${status}, Players: ${totalPlayers}`);
+            }
 
             return {
                 id: index + 1,

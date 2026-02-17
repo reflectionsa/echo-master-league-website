@@ -32,5 +32,10 @@ export const useLeagueSubs = () => {
         })
         .filter(Boolean); // Remove empty entries
 
+    console.log('League Subs loaded:', subs.length, 'subs'); // DEBUG
+    if (subs.length > 0) {
+        console.log('First 5 subs:', subs.slice(0, 5)); // DEBUG
+    }
+
     return { subs, count: subs.length, loading, error, refetch };
 };
