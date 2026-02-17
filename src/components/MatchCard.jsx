@@ -95,8 +95,17 @@ const MatchCard = ({ match, theme }) => {
 
               {match.score ? (
                 <Box bg="purple.900" px="4" py="2" rounded="lg" border="1px solid" borderColor="purple.700">
-                  <Text fontSize="lg" fontWeight="800" color="purple.300" letterSpacing="wider">
-                    {match.score}
+                  <Text fontSize="lg" fontWeight="800" letterSpacing="wider">
+                    {/* Display score with colors - green for winner, red for loser */}
+                    {match.team1Score !== undefined && match.team2Score !== undefined ? (
+                      <>
+                        <Text as="span" color={match.team1Won ? 'green.400' : 'red.400'}>{match.team1Score}</Text>
+                        <Text as="span" color="gray.500" mx="1">-</Text>
+                        <Text as="span" color={match.team2Won ? 'green.400' : 'red.400'}>{match.team2Score}</Text>
+                      </>
+                    ) : (
+                      <Text as="span" color="purple.300">{match.score}</Text>
+                    )}
                   </Text>
                 </Box>
               ) : (

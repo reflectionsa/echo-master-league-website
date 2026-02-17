@@ -1,13 +1,18 @@
 import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badge, Button, CloseButton, Tabs } from '@chakra-ui/react';
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useSchedule } from '../hooks/useSchedule';
+import { useMatchResults } from '../hooks/useMatchResults';
 import { emlColors } from '../theme/colors';
 
 const MatchesView = ({ theme, open, onClose }) => {
   const { matches, loading } = useSchedule();
+  const { matchResults, loading: resultsLoading } = useMatchResults();
 
   const upcoming = matches.filter(m => m.status === 'Scheduled' || m.status === 'Live');
   const scheduled = matches.filter(m => m.status === 'Scheduled');
+  
+  // Filter match results for Week 3
+  const week3Results = matchResults.filter(m => m.week && m.week.toString().includes('3'));
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
@@ -37,16 +42,85 @@ const MatchesView = ({ theme, open, onClose }) => {
               </HStack>
             </Dialog.Header>
             <Dialog.Body p="6" overflowY="auto">
-              {loading ? (
+              {loading || resultsLoading ? (
                 <Center py="20"><Spinner size="xl" color={emlColors.accentOrange} /></Center>
               ) : (
-                <Tabs.Root defaultValue="upcoming">
+                <Tabs.Root defaultValue="results">
                   <Tabs.List mb="6" bg={emlColors.bgTertiary} p="1" rounded="xl">
+                    <Tabs.Trigger value="results" fontWeight="600" color={emlColors.textPrimary}>
+                      Match Results (Week 3)
+                    </Tabs.Trigger>
                     <Tabs.Trigger value="upcoming" fontWeight="600" color={emlColors.textPrimary}>
                       Upcoming Matches
                     </Tabs.Trigger>
                     <Tabs.Trigger value="scheduled" fontWeight="600" color={emlColors.textPrimary}>Scheduled</Tabs.Trigger>
                   </Tabs.List>
+
+                  {/* Match Results Tab */}
+                  <Tabs.Content value="results">
+                    <Box overflowX="auto">
+                      <Table.Root size="md" variant="outline">
+                        <Table.Header bg={emlColors.bgTertiary}>
+                          <Table.Row>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>WEEK</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 1</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted} textAlign="center">SCORE</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 2</Table.ColumnHeader>
+                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>DATE</Table.ColumnHeader>
+                          </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                          {week3Results.map(match => (
+                            <Table.Row key={match.id} _hover={{ bg: `${emlColors.textPrimary}08` }}>
+                              <Table.Cell>
+                                <Badge colorPalette="purple" size="sm">{match.week}</Badge>
+                              </Table.Cell>
+                              <Table.Cell>
+                                <Text fontWeight="600" color={emlColors.textPrimary}>{match.team1}</Text>
+                              </Table.Cell>
+                              <Table.Cell textAlign="center">
+                                <HStack justify="center" gap="2">
+                                  <Text
+                                    fontSize="md"
+                                    fontWeight="800"
+                                    color={match.team1Won ? 'green.400' : 'red.400'}
+                                  >
+                                    {match.team1Score}
+                                  </Text>
+                                  <Text fontSize="sm" color={emlColors.textMuted} fontWeight="700">-</Text>
+                                  <Text
+                                    fontSize="md"
+                                    fontWeight="800"
+                                    color={match.team2Won ? 'green.400' : 'red.400'}
+                                  >
+                                    {match.team2Score}
+                                  </Text>
+                                </HStack>
+                                {match.isForfeit && (
+                                  <Badge colorPalette="yellow" size="xs" mt="1">FORFEIT</Badge>
+                                )}
+                              </Table.Cell>
+                              <Table.Cell>
+                                <Text fontWeight="600" color={emlColors.textPrimary}>{match.team2}</Text>
+                              </Table.Cell>
+                              <Table.Cell>
+                                <Text fontSize="sm" color={emlColors.textMuted}>{match.matchDate}</Text>
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
+                          {week3Results.length === 0 && (
+                            <Table.Row>
+                              <Table.Cell colSpan={5}>
+                                <Center py="8">
+                                  <Text color={emlColors.textMuted}>No match results available yet</Text>
+                                </Center>
+                              </Table.Cell>
+                            </Table.Row>
+                          )}
+                        </Table.Body>
+                      </Table.Root>
+                    </Box>
+                  </Tabs.Content>
 
                   <Tabs.Content value="upcoming">
                     <Box overflowX="auto">

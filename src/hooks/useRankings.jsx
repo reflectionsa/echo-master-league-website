@@ -55,6 +55,7 @@ export const useRankings = () => {
       region: row['Region'] || row.region || 'North America',
       wins: parseInt(row['Wins'] || row['W'] || row.wins || 0),
       losses: parseInt(row['Losses'] || row['L'] || row.losses || 0),
+      active: row['Active'] || row.active || 'Yes',
       teamLogo: {
         url: row['Logo'] || row.logo || 'https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024',
         label: row['Team'] || row.team || 'Team Logo'

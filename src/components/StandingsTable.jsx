@@ -51,6 +51,12 @@ const StandingsTable = ({ teams, theme }) => {
               <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
                 Tier
               </Table.ColumnHeader>
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
+                Status
+              </Table.ColumnHeader>
+              <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase">
+                Region
+              </Table.ColumnHeader>
               <Table.ColumnHeader color={emlColors.textMuted} fontWeight="700" fontSize="xs" textTransform="uppercase" textAlign="right">
                 Points
               </Table.ColumnHeader>
@@ -101,6 +107,23 @@ const StandingsTable = ({ teams, theme }) => {
                       {team.tier}
                     </Badge>
                   )}
+                </Table.Cell>
+                <Table.Cell>
+                  <Badge
+                    colorPalette={team.active === 'Yes' || team.active === 'Active' || team.active === true ? 'green' : 'red'}
+                    px="2.5"
+                    py="1"
+                    rounded="full"
+                    fontSize="xs"
+                    fontWeight="700"
+                  >
+                    {team.active === 'Yes' || team.active === 'Active' || team.active === true ? 'Active' : 'Inactive'}
+                  </Badge>
+                </Table.Cell>
+                <Table.Cell>
+                  <Text fontSize="sm" color={emlColors.textSecondary} fontWeight="600">
+                    {team.region || 'NA'}
+                  </Text>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
                   <Text fontSize="lg" fontWeight="800" color={emlColors.accentPurple}>

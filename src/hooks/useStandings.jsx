@@ -20,6 +20,7 @@ export const useStandings = () => {
     losses: parseInt(row['Losses'] || row['L'] || row.losses || 0),
     mmr: parseInt(row['MMR'] || row['Rating'] || row.mmr || 0),
     points: parseInt(row['Points'] || row['League Points'] || row.points || 0),
+    active: row['Active'] || row.active || 'Yes',
   })).filter(team => team.team); // Filter out empty rows
 
   return { standings, loading, error, refetch };

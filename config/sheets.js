@@ -35,6 +35,10 @@ export const GOOGLE_SHEETS_CONFIG = {
     rankings: 'NA Pblc Rnkngs!A:Z',       // Public rankings
     matches: 'NA PBLC MATCHES!A:Z',       // NA Public matches with assignments
     tournament: 'EML NA Season 4 - TOURNAMENT!A:Z', // Tournament standings
+    cooldownList: 'Cooldown List!A:Z',    // Players on cooldown
+    teamRoles: 'Team Roles!A:Z',          // Team captain and co-captain assignments
+    matchResults: 'Match Results!A:Z',    // Completed match results with scores
+    forfeits: 'Forfeits!A:Z',             // Forfeited matches
   }
 };
 
