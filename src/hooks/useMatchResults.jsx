@@ -12,6 +12,8 @@ import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
 const parseMatchScore = (row) => {
     const team1 = row['Team A'] || row.team1 || '';
     const team2 = row['Team B'] || row.team2 || '';
+    const matchStatus = row['Match Status'] || row.matchStatus || '';
+    const isForfeit = matchStatus.toLowerCase().includes('forfeit');
 
     // Get round scores for Team A (in the Round columns)
     const t1r1 = parseInt(row['Round 1'] || 0);
@@ -24,6 +26,7 @@ const parseMatchScore = (row) => {
     const t2r1 = parseInt(row['_empty_8'] || 0);
     const t2r2 = parseInt(row['_empty_10'] || 0);
     const t2r3 = parseInt(row['_empty_12'] || 0);
+    const team2Total = t2r1 + t2r2 + t2r3;
     return {
         team1,
         team2,
