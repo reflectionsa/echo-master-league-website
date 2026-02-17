@@ -16,7 +16,7 @@ export const useStandings = () => {
     const rating = row['Rating'] || row['MMR'] || row.mmr || row.rating || '';
     const rank = row['Rank'] || row.tier || row.Tier || '';
     const active = row['Active'] || row.active || row.Status || 'Active';
-    
+
     return {
       id: row.id || idx,
       position: idx + 1, // Use index as position since sheet is already sorted

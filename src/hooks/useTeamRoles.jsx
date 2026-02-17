@@ -40,7 +40,7 @@ export const useTeamRoles = () => {
         // or if it's row-per-team format
         const firstRow = data[0] || {};
         const hasPlayerNameColumn = 'Player Name' in firstRow || 'Player' in firstRow || 'player' in firstRow;
-        
+
         const teamMap = new Map();
 
         if (hasPlayerNameColumn) {
@@ -86,10 +86,10 @@ export const useTeamRoles = () => {
                 const teamName = values[0];
                 if (!teamName || teamName === 'Active' || teamName === 'Inactive') return;
 
-                const playerValues = values.slice(1).filter(v => 
-                    v && 
-                    String(v).trim() && 
-                    v !== 'Active' && 
+                const playerValues = values.slice(1).filter(v =>
+                    v &&
+                    String(v).trim() &&
+                    v !== 'Active' &&
                     v !== 'Inactive'
                 );
 
@@ -108,10 +108,10 @@ export const useTeamRoles = () => {
                 // First player is captain (unless marked with (CC))
                 // Players with (CC) prefix are co-captains
                 let captainAssigned = false;
-                
+
                 playerValues.forEach(playerValue => {
                     const playerStr = String(playerValue).trim();
-                    
+
                     // Check if this is a co-captain
                     if (playerStr.startsWith('(CC)')) {
                         const playerName = playerStr.replace('(CC)', '').trim();
