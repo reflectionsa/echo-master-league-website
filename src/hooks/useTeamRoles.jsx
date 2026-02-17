@@ -4,11 +4,7 @@ import { useMemo } from 'react';
 
 /**
  * Hook to fetch team roster data from Team Roles sheet
- * Groups players by team and determines team status based on player count
- * Rules:
- * - Teams with < 4 players = Inactive
- * - Teams with only 1 player = Inactive
- * - Teams with 4+ players = Active
+ * Groups players by team - ALL teams show as Active
  */
 export const useTeamRoles = () => {
     const config = getRosterConfig();
@@ -51,7 +47,7 @@ export const useTeamRoles = () => {
             }
         });
 
-        // Convert map to array and calculate status
+        // Convert map to array and add status
         const teamsArray = Array.from(teamMap.values()).map((team, index) => {
             const totalPlayers = [
                 team.captain,
@@ -59,11 +55,8 @@ export const useTeamRoles = () => {
                 ...team.players
             ].filter(Boolean).length;
 
-            // Determine status based on player count
-            let status = 'Inactive';
-            if (totalPlayers >= 4) {
-                status = 'Active';
-            }
+            // All teams are Active
+            const status = 'Active';
 
             return {
                 id: index + 1,
