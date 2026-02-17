@@ -10,7 +10,7 @@ const MatchesView = ({ theme, open, onClose }) => {
 
   const upcoming = matches.filter(m => m.status === 'Scheduled' || m.status === 'Live');
   const scheduled = matches.filter(m => m.status === 'Scheduled');
-  
+
   // Filter match results for Week 3
   const week3Results = matchResults.filter(m => m.week && m.week.toString().includes('3'));
 
