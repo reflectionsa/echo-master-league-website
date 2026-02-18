@@ -39,6 +39,17 @@ export const GOOGLE_SHEETS_CONFIG = {
     matchResults: 'Match Results!A:P',    // Week through Result (first section only)
     forfeits: 'Forfeits!A:P',             // Forfeited matches (first section only)
     registeredLeagueSubs: 'Registered League Subs!A:B', // Player Name, Region
+    
+    // New ranges for expanded features
+    playerStats: 'Player Stats!A:M',      // Player Name, Team, Wins, Losses, Goals, Assists, Saves, etc.
+    playerHistory: 'Player History!A:G',  // Player Name, Season, Team, Placement, Stats, Achievements
+    trophies: 'Trophies!A:F',             // Team Name, Tournament, Season, Placement, Date, Trophy Type
+    highlights: 'Highlights!A:H',         // Title, URL, Platform, Date, Featured, Player, Description, Thumbnail
+    interviews: 'Interviews!A:G',         // Title, Team, Date, URL, Interviewer, Description, Thumbnail
+    predictions: 'Predictions!A:F',       // Match ID, Team A Votes, Team B Votes, Total Votes, Closed, Result
+    announcements: 'Announcements!A:F',   // Title, Content, Date, Author, Category, Priority
+    playerTags: 'Player Tags!A:D',        // Player Name, Tag, Type, Description
+    tipsAndTricks: 'Tips And Tricks!A:G', // Title, URL, Category, Date, Description, Thumbnail, Duration
   }
 };
 

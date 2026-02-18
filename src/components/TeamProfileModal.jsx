@@ -4,6 +4,8 @@ import { useTeamProfile } from '../hooks/useTeamProfile';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 import { getTierImage, getBaseTier } from '../utils/tierUtils';
+import ChampionshipStars from './ChampionshipStars';
+import TrophyCase from './TrophyCase';
 
 const tierColors = {
   Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400' },
@@ -65,9 +67,12 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
 
                     <VStack align="start" flex="1" gap="3">
                       <VStack align="start" gap="1">
-                        <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
-                          {teamName}
-                        </Text>
+                        <HStack gap="2">
+                          <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
+                            {teamName}
+                          </Text>
+                          <ChampionshipStars teamName={teamName} size={20} />
+                        </HStack>
                         <HStack gap="3">
                           {getTierImage(team?.tier) ? (
                             <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
@@ -151,6 +156,9 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                       </VStack>
                     </Box>
                   </Box>
+
+                  {/* Trophy Case */}
+                  <TrophyCase teamName={teamName} theme={theme} />
 
                   <Box>
                     <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
