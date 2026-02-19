@@ -1,28 +1,41 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 import { useMemo } from 'react';
 
 /**
- * Hook to fetch team roster data from Team Roles sheet
- * Cross-references with Rankings sheet to determine Active/Inactive status
- * Teams in Rankings = Active, Teams not in Rankings = Inactive
+ * Hook to fetch team roster data.
+ * Reads from data.json first; falls back to Team Roles + Rankings sheets.
+ * Teams in Rankings = Active, Teams not in Rankings = Inactive (Sheets path only).
  */
 export const useTeamRoles = () => {
+    const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('teamRoles');
+    const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
     const config = getRosterConfig();
     const { data, loading, error, refetch } = useGoogleSheets(
-        config.spreadsheetId,
+        useSheets ? config.spreadsheetId : null,
         GOOGLE_SHEETS_CONFIG.ranges.teamRoles,
-        config.apiKey
+        useSheets ? config.apiKey : null
     );
 
-    // Also fetch Rankings data to determine active status
+    // Also fetch Rankings data to determine active status (Sheets fallback path only)
     const { data: rankingsData, loading: rankingsLoading } = useGoogleSheets(
-        config.spreadsheetId,
+        useSheets ? config.spreadsheetId : null,
         GOOGLE_SHEETS_CONFIG.ranges.rankings,
-        config.apiKey
+        useSheets ? config.apiKey : null
     );
+
+    // Return JSON data directly — it's already transformed and has status baked in
+    const jsonTeams = useMemo(() => {
+        if (!jsonLoading && jsonData && jsonData.length > 0) return jsonData;
+        return null;
+    }, [jsonData, jsonLoading]);
 
     const teams = useMemo(() => {
+        // Return JSON data directly if available
+        if (jsonTeams) return jsonTeams;
+
         if (!data || data.length === 0) return [];
 
         // Get list of active team names from Rankings sheet
@@ -167,7 +180,11 @@ export const useTeamRoles = () => {
 
         // Sort by name
         return teamsArray.sort((a, b) => a.name.localeCompare(b.name));
-    }, [data, rankingsData]);
+    }, [data, rankingsData, jsonTeams]);
+
+    if (jsonTeams) {
+        return { teams: jsonTeams, loading: false, error: null, refetch: () => { } };
+    }
 
     return { teams, loading: loading || rankingsLoading, error, refetch };
 };

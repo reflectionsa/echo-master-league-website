@@ -1,17 +1,28 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 
 /**
- * Hook to fetch cooldown list from Google Sheets
+ * Hook to fetch cooldown list from Google Sheets or data.json
  * Shows players who are on cooldown and cannot participate in matches
  */
 export const useCooldownList = () => {
+    const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('cooldownPlayers');
+    const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
     const config = getRosterConfig();
-    const { data, loading, error, refetch } = useGoogleSheets(
-        config.spreadsheetId,
+    const { data, loading: sheetsLoading, error: sheetsError, refetch } = useGoogleSheets(
+        useSheets ? config.spreadsheetId : null,
         GOOGLE_SHEETS_CONFIG.ranges.cooldownList,
-        config.apiKey
+        useSheets ? config.apiKey : null
     );
+
+    if (!jsonLoading && jsonData && jsonData.length > 0) {
+        return { cooldownPlayers: jsonData, loading: false, error: null, refetch: () => { } };
+    }
+
+    const loading = jsonLoading || (useSheets && sheetsLoading);
+    const error = useSheets ? sheetsError : jsonError;
 
     // Transform Google Sheets data to app format
     // Cooldown List headers: Player Name | Team Left | Expires

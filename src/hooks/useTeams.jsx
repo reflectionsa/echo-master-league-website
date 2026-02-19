@@ -1,13 +1,25 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 
 export const useTeams = () => {
+  const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('teams');
+  const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
   const config = getRosterConfig();
-  const { data, loading, error, refetch } = useGoogleSheets(
-    config.spreadsheetId,
+  const { data, loading: sheetsLoading, error: sheetsError, refetch } = useGoogleSheets(
+    useSheets ? config.spreadsheetId : null,
     GOOGLE_SHEETS_CONFIG.ranges.rosterWide,
-    config.apiKey
+    useSheets ? config.apiKey : null
   );
+
+  // If JSON data is available, return it directly (already transformed)
+  if (!jsonLoading && jsonData && jsonData.length > 0) {
+    return { teams: jsonData, loading: false, error: null, refetch: () => { } };
+  }
+
+  const loading = jsonLoading || (useSheets && sheetsLoading);
+  const error = useSheets ? sheetsError : jsonError;
 
   // Transform Google Sheets data to app format
   // _RosterWide headers: Team | Captain | Co-Captain (CC) Player | Player | Player | Player | Player | Status

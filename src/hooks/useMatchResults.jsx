@@ -1,5 +1,6 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 
 /**
  * Parse score rounds (R1, R2, R3) and calculate total
@@ -44,12 +45,22 @@ const parseMatchScore = (row) => {
  * Shows completed matches with scores (winner in green, loser in red)
  */
 export const useMatchResults = () => {
+    const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('matchResults');
+    const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
     const config = getRosterConfig();
-    const { data, loading, error, refetch } = useGoogleSheets(
-        config.spreadsheetId,
+    const { data, loading: sheetsLoading, error: sheetsError, refetch } = useGoogleSheets(
+        useSheets ? config.spreadsheetId : null,
         GOOGLE_SHEETS_CONFIG.ranges.matchResults,
-        config.apiKey
+        useSheets ? config.apiKey : null
     );
+
+    if (!jsonLoading && jsonData && jsonData.length > 0) {
+        return { matchResults: jsonData, loading: false, error: null, refetch: () => { } };
+    }
+
+    const loading = jsonLoading || (useSheets && sheetsLoading);
+    const error = useSheets ? sheetsError : jsonError;
 
     // Transform Google Sheets data to app format
     const matchResults = data.map(row => {

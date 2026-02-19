@@ -1,16 +1,28 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 
 /**
- * Hook to fetch registered league substitute players
+ * Hook to fetch registered league substitute players from data.json or Google Sheets
  */
 export const useLeagueSubs = () => {
+    const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('leagueSubs');
+    const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
     const config = getRosterConfig();
-    const { data, loading, error, refetch } = useGoogleSheets(
-        config.spreadsheetId,
+    const { data, loading: sheetsLoading, error: sheetsError, refetch } = useGoogleSheets(
+        useSheets ? config.spreadsheetId : null,
         GOOGLE_SHEETS_CONFIG.ranges.registeredLeagueSubs,
-        config.apiKey
+        useSheets ? config.apiKey : null
     );
+
+    // leagueSubs is an array of strings in data.json
+    if (!jsonLoading && jsonData && jsonData.length > 0) {
+        return { subs: jsonData, count: jsonData.length, loading: false, error: null, refetch: () => { } };
+    }
+
+    const loading = jsonLoading || (useSheets && sheetsLoading);
+    const error = useSheets ? sheetsError : jsonError;
 
     // Transform Google Sheets data to app format
     // Handle various column formats - could be in any column

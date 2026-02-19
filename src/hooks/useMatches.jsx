@@ -1,17 +1,27 @@
 import { useGoogleSheets } from './useGoogleSheets';
 import { getRosterConfig, GOOGLE_SHEETS_CONFIG } from '../../config/sheets';
+import { useDataJson } from './useDataJson';
 
 /**
- * Hook to fetch matches from the NA PBLC MATCHES sheet
- * This sheet contains match assignments with team rankings
+ * Hook to fetch matches from the Proposed Match Results sheet
  */
 export const useMatches = () => {
+  const { data: jsonData, loading: jsonLoading, error: jsonError } = useDataJson('proposedMatches');
+  const useSheets = !jsonLoading && (jsonError || !jsonData || jsonData.length === 0);
+
   const config = getRosterConfig();
-  const { data, loading, error, refetch } = useGoogleSheets(
-    config.spreadsheetId,
-    GOOGLE_SHEETS_CONFIG.ranges.matches, // Using the new NA PBLC MATCHES range
-    config.apiKey
+  const { data, loading: sheetsLoading, error: sheetsError, refetch } = useGoogleSheets(
+    useSheets ? config.spreadsheetId : null,
+    GOOGLE_SHEETS_CONFIG.ranges.matches,
+    useSheets ? config.apiKey : null
   );
+
+  if (!jsonLoading && jsonData && jsonData.length > 0) {
+    return { matches: jsonData, loading: false, error: null, refetch: () => { } };
+  }
+
+  const loading = jsonLoading || (useSheets && sheetsLoading);
+  const error = useSheets ? sheetsError : jsonError;
 
   // Transform Google Sheets data to app format
   // Proposed Match Results headers: Team Submitting Scores | Team Accepting Scores | Match Status |

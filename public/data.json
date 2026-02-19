@@ -1,0 +1,1380 @@
+{
+    "lastUpdated": "2026-02-19T00:00:00.000Z",
+    "teams": [
+        {
+            "id": 1,
+            "name": "Astral",
+            "captain": "ioah",
+            "coCaptain": "manta",
+            "players": [
+                "weep",
+                "PureCosmo",
+                "Shush"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 2,
+            "name": "CAPITA",
+            "captain": "mason",
+            "coCaptain": "dull",
+            "players": [
+                "lowz",
+                "Prize",
+                "Jay"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 3,
+            "name": "Cat Boys",
+            "captain": "IdkmyVRname-TimeSkip",
+            "coCaptain": "Greed",
+            "players": [
+                "ItxFearLess",
+                "P1nkCan",
+                "zyrts"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 4,
+            "name": "Children of God",
+            "captain": "Sam_00",
+            "coCaptain": "",
+            "players": [],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 5,
+            "name": "CRUNK",
+            "captain": "SweetLyfe",
+            "coCaptain": "GuhGuhGOOSE",
+            "players": [
+                "Peaked Gold 4",
+                "DaveJTuck"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 6,
+            "name": "Deadlock",
+            "captain": "Rivoltra",
+            "coCaptain": "ImportantIvan88",
+            "players": [
+                "Argonaut",
+                "Band1t",
+                "Flare"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 7,
+            "name": "Eclipse",
+            "captain": "Samoan",
+            "coCaptain": "Azura",
+            "players": [
+                "VTK_SAUZZE",
+                "Akxsh1",
+                "NBK zero",
+                "mura"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 8,
+            "name": "Eclipsed Reapers",
+            "captain": "Sawnic",
+            "coCaptain": "",
+            "players": [],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 9,
+            "name": "Eleven Point Five",
+            "captain": "cole",
+            "coCaptain": "JohnFortnite609",
+            "players": [
+                "Germ",
+                "FOOTLY",
+                "bbtitan1",
+                "Feels_"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 10,
+            "name": "Eternity",
+            "captain": "Shoyim",
+            "coCaptain": "Frosty",
+            "players": [
+                "Sunshine",
+                "mbck13",
+                "-Dem0n h3x-",
+                "Mountainous"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 11,
+            "name": "Exodia",
+            "captain": "Owenculus",
+            "coCaptain": "AutsticTrtl",
+            "players": [
+                "Funeral",
+                "Otter_Os",
+                "Orthrua"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 12,
+            "name": "Floccinaucinihilipilification",
+            "captain": "Decay",
+            "coCaptain": "XKing",
+            "players": [
+                "Rev",
+                "hollow",
+                "mahker"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 13,
+            "name": "frug",
+            "captain": "ryanjs4",
+            "coCaptain": "Beot",
+            "players": [
+                "Suprumbuns",
+                "PrinceXizor",
+                "Raptured9"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 14,
+            "name": "Good Vibes Only",
+            "captain": "Coastermaster77",
+            "coCaptain": "Camspin12",
+            "players": [
+                "Matt",
+                "Pause"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 15,
+            "name": "HEAT",
+            "captain": "ProGamer877",
+            "coCaptain": "aiden",
+            "players": [
+                "turtle"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 16,
+            "name": "heatSS",
+            "captain": "SwElmontAvious",
+            "coCaptain": "Mason_JesusIsKing",
+            "players": [
+                "n3z",
+                "H4nd0",
+                "Velo"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 17,
+            "name": "Hyperion",
+            "captain": "Hero",
+            "coCaptain": "Death row",
+            "players": [
+                "Zephy",
+                "Weedo420",
+                "crxptzz",
+                "NBAKairos"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 18,
+            "name": "Jackpot",
+            "captain": "Hyzer",
+            "coCaptain": "Semple",
+            "players": [
+                "Brady",
+                "Requiem"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 19,
+            "name": "Kaizen",
+            "captain": "choso",
+            "coCaptain": "yuji",
+            "players": [
+                "Mahito",
+                "Hakari",
+                "Todo",
+                "Mahoraga"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 20,
+            "name": "Kill Code",
+            "captain": "jack",
+            "coCaptain": "nya",
+            "players": [
+                "Luv",
+                "solarp",
+                "Akashi",
+                "GhostDuck"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 21,
+            "name": "lawnmower",
+            "captain": "egg",
+            "coCaptain": "appa",
+            "players": [
+                "catfood"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 22,
+            "name": "lawnmowers",
+            "captain": "wiglets246",
+            "coCaptain": "Fletcherus",
+            "players": [
+                "Cat",
+                "ChickenMan",
+                "monarch",
+                "pixelpatrick"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 23,
+            "name": "Lightbuwlb",
+            "captain": "Razor",
+            "coCaptain": "Toxicantbog",
+            "players": [
+                "HalfCourtHenry300",
+                "babytru3",
+                "Shorty"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 24,
+            "name": "M0dified",
+            "captain": "Spirit",
+            "coCaptain": "Chrome",
+            "players": [
+                "TheLaw",
+                "ryan.norton",
+                "Mozzy"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 25,
+            "name": "Monarch",
+            "captain": "Qcantshoot",
+            "coCaptain": "Flakey",
+            "players": [
+                "MrCuckoohead",
+                "Wild",
+                "caroline"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 26,
+            "name": "Mystic",
+            "captain": "Jett",
+            "coCaptain": "Fz",
+            "players": [
+                "chyer"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 27,
+            "name": "Nexus",
+            "captain": "OpaL1ght",
+            "coCaptain": "KC8921",
+            "players": [
+                "Retro",
+                "Blazemuch16",
+                "Jolo",
+                "Skibble"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 28,
+            "name": "no no no no if you",
+            "captain": "whitesox5",
+            "coCaptain": "mia",
+            "players": [
+                "OC06",
+                "wave2earth",
+                "sara",
+                "ApplJaks"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 29,
+            "name": "Purple Playhouse",
+            "captain": "sam",
+            "coCaptain": "waffledlife",
+            "players": [
+                "Devquan",
+                "Jmbjmb98",
+                "jag7274",
+                "tupacb"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 30,
+            "name": "quest",
+            "captain": "christ",
+            "coCaptain": "judah",
+            "players": [
+                "chiken",
+                "Daity",
+                "BillyBrutalFist",
+                "Bum"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 31,
+            "name": "Ragnarok",
+            "captain": "Kratos",
+            "coCaptain": "LeftNostrill",
+            "players": [
+                "Brok",
+                "heimdall",
+                "Thor",
+                "Surtur"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 32,
+            "name": "Reapers Demise",
+            "captain": "DetraAce",
+            "coCaptain": "Chill0ut",
+            "players": [
+                "Hyper_JF"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Inactive",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 33,
+            "name": "Ren",
+            "captain": "Krogers",
+            "coCaptain": "Jaxxjh",
+            "players": [
+                "Zu-Ko",
+                "mikey"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 34,
+            "name": "rent free",
+            "captain": "sashi",
+            "coCaptain": "Tyler",
+            "players": [
+                "Drpepperlover9183",
+                "MonsterEnergy",
+                "ruk",
+                "once"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 35,
+            "name": "Soul",
+            "captain": "carter",
+            "coCaptain": "DrasticMeasure",
+            "players": [
+                "kucci",
+                "Phoenixx",
+                "8B1t_Blitz"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 36,
+            "name": "Surge",
+            "captain": "IceBergg12",
+            "coCaptain": "Blitz_05",
+            "players": [
+                "fasf_on_fent",
+                "Duckyy",
+                "Ruru6886"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 37,
+            "name": "The Omens",
+            "captain": "bucket",
+            "coCaptain": "pandaaaa",
+            "players": [
+                "thenamenate",
+                "Duck",
+                "SlaveChips",
+                "Festive"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 38,
+            "name": "ULTRA x TENS0R",
+            "captain": "PHAEN0M",
+            "coCaptain": "HyperTank",
+            "players": [
+                "James",
+                "Yuji",
+                "Sizzle",
+                "Emptyi"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 39,
+            "name": "Unholy Offspring",
+            "captain": "Light Fury",
+            "coCaptain": "MyGuyChromium",
+            "players": [
+                "ECO_RebalPhoenix86",
+                "iso",
+                "B3AN",
+                "Uzu"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 40,
+            "name": "UV3",
+            "captain": "kingkrip",
+            "coCaptain": "Natsuki",
+            "players": [
+                "Synx",
+                "Taw",
+                "DarkArrow"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 41,
+            "name": "W",
+            "captain": "Adam",
+            "coCaptain": "GatheringStorm7707",
+            "players": [
+                "phanda",
+                "babs"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 42,
+            "name": "WBW",
+            "captain": "rhino",
+            "coCaptain": "7ven",
+            "players": [
+                "Katz",
+                "Lukeski",
+                "Retro",
+                "rukia"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        },
+        {
+            "id": 43,
+            "name": "Zone Echo",
+            "captain": "DarTerrorPeanut",
+            "coCaptain": "Abel156",
+            "players": [
+                "memeC50",
+                "SniperPanda4708"
+            ],
+            "tier": "",
+            "region": "NA",
+            "status": "Active",
+            "leaguePoints": 0,
+            "wins": 0,
+            "losses": 0,
+            "teamLogo": ""
+        }
+    ],
+    "teamRoles": [
+        {
+            "id": 1,
+            "name": "Astral",
+            "captain": "ioah",
+            "coCaptain": "manta",
+            "players": [
+                "weep",
+                "PureCosmo",
+                "Shush"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 2,
+            "name": "CAPITA",
+            "captain": "mason",
+            "coCaptain": "dull",
+            "players": [
+                "lowz",
+                "Prize",
+                "Jay"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 3,
+            "name": "Cat Boys",
+            "captain": "IdkmyVRname-TimeSkip",
+            "coCaptain": "Greed",
+            "players": [
+                "ItxFearLess",
+                "P1nkCan",
+                "zyrts"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 4,
+            "name": "Children of God",
+            "captain": "Sam_00",
+            "coCaptain": "",
+            "players": [],
+            "status": "Inactive",
+            "totalPlayers": 1,
+            "ranks": []
+        },
+        {
+            "id": 5,
+            "name": "CRUNK",
+            "captain": "SweetLyfe",
+            "coCaptain": "GuhGuhGOOSE",
+            "players": [
+                "Peaked Gold 4",
+                "DaveJTuck"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        },
+        {
+            "id": 6,
+            "name": "Deadlock",
+            "captain": "Rivoltra",
+            "coCaptain": "ImportantIvan88",
+            "players": [
+                "Argonaut",
+                "Band1t",
+                "Flare"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 7,
+            "name": "Eclipse",
+            "captain": "Samoan",
+            "coCaptain": "Azura",
+            "players": [
+                "VTK_SAUZZE",
+                "Akxsh1",
+                "NBK zero",
+                "mura"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 8,
+            "name": "Eclipsed Reapers",
+            "captain": "Sawnic",
+            "coCaptain": "",
+            "players": [],
+            "status": "Inactive",
+            "totalPlayers": 1,
+            "ranks": []
+        },
+        {
+            "id": 9,
+            "name": "Eleven Point Five",
+            "captain": "cole",
+            "coCaptain": "JohnFortnite609",
+            "players": [
+                "Germ",
+                "FOOTLY",
+                "bbtitan1",
+                "Feels_"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 10,
+            "name": "Eternity",
+            "captain": "Shoyim",
+            "coCaptain": "Frosty",
+            "players": [
+                "Sunshine",
+                "mbck13",
+                "-Dem0n h3x-",
+                "Mountainous"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 11,
+            "name": "Exodia",
+            "captain": "Owenculus",
+            "coCaptain": "AutsticTrtl",
+            "players": [
+                "Funeral",
+                "Otter_Os",
+                "Orthrua"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 12,
+            "name": "Floccinaucinihilipilification",
+            "captain": "Decay",
+            "coCaptain": "XKing",
+            "players": [
+                "Rev",
+                "hollow",
+                "mahker"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 13,
+            "name": "frug",
+            "captain": "ryanjs4",
+            "coCaptain": "Beot",
+            "players": [
+                "Suprumbuns",
+                "PrinceXizor",
+                "Raptured9"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 14,
+            "name": "Good Vibes Only",
+            "captain": "Coastermaster77",
+            "coCaptain": "Camspin12",
+            "players": [
+                "Matt",
+                "Pause"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        },
+        {
+            "id": 15,
+            "name": "HEAT",
+            "captain": "ProGamer877",
+            "coCaptain": "aiden",
+            "players": [
+                "turtle"
+            ],
+            "status": "Inactive",
+            "totalPlayers": 3,
+            "ranks": []
+        },
+        {
+            "id": 16,
+            "name": "heatSS",
+            "captain": "SwElmontAvious",
+            "coCaptain": "Mason_JesusIsKing",
+            "players": [
+                "n3z",
+                "H4nd0",
+                "Velo"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 17,
+            "name": "Hyperion",
+            "captain": "Hero",
+            "coCaptain": "Death row",
+            "players": [
+                "Zephy",
+                "Weedo420",
+                "crxptzz",
+                "NBAKairos"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 18,
+            "name": "Jackpot",
+            "captain": "Hyzer",
+            "coCaptain": "Semple",
+            "players": [
+                "Brady",
+                "Requiem"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        },
+        {
+            "id": 19,
+            "name": "Kaizen",
+            "captain": "choso",
+            "coCaptain": "yuji",
+            "players": [
+                "Mahito",
+                "Hakari",
+                "Todo",
+                "Mahoraga"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 20,
+            "name": "Kill Code",
+            "captain": "jack",
+            "coCaptain": "nya",
+            "players": [
+                "Luv",
+                "solarp",
+                "Akashi",
+                "GhostDuck"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 21,
+            "name": "lawnmower",
+            "captain": "egg",
+            "coCaptain": "appa",
+            "players": [
+                "catfood"
+            ],
+            "status": "Inactive",
+            "totalPlayers": 3,
+            "ranks": []
+        },
+        {
+            "id": 22,
+            "name": "lawnmowers",
+            "captain": "wiglets246",
+            "coCaptain": "Fletcherus",
+            "players": [
+                "Cat",
+                "ChickenMan",
+                "monarch",
+                "pixelpatrick"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 23,
+            "name": "Lightbuwlb",
+            "captain": "Razor",
+            "coCaptain": "Toxicantbog",
+            "players": [
+                "HalfCourtHenry300",
+                "babytru3",
+                "Shorty"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 24,
+            "name": "M0dified",
+            "captain": "Spirit",
+            "coCaptain": "Chrome",
+            "players": [
+                "TheLaw",
+                "ryan.norton",
+                "Mozzy"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 25,
+            "name": "Monarch",
+            "captain": "Qcantshoot",
+            "coCaptain": "Flakey",
+            "players": [
+                "MrCuckoohead",
+                "Wild",
+                "caroline"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 26,
+            "name": "Mystic",
+            "captain": "Jett",
+            "coCaptain": "Fz",
+            "players": [
+                "chyer"
+            ],
+            "status": "Inactive",
+            "totalPlayers": 3,
+            "ranks": []
+        },
+        {
+            "id": 27,
+            "name": "Nexus",
+            "captain": "OpaL1ght",
+            "coCaptain": "KC8921",
+            "players": [
+                "Retro",
+                "Blazemuch16",
+                "Jolo",
+                "Skibble"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 28,
+            "name": "no no no no if you",
+            "captain": "whitesox5",
+            "coCaptain": "mia",
+            "players": [
+                "OC06",
+                "wave2earth",
+                "sara",
+                "ApplJaks"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 29,
+            "name": "Purple Playhouse",
+            "captain": "sam",
+            "coCaptain": "waffledlife",
+            "players": [
+                "Devquan",
+                "Jmbjmb98",
+                "jag7274",
+                "tupacb"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 30,
+            "name": "quest",
+            "captain": "christ",
+            "coCaptain": "judah",
+            "players": [
+                "chiken",
+                "Daity",
+                "BillyBrutalFist",
+                "Bum"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 31,
+            "name": "Ragnarok",
+            "captain": "Kratos",
+            "coCaptain": "LeftNostrill",
+            "players": [
+                "Brok",
+                "heimdall",
+                "Thor",
+                "Surtur"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 32,
+            "name": "Reapers Demise",
+            "captain": "DetraAce",
+            "coCaptain": "Chill0ut",
+            "players": [
+                "Hyper_JF"
+            ],
+            "status": "Inactive",
+            "totalPlayers": 3,
+            "ranks": []
+        },
+        {
+            "id": 33,
+            "name": "Ren",
+            "captain": "Krogers",
+            "coCaptain": "Jaxxjh",
+            "players": [
+                "Zu-Ko",
+                "mikey"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        },
+        {
+            "id": 34,
+            "name": "rent free",
+            "captain": "sashi",
+            "coCaptain": "Tyler",
+            "players": [
+                "Drpepperlover9183",
+                "MonsterEnergy",
+                "ruk",
+                "once"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 35,
+            "name": "Soul",
+            "captain": "carter",
+            "coCaptain": "DrasticMeasure",
+            "players": [
+                "kucci",
+                "Phoenixx",
+                "8B1t_Blitz"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 36,
+            "name": "Surge",
+            "captain": "IceBergg12",
+            "coCaptain": "Blitz_05",
+            "players": [
+                "fasf_on_fent",
+                "Duckyy",
+                "Ruru6886"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 37,
+            "name": "The Omens",
+            "captain": "bucket",
+            "coCaptain": "pandaaaa",
+            "players": [
+                "thenamenate",
+                "Duck",
+                "SlaveChips",
+                "Festive"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 38,
+            "name": "ULTRA x TENS0R",
+            "captain": "PHAEN0M",
+            "coCaptain": "HyperTank",
+            "players": [
+                "James",
+                "Yuji",
+                "Sizzle",
+                "Emptyi"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 39,
+            "name": "Unholy Offspring",
+            "captain": "Light Fury",
+            "coCaptain": "MyGuyChromium",
+            "players": [
+                "ECO_RebalPhoenix86",
+                "iso",
+                "B3AN",
+                "Uzu"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 40,
+            "name": "UV3",
+            "captain": "kingkrip",
+            "coCaptain": "Natsuki",
+            "players": [
+                "Synx",
+                "Taw",
+                "DarkArrow"
+            ],
+            "status": "Active",
+            "totalPlayers": 5,
+            "ranks": []
+        },
+        {
+            "id": 41,
+            "name": "W",
+            "captain": "Adam",
+            "coCaptain": "GatheringStorm7707",
+            "players": [
+                "phanda",
+                "babs"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        },
+        {
+            "id": 42,
+            "name": "WBW",
+            "captain": "rhino",
+            "coCaptain": "7ven",
+            "players": [
+                "Katz",
+                "Lukeski",
+                "Retro",
+                "rukia"
+            ],
+            "status": "Active",
+            "totalPlayers": 6,
+            "ranks": []
+        },
+        {
+            "id": 43,
+            "name": "Zone Echo",
+            "captain": "DarTerrorPeanut",
+            "coCaptain": "Abel156",
+            "players": [
+                "memeC50",
+                "SniperPanda4708"
+            ],
+            "status": "Active",
+            "totalPlayers": 4,
+            "ranks": []
+        }
+    ],
+    "standings": [],
+    "rankings": [],
+    "matchResults": [],
+    "forfeits": [],
+    "proposedMatches": [],
+    "cooldownPlayers": [],
+    "leagueSubs": []
+}
