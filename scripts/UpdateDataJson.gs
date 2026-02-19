@@ -11,10 +11,9 @@
  * 2. Go to Extensions → Apps Script.
  * 3. Paste this entire file as a new script file (e.g. UpdateDataJson.gs).
  * 4. In the Apps Script editor, click Project Settings (⚙) → Script Properties.
- *    Add three properties:
+ *    Add one property:
  *      GITHUB_TOKEN  → a GitHub Personal Access Token with "repo" scope
- *      GITHUB_OWNER  → your GitHub username or org (e.g. "aaliy")
- *      GITHUB_REPO   → repository name (e.g. "echo-master-league-website")
+ *    (GITHUB_OWNER and GITHUB_REPO are already hardcoded below)
  * 5. Save the script.
  * 6. Run `updateDataJson` once manually (click ▶) to authorise OAuth scopes.
  * 7. Add a time-driven trigger:
@@ -55,6 +54,8 @@ var SHEET_TABS = {
   leagueSubs:           'Registered League Subs',
 };
 
+var GITHUB_OWNER     = 'reflectionsa';
+var GITHUB_REPO      = 'echo-master-league-website';
 var GITHUB_FILE_PATH = 'public/data.json';
 var GITHUB_BRANCH    = 'main';
 
@@ -375,11 +376,11 @@ function transformLeagueSubs(data) {
 function pushToGitHub(jsonString) {
   var props = PropertiesService.getScriptProperties();
   var token = props.getProperty('GITHUB_TOKEN');
-  var owner = props.getProperty('GITHUB_OWNER');
-  var repo  = props.getProperty('GITHUB_REPO');
+  var owner = GITHUB_OWNER;
+  var repo  = GITHUB_REPO;
 
-  if (!token || !owner || !repo) {
-    throw new Error('Missing Script Properties: GITHUB_TOKEN, GITHUB_OWNER, or GITHUB_REPO');
+  if (!token) {
+    throw new Error('Missing Script Property: GITHUB_TOKEN — add it in Project Settings → Script Properties');
   }
 
   var apiBase = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + GITHUB_FILE_PATH;
