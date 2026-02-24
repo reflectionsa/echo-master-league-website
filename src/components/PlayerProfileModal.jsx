@@ -14,16 +14,16 @@ const playerProfilePictures = {
 
 const seasonChampions = {
   'Krogers': [
-    { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png?ex=69954aa1&is=6993f921&hm=f934706494a58357a5c40c9d9039ee951e3d48b9b5c4e24e8e67b083eb309f58&' },
-    { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png?ex=69954c9d&is=6993fb1d&hm=3a04a8036aeef84ae9f7153af8c5644f470b9f493761b7f79795ebd6bdc96cf5&animated=true' }
+    { season: 2, image: '/images/seasons/season2-champion.svg' },
+    { season: 3, image: '/images/seasons/season3-champion.svg' }
   ],
   'Jaxxjh': [
-    { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png?ex=69954aa1&is=6993f921&hm=f934706494a58357a5c40c9d9039ee951e3d48b9b5c4e24e8e67b083eb309f58&' },
-    { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png?ex=69954c9d&is=6993fb1d&hm=3a04a8036aeef84ae9f7153af8c5644f470b9f493761b7f79795ebd6bdc96cf5&animated=true' }
+    { season: 2, image: '/images/seasons/season2-champion.svg' },
+    { season: 3, image: '/images/seasons/season3-champion.svg' }
   ],
   'mikey': [
-    { season: 2, image: 'https://cdn.discordapp.com/attachments/1241825775414677536/1473185735044759582/c19733f9-621e-4220-8deb-304586125467.png?ex=69954aa1&is=6993f921&hm=f934706494a58357a5c40c9d9039ee951e3d48b9b5c4e24e8e67b083eb309f58&' },
-    { season: 3, image: 'https://media.discordapp.net/attachments/1241825775414677536/1473187865511989270/f4ac3eba-635c-4479-b74d-bce417a81577.png?ex=69954c9d&is=6993fb1d&hm=3a04a8036aeef84ae9f7153af8c5644f470b9f493761b7f79795ebd6bdc96cf5&animated=true' }
+    { season: 2, image: '/images/seasons/season2-champion.svg' },
+    { season: 3, image: '/images/seasons/season3-champion.svg' }
   ],
 };
 

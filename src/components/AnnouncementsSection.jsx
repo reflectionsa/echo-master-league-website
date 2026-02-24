@@ -1,15 +1,20 @@
 import { Box, Container, VStack, Text, HStack, Badge, Grid } from '@chakra-ui/react';
 import { Newspaper, Clock } from 'lucide-react';
 import { emlColors } from '../theme/colors';
-
-const news = [
-  { title: 'Season 4 Week Four Matches Posted!', date: 'Feb 24, 2026', category: 'Announcement', summary: 'Week Four matches are live. Schedule by Friday noon EDT and play by Sunday. See EML Bot Instructions for commands.' },
-  { title: 'Replay Files Policy', date: 'Feb 24, 2026', category: 'Rules', summary: 'A replay file is required for cheating reports. For bug abuse reports, one may be requested if evidence is unclear.' },
-  { title: 'Pause Rules Reminder', date: 'Feb 24, 2026', category: 'Rules', summary: '1 between-round pause and 1 during-round pause per team (5 min each, extendable to 15 for tech). Illegal pauses result in point deductions.' },
-  { title: 'Staff Applications Open', date: 'Feb 24, 2026', category: 'Update', summary: 'Use /staff app to apply anytime. Looking for Casters, Camera Ops, Helpers, and Future Mods.' }
-];
+import { getCurrentSeasonWeek, getWeekName, getWeekDateRange } from '../utils/weekUtils';
 
 const AnnouncementsSection = ({ theme }) => {
+  const currentWeek = getCurrentSeasonWeek();
+  const weekName = getWeekName(currentWeek);
+  const weekRange = getWeekDateRange(currentWeek);
+
+  const news = [
+    { title: `Season 4 Week ${weekName} Matches Posted!`, date: weekRange, category: 'Announcement', summary: `Week ${weekName} matches are live. Schedule by Friday noon EDT and play by Sunday. See EML Bot Instructions for commands.` },
+    { title: 'Replay Files Policy', date: weekRange, category: 'Rules', summary: 'A replay file is required for cheating reports. For bug abuse reports, one may be requested if evidence is unclear.' },
+    { title: 'Pause Rules Reminder', date: weekRange, category: 'Rules', summary: '1 between-round pause and 1 during-round pause per team (5 min each, extendable to 15 for tech). Illegal pauses result in point deductions.' },
+    { title: 'Staff Applications Open', date: weekRange, category: 'Update', summary: 'Use /staff app to apply anytime. Looking for Casters, Camera Ops, Helpers, and Future Mods.' }
+  ];
+
   return (
     <Box id="announcements" py="20" bg={emlColors.bgPrimary}>
       <Container maxW="6xl">

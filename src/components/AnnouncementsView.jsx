@@ -1,9 +1,13 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge, Image, Separator } from '@chakra-ui/react';
 import { Bell, Calendar, AlertCircle } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
+import { getCurrentSeasonWeek, getWeekName, getWeekDateRange } from '../utils/weekUtils';
 
 const AnnouncementsView = ({ theme, open, onClose }) => {
   const emlColors = getThemedColors(theme);
+  const currentWeek = getCurrentSeasonWeek();
+  const weekName = getWeekName(currentWeek);
+  const weekRange = getWeekDateRange(currentWeek);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">
@@ -44,17 +48,17 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                 <VStack align="start" gap="6">
                   <HStack justify="space-between" w="full" flexWrap="wrap">
                     <Badge colorPalette="orange" size="lg" px="3" py="1">
-                      SEASON 4 - WEEK FOUR
+                      SEASON 4 - WEEK {weekName.toUpperCase()}
                     </Badge>
                     <HStack gap="1" fontSize="sm" color={emlColors.textMuted}>
                       <Calendar size={14} />
-                      <Text>Feb 24, 2026</Text>
+                      <Text>{weekRange}</Text>
                     </HStack>
                   </HStack>
 
                   <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="800" color={emlColors.textPrimary}>
                     <Text as="a" href="https://echomasterleague.com/assigned-matches/" target="_blank" rel="noopener noreferrer" color={emlColors.accentOrange} _hover={{ textDecoration: 'underline' }}>
-                      Week Four Matches
+                      Week {weekName} Matches
                     </Text>{' '}for Season 4 are Posted!
                   </Text>
 
@@ -130,7 +134,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                     <Box w="full" mt="4" rounded="xl" overflow="hidden" border="1px solid" borderColor={emlColors.borderMedium}>
                       <Image
                         src="https://media.discordapp.net/attachments/1461811148482412835/1475358463306498161/1BiQ6mb.png?ex=699f2c64&is=699ddae4&hm=5eaed7a939acd27983441ae709c919fd59a162c801e52048937c4f6fd363771f&=&format=webp&quality=lossless&width=960&height=540"
-                        alt="Season 4 Week Four Matches"
+                        alt={`Season 4 Week ${weekName} Matches`}
                         w="full"
                         h="auto"
                         objectFit="contain"

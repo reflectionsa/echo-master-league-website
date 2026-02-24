@@ -4,6 +4,7 @@ import { useSchedule } from '../hooks/useSchedule';
 import { useMatchResults } from '../hooks/useMatchResults';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
+import { getCurrentSeasonWeek } from '../utils/weekUtils';
 
 const MatchesView = ({ theme, open, onClose }) => {
   const { needsColorBlindSupport } = useAccessibility();
@@ -14,8 +15,12 @@ const MatchesView = ({ theme, open, onClose }) => {
   const upcoming = matches.filter(m => m.status === 'Scheduled' || m.status === 'Live');
   const scheduled = matches.filter(m => m.status === 'Scheduled');
 
-  // Filter match results for Week 3
-  const week3Results = matchResults.filter(m => m.week && m.week.toString().includes('3'));
+  // Dynamically find the most recent week that has results
+  const weekNumbers = matchResults
+    .map(m => parseInt(m.week))
+    .filter(n => !isNaN(n));
+  const latestWeek = weekNumbers.length > 0 ? Math.max(...weekNumbers) : getCurrentSeasonWeek();
+  const latestWeekResults = matchResults.filter(m => m.week && parseInt(m.week) === latestWeek);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
@@ -51,7 +56,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                 <Tabs.Root defaultValue="results">
                   <Tabs.List mb="6" bg={emlColors.bgTertiary} p="1" rounded="xl">
                     <Tabs.Trigger value="results" fontWeight="600" color={emlColors.textPrimary}>
-                      Match Results (Week 3)
+                      Match Results (Week {latestWeek})
                     </Tabs.Trigger>
                     <Tabs.Trigger value="upcoming" fontWeight="600" color={emlColors.textPrimary}>
                       Upcoming Matches
@@ -73,7 +78,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                           </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                          {week3Results.map(match => (
+                          {latestWeekResults.map(match => (
                             <Table.Row key={match.id} _hover={{ bg: `${emlColors.textPrimary}08` }}>
                               <Table.Cell>
                                 <Badge colorPalette="purple" size="sm">{match.week}</Badge>
@@ -111,7 +116,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                               </Table.Cell>
                             </Table.Row>
                           ))}
-                          {week3Results.length === 0 && (
+                          {latestWeekResults.length === 0 && (
                             <Table.Row>
                               <Table.Cell colSpan={5}>
                                 <Center py="8">

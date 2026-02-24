@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)" rx="12"/>
+  <rect x="0" y="0" width="400" height="200" fill="none" stroke="url(#silver)" stroke-width="2" rx="12"/>
+  <!-- Trophy icon -->
+  <text x="60" y="120" text-anchor="middle" font-size="64" fill="#94a3b8">🏆</text>
+  <!-- EML Logo text -->
+  <text x="230" y="70" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="18" fill="url(#purple)">ECHO MASTER LEAGUE</text>
+  <!-- Season label -->
+  <text x="230" y="110" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="38" fill="url(#silver)">SEASON 3</text>
+  <!-- Champions label -->
+  <text x="230" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="16" fill="rgba(255,255,255,0.7)" letter-spacing="4">CHAMPIONS</text>
+  <!-- Decorative line -->
+  <line x1="130" y1="158" x2="330" y2="158" stroke="url(#silver)" stroke-width="1.5" opacity="0.6"/>
+</svg>
