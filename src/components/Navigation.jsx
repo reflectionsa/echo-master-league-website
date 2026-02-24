@@ -13,6 +13,10 @@ import TeamsView from './TeamsView';
 import RulesView from './RulesView';
 import BotView from './BotView';
 import MediaView from './MediaView';
+import PlayerLeaderboardView from './PlayerLeaderboardView';
+import HighlightsView from './HighlightsView';
+import PredictionsView from './PredictionsView';
+import TipsAndTricksView from './TipsAndTricksView';
 
 const Navigation = ({
   theme,
@@ -34,6 +38,10 @@ const Navigation = ({
   const [rulesOpen, setRulesOpen] = useState(false);
   const [botOpen, setBotOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [highlightsOpen, setHighlightsOpen] = useState(false);
+  const [predictionsOpen, setPredictionsOpen] = useState(false);
+  const [tipsOpen, setTipsOpen] = useState(false);
 
   return (
     <>
@@ -142,7 +150,44 @@ const Navigation = ({
                       _hover={{ bg: colors.bgHover }}
                       onClick={() => setMediaOpen(true)}
                     >
-                      Highlights & Content
+                      Media & Social
+                    </Menu.Item>
+                    <Menu.Separator />
+                    <Menu.Item
+                      value="leaderboard"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => setLeaderboardOpen(true)}
+                    >
+                      Player Leaderboard
+                    </Menu.Item>
+                    <Menu.Item
+                      value="highlights"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => setHighlightsOpen(true)}
+                    >
+                      EML Highlights
+                    </Menu.Item>
+                    <Menu.Item
+                      value="predictions"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => setPredictionsOpen(true)}
+                    >
+                      Match Predictions
+                    </Menu.Item>
+                    <Menu.Item
+                      value="tips"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => setTipsOpen(true)}
+                    >
+                      Tips & Tricks
                     </Menu.Item>
                   </Menu.Content>
                 </Menu.Positioner>
@@ -263,6 +308,10 @@ const Navigation = ({
       <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
       <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
       <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
+      <PlayerLeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
+      <HighlightsView theme={theme} open={highlightsOpen} onClose={() => setHighlightsOpen(false)} />
+      <PredictionsView theme={theme} open={predictionsOpen} onClose={() => setPredictionsOpen(false)} />
+      <TipsAndTricksView theme={theme} open={tipsOpen} onClose={() => setTipsOpen(false)} />
 
       {/* Mobile Bottom Navigation */}
       <Box

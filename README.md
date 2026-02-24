@@ -75,17 +75,63 @@ echo-master-league/
 
 ## Features
 
+### Core Features
 - 🎨 Dark/Light theme toggle with localStorage persistence
 - 📱 Responsive design with mobile bottom navigation
 - 🏆 League standings and match tracking
 - 👥 Team rosters and player profiles
 - 📅 Calendar and scheduling
 - 🎮 Discord bot integration info
-- 📺 Media highlights and content
-- 🔔 Announcements and updates
 - 📊 **Live data from Google Sheets** (teams, matches, rankings)
 - 🔄 Auto-refresh with manual refetch capability
 - 📈 Dynamic stats (real team/player counts)
+
+### New Competitive & Historical Features
+- 📊 **Player Leaderboard** - Individual player statistics with sortable columns
+  - Win rate, goals, assists, saves, MVP awards
+  - Per-game averages and totals
+  - Visibility toggle for end-of-season reveal
+- 🏅 **Trophy System** - Team achievements and tournament placements
+  - Championship stars on team pages
+  - Trophy case with tournament history
+  - Support for EML, ECF, and custom tournaments
+- 📜 **Historical Data** - Player legacy across seasons
+  - Past teams and placements
+  - Season statistics archive
+  - Legacy achievements tracking
+
+### Media & Content Features
+- 🎬 **EML Highlights** - Curated video highlights
+  - Embedded YouTube, Twitch, and TikTok clips
+  - Featured highlight carousel
+  - Player spotlight tags
+- 💡 **Tips & Tricks** - Educational content library
+  - Instructional videos
+  - Strategy guides
+  - Humorous content
+- 🎤 **Team Interviews** - High-production team features (hook available)
+- 📺 **Media Hub** - Links to Twitch, YouTube, TikTok channels
+
+### Community & Engagement Features
+- 🗳️ **Match Predictions** - Community poll-based predictions
+  - Vote percentages and totals
+  - Open/closed prediction states
+  - No betting or currency (pure fun)
+- 🏷️ **Player Tags** - Cosmetic nameplates and titles
+  - Championship badges
+  - Achievement tags
+  - Fun community titles (e.g., "11.5", "Oops! I dinged it again")
+- 📢 **Dynamic Announcements** - League updates from Google Sheets
+  - Categorized announcements
+  - Priority levels
+  - Date-sorted feed
+
+### Bot Integration
+- 🤖 **Discord Bot Sync** - Real-time data updates
+  - Bot writes to Google Sheets
+  - Website reads and displays data
+  - 30-second refresh cycle
+  - See `BOT_INTEGRATION.md` for details
 
 ## Development
 
@@ -99,10 +145,18 @@ Press `F5` in VS Code to launch the dev server and open Brave browser with debug
 
 All source code is in the `src/` directory following React/Vite conventions:
 
-- Components are in `src/components/`
-- Custom hooks are in `src/hooks/`
+- Components are in `src/components/` (40+ components)
+- Custom hooks are in `src/hooks/` (20+ data hooks)
 - Static data is in `src/data/`
 - Configuration files are in the `config/` directory
+
+## Documentation
+
+- 📖 **[FEATURE_ROADMAP.md](FEATURE_ROADMAP.md)** - Complete feature implementation roadmap
+- 🔧 **[BOT_INTEGRATION.md](BOT_INTEGRATION.md)** - Discord bot integration guide
+- 📊 **[SHEETS_DATA_FORMAT.md](SHEETS_DATA_FORMAT.md)** - Google Sheets data format reference
+- 🚀 **[GOOGLE_SHEETS_SETUP.md](GOOGLE_SHEETS_SETUP.md)** - Google Sheets API setup
+- 🎨 **[docs/COLOR_REFERENCE.md](docs/COLOR_REFERENCE.md)** - Theme color reference
 
 ## Browser Support
 
