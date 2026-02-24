@@ -1,7 +1,7 @@
 ﻿
 $apiKey = "AIzaSyBASNrr1R2CIXcyEFDQNpcRVdJ9-SU54Kc"
-$ssId   = "1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc"
-$out    = "public\data.json"
+$ssId = "1Xxui4vb0j8dkIJgprfyYgUV2G-EeBfQ2ijrABxZGgoc"
+$out = "public\data.json"
 
 function Fetch-Rows($range) {
     $enc = [uri]::EscapeDataString($range)
@@ -33,13 +33,13 @@ function ToInt($v) { $n = 0; if ([int]::TryParse([string]$v, [ref]$n)) { return 
 
 # â”€â”€ Fetch all tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 Write-Host "Fetching sheets..."
-$rosterWide    = Fetch-Rows "_RosterWide!A:H"
-$rankings      = Fetch-Rows "Rankings!A:D"
-$proposed      = Fetch-Rows "Proposed Match Results!A:J"
-$matchResults  = Fetch-Rows "Match Results!A:P"
-$forfeitsRaw   = Fetch-Rows "Forfeits!A:P"
-$cooldown      = Fetch-Rows "Cooldown List!A:C"
-$teamRolesRaw  = Fetch-Rows "Team Roles!A:D"
+$rosterWide = Fetch-Rows "_RosterWide!A:H"
+$rankings = Fetch-Rows "Rankings!A:D"
+$proposed = Fetch-Rows "Proposed Match Results!A:J"
+$matchResults = Fetch-Rows "Match Results!A:P"
+$forfeitsRaw = Fetch-Rows "Forfeits!A:P"
+$cooldown = Fetch-Rows "Cooldown List!A:C"
+$teamRolesRaw = Fetch-Rows "Team Roles!A:D"
 $leagueSubsRaw = Fetch-Rows "Registered League Subs!A:B"
 Write-Host "rosterWide=$($rosterWide.Count) rankings=$($rankings.Count) proposed=$($proposed.Count) matchResults=$($matchResults.Count) forfeits=$($forfeitsRaw.Count) cooldown=$($cooldown.Count) teamRoles=$($teamRolesRaw.Count) leagueSubs=$($leagueSubsRaw.Count)"
 
@@ -48,8 +48,8 @@ $teams = foreach ($row in $rosterWide) {
     $name = if ($row.'Team Name') { $row.'Team Name' } elseif ($row.Team) { $row.Team } else { "" }
     if (-not $name) { continue }
     $cc = if ($row.'Co-Captain (CC) Player') { $row.'Co-Captain (CC) Player' } `
-          elseif ($row.'Co-Captain') { $row.'Co-Captain' } `
-          elseif ($row.'Co Captain') { $row.'Co Captain' } else { "" }
+        elseif ($row.'Co-Captain') { $row.'Co-Captain' } `
+        elseif ($row.'Co Captain') { $row.'Co Captain' } else { "" }
     $cc = $cc -replace '^\(CC\)\s*', ''
     $players = @()
     foreach ($p in @($row.'Player 1', $row.'Player', $row.'Player_2', $row.'Player_3', $row.'Player_4')) {
@@ -74,7 +74,7 @@ $teams = foreach ($row in $rosterWide) {
 }
 
 # â”€â”€ Transform standings (from Rankings) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-$standings = $rankings | ForEach-Object -Begin { $idx=0 } -Process {
+$standings = $rankings | ForEach-Object -Begin { $idx = 0 } -Process {
     $tn = if ($_.'team name') { $_.'team name' } elseif ($_.Team) { $_.Team } else { "" }
     if (-not $tn) { continue }
     [pscustomobject]@{
@@ -93,19 +93,19 @@ $standings = $rankings | ForEach-Object -Begin { $idx=0 } -Process {
 
 # â”€â”€ Parse rank tier â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Parse-Tier($s) {
-    if (-not $s) { return @{ rank="Unranked"; division=$null } }
-    $rankMap = @{M='Master';MASTER='Master';D='Diamond';DIAMOND='Diamond';P='Platinum';PLATINUM='Platinum';G='Gold';GOLD='Gold';S='Silver';SILVER='Silver';B='Bronze';BRONZE='Bronze'}
+    if (-not $s) { return @{ rank = "Unranked"; division = $null } }
+    $rankMap = @{M = 'Master'; MASTER = 'Master'; D = 'Diamond'; DIAMOND = 'Diamond'; P = 'Platinum'; PLATINUM = 'Platinum'; G = 'Gold'; GOLD = 'Gold'; S = 'Silver'; SILVER = 'Silver'; B = 'Bronze'; BRONZE = 'Bronze' }
     if ($s -match '^(Master|M|Diamond|D|Platinum|P|Gold|G|Silver|S|Bronze|B)\s*(\d)?') {
         $r = $rankMap[$matches[1].ToUpper()]
         if (-not $r) { $r = $matches[1] }
         $div = if ($matches[2]) { [int]$matches[2] } else { $null }
-        return @{ rank=$r; division=$div }
+        return @{ rank = $r; division = $div }
     }
-    return @{ rank=$s; division=$null }
+    return @{ rank = $s; division = $null }
 }
 
 # â”€â”€ Transform rankings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-$rankingsOut = $rankings | ForEach-Object -Begin { $idx=0 } -Process {
+$rankingsOut = $rankings | ForEach-Object -Begin { $idx = 0 } -Process {
     $tn = if ($_.'team name') { $_.'team name' } elseif ($_.Team) { $_.Team } else { "" }
     if (-not $tn) { continue }
     $tierStr = if ($_.Rank) { $_.Rank } else { $_.Tier }
@@ -160,12 +160,12 @@ function Transform-MatchResults($data) {
 }
 
 $matchResultsOut = Transform-MatchResults $matchResults
-$forfeitsOut     = Transform-MatchResults $forfeitsRaw
+$forfeitsOut = Transform-MatchResults $forfeitsRaw
 
 # â”€â”€ Transform proposed matches â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $proposedOut = foreach ($row in $proposed) {
     $t1 = if ($row.'Team Submitting Scores') { $row.'Team Submitting Scores' } elseif ($row.'Team 1') { $row.'Team 1' } else { "" }
-    $t2 = if ($row.'Team Accepting Scores')  { $row.'Team Accepting Scores'  } elseif ($row.'Team 2') { $row.'Team 2' } else { "" }
+    $t2 = if ($row.'Team Accepting Scores') { $row.'Team Accepting Scores' } elseif ($row.'Team 2') { $row.'Team 2' } else { "" }
     if (-not $t1 -or -not $t2) { continue }
     $t1s = (ToInt $row.'Team A Round 1') + (ToInt $row.'Team A Round 2') + (ToInt $row.'Team A Round 3')
     $t2s = (ToInt $row.'Team B Round 1') + (ToInt $row.'Team B Round 2') + (ToInt $row.'Team B Round 3')
@@ -181,7 +181,7 @@ $proposedOut = foreach ($row in $proposed) {
         week           = if ($row.Week) { $row.Week } else { "" }
         round          = if ($row.Round) { $row.Round } else { "" }
         proposedResult = if ($row.'Proposed Result') { $row.'Proposed Result' } else { "" }
-        streamLink     = [pscustomobject]@{ url=""; platform="Twitch" }
+        streamLink     = [pscustomobject]@{ url = ""; platform = "Twitch" }
     }
 }
 
@@ -203,9 +203,9 @@ $cooldownOut = foreach ($row in $cooldown) {
 # â”€â”€ Transform league subs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $leagueSubsOut = foreach ($row in $leagueSubsRaw) {
     $pn = if ($row.'Player Name') { $row.'Player Name' } `
-          elseif ($row.Player)    { $row.Player } `
-          elseif ($row.name)      { $row.name } `
-          elseif ($row.Name)      { $row.Name } else { "" }
+        elseif ($row.Player) { $row.Player } `
+        elseif ($row.name) { $row.name } `
+        elseif ($row.Name) { $row.Name } else { "" }
     if ($pn.Trim()) { $pn.Trim() }
 }
 
@@ -226,23 +226,24 @@ if ($hasPlayerNameCol) {
         $tn = if ($row.'Team Name') { $row.'Team Name' } elseif ($row.Team) { $row.Team } else { "" }
         if (-not $pn -or -not $tn) { continue }
         $isCap = ($row.Captain -ne $null -and $row.Captain.ToString().ToLower() -eq 'yes')
-        $isCC  = (($row.'Co-Captain' -ne $null -and $row.'Co-Captain'.ToString().ToLower() -eq 'yes') -or ($row.'Co-Captain ' -ne $null -and $row.'Co-Captain '.ToString().ToLower() -eq 'yes'))
-        $rank  = if ($row.Rank) { $row.Rank } else { "" }
-        if (-not $trMap.Contains($tn)) { $trMap[$tn] = @{ name=$tn; captain=""; coCaptain=""; players=@(); ranks=@() } }
+        $isCC = (($row.'Co-Captain' -ne $null -and $row.'Co-Captain'.ToString().ToLower() -eq 'yes') -or ($row.'Co-Captain ' -ne $null -and $row.'Co-Captain '.ToString().ToLower() -eq 'yes'))
+        $rank = if ($row.Rank) { $row.Rank } else { "" }
+        if (-not $trMap.Contains($tn)) { $trMap[$tn] = @{ name = $tn; captain = ""; coCaptain = ""; players = @(); ranks = @() } }
         $t = $trMap[$tn]
         if ($isCap) { $t.captain = $pn }
         elseif ($isCC) { $t.coCaptain = $pn }
         else { $t.players += $pn }
         if ($rank) { $t.ranks += $rank }
     }
-} else {
+}
+else {
     foreach ($row in $teamRolesRaw) {
         $vals = $row.PSObject.Properties | Where-Object { $_.Name -ne 'id' -and $_.Value -and [string]$_.Value -ne '' } | ForEach-Object { [string]$_.Value }
         if (-not $vals -or $vals.Count -eq 0) { continue }
         $tn = $vals[0].Trim()
         if (-not $tn -or $tn -eq 'Active' -or $tn -eq 'Inactive') { continue }
-        $playerVals = $vals[1..($vals.Count-1)] | Where-Object { $_ -and $_ -ne 'Active' -and $_ -ne 'Inactive' }
-        if (-not $trMap.Contains($tn)) { $trMap[$tn] = @{ name=$tn; captain=""; coCaptain=""; players=@(); ranks=@() } }
+        $playerVals = $vals[1..($vals.Count - 1)] | Where-Object { $_ -and $_ -ne 'Active' -and $_ -ne 'Inactive' }
+        if (-not $trMap.Contains($tn)) { $trMap[$tn] = @{ name = $tn; captain = ""; coCaptain = ""; players = @(); ranks = @() } }
         $t = $trMap[$tn]
         $capAssigned = $false
         foreach ($pv in $playerVals) {
@@ -274,16 +275,16 @@ $teamRolesOut = $trMap.Keys | Sort-Object | ForEach-Object {
 
 # â”€â”€ Assemble final object â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $dataObj = [ordered]@{
-    lastUpdated    = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-    teams          = @($teams)
-    teamRoles      = @($teamRolesOut)
-    standings      = @($standings)
-    rankings       = @($rankingsOut)
-    matchResults   = @($matchResultsOut)
-    forfeits       = @($forfeitsOut)
+    lastUpdated     = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+    teams           = @($teams)
+    teamRoles       = @($teamRolesOut)
+    standings       = @($standings)
+    rankings        = @($rankingsOut)
+    matchResults    = @($matchResultsOut)
+    forfeits        = @($forfeitsOut)
     proposedMatches = @($proposedOut)
     cooldownPlayers = @($cooldownOut)
-    leagueSubs     = @($leagueSubsOut)
+    leagueSubs      = @($leagueSubsOut)
 }
 
 $json = $dataObj | ConvertTo-Json -Depth 10

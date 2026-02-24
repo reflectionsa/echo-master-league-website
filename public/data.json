@@ -1,5 +1,5 @@
 ﻿{
-    "lastUpdated":  "2026-02-19T23:44:15.912Z",
+    "lastUpdated":  "2026-02-24T22:12:29.320Z",
     "teams":  [
                   {
                       "id":  1,
@@ -19,6 +19,22 @@
                   },
                   {
                       "id":  2,
+                      "name":  "Ardent",
+                      "captain":  "Typical",
+                      "coCaptain":  "Whittyy-",
+                      "players":  [
+                                      "Waffles"
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Inactive",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  3,
                       "name":  "Astral",
                       "captain":  "ioah",
                       "coCaptain":  "manta",
@@ -37,28 +53,10 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  3,
-                      "name":  "CAPITA",
-                      "captain":  "mason",
-                      "coCaptain":  "dull",
-                      "players":  [
-                                      "lowz",
-                                      "Prize",
-                                      "Jay"
-                                  ],
-                      "tier":  "",
-                      "region":  "NA",
-                      "status":  "Active",
-                      "leaguePoints":  0,
-                      "wins":  0,
-                      "losses":  0,
-                      "teamLogo":  ""
-                  },
-                  {
                       "id":  4,
                       "name":  "Cat Boys",
                       "captain":  "IdkmyVRname-TimeSkip",
-                      "coCaptain":  "",
+                      "coCaptain":  "Ace",
                       "players":  [
 
                                   ],
@@ -107,9 +105,9 @@
                       "id":  7,
                       "name":  "Deadlock",
                       "captain":  "Rivoltra",
-                      "coCaptain":  "ImportantIvan88",
+                      "coCaptain":  "Argonaut",
                       "players":  [
-                                      "Argonaut",
+                                      "ImportantIvan88",
                                       "Band1t",
                                       "Flare-"
                                   ],
@@ -127,8 +125,6 @@
                       "captain":  "Samoan-",
                       "coCaptain":  "Akxsh1",
                       "players":  [
-                                      "Azura",
-                                      "VTK_SAUZZE",
                                       "NBK zero",
                                       "mura"
                                   ],
@@ -177,13 +173,46 @@
                   },
                   {
                       "id":  11,
+                      "name":  "ES-Echo Speedsters",
+                      "captain":  "i_will_dropout",
+                      "coCaptain":  "",
+                      "players":  [
+
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Inactive",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  12,
+                      "name":  "ES-Echo Speedstersss",
+                      "captain":  "DonaldDuck",
+                      "coCaptain":  "",
+                      "players":  [
+
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Inactive",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  13,
                       "name":  "Eternity",
                       "captain":  "Shoyim",
                       "coCaptain":  "Frosty",
                       "players":  [
                                       "mbck13",
                                       "-Dem0n h3x-",
-                                      "Mountainous"
+                                      "Mountainous",
+                                      "Itadori"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -194,7 +223,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  12,
+                      "id":  14,
                       "name":  "Exodia",
                       "captain":  "Owenculus",
                       "coCaptain":  "AutsticTrtl",
@@ -213,7 +242,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  13,
+                      "id":  15,
                       "name":  "FloatingWater",
                       "captain":  "yTruce",
                       "coCaptain":  "",
@@ -229,14 +258,15 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  14,
+                      "id":  16,
                       "name":  "Floccinaucinihilipilification",
                       "captain":  "Decay",
                       "coCaptain":  "XKing-",
                       "players":  [
                                       "Rev",
                                       "hollow",
-                                      "mahker"
+                                      "mahker",
+                                      "Vipen"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -247,7 +277,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  15,
+                      "id":  17,
                       "name":  "frug",
                       "captain":  "ryanjs4",
                       "coCaptain":  "Beot",
@@ -265,24 +295,23 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  16,
+                      "id":  18,
                       "name":  "Good Vibes Only",
                       "captain":  "Coastermaster77",
                       "coCaptain":  "Camspin12",
                       "players":  [
-                                      "Matt-",
                                       "Pause-"
                                   ],
                       "tier":  "",
                       "region":  "NA",
-                      "status":  "Active",
+                      "status":  "Inactive",
                       "leaguePoints":  0,
                       "wins":  0,
                       "losses":  0,
                       "teamLogo":  ""
                   },
                   {
-                      "id":  17,
+                      "id":  19,
                       "name":  "HEAT",
                       "captain":  "ProGamer877",
                       "coCaptain":  "PureCosmo",
@@ -300,15 +329,14 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  18,
+                      "id":  20,
                       "name":  "heatSS",
                       "captain":  "SwElmontAvious",
-                      "coCaptain":  "Mason_JesusIsKing",
+                      "coCaptain":  "Velo-",
                       "players":  [
-                                      "Velo-",
-                                      "mrfantastic_PJ_21",
-                                      "SNAP",
-                                      "Greed"
+                                      "o2",
+                                      "CJ",
+                                      "Mason_JesusIsKing"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -319,7 +347,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  19,
+                      "id":  21,
                       "name":  "Hyperion",
                       "captain":  "Hero",
                       "coCaptain":  "Death row",
@@ -338,13 +366,14 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  20,
+                      "id":  22,
                       "name":  "Jackpot",
                       "captain":  "Hyzer",
                       "coCaptain":  "Semple",
                       "players":  [
                                       "Brady",
-                                      "Requiem"
+                                      "Requiem",
+                                      "b love"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -355,7 +384,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  21,
+                      "id":  23,
                       "name":  "Kaizen",
                       "captain":  "choso",
                       "coCaptain":  "yuji-",
@@ -374,7 +403,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  22,
+                      "id":  24,
                       "name":  "Kill Code",
                       "captain":  "jack",
                       "coCaptain":  "nya",
@@ -393,13 +422,14 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  23,
+                      "id":  25,
                       "name":  "lawnmower",
                       "captain":  "egg",
                       "coCaptain":  "appa",
                       "players":  [
                                       "catfood",
-                                      "Catnip-"
+                                      "Catnip-",
+                                      "BlackCat-"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -410,26 +440,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  24,
-                      "name":  "lawnmowers",
-                      "captain":  "wiglets246",
-                      "coCaptain":  "Fletcherus",
-                      "players":  [
-                                      "Cat",
-                                      "ChickenMan",
-                                      "monarch",
-                                      "pixelpatrick"
-                                  ],
-                      "tier":  "",
-                      "region":  "NA",
-                      "status":  "Active",
-                      "leaguePoints":  0,
-                      "wins":  0,
-                      "losses":  0,
-                      "teamLogo":  ""
-                  },
-                  {
-                      "id":  25,
+                      "id":  26,
                       "name":  "Lightbuwlb",
                       "captain":  "Razor",
                       "coCaptain":  "Toxicantbog",
@@ -447,14 +458,14 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  26,
-                      "name":  "M0dified",
-                      "captain":  "Spirit",
-                      "coCaptain":  "Chrome",
+                      "id":  27,
+                      "name":  "lightning discharge",
+                      "captain":  "Greed",
+                      "coCaptain":  "reefuuh",
                       "players":  [
-                                      "TheLaw-",
-                                      "ryan.norton",
-                                      "Mozzy"
+                                      "mrfantastic_PJ_21",
+                                      "camm",
+                                      "ECO_RebalPhoenix86"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -465,7 +476,26 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  27,
+                      "id":  28,
+                      "name":  "M0dified",
+                      "captain":  "Spirit",
+                      "coCaptain":  "ryan.norton",
+                      "players":  [
+                                      "Chrome",
+                                      "TheLaw-",
+                                      "Mozzy",
+                                      "Cool-Whip"
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Active",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  29,
                       "name":  "Monarch",
                       "captain":  "Qcantshoot",
                       "coCaptain":  "Flakey",
@@ -483,23 +513,24 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  28,
+                      "id":  30,
                       "name":  "Mystic",
                       "captain":  "Jett",
                       "coCaptain":  "Fz",
                       "players":  [
-                                      "chyer"
+                                      "chyer",
+                                      "SniperPanda4708"
                                   ],
                       "tier":  "",
                       "region":  "NA",
-                      "status":  "Inactive",
+                      "status":  "Active",
                       "leaguePoints":  0,
                       "wins":  0,
                       "losses":  0,
                       "teamLogo":  ""
                   },
                   {
-                      "id":  29,
+                      "id":  31,
                       "name":  "Nexus",
                       "captain":  "OpaL1ght",
                       "coCaptain":  "KC8921",
@@ -518,7 +549,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  30,
+                      "id":  32,
                       "name":  "no no no no if you",
                       "captain":  "whitesox5",
                       "coCaptain":  "mia",
@@ -537,7 +568,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  31,
+                      "id":  33,
                       "name":  "Purple Playhouse",
                       "captain":  "sam",
                       "coCaptain":  "waffledlife",
@@ -555,7 +586,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  32,
+                      "id":  34,
                       "name":  "Ragnarok",
                       "captain":  "Kratos",
                       "coCaptain":  "LeftNostrill",
@@ -574,7 +605,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  33,
+                      "id":  35,
                       "name":  "Reapers Demise",
                       "captain":  "DetraAce",
                       "coCaptain":  "Chill0ut",
@@ -590,7 +621,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  34,
+                      "id":  36,
                       "name":  "Ren",
                       "captain":  "Krogers",
                       "coCaptain":  "Jaxxjh",
@@ -607,7 +638,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  35,
+                      "id":  37,
                       "name":  "rent free",
                       "captain":  "sashi",
                       "coCaptain":  "Tyler",
@@ -626,15 +657,14 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  36,
-                      "name":  "Soul",
-                      "captain":  "carter",
-                      "coCaptain":  "DrasticMeasure",
+                      "id":  38,
+                      "name":  "RPRT",
+                      "captain":  "Slothy",
+                      "coCaptain":  "Special-Man",
                       "players":  [
-                                      "kucci",
-                                      "Phoenixx",
-                                      "8B1t_Blitz-",
-                                      "Typical"
+                                      "dogfrogegg",
+                                      "D4rk",
+                                      "KTVbebe"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -645,7 +675,24 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  37,
+                      "id":  39,
+                      "name":  "Soul",
+                      "captain":  "carter",
+                      "coCaptain":  "DrasticMeasure",
+                      "players":  [
+                                      "kucci",
+                                      "Phoenixx"
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Active",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  40,
                       "name":  "Surge",
                       "captain":  "IceBergg12",
                       "coCaptain":  "Blitz_05",
@@ -664,23 +711,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  38,
-                      "name":  "Team Echo",
-                      "captain":  "ItxFearLess",
-                      "coCaptain":  "zyrts",
-                      "players":  [
-
-                                  ],
-                      "tier":  "",
-                      "region":  "NA",
-                      "status":  "Inactive",
-                      "leaguePoints":  0,
-                      "wins":  0,
-                      "losses":  0,
-                      "teamLogo":  ""
-                  },
-                  {
-                      "id":  39,
+                      "id":  41,
                       "name":  "The Omens",
                       "captain":  "bucket-",
                       "coCaptain":  "pandaaaa",
@@ -699,7 +730,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  40,
+                      "id":  42,
                       "name":  "ULTRA x TENS0R",
                       "captain":  "PHAEN0M",
                       "coCaptain":  "HyperTank",
@@ -718,7 +749,7 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  41,
+                      "id":  43,
                       "name":  "UV3",
                       "captain":  "kingkrip-",
                       "coCaptain":  "Natsuki-",
@@ -737,7 +768,26 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  42,
+                      "id":  44,
+                      "name":  "Valiants",
+                      "captain":  "Azura",
+                      "coCaptain":  "everest",
+                      "players":  [
+                                      "VTK_SAUZZE",
+                                      "QuizWhiz77",
+                                      "viva",
+                                      "marvel"
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Active",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  45,
                       "name":  "W",
                       "captain":  "Adam",
                       "coCaptain":  "GatheringStorm7707",
@@ -754,15 +804,15 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  43,
+                      "id":  46,
                       "name":  "WBW",
                       "captain":  "rhino",
                       "coCaptain":  "7ven",
                       "players":  [
-                                      "Katz",
                                       "Lukeski",
                                       "Retro-",
-                                      "rukia"
+                                      "rukia",
+                                      "only"
                                   ],
                       "tier":  "",
                       "region":  "NA",
@@ -773,17 +823,34 @@
                       "teamLogo":  ""
                   },
                   {
-                      "id":  44,
-                      "name":  "Zone Echo",
-                      "captain":  "DarTerrorPeanut",
-                      "coCaptain":  "Abel156",
+                      "id":  47,
+                      "name":  "XIIX",
+                      "captain":  "wiglets246",
+                      "coCaptain":  "Fletcherus",
                       "players":  [
-                                      "memeC50",
-                                      "SniperPanda4708"
+                                      "Cat",
+                                      "ChickenMan",
+                                      "monarch"
                                   ],
                       "tier":  "",
                       "region":  "NA",
                       "status":  "Active",
+                      "leaguePoints":  0,
+                      "wins":  0,
+                      "losses":  0,
+                      "teamLogo":  ""
+                  },
+                  {
+                      "id":  48,
+                      "name":  "Zone Echo",
+                      "captain":  "DarTerrorPeanut",
+                      "coCaptain":  "",
+                      "players":  [
+
+                                  ],
+                      "tier":  "",
+                      "region":  "NA",
+                      "status":  "Inactive",
                       "leaguePoints":  0,
                       "wins":  0,
                       "losses":  0,
@@ -807,6 +874,20 @@
                       },
                       {
                           "id":  2,
+                          "name":  "Ardent",
+                          "captain":  "Typical",
+                          "coCaptain":  "Whittyy-",
+                          "players":  [
+                                          "Waffles"
+                                      ],
+                          "status":  "Inactive",
+                          "totalPlayers":  3,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  3,
                           "name":  "Astral",
                           "captain":  "ioah",
                           "coCaptain":  "",
@@ -824,31 +905,15 @@
                                     ]
                       },
                       {
-                          "id":  3,
-                          "name":  "CAPITA",
-                          "captain":  "mason",
-                          "coCaptain":  "dull",
-                          "players":  [
-                                          "Jay",
-                                          "lowz",
-                                          "Prize"
-                                      ],
-                          "status":  "Active",
-                          "totalPlayers":  5,
-                          "ranks":  [
-
-                                    ]
-                      },
-                      {
                           "id":  4,
                           "name":  "Cat Boys",
                           "captain":  "IdkmyVRname-TimeSkip",
                           "coCaptain":  "",
                           "players":  [
-
+                                          "Ace"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  1,
+                          "totalPlayers":  2,
                           "ranks":  [
 
                                     ]
@@ -886,9 +951,8 @@
                           "id":  7,
                           "name":  "Deadlock",
                           "captain":  "Rivoltra",
-                          "coCaptain":  "",
+                          "coCaptain":  "Argonaut",
                           "players":  [
-                                          "Argonaut",
                                           "Band1t",
                                           "Flare-",
                                           "ImportantIvan88"
@@ -905,13 +969,11 @@
                           "captain":  "Samoan-",
                           "coCaptain":  "Akxsh1",
                           "players":  [
-                                          "Azura",
                                           "mura",
-                                          "NBK zero",
-                                          "VTK_SAUZZE"
+                                          "NBK zero"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  6,
+                          "totalPlayers":  4,
                           "ranks":  [
 
                                     ]
@@ -949,22 +1011,51 @@
                       },
                       {
                           "id":  11,
-                          "name":  "Eternity",
-                          "captain":  "Shoyim",
-                          "coCaptain":  "Frosty",
+                          "name":  "ES-Echo Speedsters",
+                          "captain":  "i_will_dropout",
+                          "coCaptain":  "",
                           "players":  [
-                                          "-Dem0n h3x-",
-                                          "mbck13",
-                                          "Mountainous"
+
                                       ],
-                          "status":  "Active",
-                          "totalPlayers":  5,
+                          "status":  "Inactive",
+                          "totalPlayers":  1,
                           "ranks":  [
 
                                     ]
                       },
                       {
                           "id":  12,
+                          "name":  "ES-Echo Speedstersss",
+                          "captain":  "DonaldDuck",
+                          "coCaptain":  "",
+                          "players":  [
+
+                                      ],
+                          "status":  "Inactive",
+                          "totalPlayers":  1,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  13,
+                          "name":  "Eternity",
+                          "captain":  "Shoyim",
+                          "coCaptain":  "Frosty",
+                          "players":  [
+                                          "-Dem0n h3x-",
+                                          "Itadori",
+                                          "mbck13",
+                                          "Mountainous"
+                                      ],
+                          "status":  "Active",
+                          "totalPlayers":  6,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  14,
                           "name":  "Exodia",
                           "captain":  "Owenculus",
                           "coCaptain":  "AutsticTrtl",
@@ -981,7 +1072,7 @@
                                     ]
                       },
                       {
-                          "id":  13,
+                          "id":  15,
                           "name":  "FloatingWater",
                           "captain":  "yTruce",
                           "coCaptain":  "",
@@ -995,23 +1086,24 @@
                                     ]
                       },
                       {
-                          "id":  14,
+                          "id":  16,
                           "name":  "Floccinaucinihilipilification",
                           "captain":  "Decay",
                           "coCaptain":  "XKing-",
                           "players":  [
                                           "hollow",
                                           "mahker",
-                                          "Rev"
+                                          "Rev",
+                                          "Vipen"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  5,
+                          "totalPlayers":  6,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  15,
+                          "id":  17,
                           "name":  "frug",
                           "captain":  "ryanjs4",
                           "coCaptain":  "Beot",
@@ -1027,23 +1119,22 @@
                                     ]
                       },
                       {
-                          "id":  16,
+                          "id":  18,
                           "name":  "Good Vibes Only",
                           "captain":  "Coastermaster77",
                           "coCaptain":  "",
                           "players":  [
                                           "Camspin12",
-                                          "Matt-",
                                           "Pause-"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  4,
+                          "totalPlayers":  3,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  17,
+                          "id":  19,
                           "name":  "HEAT",
                           "captain":  "ProGamer877",
                           "coCaptain":  "PureCosmo",
@@ -1052,32 +1143,31 @@
                                           "Shush",
                                           "turtle"
                                       ],
-                          "status":  "Inactive",
+                          "status":  "Active",
                           "totalPlayers":  5,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  18,
+                          "id":  20,
                           "name":  "heatSS",
                           "captain":  "SwElmontAvious",
                           "coCaptain":  "",
                           "players":  [
-                                          "Greed",
+                                          "CJ",
                                           "Mason_JesusIsKing",
-                                          "mrfantastic_PJ_21",
-                                          "SNAP",
+                                          "o2",
                                           "Velo-"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  6,
+                          "totalPlayers":  5,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  19,
+                          "id":  21,
                           "name":  "Hyperion",
                           "captain":  "Hero",
                           "coCaptain":  "Death row",
@@ -1094,22 +1184,23 @@
                                     ]
                       },
                       {
-                          "id":  20,
+                          "id":  22,
                           "name":  "Jackpot",
                           "captain":  "Hyzer",
                           "coCaptain":  "Semple",
                           "players":  [
+                                          "b love",
                                           "Brady",
                                           "Requiem"
                                       ],
-                          "status":  "Inactive",
-                          "totalPlayers":  4,
+                          "status":  "Active",
+                          "totalPlayers":  5,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  21,
+                          "id":  23,
                           "name":  "Kaizen",
                           "captain":  "choso",
                           "coCaptain":  "yuji-",
@@ -1126,7 +1217,7 @@
                                     ]
                       },
                       {
-                          "id":  22,
+                          "id":  24,
                           "name":  "Kill Code",
                           "captain":  "jack",
                           "coCaptain":  "",
@@ -1144,39 +1235,23 @@
                                     ]
                       },
                       {
-                          "id":  23,
+                          "id":  25,
                           "name":  "lawnmower",
                           "captain":  "egg",
                           "coCaptain":  "appa",
                           "players":  [
+                                          "BlackCat-",
                                           "catfood",
                                           "Catnip-"
                                       ],
-                          "status":  "Inactive",
-                          "totalPlayers":  4,
-                          "ranks":  [
-
-                                    ]
-                      },
-                      {
-                          "id":  24,
-                          "name":  "lawnmowers",
-                          "captain":  "wiglets246",
-                          "coCaptain":  "Fletcherus",
-                          "players":  [
-                                          "Cat",
-                                          "ChickenMan",
-                                          "monarch",
-                                          "pixelpatrick"
-                                      ],
                           "status":  "Active",
-                          "totalPlayers":  6,
+                          "totalPlayers":  5,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  25,
+                          "id":  26,
                           "name":  "Lightbuwlb",
                           "captain":  "Razor",
                           "coCaptain":  "",
@@ -1193,24 +1268,41 @@
                                     ]
                       },
                       {
-                          "id":  26,
-                          "name":  "M0dified",
-                          "captain":  "Spirit",
+                          "id":  27,
+                          "name":  "lightning discharge",
+                          "captain":  "Greed",
                           "coCaptain":  "",
                           "players":  [
-                                          "Chrome",
-                                          "Mozzy",
-                                          "ryan.norton",
-                                          "TheLaw-"
+                                          "camm",
+                                          "ECO_RebalPhoenix86",
+                                          "mrfantastic_PJ_21",
+                                          "reefuuh"
                                       ],
-                          "status":  "Active",
+                          "status":  "Inactive",
                           "totalPlayers":  5,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  27,
+                          "id":  28,
+                          "name":  "M0dified",
+                          "captain":  "Spirit",
+                          "coCaptain":  "ryan.norton",
+                          "players":  [
+                                          "Chrome",
+                                          "Cool-Whip",
+                                          "Mozzy",
+                                          "TheLaw-"
+                                      ],
+                          "status":  "Active",
+                          "totalPlayers":  6,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  29,
                           "name":  "Monarch",
                           "captain":  "Qcantshoot",
                           "coCaptain":  "Flakey",
@@ -1226,22 +1318,22 @@
                                     ]
                       },
                       {
-                          "id":  28,
+                          "id":  30,
                           "name":  "Mystic",
                           "captain":  "Jett",
-                          "coCaptain":  "",
+                          "coCaptain":  "Fz",
                           "players":  [
                                           "chyer",
-                                          "Fz"
+                                          "SniperPanda4708"
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  3,
+                          "totalPlayers":  4,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  29,
+                          "id":  31,
                           "name":  "Nexus",
                           "captain":  "OpaL1ght",
                           "coCaptain":  "KC8921",
@@ -1258,7 +1350,7 @@
                                     ]
                       },
                       {
-                          "id":  30,
+                          "id":  32,
                           "name":  "no no no no if you",
                           "captain":  "whitesox5",
                           "coCaptain":  "mia",
@@ -1275,7 +1367,7 @@
                                     ]
                       },
                       {
-                          "id":  31,
+                          "id":  33,
                           "name":  "Purple Playhouse",
                           "captain":  "sam",
                           "coCaptain":  "waffledlife",
@@ -1291,7 +1383,7 @@
                                     ]
                       },
                       {
-                          "id":  32,
+                          "id":  34,
                           "name":  "Ragnarok",
                           "captain":  "Kratos",
                           "coCaptain":  "LeftNostrill",
@@ -1308,7 +1400,7 @@
                                     ]
                       },
                       {
-                          "id":  33,
+                          "id":  35,
                           "name":  "Reapers Demise",
                           "captain":  "DetraAce",
                           "coCaptain":  "",
@@ -1323,7 +1415,7 @@
                                     ]
                       },
                       {
-                          "id":  34,
+                          "id":  36,
                           "name":  "Ren",
                           "captain":  "Krogers",
                           "coCaptain":  "Jaxxjh",
@@ -1338,7 +1430,7 @@
                                     ]
                       },
                       {
-                          "id":  35,
+                          "id":  37,
                           "name":  "rent free",
                           "captain":  "sashi",
                           "coCaptain":  "Tyler",
@@ -1355,24 +1447,22 @@
                                     ]
                       },
                       {
-                          "id":  36,
+                          "id":  38,
                           "name":  "Soul",
                           "captain":  "carter",
                           "coCaptain":  "DrasticMeasure",
                           "players":  [
-                                          "8B1t_Blitz-",
                                           "kucci",
-                                          "Phoenixx",
-                                          "Typical"
+                                          "Phoenixx"
                                       ],
                           "status":  "Inactive",
-                          "totalPlayers":  6,
+                          "totalPlayers":  4,
                           "ranks":  [
 
                                     ]
                       },
                       {
-                          "id":  37,
+                          "id":  39,
                           "name":  "Surge",
                           "captain":  "IceBergg12",
                           "coCaptain":  "",
@@ -1390,21 +1480,7 @@
                                     ]
                       },
                       {
-                          "id":  38,
-                          "name":  "Team Echo",
-                          "captain":  "ItxFearLess",
-                          "coCaptain":  "zyrts",
-                          "players":  [
-
-                                      ],
-                          "status":  "Inactive",
-                          "totalPlayers":  2,
-                          "ranks":  [
-
-                                    ]
-                      },
-                      {
-                          "id":  39,
+                          "id":  40,
                           "name":  "The Omens",
                           "captain":  "bucket-",
                           "coCaptain":  "pandaaaa",
@@ -1421,7 +1497,7 @@
                                     ]
                       },
                       {
-                          "id":  40,
+                          "id":  41,
                           "name":  "ULTRA x TENS0R",
                           "captain":  "PHAEN0M",
                           "coCaptain":  "",
@@ -1439,7 +1515,7 @@
                                     ]
                       },
                       {
-                          "id":  41,
+                          "id":  42,
                           "name":  "UV3",
                           "captain":  "kingkrip-",
                           "coCaptain":  "Natsuki-",
@@ -1456,7 +1532,24 @@
                                     ]
                       },
                       {
-                          "id":  42,
+                          "id":  43,
+                          "name":  "Valiants",
+                          "captain":  "Azura",
+                          "coCaptain":  "everest",
+                          "players":  [
+                                          "marvel",
+                                          "QuizWhiz77",
+                                          "viva",
+                                          "VTK_SAUZZE"
+                                      ],
+                          "status":  "Inactive",
+                          "totalPlayers":  6,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  44,
                           "name":  "W",
                           "captain":  "Adam",
                           "coCaptain":  "",
@@ -1472,14 +1565,14 @@
                                     ]
                       },
                       {
-                          "id":  43,
+                          "id":  45,
                           "name":  "WBW",
                           "captain":  "rhino",
                           "coCaptain":  "",
                           "players":  [
                                           "7ven",
-                                          "Katz",
                                           "Lukeski",
+                                          "only",
                                           "Retro-",
                                           "rukia"
                                       ],
@@ -1490,17 +1583,32 @@
                                     ]
                       },
                       {
-                          "id":  44,
+                          "id":  46,
+                          "name":  "XIIX",
+                          "captain":  "wiglets246",
+                          "coCaptain":  "",
+                          "players":  [
+                                          "Cat",
+                                          "ChickenMan",
+                                          "Fletcherus",
+                                          "monarch"
+                                      ],
+                          "status":  "Inactive",
+                          "totalPlayers":  5,
+                          "ranks":  [
+
+                                    ]
+                      },
+                      {
+                          "id":  47,
                           "name":  "Zone Echo",
                           "captain":  "DarTerrorPeanut",
                           "coCaptain":  "",
                           "players":  [
-                                          "Abel156",
-                                          "memeC50",
-                                          "SniperPanda4708"
+
                                       ],
                           "status":  "Active",
-                          "totalPlayers":  4,
+                          "totalPlayers":  1,
                           "ranks":  [
 
                                     ]
@@ -1515,7 +1623,7 @@
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  897,
+                          "mmr":  906,
                           "points":  0,
                           "active":  "Active"
                       },
@@ -1523,11 +1631,11 @@
                           "id":  2,
                           "position":  2,
                           "tier":  "Diamond 4",
-                          "team":  "Lightbuwlb",
+                          "team":  "M0dified",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  857,
+                          "mmr":  878,
                           "points":  0,
                           "active":  "Active"
                       },
@@ -1535,17 +1643,29 @@
                           "id":  3,
                           "position":  3,
                           "tier":  "Diamond 4",
-                          "team":  "Eleven Point Five",
+                          "team":  "Astral",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  853,
+                          "mmr":  863,
                           "points":  0,
                           "active":  "Active"
                       },
                       {
                           "id":  4,
                           "position":  4,
+                          "tier":  "Diamond 4",
+                          "team":  "Eleven Point Five",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  862,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  5,
+                          "position":  5,
                           "tier":  "Diamond 3",
                           "team":  "Ragnarok",
                           "region":  "NA",
@@ -1556,10 +1676,10 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  5,
-                          "position":  5,
-                          "tier":  "Diamond 3",
-                          "team":  "The Omens",
+                          "id":  6,
+                          "position":  6,
+                          "tier":  "Diamond 2",
+                          "team":  "rent free",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1568,9 +1688,33 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  6,
-                          "position":  6,
-                          "tier":  "Diamond 3",
+                          "id":  7,
+                          "position":  7,
+                          "tier":  "Diamond 2",
+                          "team":  "frug",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  843,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  8,
+                          "position":  8,
+                          "tier":  "Diamond 2",
+                          "team":  "Lightbuwlb",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  842,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  9,
+                          "position":  9,
+                          "tier":  "Diamond 2",
                           "team":  "Kaizen",
                           "region":  "NA",
                           "wins":  0,
@@ -1580,46 +1724,10 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  7,
-                          "position":  7,
-                          "tier":  "Diamond 2",
-                          "team":  "M0dified",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  839,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  8,
-                          "position":  8,
-                          "tier":  "Diamond 2",
-                          "team":  "rent free",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  838,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  9,
-                          "position":  9,
-                          "tier":  "Diamond 2",
-                          "team":  "CAPITA",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  837,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
                           "id":  10,
                           "position":  10,
-                          "tier":  "Diamond 2",
-                          "team":  "ULTRA x TENS0R",
+                          "tier":  "Diamond 1",
+                          "team":  "Floccinaucinihilipilification",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1631,7 +1739,7 @@
                           "id":  11,
                           "position":  11,
                           "tier":  "Diamond 1",
-                          "team":  "WBW",
+                          "team":  "The Omens",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1643,6 +1751,18 @@
                           "id":  12,
                           "position":  12,
                           "tier":  "Diamond 1",
+                          "team":  "WBW",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  830,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  13,
+                          "position":  13,
+                          "tier":  "Platinum 4",
                           "team":  "zombieland",
                           "region":  "NA",
                           "wins":  0,
@@ -1652,10 +1772,22 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  13,
-                          "position":  13,
+                          "id":  14,
+                          "position":  14,
                           "tier":  "Platinum 4",
-                          "team":  "Deadlock",
+                          "team":  "Monarch",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  827,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  15,
+                          "position":  15,
+                          "tier":  "Platinum 4",
+                          "team":  "ULTRA x TENS0R",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1664,22 +1796,46 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  14,
-                          "position":  14,
+                          "id":  16,
+                          "position":  16,
                           "tier":  "Platinum 4",
-                          "team":  "Floccinaucinihilipilification",
+                          "team":  "HEAT",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  817,
+                          "mmr":  820,
                           "points":  0,
                           "active":  "Active"
                       },
                       {
-                          "id":  15,
-                          "position":  15,
+                          "id":  17,
+                          "position":  17,
+                          "tier":  "Platinum 4",
+                          "team":  "CAPITA",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  820,
+                          "points":  0,
+                          "active":  "Inactive"
+                      },
+                      {
+                          "id":  18,
+                          "position":  18,
                           "tier":  "Platinum 3",
-                          "team":  "lawnmowers",
+                          "team":  "Kill Code",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  815,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  19,
+                          "position":  19,
+                          "tier":  "Platinum 3",
+                          "team":  "Purple Playhouse",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1688,33 +1844,9 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  16,
-                          "position":  16,
-                          "tier":  "Platinum 3",
-                          "team":  "heatSS",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  810,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  17,
-                          "position":  17,
-                          "tier":  "Platinum 3",
-                          "team":  "Kill Code",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  810,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  18,
-                          "position":  18,
-                          "tier":  "Platinum 3",
+                          "id":  20,
+                          "position":  20,
+                          "tier":  "Platinum 2",
                           "team":  "big hero 6",
                           "region":  "NA",
                           "wins":  0,
@@ -1724,40 +1856,16 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  19,
-                          "position":  19,
-                          "tier":  "Platinum 3",
-                          "team":  "frug",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  808,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  20,
-                          "position":  20,
-                          "tier":  "Platinum 2",
-                          "team":  "Astral",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  808,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
                           "id":  21,
                           "position":  21,
                           "tier":  "Platinum 2",
-                          "team":  "Eclipse",
+                          "team":  "Good Vibes Only",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  806,
+                          "mmr":  807,
                           "points":  0,
-                          "active":  "Active"
+                          "active":  "Inactive"
                       },
                       {
                           "id":  22,
@@ -1769,17 +1877,17 @@
                           "losses":  0,
                           "mmr":  803,
                           "points":  0,
-                          "active":  "Active"
+                          "active":  "Inactive"
                       },
                       {
                           "id":  23,
                           "position":  23,
-                          "tier":  "Platinum 2",
-                          "team":  "Purple Playhouse",
+                          "tier":  "Platinum 1",
+                          "team":  "CRUNK",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  801,
+                          "mmr":  800,
                           "points":  0,
                           "active":  "Active"
                       },
@@ -1787,11 +1895,11 @@
                           "id":  24,
                           "position":  24,
                           "tier":  "Platinum 1",
-                          "team":  "UV3",
+                          "team":  "Jackpot",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  800,
+                          "mmr":  797,
                           "points":  0,
                           "active":  "Active"
                       },
@@ -1810,24 +1918,24 @@
                       {
                           "id":  26,
                           "position":  26,
-                          "tier":  "Gold 4",
-                          "team":  "Good Vibes Only",
+                          "tier":  "Platinum 1",
+                          "team":  "lawnmowers",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  792,
+                          "mmr":  796,
                           "points":  0,
-                          "active":  "Active"
+                          "active":  "Inactive"
                       },
                       {
                           "id":  27,
                           "position":  27,
                           "tier":  "Gold 4",
-                          "team":  "CRUNK",
+                          "team":  "UV3",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  790,
+                          "mmr":  786,
                           "points":  0,
                           "active":  "Active"
                       },
@@ -1847,17 +1955,41 @@
                           "id":  29,
                           "position":  29,
                           "tier":  "Gold 4",
-                          "team":  "Monarch",
+                          "team":  "Deadlock",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  786,
+                          "mmr":  784,
                           "points":  0,
                           "active":  "Active"
                       },
                       {
                           "id":  30,
                           "position":  30,
+                          "tier":  "Gold 4",
+                          "team":  "lawnmower",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  781,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  31,
+                          "position":  31,
+                          "tier":  "Gold 4",
+                          "team":  "Eternity",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  780,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  32,
+                          "position":  32,
                           "tier":  "Gold 3",
                           "team":  "lucid",
                           "region":  "NA",
@@ -1868,8 +2000,8 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  31,
-                          "position":  31,
+                          "id":  33,
+                          "position":  33,
                           "tier":  "Gold 3",
                           "team":  "Lucid",
                           "region":  "NA",
@@ -1880,21 +2012,21 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  32,
-                          "position":  32,
-                          "tier":  "Gold 2",
+                          "id":  34,
+                          "position":  34,
+                          "tier":  "Gold 3",
                           "team":  "Mystic",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
                           "mmr":  767,
                           "points":  0,
-                          "active":  "Inactive"
+                          "active":  "Active"
                       },
                       {
-                          "id":  33,
-                          "position":  33,
-                          "tier":  "Gold 2",
+                          "id":  35,
+                          "position":  35,
+                          "tier":  "Gold 3",
                           "team":  "W",
                           "region":  "NA",
                           "wins":  0,
@@ -1904,9 +2036,9 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  34,
-                          "position":  34,
-                          "tier":  "Gold 2",
+                          "id":  36,
+                          "position":  36,
+                          "tier":  "Gold 3",
                           "team":  "bussy",
                           "region":  "NA",
                           "wins":  0,
@@ -1916,22 +2048,10 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  35,
-                          "position":  35,
+                          "id":  37,
+                          "position":  37,
                           "tier":  "Gold 2",
-                          "team":  "Eternity",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  766,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  36,
-                          "position":  36,
-                          "tier":  "Gold 2",
-                          "team":  "Nexus",
+                          "team":  "Eclipse",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
@@ -1940,8 +2060,8 @@
                           "active":  "Active"
                       },
                       {
-                          "id":  37,
-                          "position":  37,
+                          "id":  38,
+                          "position":  38,
                           "tier":  "Gold 2",
                           "team":  "TGF",
                           "region":  "NA",
@@ -1952,8 +2072,44 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  38,
-                          "position":  38,
+                          "id":  39,
+                          "position":  39,
+                          "tier":  "Gold 2",
+                          "team":  "Nexus",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  761,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  40,
+                          "position":  40,
+                          "tier":  "Gold 2",
+                          "team":  "heatSS",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  758,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  41,
+                          "position":  41,
+                          "tier":  "Gold 2",
+                          "team":  "Surge",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  758,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  42,
+                          "position":  42,
                           "tier":  "Gold 2",
                           "team":  "quest",
                           "region":  "NA",
@@ -1964,8 +2120,8 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  39,
-                          "position":  39,
+                          "id":  43,
+                          "position":  43,
                           "tier":  "Gold 2",
                           "team":  "Cat Boys",
                           "region":  "NA",
@@ -1976,32 +2132,8 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  40,
-                          "position":  40,
-                          "tier":  "Gold 2",
-                          "team":  "no no no no if you",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  751,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  41,
-                          "position":  41,
-                          "tier":  "Gold 1",
-                          "team":  "Surge",
-                          "region":  "NA",
-                          "wins":  0,
-                          "losses":  0,
-                          "mmr":  743,
-                          "points":  0,
-                          "active":  "Active"
-                      },
-                      {
-                          "id":  42,
-                          "position":  42,
+                          "id":  44,
+                          "position":  44,
                           "tier":  "Gold 1",
                           "team":  "Unholy Offspring",
                           "region":  "NA",
@@ -2012,14 +2144,26 @@
                           "active":  "Inactive"
                       },
                       {
-                          "id":  43,
-                          "position":  43,
+                          "id":  45,
+                          "position":  45,
+                          "tier":  "Gold 1",
+                          "team":  "no no no no if you",
+                          "region":  "NA",
+                          "wins":  0,
+                          "losses":  0,
+                          "mmr":  717,
+                          "points":  0,
+                          "active":  "Active"
+                      },
+                      {
+                          "id":  46,
+                          "position":  46,
                           "tier":  "Gold 1",
                           "team":  "Hyperion",
                           "region":  "NA",
                           "wins":  0,
                           "losses":  0,
-                          "mmr":  709,
+                          "mmr":  703,
                           "points":  0,
                           "active":  "Active"
                       }
@@ -2032,7 +2176,7 @@
                          "captain":  "",
                          "tier":  "Diamond",
                          "division":  4,
-                         "mmr":  897,
+                         "mmr":  906,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
@@ -2045,28 +2189,45 @@
                      {
                          "id":  2,
                          "position":  2,
-                         "name":  "Lightbuwlb",
+                         "name":  "M0dified",
                          "captain":  "",
                          "tier":  "Diamond",
                          "division":  4,
-                         "mmr":  857,
+                         "mmr":  878,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Lightbuwlb"
+                                          "label":  "M0dified"
                                       }
                      },
                      {
                          "id":  3,
                          "position":  3,
+                         "name":  "Astral",
+                         "captain":  "",
+                         "tier":  "Diamond",
+                         "division":  4,
+                         "mmr":  863,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Astral"
+                                      }
+                     },
+                     {
+                         "id":  4,
+                         "position":  4,
                          "name":  "Eleven Point Five",
                          "captain":  "",
                          "tier":  "Diamond",
                          "division":  4,
-                         "mmr":  853,
+                         "mmr":  862,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
@@ -2077,8 +2238,8 @@
                                       }
                      },
                      {
-                         "id":  4,
-                         "position":  4,
+                         "id":  5,
+                         "position":  5,
                          "name":  "Ragnarok",
                          "captain":  "",
                          "tier":  "Diamond",
@@ -2094,12 +2255,12 @@
                                       }
                      },
                      {
-                         "id":  5,
-                         "position":  5,
-                         "name":  "The Omens",
+                         "id":  6,
+                         "position":  6,
+                         "name":  "rent free",
                          "captain":  "",
                          "tier":  "Diamond",
-                         "division":  3,
+                         "division":  2,
                          "mmr":  843,
                          "region":  "North America",
                          "wins":  0,
@@ -2107,16 +2268,50 @@
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "The Omens"
+                                          "label":  "rent free"
                                       }
                      },
                      {
-                         "id":  6,
-                         "position":  6,
+                         "id":  7,
+                         "position":  7,
+                         "name":  "frug",
+                         "captain":  "",
+                         "tier":  "Diamond",
+                         "division":  2,
+                         "mmr":  843,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "frug"
+                                      }
+                     },
+                     {
+                         "id":  8,
+                         "position":  8,
+                         "name":  "Lightbuwlb",
+                         "captain":  "",
+                         "tier":  "Diamond",
+                         "division":  2,
+                         "mmr":  842,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Lightbuwlb"
+                                      }
+                     },
+                     {
+                         "id":  9,
+                         "position":  9,
                          "name":  "Kaizen",
                          "captain":  "",
                          "tier":  "Diamond",
-                         "division":  3,
+                         "division":  2,
                          "mmr":  840,
                          "region":  "North America",
                          "wins":  0,
@@ -2128,63 +2323,12 @@
                                       }
                      },
                      {
-                         "id":  7,
-                         "position":  7,
-                         "name":  "M0dified",
-                         "captain":  "",
-                         "tier":  "Diamond",
-                         "division":  2,
-                         "mmr":  839,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "M0dified"
-                                      }
-                     },
-                     {
-                         "id":  8,
-                         "position":  8,
-                         "name":  "rent free",
-                         "captain":  "",
-                         "tier":  "Diamond",
-                         "division":  2,
-                         "mmr":  838,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "rent free"
-                                      }
-                     },
-                     {
-                         "id":  9,
-                         "position":  9,
-                         "name":  "CAPITA",
-                         "captain":  "",
-                         "tier":  "Diamond",
-                         "division":  2,
-                         "mmr":  837,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "CAPITA"
-                                      }
-                     },
-                     {
                          "id":  10,
                          "position":  10,
-                         "name":  "ULTRA x TENS0R",
+                         "name":  "Floccinaucinihilipilification",
                          "captain":  "",
                          "tier":  "Diamond",
-                         "division":  2,
+                         "division":  1,
                          "mmr":  834,
                          "region":  "North America",
                          "wins":  0,
@@ -2192,12 +2336,29 @@
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "ULTRA x TENS0R"
+                                          "label":  "Floccinaucinihilipilification"
                                       }
                      },
                      {
                          "id":  11,
                          "position":  11,
+                         "name":  "The Omens",
+                         "captain":  "",
+                         "tier":  "Diamond",
+                         "division":  1,
+                         "mmr":  830,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "The Omens"
+                                      }
+                     },
+                     {
+                         "id":  12,
+                         "position":  12,
                          "name":  "WBW",
                          "captain":  "",
                          "tier":  "Diamond",
@@ -2213,12 +2374,12 @@
                                       }
                      },
                      {
-                         "id":  12,
-                         "position":  12,
+                         "id":  13,
+                         "position":  13,
                          "name":  "zombieland",
                          "captain":  "",
-                         "tier":  "Diamond",
-                         "division":  1,
+                         "tier":  "Platinum",
+                         "division":  4,
                          "mmr":  828,
                          "region":  "North America",
                          "wins":  0,
@@ -2230,9 +2391,26 @@
                                       }
                      },
                      {
-                         "id":  13,
-                         "position":  13,
-                         "name":  "Deadlock",
+                         "id":  14,
+                         "position":  14,
+                         "name":  "Monarch",
+                         "captain":  "",
+                         "tier":  "Platinum",
+                         "division":  4,
+                         "mmr":  827,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Monarch"
+                                      }
+                     },
+                     {
+                         "id":  15,
+                         "position":  15,
+                         "name":  "ULTRA x TENS0R",
                          "captain":  "",
                          "tier":  "Platinum",
                          "division":  4,
@@ -2243,68 +2421,51 @@
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Deadlock"
-                                      }
-                     },
-                     {
-                         "id":  14,
-                         "position":  14,
-                         "name":  "Floccinaucinihilipilification",
-                         "captain":  "",
-                         "tier":  "Platinum",
-                         "division":  4,
-                         "mmr":  817,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Floccinaucinihilipilification"
-                                      }
-                     },
-                     {
-                         "id":  15,
-                         "position":  15,
-                         "name":  "lawnmowers",
-                         "captain":  "",
-                         "tier":  "Platinum",
-                         "division":  3,
-                         "mmr":  814,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "lawnmowers"
+                                          "label":  "ULTRA x TENS0R"
                                       }
                      },
                      {
                          "id":  16,
                          "position":  16,
-                         "name":  "heatSS",
+                         "name":  "HEAT",
                          "captain":  "",
                          "tier":  "Platinum",
-                         "division":  3,
-                         "mmr":  810,
+                         "division":  4,
+                         "mmr":  820,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "heatSS"
+                                          "label":  "HEAT"
                                       }
                      },
                      {
                          "id":  17,
                          "position":  17,
+                         "name":  "CAPITA",
+                         "captain":  "",
+                         "tier":  "Platinum",
+                         "division":  4,
+                         "mmr":  820,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Inactive",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "CAPITA"
+                                      }
+                     },
+                     {
+                         "id":  18,
+                         "position":  18,
                          "name":  "Kill Code",
                          "captain":  "",
                          "tier":  "Platinum",
                          "division":  3,
-                         "mmr":  810,
+                         "mmr":  815,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
@@ -2315,12 +2476,29 @@
                                       }
                      },
                      {
-                         "id":  18,
-                         "position":  18,
-                         "name":  "big hero 6",
+                         "id":  19,
+                         "position":  19,
+                         "name":  "Purple Playhouse",
                          "captain":  "",
                          "tier":  "Platinum",
                          "division":  3,
+                         "mmr":  814,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Purple Playhouse"
+                                      }
+                     },
+                     {
+                         "id":  20,
+                         "position":  20,
+                         "name":  "big hero 6",
+                         "captain":  "",
+                         "tier":  "Platinum",
+                         "division":  2,
                          "mmr":  809,
                          "region":  "North America",
                          "wins":  0,
@@ -2332,54 +2510,20 @@
                                       }
                      },
                      {
-                         "id":  19,
-                         "position":  19,
-                         "name":  "frug",
-                         "captain":  "",
-                         "tier":  "Platinum",
-                         "division":  3,
-                         "mmr":  808,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "frug"
-                                      }
-                     },
-                     {
-                         "id":  20,
-                         "position":  20,
-                         "name":  "Astral",
-                         "captain":  "",
-                         "tier":  "Platinum",
-                         "division":  2,
-                         "mmr":  808,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Astral"
-                                      }
-                     },
-                     {
                          "id":  21,
                          "position":  21,
-                         "name":  "Eclipse",
+                         "name":  "Good Vibes Only",
                          "captain":  "",
                          "tier":  "Platinum",
                          "division":  2,
-                         "mmr":  806,
+                         "mmr":  807,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
-                         "active":  "Active",
+                         "active":  "Inactive",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Eclipse"
+                                          "label":  "Good Vibes Only"
                                       }
                      },
                      {
@@ -2393,7 +2537,7 @@
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
-                         "active":  "Active",
+                         "active":  "Inactive",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
                                           "label":  "Zone Echo"
@@ -2402,24 +2546,7 @@
                      {
                          "id":  23,
                          "position":  23,
-                         "name":  "Purple Playhouse",
-                         "captain":  "",
-                         "tier":  "Platinum",
-                         "division":  2,
-                         "mmr":  801,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Purple Playhouse"
-                                      }
-                     },
-                     {
-                         "id":  24,
-                         "position":  24,
-                         "name":  "UV3",
+                         "name":  "CRUNK",
                          "captain":  "",
                          "tier":  "Platinum",
                          "division":  1,
@@ -2430,7 +2557,24 @@
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "UV3"
+                                          "label":  "CRUNK"
+                                      }
+                     },
+                     {
+                         "id":  24,
+                         "position":  24,
+                         "name":  "Jackpot",
+                         "captain":  "",
+                         "tier":  "Platinum",
+                         "division":  1,
+                         "mmr":  797,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Jackpot"
                                       }
                      },
                      {
@@ -2453,35 +2597,35 @@
                      {
                          "id":  26,
                          "position":  26,
-                         "name":  "Good Vibes Only",
+                         "name":  "lawnmowers",
                          "captain":  "",
-                         "tier":  "Gold",
-                         "division":  4,
-                         "mmr":  792,
+                         "tier":  "Platinum",
+                         "division":  1,
+                         "mmr":  796,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
-                         "active":  "Active",
+                         "active":  "Inactive",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Good Vibes Only"
+                                          "label":  "lawnmowers"
                                       }
                      },
                      {
                          "id":  27,
                          "position":  27,
-                         "name":  "CRUNK",
+                         "name":  "UV3",
                          "captain":  "",
                          "tier":  "Gold",
                          "division":  4,
-                         "mmr":  790,
+                         "mmr":  786,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "CRUNK"
+                                          "label":  "UV3"
                                       }
                      },
                      {
@@ -2504,23 +2648,57 @@
                      {
                          "id":  29,
                          "position":  29,
-                         "name":  "Monarch",
+                         "name":  "Deadlock",
                          "captain":  "",
                          "tier":  "Gold",
                          "division":  4,
-                         "mmr":  786,
+                         "mmr":  784,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Monarch"
+                                          "label":  "Deadlock"
                                       }
                      },
                      {
                          "id":  30,
                          "position":  30,
+                         "name":  "lawnmower",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  4,
+                         "mmr":  781,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "lawnmower"
+                                      }
+                     },
+                     {
+                         "id":  31,
+                         "position":  31,
+                         "name":  "Eternity",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  4,
+                         "mmr":  780,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Eternity"
+                                      }
+                     },
+                     {
+                         "id":  32,
+                         "position":  32,
                          "name":  "lucid",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2536,8 +2714,8 @@
                                       }
                      },
                      {
-                         "id":  31,
-                         "position":  31,
+                         "id":  33,
+                         "position":  33,
                          "name":  "Lucid",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2553,29 +2731,29 @@
                                       }
                      },
                      {
-                         "id":  32,
-                         "position":  32,
+                         "id":  34,
+                         "position":  34,
                          "name":  "Mystic",
                          "captain":  "",
                          "tier":  "Gold",
-                         "division":  2,
+                         "division":  3,
                          "mmr":  767,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
-                         "active":  "Inactive",
+                         "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
                                           "label":  "Mystic"
                                       }
                      },
                      {
-                         "id":  33,
-                         "position":  33,
+                         "id":  35,
+                         "position":  35,
                          "name":  "W",
                          "captain":  "",
                          "tier":  "Gold",
-                         "division":  2,
+                         "division":  3,
                          "mmr":  767,
                          "region":  "North America",
                          "wins":  0,
@@ -2587,12 +2765,12 @@
                                       }
                      },
                      {
-                         "id":  34,
-                         "position":  34,
+                         "id":  36,
+                         "position":  36,
                          "name":  "bussy",
                          "captain":  "",
                          "tier":  "Gold",
-                         "division":  2,
+                         "division":  3,
                          "mmr":  766,
                          "region":  "North America",
                          "wins":  0,
@@ -2604,26 +2782,9 @@
                                       }
                      },
                      {
-                         "id":  35,
-                         "position":  35,
-                         "name":  "Eternity",
-                         "captain":  "",
-                         "tier":  "Gold",
-                         "division":  2,
-                         "mmr":  766,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Eternity"
-                                      }
-                     },
-                     {
-                         "id":  36,
-                         "position":  36,
-                         "name":  "Nexus",
+                         "id":  37,
+                         "position":  37,
+                         "name":  "Eclipse",
                          "captain":  "",
                          "tier":  "Gold",
                          "division":  2,
@@ -2634,12 +2795,12 @@
                          "active":  "Active",
                          "teamLogo":  {
                                           "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Nexus"
+                                          "label":  "Eclipse"
                                       }
                      },
                      {
-                         "id":  37,
-                         "position":  37,
+                         "id":  38,
+                         "position":  38,
                          "name":  "TGF",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2655,8 +2816,59 @@
                                       }
                      },
                      {
-                         "id":  38,
-                         "position":  38,
+                         "id":  39,
+                         "position":  39,
+                         "name":  "Nexus",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  2,
+                         "mmr":  761,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Nexus"
+                                      }
+                     },
+                     {
+                         "id":  40,
+                         "position":  40,
+                         "name":  "heatSS",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  2,
+                         "mmr":  758,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "heatSS"
+                                      }
+                     },
+                     {
+                         "id":  41,
+                         "position":  41,
+                         "name":  "Surge",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  2,
+                         "mmr":  758,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "Surge"
+                                      }
+                     },
+                     {
+                         "id":  42,
+                         "position":  42,
                          "name":  "quest",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2672,8 +2884,8 @@
                                       }
                      },
                      {
-                         "id":  39,
-                         "position":  39,
+                         "id":  43,
+                         "position":  43,
                          "name":  "Cat Boys",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2689,42 +2901,8 @@
                                       }
                      },
                      {
-                         "id":  40,
-                         "position":  40,
-                         "name":  "no no no no if you",
-                         "captain":  "",
-                         "tier":  "Gold",
-                         "division":  2,
-                         "mmr":  751,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "no no no no if you"
-                                      }
-                     },
-                     {
-                         "id":  41,
-                         "position":  41,
-                         "name":  "Surge",
-                         "captain":  "",
-                         "tier":  "Gold",
-                         "division":  1,
-                         "mmr":  743,
-                         "region":  "North America",
-                         "wins":  0,
-                         "losses":  0,
-                         "active":  "Active",
-                         "teamLogo":  {
-                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
-                                          "label":  "Surge"
-                                      }
-                     },
-                     {
-                         "id":  42,
-                         "position":  42,
+                         "id":  44,
+                         "position":  44,
                          "name":  "Unholy Offspring",
                          "captain":  "",
                          "tier":  "Gold",
@@ -2740,13 +2918,30 @@
                                       }
                      },
                      {
-                         "id":  43,
-                         "position":  43,
+                         "id":  45,
+                         "position":  45,
+                         "name":  "no no no no if you",
+                         "captain":  "",
+                         "tier":  "Gold",
+                         "division":  1,
+                         "mmr":  717,
+                         "region":  "North America",
+                         "wins":  0,
+                         "losses":  0,
+                         "active":  "Active",
+                         "teamLogo":  {
+                                          "url":  "https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024",
+                                          "label":  "no no no no if you"
+                                      }
+                     },
+                     {
+                         "id":  46,
+                         "position":  46,
                          "name":  "Hyperion",
                          "captain":  "",
                          "tier":  "Gold",
                          "division":  1,
-                         "mmr":  709,
+                         "mmr":  703,
                          "region":  "North America",
                          "wins":  0,
                          "losses":  0,
@@ -3929,6 +4124,21 @@
                              "matchStatus":  "Completed"
                          },
                          {
+                             "id":  80,
+                             "week":  "3",
+                             "matchDate":  "02/18/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "UV3",
+                             "team2":  "Purple Playhouse",
+                             "team1Score":  14,
+                             "team2Score":  23,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
                              "id":  81,
                              "week":  "3",
                              "matchDate":  "02/18/2026",
@@ -3972,6 +4182,411 @@
                              "team2Won":  false,
                              "isForfeit":  true,
                              "matchStatus":  "Forfeited"
+                         },
+                         {
+                             "id":  84,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "M0dified",
+                             "team2":  "rent free",
+                             "team1Score":  38,
+                             "team2Score":  12,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  85,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "9:30 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Nexus",
+                             "team2":  "Good Vibes Only",
+                             "team1Score":  13,
+                             "team2Score":  40,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  86,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "M0dified",
+                             "team2":  "The Omens",
+                             "team1Score":  41,
+                             "team2Score":  15,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  87,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "WBW",
+                             "team2":  "lawnmowers",
+                             "team1Score":  38,
+                             "team2Score":  12,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  88,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Astral",
+                             "team2":  "Eclipse",
+                             "team1Score":  37,
+                             "team2Score":  10,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  89,
+                             "week":  "3",
+                             "matchDate":  "02/19/2026",
+                             "matchTime":  "10:30 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Deadlock",
+                             "team2":  "Kill Code",
+                             "team1Score":  19,
+                             "team2Score":  32,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  90,
+                             "week":  "3",
+                             "matchDate":  "02/20/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "ULTRA x TENS0R",
+                             "team2":  "Kaizen",
+                             "team1Score":  22,
+                             "team2Score":  30,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  91,
+                             "week":  "3",
+                             "matchDate":  "02/20/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "no no no no if you",
+                             "team2":  "Hyperion",
+                             "team1Score":  16,
+                             "team2Score":  25,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  92,
+                             "week":  "3",
+                             "matchDate":  "02/20/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Nexus",
+                             "team2":  "Surge",
+                             "team1Score":  32,
+                             "team2Score":  23,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  93,
+                             "week":  "3",
+                             "matchDate":  "02/20/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Monarch",
+                             "team2":  "heatSS",
+                             "team1Score":  40,
+                             "team2Score":  6,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  94,
+                             "week":  "3",
+                             "matchDate":  "02/20/2026",
+                             "matchTime":  "11:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Eternity",
+                             "team2":  "no no no no if you",
+                             "team1Score":  39,
+                             "team2Score":  10,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  95,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "8:30 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Ren",
+                             "team2":  "Eleven Point Five",
+                             "team1Score":  54,
+                             "team2Score":  30,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  96,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Zone Echo",
+                             "team2":  "Astral",
+                             "team1Score":  9,
+                             "team2Score":  44,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  97,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "9:15 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "rent free",
+                             "team2":  "The Omens",
+                             "team1Score":  59,
+                             "team2Score":  50,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  98,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Kill Code",
+                             "team2":  "frug",
+                             "team1Score":  40,
+                             "team2Score":  44,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  99,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "10:30 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Soul",
+                             "team2":  "Jackpot",
+                             "team1Score":  10,
+                             "team2Score":  27,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  100,
+                             "week":  "3",
+                             "matchDate":  "02/21/2026",
+                             "matchTime":  "11:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "frug",
+                             "team2":  "Deadlock",
+                             "team1Score":  47,
+                             "team2Score":  12,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  101,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "7:23 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "CAPITA",
+                             "team2":  "Eleven Point Five",
+                             "team1Score":  0,
+                             "team2Score":  20,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  true,
+                             "matchStatus":  "Forfeited"
+                         },
+                         {
+                             "id":  102,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "7:37 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Zone Echo",
+                             "team2":  "Eclipse",
+                             "team1Score":  20,
+                             "team2Score":  0,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  103,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "8:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Jackpot",
+                             "team2":  "HEAT",
+                             "team1Score":  20,
+                             "team2Score":  36,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  104,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "CRUNK",
+                             "team2":  "heatSS",
+                             "team1Score":  34,
+                             "team2Score":  6,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  105,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Challenge",
+                             "team1":  "Kaizen",
+                             "team2":  "rent free",
+                             "team1Score":  30,
+                             "team2Score":  31,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  106,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Monarch",
+                             "team2":  "CRUNK",
+                             "team1Score":  28,
+                             "team2Score":  26,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  107,
+                             "week":  "3",
+                             "matchDate":  "02/22/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Floccinaucinihilipilification",
+                             "team2":  "WBW",
+                             "team1Score":  47,
+                             "team2Score":  36,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  108,
+                             "week":  "4",
+                             "matchDate":  "02/23/2026",
+                             "matchTime":  "8:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Lightbuwlb",
+                             "team2":  "Astral",
+                             "team1Score":  21,
+                             "team2Score":  30,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  109,
+                             "week":  "4",
+                             "matchDate":  "02/23/2026",
+                             "matchTime":  "9:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "Hyperion",
+                             "team2":  "Surge",
+                             "team1Score":  2,
+                             "team2Score":  39,
+                             "team1Won":  false,
+                             "team2Won":  true,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
+                         },
+                         {
+                             "id":  110,
+                             "week":  "4",
+                             "matchDate":  "02/23/2026",
+                             "matchTime":  "10:00 PM",
+                             "matchType":  "Assigned",
+                             "team1":  "The Omens",
+                             "team2":  "lawnmower",
+                             "team1Score":  35,
+                             "team2Score":  9,
+                             "team1Won":  true,
+                             "team2Won":  false,
+                             "isForfeit":  false,
+                             "matchStatus":  "Completed"
                          }
                      ],
     "forfeits":  [
@@ -5579,115 +6194,34 @@
                          "team2Won":  false,
                          "isForfeit":  true,
                          "matchStatus":  "Forfeited"
+                     },
+                     {
+                         "id":  109,
+                         "week":  "94",
+                         "matchDate":  "02/22/2026",
+                         "matchTime":  "",
+                         "matchType":  "Assigned",
+                         "team1":  "CAPITA",
+                         "team2":  "Eleven Point Five",
+                         "team1Score":  0,
+                         "team2Score":  20,
+                         "team1Won":  false,
+                         "team2Won":  true,
+                         "isForfeit":  true,
+                         "matchStatus":  "Forfeited"
                      }
                  ],
     "proposedMatches":  [
-                            {
-                                "id":  1,
-                                "team1":  "Purple Playhouse",
-                                "team2":  "UV3",
-                                "matchDate":  null,
-                                "matchTime":  "",
-                                "score":  "23 - 14",
-                                "status":  "Assigned",
-                                "matchType":  "",
-                                "week":  "",
-                                "round":  "",
-                                "proposedResult":  "Purple Playhouse - Win",
-                                "streamLink":  {
-                                                   "url":  "",
-                                                   "platform":  "Twitch"
-                                               }
-                            }
+
                         ],
     "cooldownPlayers":  [
                             {
                                 "id":  1,
-                                "playerName":  "BillyBrutalFist",
-                                "team":  "quest",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  2,
-                                "playerName":  "Bum",
-                                "team":  "quest",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  3,
-                                "playerName":  "christ",
-                                "team":  "quest",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  4,
-                                "playerName":  "Daity",
-                                "team":  "quest",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  5,
-                                "playerName":  "ECO_RebalPhoenix86",
-                                "team":  "Unholy Offspring",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  6,
-                                "playerName":  "Greed",
-                                "team":  "Cat Boys",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  7,
-                                "playerName":  "H4nd0",
+                                "playerName":  "DonaldDuck",
                                 "team":  "heatSS",
-                                "cooldownUntil":  "2026-02-23",
+                                "cooldownUntil":  "2026-03-02",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  8,
-                                "playerName":  "Light Fury",
-                                "team":  "Unholy Offspring",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  9,
-                                "playerName":  "n3z",
-                                "team":  "heatSS",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  10,
-                                "playerName":  "Sunshine",
-                                "team":  "Eternity",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
-                            },
-                            {
-                                "id":  11,
-                                "playerName":  "zyrts",
-                                "team":  "Cat Boys",
-                                "cooldownUntil":  "2026-02-23",
-                                "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-02-23"
+                                "eligibleDate":  "2026-03-02"
                             }
                         ],
     "leagueSubs":  [
@@ -5707,7 +6241,6 @@
                        "Brae-",
                        "BTHawk",
                        "Bum",
-                       "Cool-Whip",
                        "Crafthouse",
                        "CrashDash",
                        "danieru",

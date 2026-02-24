@@ -3,10 +3,10 @@ import { Newspaper, Clock } from 'lucide-react';
 import { emlColors } from '../theme/colors';
 
 const news = [
-  { title: 'Season 12 Registration Now Open', date: 'Feb 10, 2024', category: 'Announcement', summary: 'Sign up your team for the most competitive season yet. New format and expanded competition.' },
-  { title: 'New Tournament Format Revealed', date: 'Feb 8, 2024', category: 'Update', summary: 'Double elimination brackets and extended playoff series coming to Season 12.' },
-  { title: 'Championship Results', date: 'Feb 5, 2024', category: 'Results', summary: 'Congratulations to Team Vortex for winning the Season 11 Grand Finals!' },
-  { title: 'Rule Changes for 2024', date: 'Jan 28, 2024', category: 'Rules', summary: 'Updated competitive ruleset and anti-cheat measures now in effect.' }
+  { title: 'Season 4 Week Four Matches Posted!', date: 'Feb 24, 2026', category: 'Announcement', summary: 'Week Four matches are live. Schedule by Friday noon EDT and play by Sunday. See EML Bot Instructions for commands.' },
+  { title: 'Replay Files Policy', date: 'Feb 24, 2026', category: 'Rules', summary: 'A replay file is required for cheating reports. For bug abuse reports, one may be requested if evidence is unclear.' },
+  { title: 'Pause Rules Reminder', date: 'Feb 24, 2026', category: 'Rules', summary: '1 between-round pause and 1 during-round pause per team (5 min each, extendable to 15 for tech). Illegal pauses result in point deductions.' },
+  { title: 'Staff Applications Open', date: 'Feb 24, 2026', category: 'Update', summary: 'Use /staff app to apply anytime. Looking for Casters, Camera Ops, Helpers, and Future Mods.' }
 ];
 
 const AnnouncementsSection = ({ theme }) => {
