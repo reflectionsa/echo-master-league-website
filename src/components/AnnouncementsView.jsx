@@ -133,7 +133,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                     {/* Week Four Image */}
                     <Box w="full" mt="4" rounded="xl" overflow="hidden" border="1px solid" borderColor={emlColors.borderMedium}>
                       <Image
-                        src="https://media.discordapp.net/attachments/1461811148482412835/1475358463306498161/1BiQ6mb.png?ex=699f2c64&is=699ddae4&hm=5eaed7a939acd27983441ae709c919fd59a162c801e52048937c4f6fd363771f&=&format=webp&quality=lossless&width=960&height=540"
+                        src="/images/week4-announcement.png"
                         alt={`Season 4 Week ${weekName} Matches`}
                         w="full"
                         h="auto"

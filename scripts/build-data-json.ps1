@@ -225,8 +225,8 @@ if ($hasPlayerNameCol) {
         $pn = if ($row.'Player Name') { $row.'Player Name' } elseif ($row.Player) { $row.Player } else { "" }
         $tn = if ($row.'Team Name') { $row.'Team Name' } elseif ($row.Team) { $row.Team } else { "" }
         if (-not $pn -or -not $tn) { continue }
-        $isCap = ($row.Captain -ne $null -and $row.Captain.ToString().ToLower() -eq 'yes')
-        $isCC = (($row.'Co-Captain' -ne $null -and $row.'Co-Captain'.ToString().ToLower() -eq 'yes') -or ($row.'Co-Captain ' -ne $null -and $row.'Co-Captain '.ToString().ToLower() -eq 'yes'))
+        $isCap = ($null -ne $row.Captain -and $row.Captain.ToString().ToLower() -eq 'yes')
+        $isCC = (($null -ne $row.'Co-Captain' -and $row.'Co-Captain'.ToString().ToLower() -eq 'yes') -or ($null -ne $row.'Co-Captain ' -and $row.'Co-Captain '.ToString().ToLower() -eq 'yes'))
         $rank = if ($row.Rank) { $row.Rank } else { "" }
         if (-not $trMap.Contains($tn)) { $trMap[$tn] = @{ name = $tn; captain = ""; coCaptain = ""; players = @(); ranks = @() } }
         $t = $trMap[$tn]

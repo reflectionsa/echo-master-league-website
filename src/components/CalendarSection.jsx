@@ -36,7 +36,7 @@ const CalendarSection = ({ theme }) => {
             p="4"
           >
             <Image
-              src="https://images-ext-1.discordapp.net/external/wP1SWEwYOCbLMpCVc_wz4tmudtksVSy4urpOBM2o9VQ/https/echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png?format=webp&quality=lossless&width=814&height=551"
+              src="https://echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png"
               alt="EML North America League Calendar"
               w="full"
               h="auto"
