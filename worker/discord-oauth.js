@@ -25,14 +25,14 @@ const ROLE_PRIORITY = ['viewer', 'player', 'caster', 'mod', 'admin'];
 
 const STATIC_ROLE_NAME_MAP = {
   'Commissioner': 'admin',
-  'Commisoner': 'admin', // typo variant that may exist in the guild
   'Board': 'admin',
-  'League Mods': 'mod',
+  'League Mod': 'mod',
+  'League Mod EU': 'mod',
   'Casters': 'caster',
-  'Player NA': 'player',
-  'Player EU': 'player',
-  'Captains': 'player',
-  'Co-Captains': 'player',
+  'PlayerNA': 'player',
+  'PlayerEU': 'player',
+  'CaptainNA': 'player',
+  'CoCaptainNA': 'player',
 };
 
 function mapRoleNamesToAppRole(roleNames) {

@@ -11,15 +11,15 @@ id = "REPLACE_WITH_KV_NAMESPACE_ID"
 
 [vars]
 # Your Discord Application ID (not secret - safe to commit)
-DISCORD_CLIENT_ID = "REPLACE_WITH_DISCORD_CLIENT_ID"
+DISCORD_CLIENT_ID = "1477115120759996667"
 
 # Your EML Discord server ID
 # Enable Developer Mode in Discord (User Settings > Advanced > Developer Mode)
 # Right-click your server name > Copy Server ID
-DISCORD_GUILD_ID = "REPLACE_WITH_EML_GUILD_ID"
+DISCORD_GUILD_ID = "1182380144887865406"
 
 # Comma-separated list of allowed frontend origins (no trailing slash)
-ALLOWED_ORIGINS = "http://localhost:3000,https://REPLACE_WITH_YOUR_GITHUB_USERNAME.github.io"
+ALLOWED_ORIGINS = "http://localhost:3000,https://reflectionsa.github.io"
 
 # Static role ID → name map (RECOMMENDED - no bot token needed)
 # Steps to get role IDs:
@@ -28,7 +28,7 @@ ALLOWED_ORIGINS = "http://localhost:3000,https://REPLACE_WITH_YOUR_GITHUB_USERNA
 #   3. Right-click each role > Copy Role ID
 # Replace the placeholder IDs below with your actual role IDs.
 # Keep the quotes inside the JSON string escaped.
-DISCORD_ROLE_MAP = '{"COMMISSIONER_ROLE_ID":"Commissioner","BOARD_ROLE_ID":"Board","LEAGUE_MODS_ROLE_ID":"League Mods","CASTERS_ROLE_ID":"Casters","PLAYER_NA_ROLE_ID":"Player NA","PLAYER_EU_ROLE_ID":"Player EU","CAPTAINS_ROLE_ID":"Captains","CO_CAPTAINS_ROLE_ID":"Co-Captains"}'
+DISCORD_ROLE_MAP = '{"1182380145084993593":"Commissioner","1209744291975405658":"Board","1182380145084993591":"League Mod","1196604058182623342":"League Mod EU","1209743670421753946":"Casters","1248390263940972596":"PlayerNA","1248628874099560498":"PlayerEU","1182380145047249000":"CaptainNA","1248402146546815030":"CoCaptainNA"}'
 
 # Secrets (NEVER put these in this file - set via CLI):
 #   wrangler secret put DISCORD_CLIENT_SECRET
