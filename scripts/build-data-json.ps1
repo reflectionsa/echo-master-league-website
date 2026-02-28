@@ -89,7 +89,7 @@ $standings = $rankings | ForEach-Object -Begin { $idx = 0 } -Process {
         points   = ToInt $_.Points
         active   = if ($_.Active) { $_.Active } else { "Active" }
     }
-}
+} | Select-Object -Property *
 
 # â”€â”€ Parse rank tier â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Parse-Tier($s) {

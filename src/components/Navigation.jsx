@@ -1,8 +1,13 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text } from '@chakra-ui/react';
 import { ChevronDown, Trophy, Calendar, Users, MessageCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { getThemedColors } from '../theme/colors';
+import { useAuth } from '../hooks/useAuth';
+import LoginButton from './LoginButton';
+import UserMenu from './UserMenu';
+import ProductionSignup from './ProductionSignup';
+import AdminPanel from './AdminPanel';
 import AnnouncementsView from './AnnouncementsView';
 import AboutView from './AboutView';
 import CalendarView from './CalendarView';
@@ -27,6 +32,7 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
+  const { isLoggedIn, isCaster, isAdmin, isMod, error: authError } = useAuth();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -34,6 +40,12 @@ const Navigation = ({
   const [rulesOpen, setRulesOpen] = useState(false);
   const [botOpen, setBotOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [productionSignupOpen, setProductionSignupOpen] = useState(false);
+  const [adminPanelOpen, setAdminPanelOpen] = useState(false);
+
+  useEffect(() => {
+    if (authError) console.error('[EML Auth]', authError);
+  }, [authError]);
 
   return (
     <>
@@ -246,6 +258,18 @@ const Navigation = ({
                   </Menu.Positioner>
                 </Portal>
               </Menu.Root>
+
+              {/* Auth: Login button or User menu */}
+              {isLoggedIn ? (
+                <UserMenu
+                  theme={theme}
+                  onProductionSignupClick={() => setProductionSignupOpen(true)}
+                  onAdminPanelClick={() => setAdminPanelOpen(true)}
+                />
+              ) : (
+                <LoginButton />
+              )}
+
               <ThemeToggle theme={theme} onToggle={onThemeToggle} />
             </HStack>
           </HStack>
@@ -263,6 +287,22 @@ const Navigation = ({
       <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
       <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
       <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
+
+      {/* Auth-gated Modals */}
+      {isCaster && (
+        <ProductionSignup
+          theme={theme}
+          open={productionSignupOpen}
+          onClose={() => setProductionSignupOpen(false)}
+        />
+      )}
+      {(isAdmin || isMod) && (
+        <AdminPanel
+          theme={theme}
+          open={adminPanelOpen}
+          onClose={() => setAdminPanelOpen(false)}
+        />
+      )}
 
       {/* Mobile Bottom Navigation */}
       <Box

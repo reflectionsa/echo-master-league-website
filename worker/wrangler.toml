@@ -1,0 +1,35 @@
+name = "eml-discord-oauth"
+main = "discord-oauth.js"
+compatibility_date = "2024-01-01"
+
+# KV namespace for production signups and role cache.
+# After creating: wrangler kv namespace create "EML_SIGNUPS"
+# Paste the returned id below, replacing REPLACE_WITH_KV_NAMESPACE_ID
+[[kv_namespaces]]
+binding = "EML_SIGNUPS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+# Your Discord Application ID (not secret - safe to commit)
+DISCORD_CLIENT_ID = "REPLACE_WITH_DISCORD_CLIENT_ID"
+
+# Your EML Discord server ID
+# Enable Developer Mode in Discord (User Settings > Advanced > Developer Mode)
+# Right-click your server name > Copy Server ID
+DISCORD_GUILD_ID = "REPLACE_WITH_EML_GUILD_ID"
+
+# Comma-separated list of allowed frontend origins (no trailing slash)
+ALLOWED_ORIGINS = "http://localhost:3000,https://REPLACE_WITH_YOUR_GITHUB_USERNAME.github.io"
+
+# Static role ID → name map (RECOMMENDED - no bot token needed)
+# Steps to get role IDs:
+#   1. Enable Developer Mode: Discord > User Settings > Advanced > Developer Mode
+#   2. Open your EML server > Server Settings > Roles
+#   3. Right-click each role > Copy Role ID
+# Replace the placeholder IDs below with your actual role IDs.
+# Keep the quotes inside the JSON string escaped.
+DISCORD_ROLE_MAP = '{"COMMISSIONER_ROLE_ID":"Commissioner","BOARD_ROLE_ID":"Board","LEAGUE_MODS_ROLE_ID":"League Mods","CASTERS_ROLE_ID":"Casters","PLAYER_NA_ROLE_ID":"Player NA","PLAYER_EU_ROLE_ID":"Player EU","CAPTAINS_ROLE_ID":"Captains","CO_CAPTAINS_ROLE_ID":"Co-Captains"}'
+
+# Secrets (NEVER put these in this file - set via CLI):
+#   wrangler secret put DISCORD_CLIENT_SECRET
+#   wrangler secret put DISCORD_BOT_TOKEN   (only needed if NOT using DISCORD_ROLE_MAP)
