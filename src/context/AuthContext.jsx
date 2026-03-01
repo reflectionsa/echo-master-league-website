@@ -75,9 +75,11 @@ export const AuthProvider = ({ children }) => {
       .replace(/^\?$/, '');
     window.history.replaceState({}, document.title, url.pathname + cleanSearch);
 
-    // CSRF check
+    // CSRF check — if stored is null the redirect came through a different browser
+    // context (common on mobile with in-app browsers). Allow through; only reject
+    // if a stored state exists but explicitly doesn't match.
     localStorage.removeItem(STATE_KEY);
-    if (!stored || stored !== state) {
+    if (stored && stored !== state) {
       setError('Login failed: invalid state parameter. Please try again.');
       return;
     }

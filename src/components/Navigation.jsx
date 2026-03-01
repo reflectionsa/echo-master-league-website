@@ -380,20 +380,73 @@ const Navigation = ({
               <Users size={18} />
               <Box fontSize="xs" mt="1">Members</Box>
             </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              flexDirection="column"
-              h="auto"
-              py="2"
-              px="2"
-              onClick={() => window.open('https://discord.gg/YhKGzPhaUw', '_blank')}
-              color={colors.accentPurple}
-              _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
-            >
-              <MessageCircle size={18} />
-              <Box fontSize="xs" mt="1">Discord</Box>
-            </Button>
+            <Menu.Root positioning={{ placement: 'top-end' }}>
+              <Menu.Trigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  flexDirection="column"
+                  h="auto"
+                  py="2"
+                  px="2"
+                  color={colors.accentPurple}
+                  _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
+                >
+                  <MessageCircle size={18} />
+                  <Box fontSize="xs" mt="1">Discord</Box>
+                </Button>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content
+                    minW="200px"
+                    bg={colors.bgSecondary}
+                    border="1px solid"
+                    borderColor={colors.borderMedium}
+                    rounded="xl"
+                    boxShadow="2xl"
+                    p="2"
+                  >
+                    <Menu.Item
+                      value="eml-discord-mobile"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => window.open('https://discord.gg/YhKGzPhaUw', '_blank')}
+                    >
+                      <HStack gap="3">
+                        <Image
+                          src="https://cdn.discordapp.com/avatars/1461558413971554392/791aa1c1bae16f1a423fa2e008279e39.webp?size=1024"
+                          alt="EML"
+                          w="6"
+                          h="6"
+                          rounded="full"
+                        />
+                        <Text fontWeight="500">EML Discord</Text>
+                      </HStack>
+                    </Menu.Item>
+                    <Menu.Item
+                      value="lounge-discord-mobile"
+                      rounded="lg"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={() => window.open('https://discord.gg/yG6speErHC', '_blank')}
+                    >
+                      <HStack gap="3">
+                        <Image
+                          src="https://cdn.discordapp.com/icons/779349159852769310/d3f47955fc2d4558a5351a12a3502eea.webp?size=480"
+                          alt="Echo VR Lounge"
+                          w="6"
+                          h="6"
+                          rounded="full"
+                        />
+                        <Text fontWeight="500">Echo VR Lounge</Text>
+                      </HStack>
+                    </Menu.Item>
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
           </HStack>
         </Container>
       </Box>
