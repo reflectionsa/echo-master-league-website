@@ -2,7 +2,7 @@ import {
   Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge,
   Button, Tabs, Input, Textarea
 } from '@chakra-ui/react';
-import { Shield, FileText, Users, Trophy } from 'lucide-react';
+import { Shield, FileText, Users, Trophy, Terminal } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 
@@ -105,6 +105,20 @@ const AdminPanel = ({ theme, open, onClose }) => {
                       _hover={{ bg: colors.bgHover }}
                     >
                       <FileText size={14} /> Announcements
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="botcommands"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                    >
+                      <Terminal size={14} /> Bot Commands
                     </Tabs.Trigger>
                   </Tabs.List>
 
@@ -288,6 +302,83 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             </Button>
                           </VStack>
                         </Box>
+                      </VStack>
+                    </Tabs.Content>
+
+                    {/* Bot Commands */}
+                    <Tabs.Content value="botcommands" p="6">
+                      <VStack align="start" gap="5">
+                        <VStack align="start" gap="1">
+                          <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>
+                            Bot Commands Reference
+                          </Text>
+                          <Text fontSize="sm" color={colors.textMuted}>
+                            Director and Server Mod slash commands available in Discord.
+                          </Text>
+                        </VStack>
+
+                        {[
+                          {
+                            cmd: '/zadminmatchentry',
+                            desc: 'Enter a match result on behalf of two teams.',
+                            palette: 'orange',
+                          },
+                          {
+                            cmd: '/zadminfixroles',
+                            desc: 'Perform a manual accounting of server and league roles.',
+                            palette: 'blue',
+                          },
+                          {
+                            cmd: '/zadminsuspend',
+                            desc: 'Manually suspend a player for a specific duration. Kicks the player from everything and adds them to the suspension list. If the player is a captain, their team is disbanded.',
+                            palette: 'red',
+                          },
+                          {
+                            cmd: '/zdebugdbcache',
+                            desc: 'Debug the local database cache.',
+                            palette: 'yellow',
+                          },
+                          {
+                            cmd: '/zadmingenerateuuid',
+                            desc: 'Perform UUID generation and related wizardry.',
+                            palette: 'purple',
+                          },
+                          {
+                            cmd: '/zdebugdbqueue',
+                            desc: 'Debug the pending database write queue.',
+                            palette: 'yellow',
+                          },
+                        ].map(({ cmd, desc, palette }) => (
+                          <Box
+                            key={cmd}
+                            w="full"
+                            p="4"
+                            rounded="xl"
+                            bg={colors.bgSecondary}
+                            border="1px solid"
+                            borderColor={colors.borderMedium}
+                          >
+                            <HStack align="flex-start" gap="3">
+                              <Terminal size={16} color={colors.accentOrange} style={{ marginTop: 2, flexShrink: 0 }} />
+                              <VStack align="start" gap="1" flex="1">
+                                <HStack gap="2" flexWrap="wrap">
+                                  <Text
+                                    fontFamily="mono"
+                                    fontWeight="700"
+                                    fontSize="sm"
+                                    color={colors.textPrimary}
+                                  >
+                                    {cmd}
+                                  </Text>
+                                  <Badge colorPalette={palette} size="xs">Director / Mod</Badge>
+                                </HStack>
+                                <Text fontSize="xs" color={colors.textSecondary}>
+                                  {desc}
+                                </Text>
+                              </VStack>
+                            </HStack>
+                          </Box>
+                        ))}
                       </VStack>
                     </Tabs.Content>
 

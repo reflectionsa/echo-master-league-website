@@ -3,9 +3,34 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef } f
 const STORAGE_KEY = 'eml-auth-user';
 const STATE_KEY = 'eml-oauth-state';
 
-const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
-const DISCORD_REDIRECT = import.meta.env.VITE_DISCORD_REDIRECT_URI;
-const WORKER_URL = import.meta.env.VITE_WORKER_URL;
+// CLIENT_ID is not a secret — hardcoded as fallback so OAuth never breaks
+// if env injection fails (old build, local dev without .env, mobile cache, etc.)
+const DISCORD_CLIENT_ID =
+  (import.meta.env.VITE_DISCORD_CLIENT_ID &&
+    import.meta.env.VITE_DISCORD_CLIENT_ID !== 'undefined')
+    ? import.meta.env.VITE_DISCORD_CLIENT_ID
+    : '1477115120759996667';
+
+// Derive the redirect URI from the actual browser URL at runtime so it always
+// exactly matches what Discord sends the user back to — handles trailing-slash
+// differences, mobile in-app browsers, and local dev without any config.
+function getRedirectUri() {
+  const env = import.meta.env.VITE_DISCORD_REDIRECT_URI;
+  if (env && env !== 'undefined') return env;
+  // Build from window.location: origin + pathname, normalised to a trailing slash
+  const base = window.location.origin + window.location.pathname.replace(/\/+$/, '');
+  return base + '/';
+}
+
+const WORKER_URL =
+  (import.meta.env.VITE_WORKER_URL &&
+    import.meta.env.VITE_WORKER_URL !== 'undefined')
+    ? import.meta.env.VITE_WORKER_URL
+    : null;
+
+if (!WORKER_URL) {
+  console.error('[Auth] VITE_WORKER_URL is not set. Login will not work until this is configured.');
+}
 
 function generateState() {
   const arr = new Uint8Array(16);
@@ -37,12 +62,18 @@ export const AuthProvider = ({ children }) => {
   const callbackHandled = useRef(false);
 
   const login = useCallback(() => {
+    if (!WORKER_URL) {
+      setError('Login is not configured. Please contact the site administrator.');
+      return;
+    }
+
+    const redirectUri = getRedirectUri();
     const state = generateState();
     localStorage.setItem(STATE_KEY, state);
 
     const params = new URLSearchParams({
       client_id: DISCORD_CLIENT_ID,
-      redirect_uri: DISCORD_REDIRECT,
+      redirect_uri: redirectUri,
       response_type: 'code',
       scope: 'identify guilds.members.read',
       state,
@@ -90,7 +121,7 @@ export const AuthProvider = ({ children }) => {
     fetch(`${WORKER_URL}/auth/callback`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, redirect_uri: DISCORD_REDIRECT }),
+      body: JSON.stringify({ code, redirect_uri: getRedirectUri() }),
     })
       .then(res => {
         if (!res.ok) return res.json().then(e => Promise.reject(e.error || 'Authentication failed'));
