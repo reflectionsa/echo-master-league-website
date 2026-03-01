@@ -1,7 +1,7 @@
 import { Dialog, Portal, HStack, Text, CloseButton } from '@chakra-ui/react';
 import { Award } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
-import RankingsSection from './RankingsSection';
+import PlayerLeaderboardSection from './PlayerLeaderboardSection';
 
 const LeaderboardView = ({ theme, open, onClose }) => {
   const colors = getThemedColors(theme);
@@ -34,7 +34,7 @@ const LeaderboardView = ({ theme, open, onClose }) => {
               </HStack>
             </Dialog.Header>
             <Dialog.Body p="0" overflowY="auto">
-              <RankingsSection theme={theme} />
+              <PlayerLeaderboardSection theme={theme} />
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
