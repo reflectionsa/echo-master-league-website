@@ -24,15 +24,18 @@ const DISCORD_API = 'https://discord.com/api/v10';
 const ROLE_PRIORITY = ['viewer', 'player', 'caster', 'mod', 'admin'];
 
 const STATIC_ROLE_NAME_MAP = {
-  'Commissioner': 'admin',
-  'Board': 'admin',
-  'League Mod': 'mod',
+  'Commissioner':  'admin',
+  'Board':         'admin',
+  'League Mod':    'mod',
   'League Mod EU': 'mod',
-  'Casters': 'caster',
-  'PlayerNA': 'player',
-  'PlayerEU': 'player',
-  'CaptainNA': 'player',
-  'CoCaptainNA': 'player',
+  'Casters':       'caster',
+  'Player NA':     'player',  // matches DISCORD_ROLE_MAP exactly
+  'PlayerNA':      'player',  // fallback (no space variant)
+  'Player EU':     'player',  // matches DISCORD_ROLE_MAP exactly
+  'PlayerEU':      'player',  // fallback (no space variant)
+  'CaptainNA':     'player',
+  'Co-Captain':    'player',  // matches DISCORD_ROLE_MAP exactly
+  'CoCaptainNA':   'player',  // fallback variant
 };
 
 function mapRoleNamesToAppRole(roleNames) {

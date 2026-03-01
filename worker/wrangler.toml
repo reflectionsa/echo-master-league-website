@@ -25,7 +25,7 @@ ALLOWED_ORIGINS = "http://localhost:3000,https://reflectionsa.github.io"
 # Steps to get role IDs:
 #   1. Enable Developer Mode: Discord > User Settings > Advanced > Developer Mode
 #   2. Open your EML server > Server Settings > Roles
-#   3. Right-click eanpx wrangler kv namespace create "EML_SIGNUPS"ch role > Copy Role ID
+#   3. Right-click each role > Copy Role ID
 # Replace the placeholder IDs below with your actual role IDs.
 # Keep the quotes inside the JSON string escaped.
 DISCORD_ROLE_MAP = '{"1182380145084993593":"Commissioner","1209744291975405658":"Board","1182380145084993591":"League Mod","1196604058182623342":"League Mod EU","1209743670421753946":"Casters","1248390263940972596":"PlayerNA","1248628874099560498":"PlayerEU","1182380145047249000":"CaptainNA","1248402146546815030":"CoCaptainNA"}'
