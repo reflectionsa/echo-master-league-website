@@ -18,6 +18,7 @@ import TeamsView from './TeamsView';
 import RulesView from './RulesView';
 import BotView from './BotView';
 import MediaView from './MediaView';
+import LeaderboardView from './LeaderboardView';
 
 const Navigation = ({
   theme,
@@ -42,6 +43,7 @@ const Navigation = ({
   const [mediaOpen, setMediaOpen] = useState(false);
   const [productionSignupOpen, setProductionSignupOpen] = useState(false);
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
 
   useEffect(() => {
     if (authError) console.error('[EML Auth]', authError);
@@ -156,6 +158,29 @@ const Navigation = ({
                     >
                       Highlights & Content
                     </Menu.Item>
+                    {(isAdmin || isMod) && <Menu.Separator />}
+                    {(isAdmin || isMod) && (
+                      <Menu.Item
+                        value="leaderboard"
+                        rounded="lg"
+                        color={colors.accentOrange}
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setLeaderboardOpen(true)}
+                      >
+                        Player Leaderboard
+                      </Menu.Item>
+                    )}
+                    {(isAdmin || isMod || isCaster) && (
+                      <Menu.Item
+                        value="production-signup-nav"
+                        rounded="lg"
+                        color={colors.accentPurple}
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setProductionSignupOpen(true)}
+                      >
+                        Production Signup
+                      </Menu.Item>
+                    )}
                   </Menu.Content>
                 </Menu.Positioner>
               </Portal>
@@ -287,6 +312,9 @@ const Navigation = ({
       <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
       <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
       <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
+      {(isAdmin || isMod) && (
+        <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
+      )}
 
       {/* Auth-gated Modals */}
       {isCaster && (
