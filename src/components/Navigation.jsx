@@ -63,8 +63,8 @@ const Navigation = ({
         borderColor={colors.borderMedium}
         boxShadow={`0 8px 32px ${colors.bgPrimary}80`}
       >
-        <Container maxW="7xl" py="3">
-          <HStack justify="space-between" gap="4">
+        <Container maxW="7xl" py="3" px={{ base: '3', md: '6' }}>
+          <HStack justify="space-between" gap={{ base: '2', md: '4' }}>
             {/* EML Dropdown */}
             <Menu.Root positioning={{ placement: 'bottom-start' }}>
               <Menu.Trigger asChild>
@@ -347,20 +347,20 @@ const Navigation = ({
         boxShadow={`0 -8px 32px ${colors.bgPrimary}80`}
         pb="env(safe-area-inset-bottom)"
       >
-        <Container maxW="full" px="4" py="2">
-          <HStack justify="center" gap="8">
+        <Container maxW="full" px="2" py="2">
+          <HStack justify="space-around" gap="1">
             <Button
               size="sm"
               variant="ghost"
               flexDirection="column"
               h="auto"
               py="2"
-              px="4"
+              px="2"
               onClick={() => setStandingsOpen(true)}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
-              <Trophy size={20} />
+              <Trophy size={18} />
               <Box fontSize="xs" mt="1">Standings</Box>
             </Button>
             <Button
@@ -369,12 +369,12 @@ const Navigation = ({
               flexDirection="column"
               h="auto"
               py="2"
-              px="4"
+              px="2"
               onClick={() => setMatchesOpen(true)}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
-              <Calendar size={20} />
+              <Calendar size={18} />
               <Box fontSize="xs" mt="1">Matches</Box>
             </Button>
             <Button
@@ -383,12 +383,12 @@ const Navigation = ({
               flexDirection="column"
               h="auto"
               py="2"
-              px="4"
+              px="2"
               onClick={() => setMembersOpen(true)}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
-              <Users size={20} />
+              <Users size={18} />
               <Box fontSize="xs" mt="1">Members</Box>
             </Button>
             <Button
@@ -397,12 +397,12 @@ const Navigation = ({
               flexDirection="column"
               h="auto"
               py="2"
-              px="4"
+              px="2"
               onClick={() => window.open('https://discord.gg/YhKGzPhaUw', '_blank')}
               color={colors.accentPurple}
               _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={18} />
               <Box fontSize="xs" mt="1">Discord</Box>
             </Button>
           </HStack>

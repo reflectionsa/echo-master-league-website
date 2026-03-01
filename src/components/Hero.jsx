@@ -75,8 +75,8 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
         <VStack gap="8" textAlign="center">
           {/* EML Logo */}
           <Box
-            w="200px"
-            h="200px"
+            w={{ base: '130px', md: '200px' }}
+            h={{ base: '130px', md: '200px' }}
             bg={`${colors.bgElevated}99`}
             backdropFilter="blur(20px)"
             border="3px solid"
@@ -119,7 +119,7 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
           </VStack>
 
           {/* Stats */}
-          <HStack gap="8" flexWrap="wrap" justify="center" mt="6">
+          <HStack gap={{ base: '3', md: '8' }} flexWrap="wrap" justify="center" mt="6">
             {statBlocks.map(stat => (
               <Box
                 key={stat.label}
@@ -127,8 +127,8 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
                 backdropFilter="blur(10px)"
                 border="1px solid"
                 borderColor={colors.borderMedium}
-                px="6"
-                py="4"
+                px={{ base: '4', md: '6' }}
+                py={{ base: '3', md: '4' }}
                 rounded="xl"
                 textAlign="center"
                 cursor="pointer"

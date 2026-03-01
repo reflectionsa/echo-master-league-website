@@ -28,7 +28,7 @@ const App = () => {
           setStandingsOpen={setStandingsOpen}
         />
 
-        <Box pt="60px">
+        <Box pt="60px" pb={{ base: '72px', md: '0' }}>
           <Hero
             theme={theme}
             onTeamsClick={() => setTeamsOpen(true)}

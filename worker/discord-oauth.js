@@ -147,7 +147,7 @@ async function handleAuthCallback(request, env, cors) {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      client_id: env.DISCORD_CLIENT_ID,
+      client_id: env.DISCORD_CLIENT_ID || '1477115120759996667',
       client_secret: env.DISCORD_CLIENT_SECRET, // Workers Secret — never leaves the Worker
       grant_type: 'authorization_code',
       code,
