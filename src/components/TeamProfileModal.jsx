@@ -449,8 +449,8 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                 </VStack>
               )}
             </Dialog.Body>
-      </Dialog.Content>
-    </Dialog.Positioner>
+          </Dialog.Content>
+        </Dialog.Positioner>
       </Portal >
     </Dialog.Root >
   );
