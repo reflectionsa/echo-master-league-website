@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback(() => {
     const state = generateState();
-    sessionStorage.setItem(STATE_KEY, state);
+    localStorage.setItem(STATE_KEY, state);
 
     const params = new URLSearchParams({
       client_id: DISCORD_CLIENT_ID,
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
     const state = url.searchParams.get('state');
-    const stored = sessionStorage.getItem(STATE_KEY);
+    const stored = localStorage.getItem(STATE_KEY);
 
     if (!code) return;
     if (callbackHandled.current) return;
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
     window.history.replaceState({}, document.title, url.pathname + cleanSearch);
 
     // CSRF check
-    sessionStorage.removeItem(STATE_KEY);
+    localStorage.removeItem(STATE_KEY);
     if (!stored || stored !== state) {
       setError('Login failed: invalid state parameter. Please try again.');
       return;

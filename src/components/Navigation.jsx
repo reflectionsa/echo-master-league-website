@@ -363,6 +363,20 @@ const Navigation = ({
               <Users size={20} />
               <Box fontSize="xs" mt="1">Members</Box>
             </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              flexDirection="column"
+              h="auto"
+              py="2"
+              px="4"
+              onClick={() => window.open('https://discord.gg/YhKGzPhaUw', '_blank')}
+              color={colors.accentPurple}
+              _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
+            >
+              <MessageCircle size={20} />
+              <Box fontSize="xs" mt="1">Discord</Box>
+            </Button>
           </HStack>
         </Container>
       </Box>
