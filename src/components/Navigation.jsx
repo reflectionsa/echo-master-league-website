@@ -170,17 +170,6 @@ const Navigation = ({
                         Player Leaderboard
                       </Menu.Item>
                     )}
-                    {(isAdmin || isMod || isCaster) && (
-                      <Menu.Item
-                        value="production-signup-nav"
-                        rounded="lg"
-                        color={colors.accentPurple}
-                        _hover={{ bg: colors.bgHover }}
-                        onClick={() => setProductionSignupOpen(true)}
-                      >
-                        Production Signup
-                      </Menu.Item>
-                    )}
                   </Menu.Content>
                 </Menu.Positioner>
               </Portal>
