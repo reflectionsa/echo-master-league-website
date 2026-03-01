@@ -1,14 +1,122 @@
 import {
   Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge,
-  Button, Tabs, Input, Textarea
+  Button, Tabs, Input, Textarea, Select
 } from '@chakra-ui/react';
-import { Shield, FileText, Users, Trophy, Terminal } from 'lucide-react';
+import { Shield, FileText, Users, Trophy, Terminal, Zap, Video } from 'lucide-react';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
+
+const WORKER_URL = import.meta.env.VITE_WORKER_URL;
 
 const AdminPanel = ({ theme, open, onClose }) => {
   const colors = getThemedColors(theme);
   const { isAdmin, isMod } = useAuth();
+
+  // Production form state
+  const [ticketMatchId, setTicketMatchId] = useState('');
+  const [ticketTitle, setTicketTitle] = useState('');
+  const [ticketLoading, setTicketLoading] = useState(false);
+
+  const [casterName, setCasterName] = useState('');
+  const [casterStats, setCasterStats] = useState({ events: 0, matches: 0 });
+  const [casterLoading, setCasterLoading] = useState(false);
+
+  const [cameraName, setCameraName] = useState('');
+  const [cameraStats, setCameraStats] = useState({ events: 0, matches: 0 });
+  const [cameraLoading, setCameraLoading] = useState(false);
+
+  const handleCreateTicket = async () => {
+    if (!ticketMatchId.trim()) {
+      alert('Please enter a match ID');
+      return;
+    }
+    setTicketLoading(true);
+    try {
+      const res = await fetch(`${WORKER_URL}/production/ticket`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          matchId: ticketMatchId,
+          title: ticketTitle || `Production - ${ticketMatchId}`,
+        }),
+      });
+      if (res.ok) {
+        alert('Discord ticket created successfully!');
+        setTicketMatchId('');
+        setTicketTitle('');
+      } else {
+        alert('Failed to create ticket');
+      }
+    } catch (err) {
+      console.error('Ticket creation error:', err);
+      alert('Error creating ticket');
+    } finally {
+      setTicketLoading(false);
+    }
+  };
+
+  const handleAddCasterStats = async () => {
+    if (!casterName.trim()) {
+      alert('Please enter caster name');
+      return;
+    }
+    setCasterLoading(true);
+    try {
+      const res = await fetch(`${WORKER_URL}/production/caster-stats`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: casterName,
+          events: parseInt(casterStats.events) || 0,
+          matches: parseInt(casterStats.matches) || 0,
+        }),
+      });
+      if (res.ok) {
+        alert('Caster stats updated!');
+        setCasterName('');
+        setCasterStats({ events: 0, matches: 0 });
+      } else {
+        alert('Failed to update caster stats');
+      }
+    } catch (err) {
+      console.error('Caster stats error:', err);
+      alert('Error updating stats');
+    } finally {
+      setCasterLoading(false);
+    }
+  };
+
+  const handleAddCameraStats = async () => {
+    if (!cameraName.trim()) {
+      alert('Please enter camera operator name');
+      return;
+    }
+    setCameraLoading(true);
+    try {
+      const res = await fetch(`${WORKER_URL}/production/camera-stats`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: cameraName,
+          events: parseInt(cameraStats.events) || 0,
+          matches: parseInt(cameraStats.matches) || 0,
+        }),
+      });
+      if (res.ok) {
+        alert('Camera operator stats updated!');
+        setCameraName('');
+        setCameraStats({ events: 0, matches: 0 });
+      } else {
+        alert('Failed to update camera stats');
+      }
+    } catch (err) {
+      console.error('Camera stats error:', err);
+      alert('Error updating stats');
+    } finally {
+      setCameraLoading(false);
+    }
+  };
 
   if (!isAdmin && !isMod) return null;
 
@@ -105,6 +213,20 @@ const AdminPanel = ({ theme, open, onClose }) => {
                       _hover={{ bg: colors.bgHover }}
                     >
                       <FileText size={14} /> Announcements
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="production"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                    >
+                      <Zap size={14} /> Production
                     </Tabs.Trigger>
                     <Tabs.Trigger
                       value="botcommands"
@@ -302,6 +424,227 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             </Button>
                           </VStack>
                         </Box>
+                      </VStack>
+                    </Tabs.Content>
+
+                    {/* Production Management */}
+                    <Tabs.Content value="production" p="6">
+                      <VStack align="start" gap="8">
+                        {/* Discord Ticket Creation */}
+                        <VStack align="start" gap="5" w="full">
+                          <VStack align="start" gap="1">
+                            <HStack gap="2">
+                              <Zap size={16} color={colors.accentOrange} />
+                              <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>
+                                Create Discord Ticket
+                              </Text>
+                            </HStack>
+                            <Text fontSize="sm" color={colors.textMuted}>
+                              Manually create a Discord ticket for production planning and coordination.
+                            </Text>
+                          </VStack>
+
+                          <Box
+                            w="full"
+                            p="5"
+                            rounded="xl"
+                            bg={colors.bgSecondary}
+                            border="1px solid"
+                            borderColor={colors.borderMedium}
+                          >
+                            <VStack gap="4" align="stretch">
+                              <Input
+                                placeholder="Match ID (e.g., match-week4-1)"
+                                value={ticketMatchId}
+                                onChange={(e) => setTicketMatchId(e.target.value)}
+                                bg={colors.bgPrimary}
+                                color={colors.textPrimary}
+                                border="1px solid"
+                                borderColor={colors.borderMedium}
+                                _placeholder={{ color: colors.textSubtle }}
+                                _focus={{ borderColor: colors.accentOrange }}
+                                size="sm"
+                              />
+                              <Input
+                                placeholder="Ticket title (optional)"
+                                value={ticketTitle}
+                                onChange={(e) => setTicketTitle(e.target.value)}
+                                bg={colors.bgPrimary}
+                                color={colors.textPrimary}
+                                border="1px solid"
+                                borderColor={colors.borderMedium}
+                                _placeholder={{ color: colors.textSubtle }}
+                                _focus={{ borderColor: colors.accentOrange }}
+                                size="sm"
+                              />
+                              <Button
+                                colorPalette="orange"
+                                size="sm"
+                                alignSelf="flex-end"
+                                onClick={handleCreateTicket}
+                                loading={ticketLoading}
+                              >
+                                Create Ticket
+                              </Button>
+                            </VStack>
+                          </Box>
+                        </VStack>
+
+                        {/* Caster Stats */}
+                        <VStack align="start" gap="5" w="full">
+                          <VStack align="start" gap="1">
+                            <HStack gap="2">
+                              <Video size={16} color={colors.accentPurple} />
+                              <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>
+                                Caster Statistics
+                              </Text>
+                            </HStack>
+                            <Text fontSize="sm" color={colors.textMuted}>
+                              Add or update caster event and match statistics.
+                            </Text>
+                          </VStack>
+
+                          <Box
+                            w="full"
+                            p="5"
+                            rounded="xl"
+                            bg={colors.bgSecondary}
+                            border="1px solid"
+                            borderColor={colors.borderMedium}
+                          >
+                            <VStack gap="4" align="stretch">
+                              <Input
+                                placeholder="Caster name"
+                                value={casterName}
+                                onChange={(e) => setCasterName(e.target.value)}
+                                bg={colors.bgPrimary}
+                                color={colors.textPrimary}
+                                border="1px solid"
+                                borderColor={colors.borderMedium}
+                                _placeholder={{ color: colors.textSubtle }}
+                                _focus={{ borderColor: colors.accentPurple }}
+                                size="sm"
+                              />
+                              <HStack gap="3">
+                                <Input
+                                  placeholder="Events"
+                                  type="number"
+                                  min={0}
+                                  value={casterStats.events}
+                                  onChange={(e) => setCasterStats({ ...casterStats, events: e.target.value })}
+                                  bg={colors.bgPrimary}
+                                  color={colors.textPrimary}
+                                  border="1px solid"
+                                  borderColor={colors.borderMedium}
+                                  _placeholder={{ color: colors.textSubtle }}
+                                  _focus={{ borderColor: colors.accentPurple }}
+                                  size="sm"
+                                />
+                                <Input
+                                  placeholder="Matches"
+                                  type="number"
+                                  min={0}
+                                  value={casterStats.matches}
+                                  onChange={(e) => setCasterStats({ ...casterStats, matches: e.target.value })}
+                                  bg={colors.bgPrimary}
+                                  color={colors.textPrimary}
+                                  border="1px solid"
+                                  borderColor={colors.borderMedium}
+                                  _placeholder={{ color: colors.textSubtle }}
+                                  _focus={{ borderColor: colors.accentPurple }}
+                                  size="sm"
+                                />
+                              </HStack>
+                              <Button
+                                colorPalette="purple"
+                                size="sm"
+                                alignSelf="flex-end"
+                                onClick={handleAddCasterStats}
+                                loading={casterLoading}
+                              >
+                                Update Caster Stats
+                              </Button>
+                            </VStack>
+                          </Box>
+                        </VStack>
+
+                        {/* Camera Operator Stats */}
+                        <VStack align="start" gap="5" w="full">
+                          <VStack align="start" gap="1">
+                            <HStack gap="2">
+                              <Video size={16} color={colors.accentPurple} />
+                              <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>
+                                Camera Operator Statistics
+                              </Text>
+                            </HStack>
+                            <Text fontSize="sm" color={colors.textMuted}>
+                              Track camera operator event and match statistics.
+                            </Text>
+                          </VStack>
+
+                          <Box
+                            w="full"
+                            p="5"
+                            rounded="xl"
+                            bg={colors.bgSecondary}
+                            border="1px solid"
+                            borderColor={colors.borderMedium}
+                          >
+                            <VStack gap="4" align="stretch">
+                              <Input
+                                placeholder="Camera operator name"
+                                value={cameraName}
+                                onChange={(e) => setCameraName(e.target.value)}
+                                bg={colors.bgPrimary}
+                                color={colors.textPrimary}
+                                border="1px solid"
+                                borderColor={colors.borderMedium}
+                                _placeholder={{ color: colors.textSubtle }}
+                                _focus={{ borderColor: colors.accentPurple }}
+                                size="sm"
+                              />
+                              <HStack gap="3">
+                                <Input
+                                  placeholder="Events"
+                                  type="number"
+                                  min={0}
+                                  value={cameraStats.events}
+                                  onChange={(e) => setCameraStats({ ...cameraStats, events: e.target.value })}
+                                  bg={colors.bgPrimary}
+                                  color={colors.textPrimary}
+                                  border="1px solid"
+                                  borderColor={colors.borderMedium}
+                                  _placeholder={{ color: colors.textSubtle }}
+                                  _focus={{ borderColor: colors.accentPurple }}
+                                  size="sm"
+                                />
+                                <Input
+                                  placeholder="Matches"
+                                  type="number"
+                                  min={0}
+                                  value={cameraStats.matches}
+                                  onChange={(e) => setCameraStats({ ...cameraStats, matches: e.target.value })}
+                                  bg={colors.bgPrimary}
+                                  color={colors.textPrimary}
+                                  border="1px solid"
+                                  borderColor={colors.borderMedium}
+                                  _placeholder={{ color: colors.textSubtle }}
+                                  _focus={{ borderColor: colors.accentPurple }}
+                                  size="sm"
+                                />
+                              </HStack>
+                              <Button
+                                colorPalette="purple"
+                                size="sm"
+                                alignSelf="flex-end"
+                                onClick={handleAddCameraStats}
+                                loading={cameraLoading}
+                              >
+                                Update Camera Stats
+                              </Button>
+                            </VStack>
+                          </Box>
+                        </VStack>
                       </VStack>
                     </Tabs.Content>
 
