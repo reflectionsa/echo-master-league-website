@@ -354,103 +354,101 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                           </VStack>
                         </Box>
                       )}
-                  </Box>
-                      )}
 
-                  {/* ─── MATCH HISTORY ───────────────────────────────────────────────────── */}
-                  <Box>
-                    <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
-                      Match History
-                    </Text>
-                    <Box
-                      border="1px solid"
-                      borderColor={emlColors.borderMedium}
-                      rounded="xl"
-                      overflow="hidden"
-                    >
-                      {matchHistory.length === 0 ? (
-                        <Center py="8">
-                          <Text color={emlColors.textMuted} fontSize="sm">No matches played yet</Text>
-                        </Center>
-                      ) : (
-                        <Table.Root size="sm" variant="outline">
-                          <Table.Header bg={emlColors.bgCard}>
-                            <Table.Row>
-                              <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Opponent</Table.ColumnHeader>
-                              <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Result</Table.ColumnHeader>
-                              <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Date</Table.ColumnHeader>
-                              <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Casted</Table.ColumnHeader>
-                              <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Votes</Table.ColumnHeader>
-                            </Table.Row>
-                          </Table.Header>
-                          <Table.Body>
-                            {matchHistory.slice(0, 10).map(match => (
-                              <Table.Row key={match.id} _hover={{ bg: `${emlColors.textPrimary}14` }}>
-                                <Table.Cell>
-                                  <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary} textTransform="uppercase">
-                                    {match.opponent}
-                                  </Text>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Badge
-                                    colorPalette={match.status === 'Won' ? emlColors.semantic.winBadge : match.status === 'Lost' ? emlColors.semantic.lossBadge : 'gray'}
-                                    size="sm"
-                                    px="2"
-                                    py="0.5"
-                                    rounded="md"
-                                  >
-                                    {match.score}
-                                  </Badge>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <HStack gap="1">
-                                    <Calendar size={12} color={emlColors.textSubtle} />
-                                    <Text fontSize="xs" color={emlColors.textMuted}>
-                                      {match.matchDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                                    </Text>
-                                  </HStack>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  {match.caster && match.streamLink ? (
-                                    <Button
-                                      size="xs"
-                                      variant="solid"
-                                      colorPalette={emlColors.semantic.winBadge}
-                                      onClick={() => window.open(match.streamLink.url, '_blank')}
-                                      _hover={{
-                                        bg: `${emlColors.semantic.winBadge}.600`,
-                                        transform: 'translateY(-1px)',
-                                        boxShadow: 'md'
-                                      }}
-                                      transition="all 0.2s"
-                                    >
-                                      <Radio size={12} /> Yes <ExternalLink size={12} />
-                                    </Button>
-                                  ) : match.caster ? (
-                                    <Badge colorPalette={emlColors.semantic.winBadge} size="sm">
-                                      <Radio size={12} /> Yes
-                                    </Badge>
-                                  ) : (
-                                    <Badge colorPalette="gray" size="sm">No</Badge>
-                                  )}
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Text fontSize="sm" fontWeight="600" color={emlColors.accentPurple}>
-                                    {match.votes}
-                                  </Text>
-                                </Table.Cell>
-                              </Table.Row>
-                            ))}
-                          </Table.Body>
-                        </Table.Root>
-                      )}
-                    </Box>
+                      {/* ─── MATCH HISTORY ───────────────────────────────────────────────────── */}
+                      <Box>
+                        <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
+                          Match History
+                        </Text>
+                        <Box
+                          border="1px solid"
+                          borderColor={emlColors.borderMedium}
+                          rounded="xl"
+                          overflow="hidden"
+                        >
+                          {matchHistory.length === 0 ? (
+                            <Center py="8">
+                              <Text color={emlColors.textMuted} fontSize="sm">No matches played yet</Text>
+                            </Center>
+                          ) : (
+                            <Table.Root size="sm" variant="outline">
+                              <Table.Header bg={emlColors.bgCard}>
+                                <Table.Row>
+                                  <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Opponent</Table.ColumnHeader>
+                                  <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Result</Table.ColumnHeader>
+                                  <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Date</Table.ColumnHeader>
+                                  <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Casted</Table.ColumnHeader>
+                                  <Table.ColumnHeader fontSize="xs" color={emlColors.textMuted}>Votes</Table.ColumnHeader>
+                                </Table.Row>
+                              </Table.Header>
+                              <Table.Body>
+                                {matchHistory.slice(0, 10).map(match => (
+                                  <Table.Row key={match.id} _hover={{ bg: `${emlColors.textPrimary}14` }}>
+                                    <Table.Cell>
+                                      <Text fontSize="sm" fontWeight="600" color={emlColors.textSecondary} textTransform="uppercase">
+                                        {match.opponent}
+                                      </Text>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      <Badge
+                                        colorPalette={match.status === 'Won' ? emlColors.semantic.winBadge : match.status === 'Lost' ? emlColors.semantic.lossBadge : 'gray'}
+                                        size="sm"
+                                        px="2"
+                                        py="0.5"
+                                        rounded="md"
+                                      >
+                                        {match.score}
+                                      </Badge>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      <HStack gap="1">
+                                        <Calendar size={12} color={emlColors.textSubtle} />
+                                        <Text fontSize="xs" color={emlColors.textMuted}>
+                                          {match.matchDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                        </Text>
+                                      </HStack>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      {match.caster && match.streamLink ? (
+                                        <Button
+                                          size="xs"
+                                          variant="solid"
+                                          colorPalette={emlColors.semantic.winBadge}
+                                          onClick={() => window.open(match.streamLink.url, '_blank')}
+                                          _hover={{
+                                            bg: `${emlColors.semantic.winBadge}.600`,
+                                            transform: 'translateY(-1px)',
+                                            boxShadow: 'md'
+                                          }}
+                                          transition="all 0.2s"
+                                        >
+                                          <Radio size={12} /> Yes <ExternalLink size={12} />
+                                        </Button>
+                                      ) : match.caster ? (
+                                        <Badge colorPalette={emlColors.semantic.winBadge} size="sm">
+                                          <Radio size={12} /> Yes
+                                        </Badge>
+                                      ) : (
+                                        <Badge colorPalette="gray" size="sm">No</Badge>
+                                      )}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      <Text fontSize="sm" fontWeight="600" color={emlColors.accentPurple}>
+                                        {match.votes}
+                                      </Text>
+                                    </Table.Cell>
+                                  </Table.Row>
+                                ))}
+                              </Table.Body>
+                            </Table.Root>
+                          )}
+                        </Box>
+                      </Box>
+                    </VStack>
                   </Box>
                 </VStack>
-                  </Box>
-          </VStack>
               )}
-        </Dialog.Body>
+            </Dialog.Body>
       </Dialog.Content>
     </Dialog.Positioner>
       </Portal >
