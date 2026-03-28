@@ -16,6 +16,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
   // Production form state
   const [ticketMatchId, setTicketMatchId] = useState('');
   const [ticketTitle, setTicketTitle] = useState('');
+  const [ticketType, setTicketType] = useState('production');
   const [ticketLoading, setTicketLoading] = useState(false);
 
   const [casterName, setCasterName] = useState('');
@@ -38,6 +39,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           matchId: ticketMatchId,
+          ticketType: ticketType,
           title: ticketTitle || `Production - ${ticketMatchId}`,
         }),
       });
@@ -45,6 +47,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
         alert('Discord ticket created successfully!');
         setTicketMatchId('');
         setTicketTitle('');
+        setTicketType('production');
       } else {
         alert('Failed to create ticket');
       }
@@ -453,6 +456,26 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             borderColor={colors.borderMedium}
                           >
                             <VStack gap="4" align="stretch">
+                              <Select.Root
+                                value={[ticketType]}
+                                onValueChange={(details) => setTicketType(details.value)}
+                                size="sm"
+                              >
+                                <Select.Trigger
+                                  bg={colors.bgPrimary}
+                                  color={colors.textPrimary}
+                                  border="1px solid"
+                                  borderColor={colors.borderMedium}
+                                  _focus={{ borderColor: colors.accentOrange }}
+                                />
+                                <Select.Content bg={colors.bgSecondary}>
+                                  <Select.Item value="production" label="🎥 Production / Cast Request" />
+                                  <Select.Item value="tech-support" label="⚙️ Tech Support" />
+                                  <Select.Item value="match-support" label="🏆 Match Support" />
+                                  <Select.Item value="league-support" label="📋 League Support" />
+                                  <Select.Item value="server-request" label="🖥️ Server Request" />
+                                </Select.Content>
+                              </Select.Root>
                               <Input
                                 placeholder="Match ID (e.g., match-week4-1)"
                                 value={ticketMatchId}

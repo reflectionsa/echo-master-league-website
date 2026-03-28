@@ -24,18 +24,18 @@ const DISCORD_API = 'https://discord.com/api/v10';
 const ROLE_PRIORITY = ['viewer', 'player', 'caster', 'mod', 'admin'];
 
 const STATIC_ROLE_NAME_MAP = {
-  'Commissioner':  'admin',
-  'Board':         'admin',
-  'League Mod':    'mod',
+  'Commissioner': 'admin',
+  'Board': 'admin',
+  'League Mod': 'mod',
   'League Mod EU': 'mod',
-  'Casters':       'caster',
-  'Player NA':     'player',  // matches DISCORD_ROLE_MAP exactly
-  'PlayerNA':      'player',  // fallback (no space variant)
-  'Player EU':     'player',  // matches DISCORD_ROLE_MAP exactly
-  'PlayerEU':      'player',  // fallback (no space variant)
-  'CaptainNA':     'player',
-  'Co-Captain':    'player',  // matches DISCORD_ROLE_MAP exactly
-  'CoCaptainNA':   'player',  // fallback variant
+  'Casters': 'caster',
+  'Player NA': 'player',  // matches DISCORD_ROLE_MAP exactly
+  'PlayerNA': 'player',  // fallback (no space variant)
+  'Player EU': 'player',  // matches DISCORD_ROLE_MAP exactly
+  'PlayerEU': 'player',  // fallback (no space variant)
+  'CaptainNA': 'player',
+  'Co-Captain': 'player',  // matches DISCORD_ROLE_MAP exactly
+  'CoCaptainNA': 'player',  // fallback variant
 };
 
 function mapRoleNamesToAppRole(roleNames) {
@@ -267,6 +267,154 @@ async function handleSignupGet(matchId, env, cors) {
   return jsonResponse({ signups }, 200, cors);
 }
 
+// ─── Route: POST /production/ticket ───────────────────────────────────────────
+
+const TICKET_TYPE_MAP = {
+  'production': {
+    emoji: '🎥',
+    name: 'Production / Cast Request',
+    description: 'Production scheduling and casting assignments',
+  },
+  'tech-support': {
+    emoji: '⚙️',
+    name: 'Tech Support',
+    description: 'Technical issues and support requests',
+  },
+  'match-support': {
+    emoji: '🏆',
+    name: 'Match Support',
+    description: 'Match-related issues and coordination',
+  },
+  'league-support': {
+    emoji: '📋',
+    name: 'League Support',
+    description: 'League rules, policies, and administrative help',
+  },
+  'server-request': {
+    emoji: '🖥️',
+    name: 'Server Request',
+    description: 'Competitive server requests and configuration',
+  },
+};
+
+async function handleCreateTicket(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: 'Invalid JSON' }, 400, cors);
+  }
+
+  const { matchId, title, ticketType = 'production' } = body;
+  if (!matchId) {
+    return jsonResponse({ error: 'Missing required field: matchId' }, 400, cors);
+  }
+
+  if (!env.DISCORD_BOT_TOKEN) {
+    return jsonResponse({ error: 'DISCORD_BOT_TOKEN not configured' }, 500, cors);
+  }
+
+  // Get channel ID based on ticket type from env vars
+  const channelKey = `TICKET_CHANNEL_${ticketType.toUpperCase()}`;
+  const CHANNEL_ID = env[channelKey];
+
+  if (!CHANNEL_ID) {
+    return jsonResponse({ error: `Channel ID not configured for ticket type: ${ticketType}` }, 500, cors);
+  }
+
+  const ticketInfo = TICKET_TYPE_MAP[ticketType] || TICKET_TYPE_MAP['production'];
+  const ticketTitle = title || `${ticketInfo.emoji} ${ticketInfo.name} - ${matchId}`;
+  const ticketMessage = `${ticketInfo.emoji} **${ticketTitle}**\n\nMatch ID: \`${matchId}\`\n${ticketInfo.description}`;
+
+  try {
+    const res = await fetch(`${DISCORD_API}/channels/${CHANNEL_ID}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: ticketMessage,
+        allowed_mentions: { parse: [] },
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('Discord message creation failed:', err);
+      return jsonResponse({ error: 'Failed to create Discord ticket' }, 500, cors);
+    }
+
+    const message = await res.json();
+    return jsonResponse({ success: true, messageId: message.id }, 200, cors);
+  } catch (err) {
+    console.error('Error creating ticket:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, cors);
+  }
+}
+
+// ─── Route: POST /production/caster-stats ─────────────────────────────────────
+
+async function handleUpdateCasterStats(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: 'Invalid JSON' }, 400, cors);
+  }
+
+  const { name, events, matches } = body;
+  if (!name) {
+    return jsonResponse({ error: 'Missing required field: name' }, 400, cors);
+  }
+
+  // Store in KV with key pattern: caster_stats:{name}
+  const key = `caster_stats:${name.toLowerCase()}`;
+  const stats = {
+    id: `caster_${Math.random().toString(36).substr(2, 9)}`,
+    name,
+    events: parseInt(events) || 0,
+    matches: parseInt(matches) || 0,
+    lastUpdated: new Date().toISOString(),
+  };
+
+  try {
+    await env.EML_SIGNUPS.put(key, JSON.stringify(stats));
+    return jsonResponse({ success: true, stats }, 200, cors);
+  } catch (err) {
+    console.error('Error updating caster stats:', err);
+    return jsonResponse({ error: 'Failed to update stats' }, 500, cors);
+  }
+}
+
+// ─── Route: POST /production/camera-stats ────────────────────────────────────
+
+async function handleUpdateCameraStats(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: 'Invalid JSON' }, 400, cors);
+  }
+
+  const { name, events, matches } = body;
+  if (!name) {
+    return jsonResponse({ error: 'Missing required field: name' }, 400, cors);
+  }
+
+  // Store in KV with key pattern: camera_stats:{name}
+  const key = `camera_stats:${name.toLowerCase()}`;
+  const stats = {
+    id: `camera_${Math.random().toString(36).substr(2, 9)}`,
+    name,
+    events: parseInt(events) || 0,
+    matches: parseInt(matches) || 0,
+    lastUpdated: new Date().toISOString(),
+  };
+
+  try {
+    await env.EML_SIGNUPS.put(key, JSON.stringify(stats));
+    return jsonResponse({ success: true, stats }, 200, cors);
+  } catch (err) {
+    console.error('Error updating camera stats:', err);
+    return jsonResponse({ error: 'Failed to update stats' }, 500, cors);
+  }
+}
+
 // ─── Main Fetch Handler ───────────────────────────────────────────────────────
 
 export default {
@@ -296,6 +444,18 @@ export default {
     const signupGetMatch = path.match(/^\/signups\/(.+)$/);
     if (request.method === 'GET' && signupGetMatch) {
       return handleSignupGet(decodeURIComponent(signupGetMatch[1]), env, cors);
+    }
+
+    if (request.method === 'POST' && path === '/production/ticket') {
+      return handleCreateTicket(request, env, cors);
+    }
+
+    if (request.method === 'POST' && path === '/production/caster-stats') {
+      return handleUpdateCasterStats(request, env, cors);
+    }
+
+    if (request.method === 'POST' && path === '/production/camera-stats') {
+      return handleUpdateCameraStats(request, env, cors);
     }
 
     return jsonResponse({ error: 'Not found' }, 404, cors);
