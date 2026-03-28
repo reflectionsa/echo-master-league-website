@@ -13,13 +13,14 @@
     },
     "dependencies": {
         "@chakra-ui/react": "^3.2.2",
+        "lucide-react": "^0.263.1",
+        "posthog-js": "^1.356.2",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "lucide-react": "^0.263.1"
+        "react-dom": "^18.3.1"
     },
     "devDependencies": {
         "@vitejs/plugin-react": "^4.3.4",
-        "vite": "^6.0.5",
-        "gh-pages": "^6.2.0"
+        "gh-pages": "^6.2.0",
+        "vite": "^6.0.5"
     }
 }
