@@ -1,5 +1,5 @@
 import { Box, Button, Menu, Portal, HStack, VStack, Text, Badge, Image } from '@chakra-ui/react';
-import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell } from 'lucide-react';
+import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { useNotifications } from '../hooks/useNotifications';
@@ -12,7 +12,7 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick, onChallengeClick, onMatchReportClick }) => {
   const { user, logout, isAdmin, isMod, isCaster } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
@@ -27,6 +27,8 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'admin-panel') onAdminPanelClick?.();
     if (details.value === 'my-team') onMyTeamClick?.();
     if (details.value === 'notifications') onNotificationsClick?.();
+    if (details.value === 'challenge') onChallengeClick?.();
+    if (details.value === 'match-report') onMatchReportClick?.();
     if (details.value === 'logout') logout();
   };
 
@@ -139,6 +141,34 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               <HStack gap="2">
                 <Users size={14} />
                 <Text fontSize="sm">My Team</Text>
+              </HStack>
+            </Menu.Item>
+
+            {/* Challenge Teams */}
+            <Menu.Item
+              value="challenge"
+              rounded="lg"
+              color={colors.accentOrange}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2">
+                <Swords size={14} />
+                <Text fontSize="sm">Challenge Teams</Text>
+              </HStack>
+            </Menu.Item>
+
+            {/* Report Match */}
+            <Menu.Item
+              value="match-report"
+              rounded="lg"
+              color={colors.accentCyan}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2">
+                <ClipboardList size={14} />
+                <Text fontSize="sm">Report Match</Text>
               </HStack>
             </Menu.Item>
 

@@ -1,5 +1,5 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
-import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell } from 'lucide-react';
+import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { getThemedColors } from '../theme/colors';
@@ -25,6 +25,8 @@ import NotificationsPanel from './NotificationsPanel';
 import TeamCreationModal from './TeamCreationModal';
 import TeamManagementPanel from './TeamManagementPanel';
 import PlayerRegistrationModal from './PlayerRegistrationModal';
+import ChallengeSystem from './ChallengeSystem';
+import MatchReportModal from './MatchReportModal';
 import { useNotifications } from '../hooks/useNotifications';
 
 const Navigation = ({
@@ -58,11 +60,23 @@ const Navigation = ({
   const [teamCreateOpen, setTeamCreateOpen] = useState(false);
   const [teamManageOpen, setTeamManageOpen] = useState(false);
   const [playerRegOpen, setPlayerRegOpen] = useState(false);
+  const [challengeOpen, setChallengeOpen] = useState(false);
+  const [matchReportOpen, setMatchReportOpen] = useState(false);
   const [myTeamId, setMyTeamId] = useState(null);
 
   useEffect(() => {
     if (authError) console.error('[EML Auth]', authError);
   }, [authError]);
+
+  // Auto-open registration modal on first login
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      const key = `eml_registered_${user.id}`;
+      if (!localStorage.getItem(key)) {
+        setPlayerRegOpen(true);
+      }
+    }
+  }, [isLoggedIn, user?.id]);
 
   return (
     <>
@@ -197,6 +211,28 @@ const Navigation = ({
                         <Shield size={14} /> Captain's Dashboard
                       </Menu.Item>
                     )}
+                    {isLoggedIn && (
+                      <Menu.Item
+                        value="challenge"
+                        rounded="lg"
+                        color={colors.accentOrange}
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setChallengeOpen(true)}
+                      >
+                        <Swords size={14} /> Challenge Teams
+                      </Menu.Item>
+                    )}
+                    {isLoggedIn && (
+                      <Menu.Item
+                        value="match-report"
+                        rounded="lg"
+                        color={colors.accentCyan}
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setMatchReportOpen(true)}
+                      >
+                        <ClipboardList size={14} /> Report Match
+                      </Menu.Item>
+                    )}
                     {(isCaster || isAdmin) && (
                       <Menu.Item
                         value="caster-greenroom"
@@ -319,6 +355,8 @@ const Navigation = ({
                   onAdminPanelClick={() => setAdminPanelOpen(true)}
                   onMyTeamClick={() => myTeamId ? setTeamManageOpen(true) : setTeamCreateOpen(true)}
                   onNotificationsClick={() => setNotificationsOpen(true)}
+                  onChallengeClick={() => setChallengeOpen(true)}
+                  onMatchReportClick={() => setMatchReportOpen(true)}
                 />
               ) : (
                 <LoginButton />
@@ -360,7 +398,20 @@ const Navigation = ({
         <TeamManagementPanel theme={theme} open={teamManageOpen} onClose={() => setTeamManageOpen(false)} teamId={myTeamId} />
       )}
       {isLoggedIn && (
-        <PlayerRegistrationModal theme={theme} open={playerRegOpen} onClose={() => setPlayerRegOpen(false)} />
+        <PlayerRegistrationModal
+          theme={theme}
+          open={playerRegOpen}
+          onClose={() => {
+            setPlayerRegOpen(false);
+            if (user?.id) localStorage.setItem(`eml_registered_${user.id}`, '1');
+          }}
+        />
+      )}
+      {isLoggedIn && (
+        <ChallengeSystem theme={theme} open={challengeOpen} onClose={() => setChallengeOpen(false)} />
+      )}
+      {isLoggedIn && (
+        <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
       )}
 
       {/* Auth-gated Modals */}
