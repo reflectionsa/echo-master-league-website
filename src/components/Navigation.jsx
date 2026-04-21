@@ -1,5 +1,5 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text } from '@chakra-ui/react';
-import { ChevronDown, Trophy, Calendar, Users, MessageCircle } from 'lucide-react';
+import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { getThemedColors } from '../theme/colors';
@@ -19,6 +19,8 @@ import RulesView from './RulesView';
 import BotView from './BotView';
 import MediaView from './MediaView';
 import LeaderboardView from './LeaderboardView';
+import CaptainsDashboard from './CaptainsDashboard';
+import CasterGreenRoom from './CasterGreenRoom';
 
 const Navigation = ({
   theme,
@@ -44,6 +46,8 @@ const Navigation = ({
   const [productionSignupOpen, setProductionSignupOpen] = useState(false);
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [captainsDashOpen, setCaptainsDashOpen] = useState(false);
+  const [casterGreenRoomOpen, setCasterGreenRoomOpen] = useState(false);
 
   useEffect(() => {
     if (authError) console.error('[EML Auth]', authError);
@@ -168,6 +172,29 @@ const Navigation = ({
                         onClick={() => setLeaderboardOpen(true)}
                       >
                         Player Leaderboard
+                      </Menu.Item>
+                    )}
+                    {isLoggedIn && <Menu.Separator />}
+                    {isLoggedIn && (
+                      <Menu.Item
+                        value="captains-dashboard"
+                        rounded="lg"
+                        color="#fbbf24"
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setCaptainsDashOpen(true)}
+                      >
+                        <Shield size={14} /> Captain's Dashboard
+                      </Menu.Item>
+                    )}
+                    {(isCaster || isAdmin) && (
+                      <Menu.Item
+                        value="caster-greenroom"
+                        rounded="lg"
+                        color="#00bfff"
+                        _hover={{ bg: colors.bgHover }}
+                        onClick={() => setCasterGreenRoomOpen(true)}
+                      >
+                        <Tv size={14} /> Caster Green Room
                       </Menu.Item>
                     )}
                   </Menu.Content>
@@ -303,6 +330,12 @@ const Navigation = ({
       <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
       {(isAdmin || isMod) && (
         <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
+      )}
+      {isLoggedIn && (
+        <CaptainsDashboard theme={theme} open={captainsDashOpen} onClose={() => setCaptainsDashOpen(false)} />
+      )}
+      {(isCaster || isAdmin) && (
+        <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
       )}
 
       {/* Auth-gated Modals */}

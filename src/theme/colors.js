@@ -2,21 +2,21 @@
 // These values are used in both the Chakra UI theme and direct component styling
 
 export const emlColors = {
-    // Backgrounds
-    bgPrimary: '#0f172a',      // Deep navy (main bg)
-    bgSecondary: '#1e1b4b',    // Mid indigo
-    bgTertiary: '#312e81',     // Light indigo
-    bgCard: '#1a1d3a',         // Card backgrounds
-    bgElevated: '#252850',     // Elevated surfaces
-    bgHover: '#2d3154',        // Hover states
+    // Backgrounds - G2 Dark Aesthetic
+    bgPrimary: '#0a0a0a',      // Near-black (G2 style)
+    bgSecondary: '#111111',    // Very dark grey
+    bgTertiary: '#1a1a1a',     // Dark grey
+    bgCard: '#0d0d0d',         // Card backgrounds
+    bgElevated: '#1e1e1e',     // Elevated surfaces
+    bgHover: '#242424',        // Hover states
 
-    // Gradient Accents (from logo)
-    accentOrange: '#ff8c42',   // Top gradient
-    accentPink: '#ff5c8d',     // Mid-top gradient  
+    // Gradient Accents (G2 + Echo VR theme)
+    accentOrange: '#ff6b2b',   // G2 signature orange
+    accentPink: '#ff8c42',     // Soft orange highlight
     accentRose: '#ef4444',     // Rose/red
-    accentBlue: '#00d4ff',     // Bottom gradient
-    accentCyan: '#06b6d4',     // Cyan
-    accentPurple: '#a855f7',   // Purple accent
+    accentBlue: '#00bfff',     // Electric blue (Echo VR)
+    accentCyan: '#00e5ff',     // Bright cyan
+    accentPurple: '#7c3aed',   // Purple (secondary)
 
     // Text
     textPrimary: '#ffffff',    // White
@@ -28,12 +28,12 @@ export const emlColors = {
     statusLive: '#ef4444',     // Red (live matches)
     statusScheduled: '#10b981', // Green
     statusCompleted: '#3b82f6', // Blue
-    statusDisputed: '#a855f7',  // Purple
+    statusDisputed: '#f59e0b',  // Amber (disputed)
 
     // Borders
-    borderLight: 'rgba(255, 255, 255, 0.1)',
-    borderMedium: 'rgba(255, 255, 255, 0.2)',
-    borderAccent: '#ff8c42',
+    borderLight: 'rgba(255, 255, 255, 0.07)',
+    borderMedium: 'rgba(255, 255, 255, 0.12)',
+    borderAccent: '#ff6b2b',
 }
 
 // Light mode color overrides

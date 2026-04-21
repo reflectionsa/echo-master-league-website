@@ -24,6 +24,11 @@ export const usePlayerLeaderboard = () => {
                 overallRating: parseInt(player['Overall Rating'] || player['overallRating'] || player['rating'] || 0),
                 isMvp: player['MVP'] === 'Yes' || player['MVP'] === true || player.isMvp === true,
                 team: player['Team'] || player.team || '',
+                goals: parseInt(player['Goals'] || player.goals || 0),
+                saves: parseInt(player['Saves'] || player.saves || 0),
+                stuns: parseInt(player['Stuns'] || player.stuns || 0),
+                assists: parseInt(player['Assists'] || player.assists || 0),
+                ppg: parseFloat(player['PPG'] || player.ppg || 0),
             }))
             .filter(player => player.name)
             .sort((a, b) => b.overallRating - a.overallRating)
@@ -45,6 +50,11 @@ export const usePlayerLeaderboard = () => {
             overallRating: parseInt(row['Overall Rating'] || row['overallRating'] || row['rating'] || 0),
             isMvp: row['MVP'] === 'Yes' || row['MVP'] === true || row.isMvp === true,
             team: row['Team'] || row.team || '',
+            goals: parseInt(row['Goals'] || row.goals || 0),
+            saves: parseInt(row['Saves'] || row.saves || 0),
+            stuns: parseInt(row['Stuns'] || row.stuns || 0),
+            assists: parseInt(row['Assists'] || row.assists || 0),
+            ppg: parseFloat(row['PPG'] || row.ppg || 0),
         }))
         .filter(player => player.name)
         .sort((a, b) => b.overallRating - a.overallRating)

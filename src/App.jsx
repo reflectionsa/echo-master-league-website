@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <Box bg={theme === 'dark' ? 'gray.950' : 'gray.50'} minH="100vh">
+      <Box bg="#0a0a0a" minH="100vh">
         <Navigation
           theme={theme}
           onThemeToggle={toggleTheme}

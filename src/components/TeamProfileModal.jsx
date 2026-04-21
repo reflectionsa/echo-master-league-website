@@ -1,9 +1,9 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Image, Badge, Table, CloseButton, Button, SimpleGrid } from '@chakra-ui/react';
-import { Trophy, Users, Calendar, Radio, ExternalLink, Award, Zap, History } from 'lucide-react';
+import { Trophy, Users, Calendar, Radio, ExternalLink, Award, Zap, History, Star } from 'lucide-react';
 import { useTeamProfile } from '../hooks/useTeamProfile';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
-import { getTierImage, getBaseTier } from '../utils/tierUtils';
+import { getTierImage, getBaseTier, getTierInfo } from '../utils/tierUtils';
 
 // Team championship history (mock data - replace with real data from sheets)
 const teamChampionships = {
@@ -37,70 +37,136 @@ const teamHistory = {
   // Add more teams as needed
 };
 
-const tierColors = {
-  Master: { bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', text: 'yellow.400', banner: 'linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.1) 100%)' },
-  Diamond: { bg: 'linear-gradient(135deg, #B9F2FF 0%, #0EA5E9 100%)', text: 'cyan.400', banner: 'linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(185, 242, 255, 0.1) 100%)' },
-  Platinum: { bg: 'linear-gradient(135deg, #A8B9C7 0%, #6B7FA0 100%)', text: 'gray.400', banner: 'linear-gradient(135deg, rgba(107, 127, 160, 0.3) 0%, rgba(168, 185, 199, 0.1) 100%)' },
-  Gold: { bg: 'linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%)', text: 'yellow.500', banner: 'linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(252, 211, 77, 0.1) 100%)' },
-};
-
 const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
   const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName);
   const { needsColorBlindSupport } = useAccessibility();
   const emlColors = getThemedColors(theme, needsColorBlindSupport);
-  const tierConfig = tierColors[getBaseTier(team?.tier)] || tierColors.Gold;
+  const baseTier = getBaseTier(team?.tier);
+  const tierConfig = getTierInfo(baseTier) || {
+    gradient: 'linear-gradient(135deg, #ff6b2b 0%, #ff8c42 100%)',
+    bannerGradient: 'linear-gradient(135deg, rgba(255,107,43,0.2) 0%, rgba(17,17,17,0) 100%)',
+    borderColor: 'rgba(255,107,43,0.5)',
+    color: '#ff6b2b',
+    glowColor: 'rgba(255,107,43,0.4)',
+    badge: '—',
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">
       <Portal>
-        <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(8px)" />
+        <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            bg={emlColors.bgSecondary}
+            bg="#0d0d0d"
             border="1px solid"
-            borderColor={emlColors.accentPurple}
+            borderColor={tierConfig.borderColor}
             rounded="2xl"
             maxH="90vh"
             display="flex"
             flexDirection="column"
+            boxShadow={`0 0 60px ${tierConfig.glowColor}`}
           >
             <Dialog.CloseTrigger asChild position="absolute" top="4" right="4" zIndex="10">
-              <CloseButton size="sm" />
+              <CloseButton size="sm" color={emlColors.textMuted} />
             </Dialog.CloseTrigger>
 
             <Dialog.Body p="0" overflowY="auto" flex="1">
               {loading ? (
-                <Center py="20"><Spinner size="lg" color={emlColors.accentPurple} /></Center>
+                <Center py="20"><Spinner size="lg" color={emlColors.accentOrange} /></Center>
               ) : error ? (
                 <Box p="8"><Text color={emlColors.semantic.error}>Failed to load team profile</Text></Box>
               ) : (
                 <VStack align="stretch" gap="0">
-                  {/* ─── TEAM BANNER ─────────────────────────────────────────────────────────── */}
+                  {/* ─── G2-STYLE TEAM BANNER ────────────────────────────────────────────────── */}
                   <Box
                     position="relative"
-                    h="200px"
-                    bg={tierConfig.banner || 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(17, 24, 39, 0) 100%)'}
-                    borderBottom="2px solid"
-                    borderColor={emlColors.borderMedium}
+                    h="220px"
+                    bg={tierConfig.bannerGradient}
+                    borderBottom="1px solid"
+                    borderColor={tierConfig.borderColor}
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
                     overflow="hidden"
                   >
-                    {/* Banner accent stripes */}
-                    <Box position="absolute" top="0" left="0" right="0" bottom="0" opacity="0.3" pointerEvents="none">
-                      <Box position="absolute" w="full" h="3px" bg={emlColors.accentOrange} top="0" />
-                      <Box position="absolute" w="full" h="2px" bg={emlColors.accentPurple} top="4" />
+                    {/* G2-style diagonal stripe background */}
+                    <Box
+                      position="absolute"
+                      top="0" left="0" right="0" bottom="0"
+                      opacity="0.06"
+                      pointerEvents="none"
+                      style={{
+                        backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)',
+                        backgroundSize: '24px 24px',
+                      }}
+                    />
+                    {/* Top accent bar — tier color */}
+                    <Box position="absolute" top="0" left="0" right="0" h="4px" bg={tierConfig.gradient} />
+
+                    {/* Team logo */}
+                    <Box
+                      position="relative"
+                      zIndex="1"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      w="160px"
+                      h="160px"
+                      style={{
+                        filter: `drop-shadow(0 0 24px ${tierConfig.glowColor})`,
+                      }}
+                    >
+                      {team?.teamLogo?.url ? (
+                        <Image src={team.teamLogo.url} alt={teamName} w="150px" h="150px" objectFit="contain" />
+                      ) : (
+                        <Trophy size={80} color={tierConfig.color} opacity="0.7" />
+                      )}
                     </Box>
 
-                    {/* Team logo in banner */}
-                    {team?.teamLogo?.url ? (
-                      <Image src={team.teamLogo.url} alt={teamName} w="140px" h="140px" objectFit="contain" />
-                    ) : (
-                      <Trophy size={80} color={emlColors.textSubtle} opacity="0.4" />
+                    {/* ── VRML STAR TIER BADGE ── prominent, top-right */}
+                    {team?.tier && (
+                      <Box
+                        position="absolute"
+                        top="16px"
+                        left="20px"
+                        zIndex="2"
+                        bg="rgba(0,0,0,0.7)"
+                        border="1px solid"
+                        borderColor={tierConfig.borderColor}
+                        rounded="xl"
+                        px="4"
+                        py="2"
+                        backdropFilter="blur(8px)"
+                      >
+                        <HStack gap="2">
+                          {getTierImage(team.tier) ? (
+                            <Image
+                              src={getTierImage(team.tier)}
+                              alt={baseTier}
+                              w="28px"
+                              h="28px"
+                              style={{ filter: `drop-shadow(0 0 6px ${tierConfig.glowColor})` }}
+                            />
+                          ) : null}
+                          <VStack gap="0" align="start">
+                            <Text fontSize="xs" fontWeight="600" color={emlColors.textMuted} letterSpacing="wider" textTransform="uppercase">
+                              Division
+                            </Text>
+                            <Text fontSize="sm" fontWeight="800" color={tierConfig.color} letterSpacing="wide">
+                              {team.tier}
+                            </Text>
+                          </VStack>
+                        </HStack>
+                        {/* Star row */}
+                        <HStack gap="1" mt="1">
+                          {Array.from({ length: getTierInfo(baseTier)?.stars || 1 }).map((_, i) => (
+                            <Star key={i} size={10} fill={tierConfig.color} color={tierConfig.color} />
+                          ))}
+                        </HStack>
+                      </Box>
                     )}
 
-                    {/* Championship triangles (overlaid) */}
+                    {/* Championship triangles */}
                     {teamChampionships[teamName] && teamChampionships[teamName].length > 0 && (
                       <HStack position="absolute" bottom="4" right="6" gap="2">
                         {teamChampionships[teamName].map((championship) => (
@@ -128,85 +194,88 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                   </Box>
 
                   {/* ─── MAIN CONTENT ────────────────────────────────────────────────────────── */}
-                  <Box p="8">
+                  <Box p="8" bg="#0d0d0d">
                     <VStack align="stretch" gap="6">
-                      {/* Team info header */}
-                      <HStack gap="6" align="start">
-                        <Box
-                          w="100px"
-                          h="100px"
-                          bg={emlColors.bgCard}
-                          rounded="xl"
-                          border="2px solid"
-                          borderColor={emlColors.accentPurple}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          overflow="hidden"
-                        >
-                          {team?.teamLogo?.url ? (
-                            <Image src={team.teamLogo.url} alt={teamName} objectFit="contain" w="full" h="full" p="2" />
-                          ) : (
-                            <Users size={40} color={emlColors.textSubtle} />
-                          )}
-                        </Box>
-
-                        <VStack align="start" flex="1" gap="3">
-                          <VStack align="start" gap="1">
-                            <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
-                              {teamName}
-                            </Text>
-                            <HStack gap="3" flexWrap="wrap">
-                              {getTierImage(team?.tier) ? (
-                                <HStack gap="2" bg={emlColors.bgCard} px="3" py="1.5" rounded="full">
-                                  <Image src={getTierImage(team.tier)} alt={team.tier} w="20px" h="20px" minW="20px" minH="20px" />
-                                  <Text fontSize="xs" fontWeight="800" color={emlColors.textPrimary}>
-                                    {team.tier}
-                                  </Text>
-                                </HStack>
-                              ) : (
-                                <Box background={tierConfig.bg} px="3" py="1" rounded="full">
-                                  <HStack gap="1">
-                                    <Trophy size={12} color="white" />
-                                    <Text fontSize="xs" fontWeight="800" color="white">
-                                      {team?.tier || 'Unranked'}
-                                    </Text>
-                                  </HStack>
-                                </Box>
-                              )}
-                              <Badge colorPalette="purple" px="2.5" py="1" rounded="full">
-                                MMR: {mmr}
-                              </Badge>
-
-                              {/* Championship count badge */}
-                              {teamChampionships[teamName] && teamChampionships[teamName].length > 0 && (
-                                <Badge colorPalette="orange" px="2.5" py="1" rounded="full" display="flex" alignItems="center" gap="1">
-                                  <Trophy size={12} /> {teamChampionships[teamName].length} Championships
-                                </Badge>
-                              )}
-                            </HStack>
-                          </VStack>
+                      {/* Team name + MMR row — G2 style */}
+                      <HStack gap="4" align="center" justify="space-between" flexWrap="wrap">
+                        <VStack align="start" gap="1">
+                          <Text
+                            fontSize={{ base: '2xl', md: '3xl' }}
+                            fontWeight="900"
+                            color={emlColors.textPrimary}
+                            letterSpacing="-0.5px"
+                            textTransform="uppercase"
+                          >
+                            {teamName}
+                          </Text>
+                          <HStack gap="3" flexWrap="wrap">
+                            {/* VRML Star Tier pill */}
+                            {team?.tier && (
+                              <HStack
+                                gap="2"
+                                bg="rgba(255,255,255,0.05)"
+                                border="1px solid"
+                                borderColor={tierConfig.borderColor}
+                                px="3"
+                                py="1.5"
+                                rounded="full"
+                              >
+                                {getTierImage(team.tier) && (
+                                  <Image src={getTierImage(team.tier)} alt={baseTier} w="18px" h="18px" />
+                                )}
+                                <Text fontSize="xs" fontWeight="800" color={tierConfig.color} letterSpacing="wider" textTransform="uppercase">
+                                  {team.tier}
+                                </Text>
+                              </HStack>
+                            )}
+                            <Box
+                              bg="rgba(255,107,43,0.1)"
+                              border="1px solid rgba(255,107,43,0.3)"
+                              px="3"
+                              py="1.5"
+                              rounded="full"
+                            >
+                              <Text fontSize="xs" fontWeight="800" color={emlColors.accentOrange}>
+                                MMR {mmr}
+                              </Text>
+                            </Box>
+                            {teamChampionships[teamName]?.length > 0 && (
+                              <HStack
+                                gap="1"
+                                bg="rgba(251,191,36,0.1)"
+                                border="1px solid rgba(251,191,36,0.3)"
+                                px="3"
+                                py="1.5"
+                                rounded="full"
+                              >
+                                <Trophy size={12} color="#fbbf24" />
+                                <Text fontSize="xs" fontWeight="800" color="#fbbf24">
+                                  {teamChampionships[teamName].length}× Champ
+                                </Text>
+                              </HStack>
+                            )}
+                          </HStack>
                         </VStack>
                       </HStack>
 
                       {/* ─── TEAM ROSTER ─────────────────────────────────────────────────────── */}
                       <Box>
-                        <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary} mb="3">
-                          Team Roster
+                        <Text fontSize="sm" fontWeight="700" color={emlColors.textMuted} mb="3" textTransform="uppercase" letterSpacing="wider">
+                          Roster
                         </Text>
                         <Box
                           border="1px solid"
-                          borderColor={emlColors.borderMedium}
+                          borderColor={emlColors.borderLight}
                           rounded="xl"
                           p="4"
-                          bg={emlColors.bgCard}
+                          bg="#111111"
                         >
                           <VStack align="stretch" gap="3">
                             {/* Captain */}
                             <HStack justify="space-between">
                               <HStack gap="2">
-                                <Box bg="yellow.500" p="1" rounded="md">
-                                  <Trophy size={12} color="white" />
+                                <Box bg="rgba(251,191,36,0.15)" border="1px solid rgba(251,191,36,0.3)" p="1" rounded="md">
+                                  <Trophy size={12} color="#fbbf24" />
                                 </Box>
                                 <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                   {team?.captain || 'N/A'}
@@ -219,8 +288,8 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {team?.coCaptain && (
                               <HStack justify="space-between">
                                 <HStack gap="2">
-                                  <Box bg="orange.500" p="1" rounded="md">
-                                    <Users size={12} color="white" />
+                                  <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="1" rounded="md">
+                                    <Users size={12} color="#ff6b2b" />
                                   </Box>
                                   <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                     {team.coCaptain}
