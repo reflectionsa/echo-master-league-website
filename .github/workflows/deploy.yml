@@ -34,17 +34,14 @@ jobs:
           VITE_DISCORD_REDIRECT_URI: "https://pub-e09519a9341b4ca6bd62c5e785f31dd3.r2.dev/"
           VITE_WORKER_URL: ${{ secrets.VITE_WORKER_URL }}
 
-      - name: Install rclone
-        run: curl https://rclone.org/install.sh | sudo bash
-
       - name: Deploy to R2
         env:
-          RCLONE_CONFIG_R2_TYPE: s3
-          RCLONE_CONFIG_R2_PROVIDER: Cloudflare
-          RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-          RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
-          RCLONE_CONFIG_R2_ENDPOINT: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
-          RCLONE_CONFIG_R2_ACL: private
-          RCLONE_CONFIG_R2_NO_CHECK_BUCKET: "true"
+          AWS_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          rclone copy ./dist r2:echo-master-league --progress --no-check-dest --ignore-checksum
+          aws s3 sync ./dist s3://echo-master-league \
+            --endpoint-url https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com \
+            --no-progress \
+            --delete
