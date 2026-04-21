@@ -41,7 +41,7 @@ jobs:
           AWS_DEFAULT_REGION: auto
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          aws s3 sync ./dist s3://echo-master-league \
+          aws s3 sync ./dist s3://eml-website \
             --endpoint-url https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com \
             --no-progress \
             --delete
