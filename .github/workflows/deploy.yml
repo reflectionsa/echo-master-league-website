@@ -34,24 +34,17 @@ jobs:
           VITE_DISCORD_REDIRECT_URI: "https://pub-e09519a9341b4ca6bd62c5e785f31dd3.r2.dev/"
           VITE_WORKER_URL: ${{ secrets.VITE_WORKER_URL }}
 
-      - name: Configure rclone
-        run: |
-          mkdir -p ~/.config/rclone
-          cat << EOF > ~/.config/rclone/rclone.conf
-          [r2]
-          type = s3
-          provider = Cloudflare
-          access_key_id = ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-          secret_access_key = ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
-          endpoint = https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
-          acl = private
-          no_check_bucket = true
-          EOF
-
       - name: Install rclone
-        run: |
-          curl https://rclone.org/install.sh | sudo bash
+        run: curl https://rclone.org/install.sh | sudo bash
 
       - name: Deploy to R2
+        env:
+          RCLONE_CONFIG_R2_TYPE: s3
+          RCLONE_CONFIG_R2_PROVIDER: Cloudflare
+          RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_R2_ENDPOINT: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
+          RCLONE_CONFIG_R2_ACL: private
+          RCLONE_CONFIG_R2_NO_CHECK_BUCKET: "true"
         run: |
-          rclone copy ./dist r2:echo-master-league --progress --s3-no-check-bucket --no-check-dest --ignore-checksum
+          rclone copy ./dist r2:echo-master-league --progress --no-check-dest --ignore-checksum
