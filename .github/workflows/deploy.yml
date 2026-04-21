@@ -31,7 +31,7 @@ jobs:
         env:
           VITE_GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
           VITE_DISCORD_CLIENT_ID: "1477115120759996667"
-          VITE_DISCORD_REDIRECT_URI: "https://pub-e09519a9341b4ca6bd62c5e785f31dd3.r2.dev/"
+          VITE_DISCORD_REDIRECT_URI: "https://pub-4b2224a438874dac9ded8cbfadf07677.r2.dev/"
           VITE_WORKER_URL: ${{ secrets.VITE_WORKER_URL }}
 
       - name: Deploy to R2
