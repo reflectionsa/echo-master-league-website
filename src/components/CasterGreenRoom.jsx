@@ -1,8 +1,10 @@
-import { Dialog, Portal, Box, VStack, HStack, Text, CloseButton, Badge, Center, Spinner, Button } from '@chakra-ui/react';
-import { Radio, ExternalLink, Play, Clock, Tv } from 'lucide-react';
+import { Dialog, Portal, Box, VStack, HStack, Text, CloseButton, Badge, Center, Spinner, Button, Input } from '@chakra-ui/react';
+import { Radio, ExternalLink, Play, Clock, Tv, Mic } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
 import { getThemedColors } from '../theme/colors';
 import { useSchedule } from '../hooks/useSchedule';
 import { useAuth } from '../hooks/useAuth';
+import { emlApi } from '../hooks/useEmlApi';
 
 const READY_STATUSES = ['Scheduled', 'Live', 'In Progress'];
 
@@ -10,6 +12,35 @@ const CasterGreenRoom = ({ open, onClose, theme }) => {
   const colors = getThemedColors(theme);
   const { matches, loading } = useSchedule();
   const { user, isLoggedIn, isCaster } = useAuth();
+  const [twitchChannel, setTwitchChannel] = useState('');
+  const [claimedMatches, setClaimedMatches] = useState([]);
+
+  const fetchClaims = useCallback(async () => {
+    if (!open) return;
+    try {
+      const data = await emlApi('GET', '/caster/matches');
+      setClaimedMatches(data.matches || []);
+    } catch { /* non-critical */ }
+  }, [open]);
+
+  useEffect(() => { fetchClaims(); }, [fetchClaims]);
+
+  const handleClaim = async (matchId) => {
+    try {
+      await emlApi('POST', '/caster/claim', { matchId, discordId: user.id, username: user.username, twitchChannel: twitchChannel.trim() });
+      await fetchClaims();
+    } catch { /* ignore */ }
+  };
+
+  const handleUnclaim = async (matchId) => {
+    try {
+      await emlApi('POST', '/caster/unclaim', { matchId, discordId: user.id });
+      await fetchClaims();
+    } catch { /* ignore */ }
+  };
+
+  const getClaimInfo = (matchId) => claimedMatches.find(c => c.matchId === matchId);
+  const isMyClaim = (matchId) => getClaimInfo(matchId)?.discordId === user?.id;
 
   // Matches that are "ready to cast" — scheduled for today or live
   const now = new Date();
@@ -74,6 +105,24 @@ const CasterGreenRoom = ({ open, onClose, theme }) => {
             </Dialog.Header>
 
             <Dialog.Body p="6" overflowY="auto">
+              {/* Twitch channel */}
+              <Box bg="#111111" border="1px solid rgba(255,255,255,0.08)" rounded="xl" p="3" mb="4">
+                <HStack gap="2" mb="2">
+                  <Mic size={13} color="#9146ff" />
+                  <Text fontSize="xs" fontWeight="700" color="#9146ff" textTransform="uppercase" letterSpacing="wider">Your Twitch Channel</Text>
+                </HStack>
+                <HStack gap="2">
+                  <Input value={twitchChannel} onChange={e => setTwitchChannel(e.target.value)} placeholder="yourchannelname"
+                    bg="#0a0a0a" border="1px solid rgba(255,255,255,0.1)" color="white" rounded="lg" size="sm"
+                    _placeholder={{ color: 'rgba(255,255,255,0.25)' }} _focus={{ borderColor: '#9146ff', outline: 'none' }} />
+                  {twitchChannel && (
+                    <Button as="a" href={`https://twitch.tv/${twitchChannel}`} target="_blank" size="sm"
+                      bg="rgba(145,70,255,0.1)" border="1px solid rgba(145,70,255,0.3)" color="#9146ff" rounded="lg">
+                      <ExternalLink size={12} />
+                    </Button>
+                  )}
+                </HStack>
+              </Box>
               {loading ? (
                 <Center py="16">
                   <Spinner size="lg" color="#00bfff" />
@@ -162,14 +211,18 @@ const CasterGreenRoom = ({ open, onClose, theme }) => {
                         const timeStr = match.matchDate
                           ? match.matchDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
                           : 'TBA';
+                        const matchId = match.id || match.matchId;
+                        const claimInfo = getClaimInfo(matchId);
+                        const mine = isMyClaim(matchId);
                         return (
                           <Box
                             key={match.id}
                             bg="#111111"
-                            border="1px solid rgba(34,197,94,0.2)"
+                            border="1px solid"
+                            borderColor={claimInfo ? 'rgba(0,191,255,0.3)' : 'rgba(34,197,94,0.2)'}
                             rounded="xl"
                             p="4"
-                            _hover={{ borderColor: 'rgba(34,197,94,0.4)' }}
+                            _hover={{ borderColor: claimInfo ? 'rgba(0,191,255,0.5)' : 'rgba(34,197,94,0.4)' }}
                             transition="border-color 0.2s"
                           >
                             <HStack justify="space-between" flexWrap="wrap" gap="3">
@@ -192,18 +245,31 @@ const CasterGreenRoom = ({ open, onClose, theme }) => {
                                       Week {match.week}
                                     </Badge>
                                   )}
+                                  {claimInfo && (
+                                    <Badge bg="rgba(0,191,255,0.1)" color="#00bfff" border="1px solid rgba(0,191,255,0.25)" fontSize="2xs">
+                                      <Radio size={8} /> {claimInfo.username}
+                                    </Badge>
+                                  )}
                                 </HStack>
                               </VStack>
                               <HStack gap="2">
-                                <Box
-                                  px="3"
-                                  py="1"
-                                  bg="rgba(34,197,94,0.1)"
-                                  border="1px solid rgba(34,197,94,0.3)"
-                                  rounded="full"
-                                >
-                                  <Text fontSize="xs" fontWeight="700" color="#22c55e">Ready to Cast</Text>
-                                </Box>
+                                {claimInfo?.twitchChannel && (
+                                  <Button size="sm" as="a" href={`https://twitch.tv/${claimInfo.twitchChannel}`} target="_blank"
+                                    bg="rgba(145,70,255,0.1)" border="1px solid rgba(145,70,255,0.3)" color="#9146ff">
+                                    <ExternalLink size={12} /> Twitch
+                                  </Button>
+                                )}
+                                {mine ? (
+                                  <Button size="sm" bg="rgba(239,68,68,0.1)" border="1px solid rgba(239,68,68,0.3)" color="#ef4444" rounded="lg" fontWeight="700"
+                                    onClick={() => handleUnclaim(matchId)}>Unclaim</Button>
+                                ) : !claimInfo ? (
+                                  <Button size="sm" bg="rgba(0,191,255,0.1)" border="1px solid rgba(0,191,255,0.3)" color="#00bfff" rounded="lg" fontWeight="700"
+                                    onClick={() => handleClaim(matchId)}>
+                                    <Radio size={12} /> Claim
+                                  </Button>
+                                ) : (
+                                  <Badge bg="rgba(255,255,255,0.05)" color={colors.textMuted} fontSize="xs">Claimed</Badge>
+                                )}
                                 {match.streamLink?.url && (
                                   <Button
                                     size="sm"

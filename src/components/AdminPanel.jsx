@@ -1,17 +1,18 @@
 import {
   Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge,
-  Button, Tabs, Input, Textarea, Select
+  Button, Tabs, Input, Textarea, Select, Spinner
 } from '@chakra-ui/react';
-import { Shield, FileText, Users, Trophy, Terminal, Zap, Video } from 'lucide-react';
-import { useState } from 'react';
+import { Shield, FileText, Users, Trophy, Terminal, Zap, Video, UserX, AlertTriangle, ClipboardList } from 'lucide-react';
+import { useState, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
+import { emlApi } from '../hooks/useEmlApi';
 
 const WORKER_URL = import.meta.env.VITE_WORKER_URL;
 
 const AdminPanel = ({ theme, open, onClose }) => {
   const colors = getThemedColors(theme);
-  const { isAdmin, isMod } = useAuth();
+  const { user, isAdmin, isMod } = useAuth();
 
   // Production form state
   const [ticketMatchId, setTicketMatchId] = useState('');
@@ -26,6 +27,73 @@ const AdminPanel = ({ theme, open, onClose }) => {
   const [cameraName, setCameraName] = useState('');
   const [cameraStats, setCameraStats] = useState({ events: 0, matches: 0 });
   const [cameraLoading, setCameraLoading] = useState(false);
+
+  // Team admin
+  const [teamAdminId, setTeamAdminId] = useState('');
+  const [teamAdminTier, setTeamAdminTier] = useState('');
+  const [teamAdminElo, setTeamAdminElo] = useState('');
+  const [teamAdminLoading, setTeamAdminLoading] = useState(false);
+  const [teamAdminMsg, setTeamAdminMsg] = useState('');
+
+  // Player admin
+  const [playerAdminId, setPlayerAdminId] = useState('');
+  const [playerAdminAction, setPlayerAdminAction] = useState('ban');
+  const [playerAdminReason, setPlayerAdminReason] = useState('');
+  const [playerAdminLoading, setPlayerAdminLoading] = useState(false);
+  const [playerAdminMsg, setPlayerAdminMsg] = useState('');
+
+  // Match admin
+  const [matchAdminId, setMatchAdminId] = useState('');
+  const [matchAdminAction, setMatchAdminAction] = useState('force_report');
+  const [matchAdminWinner, setMatchAdminWinner] = useState('');
+  const [matchAdminNote, setMatchAdminNote] = useState('');
+  const [matchAdminLoading, setMatchAdminLoading] = useState(false);
+  const [matchAdminMsg, setMatchAdminMsg] = useState('');
+
+  // Audit log
+  const [auditLog, setAuditLog] = useState([]);
+  const [auditLoading, setAuditLoading] = useState(false);
+
+  const handleAdminTeam = async () => {
+    if (!teamAdminId) return;
+    setTeamAdminLoading(true);
+    setTeamAdminMsg('');
+    try {
+      const updates = {};
+      if (teamAdminTier) updates.tier = teamAdminTier;
+      if (teamAdminElo) updates.elo = parseInt(teamAdminElo);
+      await emlApi('POST', '/admin/team', { adminDiscordId: user.id, teamId: teamAdminId, updates });
+      setTeamAdminMsg('Team updated.');
+    } catch (e) { setTeamAdminMsg(e.message); } finally { setTeamAdminLoading(false); }
+  };
+
+  const handleAdminPlayer = async () => {
+    if (!playerAdminId) return;
+    setPlayerAdminLoading(true);
+    setPlayerAdminMsg('');
+    try {
+      await emlApi('POST', '/admin/player', { adminDiscordId: user.id, targetDiscordId: playerAdminId, action: playerAdminAction, reason: playerAdminReason });
+      setPlayerAdminMsg(`Player ${playerAdminAction === 'ban' ? 'banned' : 'unbanned'}.`);
+    } catch (e) { setPlayerAdminMsg(e.message); } finally { setPlayerAdminLoading(false); }
+  };
+
+  const handleAdminMatch = async () => {
+    if (!matchAdminId) return;
+    setMatchAdminLoading(true);
+    setMatchAdminMsg('');
+    try {
+      await emlApi('POST', '/admin/match', { adminDiscordId: user.id, matchId: matchAdminId, action: matchAdminAction, winner: matchAdminWinner, note: matchAdminNote });
+      setMatchAdminMsg('Match updated.');
+    } catch (e) { setMatchAdminMsg(e.message); } finally { setMatchAdminLoading(false); }
+  };
+
+  const loadAuditLog = useCallback(async () => {
+    setAuditLoading(true);
+    try {
+      const data = await emlApi('GET', '/audit-log');
+      setAuditLog(data.log || []);
+    } catch { } finally { setAuditLoading(false); }
+  }, []);
 
   const handleCreateTicket = async () => {
     if (!ticketMatchId.trim()) {
@@ -244,6 +312,63 @@ const AdminPanel = ({ theme, open, onClose }) => {
                       _hover={{ bg: colors.bgHover }}
                     >
                       <Terminal size={14} /> Bot Commands
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="team-ctrl"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                    >
+                      <Users size={14} /> Teams
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="player-ctrl"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                    >
+                      <UserX size={14} /> Players
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="match-ctrl"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                    >
+                      <AlertTriangle size={14} /> Match Ctrl
+                    </Tabs.Trigger>
+                    <Tabs.Trigger
+                      value="audit"
+                      justifyContent="flex-start"
+                      gap="2"
+                      rounded="lg"
+                      px="3"
+                      py="2"
+                      fontSize="sm"
+                      color={colors.textSecondary}
+                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
+                      _hover={{ bg: colors.bgHover }}
+                      onClick={loadAuditLog}
+                    >
+                      <ClipboardList size={14} /> Audit Log
                     </Tabs.Trigger>
                   </Tabs.List>
 
@@ -747,6 +872,117 @@ const AdminPanel = ({ theme, open, onClose }) => {
                         ))}
                       </VStack>
                     </Tabs.Content>
+
+                    {/* --- New Admin Tabs --- */}
+
+                    {/* Teams Admin */}
+                    <Tabs.Content value="team-ctrl" p="6">
+                    <VStack align="start" gap="5">
+                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Team Management</Text>
+                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
+                        <VStack gap="3" align="stretch">
+                          <Input placeholder="Team ID" value={teamAdminId} onChange={e => setTeamAdminId(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                          <HStack gap="3">
+                            <Input placeholder="New Tier (Master/Diamond/...)" value={teamAdminTier} onChange={e => setTeamAdminTier(e.target.value)}
+                              bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                              _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                            <Input placeholder="New ELO" type="number" value={teamAdminElo} onChange={e => setTeamAdminElo(e.target.value)}
+                              bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                              _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                          </HStack>
+                          {teamAdminMsg && <Text fontSize="xs" color={teamAdminMsg.includes('updated') ? '#22c55e' : '#ef4444'}>{teamAdminMsg}</Text>}
+                          <Button colorPalette="orange" size="sm" alignSelf="flex-end" onClick={handleAdminTeam} loading={teamAdminLoading}>Update Team</Button>
+                        </VStack>
+                      </Box>
+                    </VStack>
+                  </Tabs.Content>
+
+                  {/* Players Admin */}
+                  <Tabs.Content value="player-ctrl" p="6">
+                    <VStack align="start" gap="5">
+                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Player Management</Text>
+                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
+                        <VStack gap="3" align="stretch">
+                          <Input placeholder="Player Discord ID" value={playerAdminId} onChange={e => setPlayerAdminId(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: '#ef4444' }} />
+                          <HStack gap="2">
+                            {['ban', 'unban'].map(a => (
+                              <Button key={a} size="sm" bg={playerAdminAction === a ? 'rgba(239,68,68,0.15)' : '#0a0a0a'}
+                                border="1px solid" borderColor={playerAdminAction === a ? 'rgba(239,68,68,0.4)' : colors.borderMedium}
+                                color={playerAdminAction === a ? '#ef4444' : colors.textMuted} rounded="lg" fontWeight="700"
+                                onClick={() => setPlayerAdminAction(a)}>{a.charAt(0).toUpperCase() + a.slice(1)}</Button>
+                            ))}
+                          </HStack>
+                          <Input placeholder="Reason" value={playerAdminReason} onChange={e => setPlayerAdminReason(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: '#ef4444' }} />
+                          {playerAdminMsg && <Text fontSize="xs" color={playerAdminMsg.includes('banned') || playerAdminMsg.includes('unbanned') ? '#22c55e' : '#ef4444'}>{playerAdminMsg}</Text>}
+                          <Button colorPalette="red" size="sm" alignSelf="flex-end" onClick={handleAdminPlayer} loading={playerAdminLoading}>Apply Action</Button>
+                        </VStack>
+                      </Box>
+                    </VStack>
+                  </Tabs.Content>
+
+                  {/* Match Control */}
+                  <Tabs.Content value="match-ctrl" p="6">
+                    <VStack align="start" gap="5">
+                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Match Control</Text>
+                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
+                        <VStack gap="3" align="stretch">
+                          <Input placeholder="Match ID" value={matchAdminId} onChange={e => setMatchAdminId(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                          <HStack gap="2" flexWrap="wrap">
+                            {['force_report', 'forfeit', 'swap_teams'].map(a => (
+                              <Button key={a} size="sm" bg={matchAdminAction === a ? 'rgba(255,107,43,0.15)' : '#0a0a0a'}
+                                border="1px solid" borderColor={matchAdminAction === a ? 'rgba(255,107,43,0.4)' : colors.borderMedium}
+                                color={matchAdminAction === a ? '#ff6b2b' : colors.textMuted} rounded="lg" fontWeight="700"
+                                onClick={() => setMatchAdminAction(a)}>{a.replace(/_/g, ' ')}</Button>
+                            ))}
+                          </HStack>
+                          <Input placeholder="Winner team ID (if applicable)" value={matchAdminWinner} onChange={e => setMatchAdminWinner(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                          <Input placeholder="Admin note" value={matchAdminNote} onChange={e => setMatchAdminNote(e.target.value)}
+                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
+                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
+                          {matchAdminMsg && <Text fontSize="xs" color={matchAdminMsg.includes('updated') ? '#22c55e' : '#ef4444'}>{matchAdminMsg}</Text>}
+                          <Button colorPalette="orange" size="sm" alignSelf="flex-end" onClick={handleAdminMatch} loading={matchAdminLoading}>Execute</Button>
+                        </VStack>
+                      </Box>
+                    </VStack>
+                  </Tabs.Content>
+
+                  {/* Audit Log */}
+                  <Tabs.Content value="audit" p="6">
+                    <VStack align="start" gap="5" w="full">
+                      <HStack justify="space-between" w="full">
+                        <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Audit Log</Text>
+                        <Button size="sm" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium} color={colors.textMuted} onClick={loadAuditLog} loading={auditLoading}>Refresh</Button>
+                      </HStack>
+                      {auditLoading && <HStack justify="center" w="full" py="8"><Spinner color="#ff6b2b" /></HStack>}
+                      {!auditLoading && auditLog.length === 0 && <Text fontSize="sm" color={colors.textMuted}>No audit entries yet. Click Refresh to load.</Text>}
+                      <VStack gap="2" align="stretch" w="full">
+                        {auditLog.map(entry => (
+                          <Box key={entry.id} bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium} rounded="xl" p="3">
+                            <HStack justify="space-between" flexWrap="wrap" gap="1">
+                              <HStack gap="2">
+                                <Badge colorPalette="orange" size="xs">{entry.action?.replace(/_/g, ' ')}</Badge>
+                                {entry.teamId && <Text fontSize="xs" color={colors.textMuted}>team: {entry.teamId.slice(0, 8)}</Text>}
+                                {entry.targetDiscordId && <Text fontSize="xs" color={colors.textMuted}>player: {entry.targetDiscordId.slice(0, 8)}</Text>}
+                              </HStack>
+                              <Text fontSize="2xs" color={colors.textSubtle}>{new Date(entry.createdAt).toLocaleString()}</Text>
+                            </HStack>
+                            {entry.reason && <Text fontSize="xs" color={colors.textSecondary} mt="1">{entry.reason}</Text>}
+                            {entry.note && <Text fontSize="xs" color={colors.textSecondary} mt="1">{entry.note}</Text>}
+                          </Box>
+                        ))}
+                      </VStack>
+                    </VStack>
+                  </Tabs.Content>
 
                   </Box>
                 </HStack>

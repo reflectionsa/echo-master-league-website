@@ -1,7 +1,8 @@
 import { Box, Button, Menu, Portal, HStack, VStack, Text, Badge, Image } from '@chakra-ui/react';
-import { ChevronDown, LogOut, Shield, Mic2, User, Users } from 'lucide-react';
+import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
+import { useNotifications } from '../hooks/useNotifications';
 
 const ROLE_CONFIG = {
   admin: { label: 'Admin', colorPalette: 'red', Icon: Shield },
@@ -11,8 +12,9 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick }) => {
   const { user, logout, isAdmin, isMod, isCaster } = useAuth();
+  const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
 
   if (!user) return null;
@@ -23,6 +25,8 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick }) => {
   const handleSelect = (details) => {
     if (details.value === 'production-signup') onProductionSignupClick?.();
     if (details.value === 'admin-panel') onAdminPanelClick?.();
+    if (details.value === 'my-team') onMyTeamClick?.();
+    if (details.value === 'notifications') onNotificationsClick?.();
     if (details.value === 'logout') logout();
   };
 
@@ -104,6 +108,41 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick }) => {
             </Box>
 
             <Menu.Separator borderColor={colors.borderMedium} mb="1" />
+
+            {/* Notifications */}
+            <Menu.Item
+              value="notifications"
+              rounded="lg"
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2" justify="space-between" w="full">
+                <HStack gap="2">
+                  <Bell size={14} />
+                  <Text fontSize="sm">Notifications</Text>
+                </HStack>
+                {unreadCount > 0 && (
+                  <Badge bg="#ff6b2b" color="white" fontSize="2xs" fontWeight="800" rounded="full" minW="4" textAlign="center">{unreadCount}</Badge>
+                )}
+              </HStack>
+            </Menu.Item>
+
+            {/* My Team */}
+            <Menu.Item
+              value="my-team"
+              rounded="lg"
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2">
+                <Users size={14} />
+                <Text fontSize="sm">My Team</Text>
+              </HStack>
+            </Menu.Item>
+
+            <Menu.Separator borderColor={colors.borderMedium} my="1" />
 
             {/* Caster-only: Production Signup */}
             {isCaster && (

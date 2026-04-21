@@ -1,149 +1,172 @@
-import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge, Image, Separator } from '@chakra-ui/react';
-import { Bell, Calendar, AlertCircle } from 'lucide-react';
+import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge, Image, Spinner, Center } from '@chakra-ui/react';
+import { Bell, Calendar, RefreshCw, AlertCircle } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
+import { useAnnouncements } from '../hooks/useAnnouncements';
 import { getCurrentSeasonWeek, getWeekName, getWeekDateRange } from '../utils/weekUtils';
 
-const AnnouncementsView = ({ theme, open, onClose }) => {
-  const emlColors = getThemedColors(theme);
+const formatRelativeTime = (isoStr) => {
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+};
+
+// Render Discord markdown-lite: bold **text** and links
+const renderContent = (text) => {
+  if (!text) return null;
+  // Split on **bold** first
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <Text as="span" key={i} fontWeight="800" color="white">{part.slice(2, -2)}</Text>;
+    }
+    // Simple URL linkification
+    const urlParts = part.split(/(https?:\/\/[^\s]+)/g);
+    return urlParts.map((up, j) =>
+      up.match(/^https?:\/\//) ? (
+        <Text as="a" key={`${i}-${j}`} href={up} target="_blank" rel="noopener noreferrer" color="#ff6b2b" fontWeight="600" _hover={{ textDecoration: 'underline' }}>{up}</Text>
+      ) : up
+    );
+  });
+};
+
+const AnnouncementCard = ({ announcement, colors, index }) => (
+  <Box
+    bg={index === 0 ? 'linear-gradient(135deg, rgba(255,107,43,0.08), rgba(124,58,237,0.06))' : '#111111'}
+    border="1px solid"
+    borderColor={index === 0 ? 'rgba(255,107,43,0.35)' : 'rgba(255,255,255,0.08)'}
+    rounded="2xl"
+    overflow="hidden"
+  >
+    {/* Author + timestamp header */}
+    <HStack bg={index === 0 ? 'rgba(255,107,43,0.07)' : 'rgba(255,255,255,0.03)'} px="5" py="3" borderBottom="1px solid rgba(255,255,255,0.06)">
+      <HStack gap="2" flex="1">
+        {announcement.author?.avatar && (
+          <Image src={announcement.author.avatar} alt={announcement.author.username} w="6" h="6" rounded="full" />
+        )}
+        <Text fontSize="xs" fontWeight="700" color={colors.textPrimary}>{announcement.author?.username || 'EML Staff'}</Text>
+        {index === 0 && <Badge bg="rgba(255,107,43,0.15)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.3)" fontSize="2xs" fontWeight="800">LATEST</Badge>}
+      </HStack>
+      <Text fontSize="xs" color={colors.textMuted}>{formatRelativeTime(announcement.timestamp)}</Text>
+    </HStack>
+
+    {/* Content */}
+    <Box px="5" py="4">
+      <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.75" whiteSpace="pre-wrap">
+        {renderContent(announcement.content)}
+      </Text>
+    </Box>
+
+    {/* Images */}
+    {(announcement.attachments?.length > 0 || announcement.embedImages?.length > 0) && (
+      <Box px="5" pb="5">
+        {[...announcement.attachments, ...announcement.embedImages].map((img, i) => (
+          <Box key={i} rounded="xl" overflow="hidden" border="1px solid rgba(255,255,255,0.08)" mt={i > 0 ? '3' : '0'}>
+            <Image src={img.url} alt={img.filename || `Image ${i + 1}`} w="full" h="auto" maxH="480px" objectFit="contain" bg="#0a0a0a" />
+          </Box>
+        ))}
+      </Box>
+    )}
+  </Box>
+);
+
+// Hardcoded fallback shown when Discord API is unavailable
+const FallbackAnnouncement = ({ colors }) => {
   const currentWeek = getCurrentSeasonWeek();
   const weekName = getWeekName(currentWeek);
   const weekRange = getWeekDateRange(currentWeek);
+  return (
+    <Box bg="linear-gradient(135deg, rgba(255,107,43,0.08), rgba(124,58,237,0.06))" border="1px solid rgba(255,107,43,0.35)" rounded="2xl" p="6">
+      <HStack justify="space-between" mb="4" flexWrap="wrap" gap="2">
+        <Badge bg="rgba(255,107,43,0.15)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.3)" fontWeight="800">SEASON 4 — WEEK {weekName?.toUpperCase()}</Badge>
+        <HStack gap="1" fontSize="xs" color={colors.textMuted}><Calendar size={12} /><Text>{weekRange}</Text></HStack>
+      </HStack>
+      <Text fontSize="xl" fontWeight="800" color={colors.textPrimary} mb="3">Week {weekName} Matches are Posted!</Text>
+      <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7">
+        Matches need to be scheduled by Friday and played by Sunday. Use EML Bot commands to schedule — captains and co-captains have permissions. GLHF!
+      </Text>
+    </Box>
+  );
+};
+
+const AnnouncementsView = ({ theme, open, onClose }) => {
+  const colors = getThemedColors(theme);
+  const { announcements, loading, error, refresh } = useAnnouncements();
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">
       <Portal>
-        <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
+        <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            maxW="900px"
+            maxW="800px"
             maxH="90vh"
-            bg={emlColors.bgPrimary}
-            border="1px solid"
-            borderColor={emlColors.borderMedium}
+            bg="#0a0a0a"
+            border="1px solid rgba(255,255,255,0.1)"
             rounded="2xl"
             overflow="hidden"
+            display="flex"
+            flexDir="column"
           >
-            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
+            <Dialog.Header bg="#0d0d0d" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
               <HStack justify="space-between">
-                <HStack gap="2">
-                  <Bell size={24} color={emlColors.accentOrange} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
-                    Announcements & Updates
-                  </Dialog.Title>
+                <HStack gap="3">
+                  <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="2" rounded="lg">
+                    <Bell size={18} color="#ff6b2b" />
+                  </Box>
+                  <Dialog.Title fontSize="lg" fontWeight="800" color={colors.textPrimary}>Announcements</Dialog.Title>
+                  {announcements.length > 0 && (
+                    <Badge bg="rgba(255,107,43,0.12)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.25)" fontSize="xs">{announcements.length}</Badge>
+                  )}
                 </HStack>
-                <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" />
-                </Dialog.CloseTrigger>
+                <HStack gap="2">
+                  <Box as="button" onClick={refresh} p="1.5" rounded="lg" color={colors.textMuted} _hover={{ color: '#ff6b2b', bg: 'rgba(255,107,43,0.1)' }} transition="all 0.15s">
+                    <RefreshCw size={14} />
+                  </Box>
+                  <Dialog.CloseTrigger asChild>
+                    <CloseButton size="sm" color={colors.textMuted} />
+                  </Dialog.CloseTrigger>
+                </HStack>
               </HStack>
             </Dialog.Header>
-            <Dialog.Body p="6" overflowY="auto">
-              {/* Featured: Season 4 Week Four Announcement */}
-              <Box
-                bg={`linear-gradient(135deg, ${emlColors.accentOrange}15, ${emlColors.accentPurple}15)`}
-                p="8"
-                rounded="2xl"
-                border="2px solid"
-                borderColor={emlColors.accentOrange}
-              >
-                <VStack align="start" gap="6">
-                  <HStack justify="space-between" w="full" flexWrap="wrap">
-                    <Badge colorPalette="orange" size="lg" px="3" py="1">
-                      SEASON 4 - WEEK {weekName.toUpperCase()}
-                    </Badge>
-                    <HStack gap="1" fontSize="sm" color={emlColors.textMuted}>
-                      <Calendar size={14} />
-                      <Text>{weekRange}</Text>
-                    </HStack>
-                  </HStack>
 
-                  <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="800" color={emlColors.textPrimary}>
-                    <Text as="a" href="https://echomasterleague.com/assigned-matches/" target="_blank" rel="noopener noreferrer" color={emlColors.accentOrange} _hover={{ textDecoration: 'underline' }}>
-                      Week {weekName} Matches
-                    </Text>{' '}for Season 4 are Posted!
-                  </Text>
-
-                  <VStack align="start" gap="4" w="full">
-                    <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="1.7">
-                      Go to{' '}
-                      <Text as="a" href="https://echomasterleague.com/eml-bot-instructions/" target="_blank" rel="noopener noreferrer" fontWeight="700" color={emlColors.accentOrange} _hover={{ textDecoration: 'underline' }}>
-                        EML Bot Instructions
-                      </Text>{' '}
-                      to see the commands for sending and accepting scheduled matches once the teams agree.
-                      Captains and Co-Captains have permissions to run the commands.
-                    </Text>
-
-                    <Separator borderColor={emlColors.borderMedium} />
-
-                    {/* Replay Files */}
-                    <Box w="full" bg={`${emlColors.accentPurple}10`} p="4" rounded="lg" border="1px solid" borderColor={`${emlColors.accentPurple}40`}>
-                      <HStack gap="2" mb="2">
-                        <AlertCircle size={16} color={emlColors.accentPurple} />
-                        <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" letterSpacing="wide">
-                          Replay Files
-                        </Text>
-                      </HStack>
-                      <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="1.7">
-                        In the event of a player being reported for bug abuse (half-cycling, yaw stremming, walking) a replay file may be requested if the evidence isn't clear enough. In the event of a player being reported for cheating, you NEED a replay file to make a valid report.
-                      </Text>
-                    </Box>
-
-                    {/* Pauses */}
-                    <Box w="full" bg={`${emlColors.accentOrange}10`} p="4" rounded="lg" border="1px solid" borderColor={`${emlColors.accentOrange}40`}>
-                      <HStack gap="2" mb="2">
-                        <AlertCircle size={16} color={emlColors.accentOrange} />
-                        <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" letterSpacing="wide">
-                          Pauses
-                        </Text>
-                      </HStack>
-                      <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="1.7">
-                        Teams get 1 five-minute between-round pause, and 1 five-minute during-round pause (that can be extended to 15 for tech). Any illegal pause will result in a scoring penalty. For every 20 seconds the match is paused as a result of an illegal pause, 2 points will be deducted from the offending team.
-                      </Text>
-                    </Box>
-
-                    {/* Staff Applications */}
-                    <Box w="full" bg={`${emlColors.accentPurple}10`} p="4" rounded="lg" border="1px solid" borderColor={`${emlColors.accentPurple}40`}>
-                      <HStack gap="2" mb="2">
-                        <AlertCircle size={16} color={emlColors.accentPurple} />
-                        <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" letterSpacing="wide">
-                          Staff Applications
-                        </Text>
-                      </HStack>
-                      <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="1.7">
-                        At any time you can type <Text as="span" fontWeight="700" color={emlColors.accentPurple}>/staff app</Text> and it will pop up with our applications. We are always open for more Casters, Camera Ops, Helpers and Future Mods.
-                      </Text>
-                    </Box>
-
-                    {/* Match Scheduling */}
-                    <Box w="full" bg={`${emlColors.accentOrange}10`} p="4" rounded="lg" border="1px solid" borderColor={`${emlColors.accentOrange}40`}>
-                      <HStack gap="2" mb="2">
-                        <AlertCircle size={16} color={emlColors.accentOrange} />
-                        <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" letterSpacing="wide">
-                          Matches Need to Be Scheduled by Friday and Played by Sunday
-                        </Text>
-                      </HStack>
-                      <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="1.7">
-                        League rules require matches be scheduled by <Text as="span" fontStyle="italic">Friday at noon EDT</Text>. If the match is not scheduled by Friday noon please open a ticket.
-                      </Text>
-                    </Box>
-
-                    <Text fontSize="lg" fontWeight="800" color={emlColors.accentOrange} textAlign="center" w="full" mt="2">
-                      GLHF!
-                    </Text>
-
-                    {/* Week Four Image */}
-                    <Box w="full" mt="4" rounded="xl" overflow="hidden" border="1px solid" borderColor={emlColors.borderMedium}>
-                      <Image
-                        src="/images/week4-announcement.png"
-                        alt={`Season 4 Week ${weekName} Matches`}
-                        w="full"
-                        h="auto"
-                        objectFit="contain"
-                        maxH={{ base: '300px', md: '500px' }}
-                      />
-                    </Box>
+            <Dialog.Body p="5" overflowY="auto" flex="1">
+              {loading && (
+                <Center py="16">
+                  <VStack gap="3">
+                    <Spinner size="lg" color="#ff6b2b" />
+                    <Text fontSize="sm" color={colors.textMuted}>Loading announcements…</Text>
                   </VStack>
+                </Center>
+              )}
+
+              {!loading && error && (
+                <VStack gap="4">
+                  <Box bg="rgba(239,68,68,0.07)" border="1px solid rgba(239,68,68,0.2)" rounded="xl" p="4" w="full">
+                    <HStack gap="2">
+                      <AlertCircle size={14} color="#ef4444" />
+                      <Text fontSize="xs" color="#ef4444">Could not load live announcements — showing cached content.</Text>
+                    </HStack>
+                  </Box>
+                  <FallbackAnnouncement colors={colors} />
                 </VStack>
-              </Box>
+              )}
+
+              {!loading && !error && announcements.length === 0 && (
+                <VStack gap="4">
+                  <FallbackAnnouncement colors={colors} />
+                </VStack>
+              )}
+
+              {!loading && !error && announcements.length > 0 && (
+                <VStack gap="4" align="stretch">
+                  {announcements.map((a, i) => (
+                    <AnnouncementCard key={a.id} announcement={a} colors={colors} index={i} />
+                  ))}
+                </VStack>
+              )}
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>

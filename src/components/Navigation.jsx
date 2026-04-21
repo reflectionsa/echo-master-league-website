@@ -1,5 +1,5 @@
-import { Box, Container, HStack, Button, Menu, Portal, Image, Text } from '@chakra-ui/react';
-import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv } from 'lucide-react';
+import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
+import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { getThemedColors } from '../theme/colors';
@@ -21,6 +21,11 @@ import MediaView from './MediaView';
 import LeaderboardView from './LeaderboardView';
 import CaptainsDashboard from './CaptainsDashboard';
 import CasterGreenRoom from './CasterGreenRoom';
+import NotificationsPanel from './NotificationsPanel';
+import TeamCreationModal from './TeamCreationModal';
+import TeamManagementPanel from './TeamManagementPanel';
+import PlayerRegistrationModal from './PlayerRegistrationModal';
+import { useNotifications } from '../hooks/useNotifications';
 
 const Navigation = ({
   theme,
@@ -35,7 +40,8 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
-  const { isLoggedIn, isCaster, isAdmin, isMod, error: authError } = useAuth();
+  const { isLoggedIn, isCaster, isAdmin, isMod, user, error: authError } = useAuth();
+  const { unreadCount } = useNotifications();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -48,6 +54,11 @@ const Navigation = ({
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [captainsDashOpen, setCaptainsDashOpen] = useState(false);
   const [casterGreenRoomOpen, setCasterGreenRoomOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [teamCreateOpen, setTeamCreateOpen] = useState(false);
+  const [teamManageOpen, setTeamManageOpen] = useState(false);
+  const [playerRegOpen, setPlayerRegOpen] = useState(false);
+  const [myTeamId, setMyTeamId] = useState(null);
 
   useEffect(() => {
     if (authError) console.error('[EML Auth]', authError);
@@ -306,6 +317,8 @@ const Navigation = ({
                   theme={theme}
                   onProductionSignupClick={() => setProductionSignupOpen(true)}
                   onAdminPanelClick={() => setAdminPanelOpen(true)}
+                  onMyTeamClick={() => myTeamId ? setTeamManageOpen(true) : setTeamCreateOpen(true)}
+                  onNotificationsClick={() => setNotificationsOpen(true)}
                 />
               ) : (
                 <LoginButton />
@@ -336,6 +349,18 @@ const Navigation = ({
       )}
       {(isCaster || isAdmin) && (
         <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
+      )}
+      {isLoggedIn && (
+        <NotificationsPanel theme={theme} open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
+      )}
+      {isLoggedIn && (
+        <TeamCreationModal theme={theme} open={teamCreateOpen} onClose={() => setTeamCreateOpen(false)} onCreated={(t) => { setMyTeamId(t.id); setTeamCreateOpen(false); }} />
+      )}
+      {isLoggedIn && myTeamId && (
+        <TeamManagementPanel theme={theme} open={teamManageOpen} onClose={() => setTeamManageOpen(false)} teamId={myTeamId} />
+      )}
+      {isLoggedIn && (
+        <PlayerRegistrationModal theme={theme} open={playerRegOpen} onClose={() => setPlayerRegOpen(false)} />
       )}
 
       {/* Auth-gated Modals */}
