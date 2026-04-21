@@ -54,4 +54,4 @@ jobs:
 
       - name: Deploy to R2
         run: |
-          rclone sync ./dist r2:echo-master-league --progress --s3-no-check-bucket
+          rclone copy ./dist r2:echo-master-league --progress --s3-no-check-bucket --no-check-dest --ignore-checksum
