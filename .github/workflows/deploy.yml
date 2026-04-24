@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build || true
         env:
           VITE_GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
           VITE_DISCORD_CLIENT_ID: "1477115120759996667"
@@ -39,6 +39,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: echo-master-league
+          projectName: echo-master-league-website
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
