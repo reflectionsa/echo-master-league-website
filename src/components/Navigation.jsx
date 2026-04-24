@@ -30,6 +30,8 @@ const TeamManagementPanel = lazy(() => import('./TeamManagementPanel'));
 const PlayerRegistrationModal = lazy(() => import('./PlayerRegistrationModal'));
 const ChallengeSystem = lazy(() => import('./ChallengeSystem'));
 const MatchReportModal = lazy(() => import('./MatchReportModal'));
+const MyTeamView = lazy(() => import('./MyTeamView'));
+const MyProfileModal = lazy(() => import('./MyProfileModal'));
 import { useNotifications } from '../hooks/useNotifications';
 
 const Navigation = ({
@@ -69,6 +71,8 @@ const Navigation = ({
   const [playerRegOpen, setPlayerRegOpen] = useState(false);
   const [challengeOpen, setChallengeOpen] = useState(false);
   const [matchReportOpen, setMatchReportOpen] = useState(false);
+  const [myTeamOpen, setMyTeamOpen] = useState(false);
+  const [myProfileOpen, setMyProfileOpen] = useState(false);
   const [myTeamId, setMyTeamId] = useState(null);
 
   useEffect(() => {
@@ -343,7 +347,8 @@ const Navigation = ({
                   theme={theme}
                   onProductionSignupClick={() => setProductionSignupOpen(true)}
                   onAdminPanelClick={() => setAdminPanelOpen(true)}
-                  onMyTeamClick={() => myTeamId ? setTeamManageOpen(true) : setTeamCreateOpen(true)}
+                  onMyTeamClick={() => setMyTeamOpen(true)}
+                  onMyProfileClick={() => setMyProfileOpen(true)}
                   onNotificationsClick={() => setNotificationsOpen(true)}
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
@@ -412,6 +417,12 @@ const Navigation = ({
         )}
         {isLoggedIn && (
           <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <MyTeamView theme={theme} open={myTeamOpen} onClose={() => setMyTeamOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <MyProfileModal theme={theme} open={myProfileOpen} onClose={() => setMyProfileOpen(false)} />
         )}
 
         {/* Auth-gated Modals */}

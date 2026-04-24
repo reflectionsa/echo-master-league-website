@@ -12,7 +12,7 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
   const { user, logout, isAdmin, isMod, isCaster, isPlayer } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
@@ -26,6 +26,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'production-signup') onProductionSignupClick?.();
     if (details.value === 'admin-panel') onAdminPanelClick?.();
     if (details.value === 'my-team') onMyTeamClick?.();
+    if (details.value === 'my-profile') onMyProfileClick?.();
     if (details.value === 'notifications') onNotificationsClick?.();
     if (details.value === 'challenge') onChallengeClick?.();
     if (details.value === 'match-report') onMatchReportClick?.();
@@ -129,6 +130,20 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
                 {unreadCount > 0 && (
                   <Badge bg="#ff6b2b" color="white" fontSize="2xs" fontWeight="800" rounded="full" minW="4" textAlign="center">{unreadCount}</Badge>
                 )}
+              </HStack>
+            </Menu.Item>
+
+            {/* My Profile */}
+            <Menu.Item
+              value="my-profile"
+              rounded="lg"
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2">
+                <User size={14} />
+                <Text fontSize="sm">My Profile</Text>
               </HStack>
             </Menu.Item>
 
