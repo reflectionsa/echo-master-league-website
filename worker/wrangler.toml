@@ -20,7 +20,7 @@ DISCORD_CLIENT_ID = "1477115120759996667"
 DISCORD_GUILD_ID = "1182380144887865406"
 
 # Comma-separated list of allowed frontend origins (no trailing slash)
-ALLOWED_ORIGINS = "http://localhost:3000,http://localhost:3001,https://reflectionsa.github.io,https://echo-master-league-website.pages.dev"
+ALLOWED_ORIGINS = "http://localhost:3000,http://localhost:3001,http://localhost:3002,https://reflectionsa.github.io,https://echo-master-league-website.pages.dev"
 
 # Static role ID → name map (RECOMMENDED - no bot token needed)
 # Steps to get role IDs:
