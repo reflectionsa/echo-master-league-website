@@ -835,69 +835,82 @@ const AdminPanel = ({ theme, open, onClose }) => {
                           {
                             cmd: '/zadminmatchentry',
                             desc: 'Enter a match result on behalf of two teams.',
-                            palette: 'orange',
+                            color: colors.accentOrange,
+                            label: 'Match',
                           },
                           {
                             cmd: '/z_forfeit',
                             desc: 'ADMIN: Forfeit a match between two teams (reconciliation).',
-                            palette: 'orange',
+                            color: colors.accentOrange,
+                            label: 'Match',
                           },
                           {
                             cmd: '/z_player_register',
                             desc: 'ADMIN: Register a player into the League (reconciliation). Executes immediately. Accepts either a Discord mention or a raw ID.',
-                            palette: 'green',
+                            color: colors.accentBlue,
+                            label: 'Player',
                           },
                           {
                             cmd: '/z_player_unregister',
                             desc: 'ADMIN: Unregister (remove) a player from the League (reconciliation). No dry-run/apply; executes immediately.',
-                            palette: 'red',
+                            color: colors.accentBlue,
+                            label: 'Player',
                           },
                           {
                             cmd: '/z_team_create',
                             desc: 'ADMIN: Create a team with an explicit captain (reconciliation).',
-                            palette: 'blue',
+                            color: colors.accentBlue,
+                            label: 'Team',
                           },
                           {
                             cmd: '/z_team_disband',
                             desc: 'ADMIN: Disband a team historically (reconciliation).',
-                            palette: 'red',
+                            color: colors.accentBlue,
+                            label: 'Team',
                           },
                           {
                             cmd: '/z_team_player_add',
                             desc: 'ADMIN: Add a player to a team historically (reconciliation).',
-                            palette: 'green',
+                            color: colors.accentBlue,
+                            label: 'Team',
                           },
                           {
                             cmd: '/z_team_player_remove',
                             desc: 'ADMIN: Remove a player from a team historically (reconciliation).',
-                            palette: 'red',
+                            color: colors.accentBlue,
+                            label: 'Team',
                           },
                           {
                             cmd: '/zadminfixroles',
                             desc: 'Fix Discord Roles — perform a manual accounting of server and league roles.',
-                            palette: 'blue',
+                            color: colors.accentOrange,
+                            label: 'Roles',
                           },
                           {
                             cmd: '/zadminsuspend',
                             desc: 'Suspend a Player — manually suspend a player for a specific duration. Kicks the player from everything and adds them to the suspension list. If the player is a captain, their team is disbanded.',
-                            palette: 'red',
+                            color: colors.accentOrange,
+                            label: 'Moderation',
                           },
                           {
                             cmd: '/zadmingenerateuuid',
                             desc: 'Generate a UUID — perform UUID generation and related wizardry.',
-                            palette: 'purple',
+                            color: colors.accentBlue,
+                            label: 'Utility',
                           },
                           {
                             cmd: '/zdebugdbcache',
                             desc: 'Debug the local cache.',
-                            palette: 'yellow',
+                            color: colors.accentBlue,
+                            label: 'Debug',
                           },
                           {
                             cmd: '/zdebugdbqueue',
                             desc: 'Debug the pending writes.',
-                            palette: 'yellow',
+                            color: colors.accentBlue,
+                            label: 'Debug',
                           },
-                        ].map(({ cmd, desc, palette }) => (
+                        ].map(({ cmd, desc, color, label }) => (
                           <Box
                             key={cmd}
                             w="full"
@@ -908,7 +921,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             borderColor={colors.borderMedium}
                           >
                             <HStack align="flex-start" gap="3">
-                              <Terminal size={16} color={colors.accentOrange} style={{ marginTop: 2, flexShrink: 0 }} />
+                              <Terminal size={16} color={color} style={{ marginTop: 2, flexShrink: 0 }} />
                               <VStack align="start" gap="1" flex="1">
                                 <HStack gap="2" flexWrap="wrap">
                                   <Text
@@ -919,7 +932,20 @@ const AdminPanel = ({ theme, open, onClose }) => {
                                   >
                                     {cmd}
                                   </Text>
-                                  <Badge colorPalette={palette} size="xs">Director / Mod</Badge>
+                                  <Box
+                                    px="2"
+                                    py="0.5"
+                                    rounded="md"
+                                    fontSize="xs"
+                                    fontWeight="700"
+                                    bg={`${color}22`}
+                                    color={color}
+                                    border="1px solid"
+                                    borderColor={`${color}44`}
+                                    letterSpacing="wide"
+                                  >
+                                    {label}
+                                  </Box>
                                 </HStack>
                                 <Text fontSize="xs" color={colors.textSecondary}>
                                   {desc}
