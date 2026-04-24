@@ -996,6 +996,64 @@ async function handleRosterLog(teamId, env, cors) {
   return jsonResponse({ log }, 200, cors);
 }
 
+// ─── Team Assets Routes ───────────────────────────────────────────────────────
+
+async function handleTeamAssetsGet(teamSlug, env, cors) {
+  const assets = await kvGet(env, `team_assets:${teamSlug}`);
+  return jsonResponse({ assets: assets || { logoUrl: null, bannerUrl: null } }, 200, cors);
+}
+
+async function handleTeamAssetsSet(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch { return jsonResponse({ error: 'Invalid JSON' }, 400, cors); }
+  const { teamSlug, captainDiscordId, logoUrl, bannerUrl } = body;
+  if (!teamSlug || !captainDiscordId) return jsonResponse({ error: 'Missing required fields' }, 400, cors);
+
+  const isValidDataUri = (uri) =>
+    uri.startsWith('data:image/png;base64,') || uri.startsWith('data:image/jpeg;base64,');
+
+  if (logoUrl && !isValidDataUri(logoUrl)) return jsonResponse({ error: 'Only PNG and JPG images are allowed' }, 400, cors);
+  if (bannerUrl && !isValidDataUri(bannerUrl)) return jsonResponse({ error: 'Only PNG and JPG images are allowed' }, 400, cors);
+
+  // Rough size check (base64 chars * 0.75 ≈ bytes)
+  if (logoUrl && logoUrl.length * 0.75 > 2 * 1024 * 1024) return jsonResponse({ error: 'Logo too large (max 2MB)' }, 400, cors);
+  if (bannerUrl && bannerUrl.length * 0.75 > 5 * 1024 * 1024) return jsonResponse({ error: 'Banner too large (max 5MB)' }, 400, cors);
+
+  const existing = await kvGet(env, `team_assets:${teamSlug}`) || {};
+  const assets = {
+    ...existing,
+    teamSlug,
+    logoUrl: logoUrl !== undefined ? logoUrl : (existing.logoUrl || null),
+    bannerUrl: bannerUrl !== undefined ? bannerUrl : (existing.bannerUrl || null),
+    updatedAt: new Date().toISOString(),
+    updatedBy: captainDiscordId,
+  };
+  await kvPut(env, `team_assets:${teamSlug}`, assets);
+  return jsonResponse({ success: true, assets }, 200, cors);
+}
+
+// ─── Player Banner Routes ─────────────────────────────────────────────────────
+
+async function handlePlayerBannerGet(discordId, env, cors) {
+  const data = await kvGet(env, `player_banner:${discordId}`);
+  return jsonResponse({ bannerUrl: data?.bannerUrl || null }, 200, cors);
+}
+
+async function handlePlayerBannerSet(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch { return jsonResponse({ error: 'Invalid JSON' }, 400, cors); }
+  const { discordId, bannerUrl } = body;
+  if (!discordId) return jsonResponse({ error: 'Missing discordId' }, 400, cors);
+
+  if (bannerUrl && !bannerUrl.startsWith('data:image/png;base64,') && !bannerUrl.startsWith('data:image/jpeg;base64,'))
+    return jsonResponse({ error: 'Only PNG and JPG images are allowed' }, 400, cors);
+  if (bannerUrl && bannerUrl.length * 0.75 > 5 * 1024 * 1024)
+    return jsonResponse({ error: 'Banner too large (max 5MB)' }, 400, cors);
+
+  await kvPut(env, `player_banner:${discordId}`, { discordId, bannerUrl: bannerUrl || null, updatedAt: new Date().toISOString() });
+  return jsonResponse({ success: true }, 200, cors);
+}
+
 export default {
   async fetch(request, env) {
     const cors = buildCorsHeaders(request, env);
@@ -1026,13 +1084,17 @@ export default {
     // Teams
     if (request.method === 'POST' && path === '/team/create') return handleTeamCreate(request, env, cors);
     const teamGet = path.match(/^\/team\/([^/]+)$/);
-    if (request.method === 'GET' && teamGet) return handleTeamGet(teamGet[1], env, cors);
+    if (request.method === 'GET' && teamGet && teamGet[1] !== 'assets') return handleTeamGet(teamGet[1], env, cors);
     if (request.method === 'POST' && path === '/team/invite') return handleTeamInvite(request, env, cors);
     if (request.method === 'POST' && path === '/team/invite/respond') return handleInviteRespond(request, env, cors);
     if (request.method === 'POST' && path === '/team/kick') return handleTeamKick(request, env, cors);
     if (request.method === 'POST' && path === '/team/leave') return handleTeamLeave(request, env, cors);
     if (request.method === 'POST' && path === '/team/transfer') return handleTeamTransfer(request, env, cors);
     if (request.method === 'POST' && path === '/team/disband') return handleTeamDisband(request, env, cors);
+    // Team assets (logo/banner upload by captain)
+    const teamAssetsGet = path.match(/^\/team\/assets\/([^/]+)$/);
+    if (request.method === 'GET' && teamAssetsGet) return handleTeamAssetsGet(decodeURIComponent(teamAssetsGet[1]), env, cors);
+    if (request.method === 'POST' && path === '/team/assets') return handleTeamAssetsSet(request, env, cors);
 
     // Match reporting
     if (request.method === 'POST' && path === '/match/report') return handleMatchReport(request, env, cors);

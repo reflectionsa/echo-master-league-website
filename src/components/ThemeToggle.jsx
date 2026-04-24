@@ -4,6 +4,7 @@ import { getThemedColors } from '../theme/colors';
 
 const ThemeToggle = ({ theme, onToggle }) => {
   const colors = getThemedColors(theme);
+  const isDark = theme.endsWith('-dark') || theme === 'dark';
 
   return (
     <IconButton
@@ -21,9 +22,9 @@ const ThemeToggle = ({ theme, onToggle }) => {
         borderColor: colors.accentOrange
       }}
       transition="all 0.4s ease"
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
-      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      {isDark ? <Sun size={18} /> : <Moon size={18} />}
     </IconButton>
   );
 };
