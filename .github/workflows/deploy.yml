@@ -32,8 +32,8 @@ jobs:
         env:
           VITE_GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
           VITE_DISCORD_CLIENT_ID: "1477115120759996667"
-          VITE_DISCORD_REDIRECT_URI: ${{ secrets.VITE_DISCORD_REDIRECT_URI }}
-          VITE_WORKER_URL: ${{ secrets.VITE_WORKER_URL }}
+          VITE_DISCORD_REDIRECT_URI: "https://echo-master-league-website.pages.dev/"
+          VITE_WORKER_URL: "https://eml-discord-oauth.aaliyahkarol101.workers.dev"
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
