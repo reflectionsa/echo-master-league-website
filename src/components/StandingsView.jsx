@@ -40,6 +40,10 @@ const TeamAvatar = ({ name, color }) => {
   );
 };
 
+// Medal colors for top 3 positions
+const MEDAL_COLORS = { 1: '#FFD700', 2: '#C0C0C0', 3: '#CD7F32' };
+const getMedalColor = (pos, fallback) => MEDAL_COLORS[pos] || fallback;
+
 const StandingsView = ({ theme, open, onClose }) => {
   const { needsColorBlindSupport } = useAccessibility();
   const colors = getThemedColors(theme, needsColorBlindSupport);
@@ -76,7 +80,7 @@ const StandingsView = ({ theme, open, onClose }) => {
               {/* Close button */}
               <Box position="absolute" top="4" right="4" zIndex="2">
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="sm" color={colors.textMuted} _hover={{ color: colors.textPrimary }} />
+                  <CloseButton size="sm" color={colors.textSecondary} _hover={{ color: colors.textPrimary }} />
                 </Dialog.CloseTrigger>
               </Box>
 
@@ -188,8 +192,8 @@ const StandingsView = ({ theme, open, onClose }) => {
                         <Text
                           key={label}
                           fontSize="10px"
-                          fontWeight="700"
-                          color={colors.textMuted}
+                          fontWeight="800"
+                          color={colors.textSecondary}
                           letterSpacing="wider"
                           textTransform="uppercase"
                           textAlign={align}
@@ -207,6 +211,8 @@ const StandingsView = ({ theme, open, onClose }) => {
                       const pos = team.position || index + 1;
                       const rankNum = String(pos).padStart(2, '0');
                       const isTop3 = pos <= 3;
+                      const rankColor = isTop3 ? getMedalColor(pos, colors.accentOrange) : colors.textSubtle;
+                      const isInactive = team.active && String(team.active).toLowerCase() === 'inactive';
 
                       return (
                         <Box
@@ -217,18 +223,19 @@ const StandingsView = ({ theme, open, onClose }) => {
                           py="3"
                           borderBottom="1px solid"
                           borderColor={`${colors.borderMedium}55`}
-                          bg={isTop3 ? `${colors.accentOrange}08` : 'transparent'}
+                          bg={isTop3 ? `${getMedalColor(pos, colors.accentOrange)}10` : 'transparent'}
+                          opacity={isInactive ? 0.5 : 1}
                           _hover={{ bg: `${colors.textPrimary}0c`, cursor: 'pointer' }}
                           transition="background 0.15s"
                           _last={{ borderBottom: 'none' }}
                           onClick={() => setSelectedTeam(team.team)}
                         >
                           {/* Rank */}
-                          <Box display="flex" alignItems="center">
+                          <Box display="flex" alignItems="center" gap="1">
                             <Text
                               fontSize="sm"
                               fontWeight="900"
-                              color={isTop3 ? colors.accentOrange : colors.textSubtle}
+                              color={rankColor}
                               fontFamily="mono"
                               letterSpacing="tight"
                             >
@@ -238,19 +245,24 @@ const StandingsView = ({ theme, open, onClose }) => {
 
                           {/* Team */}
                           <Box display="flex" alignItems="center" gap="3" minW="0" overflow="hidden">
-                            <TeamAvatar name={team.team} color={tierColor} />
-                            <Text
-                              fontSize="sm"
-                              fontWeight="700"
-                              color={colors.textPrimary}
-                              _hover={{ color: colors.accentOrange }}
-                              noOfLines={1}
-                              overflow="hidden"
-                              textOverflow="ellipsis"
-                              whiteSpace="nowrap"
-                            >
-                              {team.team}
-                            </Text>
+                            <TeamAvatar name={team.team} color={isInactive ? colors.textSubtle : tierColor} />
+                            <Box minW="0">
+                              <Text
+                                fontSize="sm"
+                                fontWeight="700"
+                                color={isInactive ? colors.textMuted : colors.textPrimary}
+                                _hover={{ color: colors.accentOrange }}
+                                noOfLines={1}
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                                whiteSpace="nowrap"
+                              >
+                                {team.team}
+                              </Text>
+                              {isInactive && (
+                                <Text fontSize="9px" fontWeight="700" color={colors.textSubtle} textTransform="uppercase" letterSpacing="wider">Inactive</Text>
+                              )}
+                            </Box>
                           </Box>
 
                           {/* Tier */}

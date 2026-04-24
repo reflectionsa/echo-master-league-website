@@ -1,6 +1,6 @@
 import { Box, Dialog, Portal, Text, HStack, VStack, Badge, CloseButton, SimpleGrid, Input, InputGroup, Button, Table } from '@chakra-ui/react';
 import { Users, Shield, Star, Radio, Video, Clock, UserX, Search, ChevronLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTeamRoles } from '../hooks/useTeamRoles';
 import { useLeagueSubs } from '../hooks/useLeagueSubs';
 import PlayerProfileModal from './PlayerProfileModal';
@@ -22,6 +22,16 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const { teams } = useTeamRoles();
   const { subs: leagueSubs } = useLeagueSubs();
+
+  // Reset to the correct category whenever the modal opens or initialCategory changes
+  useEffect(() => {
+    if (open) {
+      setSelectedCategory(initialCategory || null);
+      setSearch('');
+    } else {
+      setSelectedCategory(null);
+    }
+  }, [open, initialCategory]);
 
   const activeTeams = teams.filter(t => t.status === 'Active');
   const activePlayers = activeTeams.reduce((acc, t) => acc + 1 + (t.coCaptain ? 1 : 0) + t.players.filter(Boolean).length, 0);
@@ -132,7 +142,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                     </Dialog.Title>
                   </HStack>
                   <Dialog.CloseTrigger asChild>
-                    <CloseButton size="lg" />
+                    <CloseButton size="lg" color={colors.textSecondary} _hover={{ color: colors.textPrimary }} />
                   </Dialog.CloseTrigger>
                 </HStack>
               </Dialog.Header>
@@ -218,16 +228,16 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                         <Table.Root size="md" variant="outline">
                           <Table.Header>
                             <Table.Row bg={colors.bgTertiary}>
-                              <Table.ColumnHeader fontWeight="700" color={colors.textMuted} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={colors.textSecondary} fontSize="xs" textTransform="uppercase">
                                 Player Name
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={colors.textMuted} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={colors.textSecondary} fontSize="xs" textTransform="uppercase">
                                 Previous Team
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={colors.textMuted} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={colors.textSecondary} fontSize="xs" textTransform="uppercase">
                                 Status
                               </Table.ColumnHeader>
-                              <Table.ColumnHeader fontWeight="700" color={colors.textMuted} fontSize="xs" textTransform="uppercase">
+                              <Table.ColumnHeader fontWeight="700" color={colors.textSecondary} fontSize="xs" textTransform="uppercase">
                                 Expires
                               </Table.ColumnHeader>
                             </Table.Row>

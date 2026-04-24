@@ -79,11 +79,12 @@ const Navigation = ({
     if (authError) console.error('[EML Auth]', authError);
   }, [authError]);
 
-  // Auto-open registration modal on first login
+  // Auto-open registration modal on first login (only if never seen)
   useEffect(() => {
     if (isLoggedIn && user?.id) {
-      const key = `eml_registered_${user.id}`;
-      if (!localStorage.getItem(key)) {
+      const seenKey = `eml_reg_seen_${user.id}`;
+      if (!localStorage.getItem(seenKey)) {
+        localStorage.setItem(seenKey, '1'); // mark as seen so X-close won't re-popup
         setPlayerRegOpen(true);
       }
     }
@@ -349,6 +350,7 @@ const Navigation = ({
                   onAdminPanelClick={() => setAdminPanelOpen(true)}
                   onMyTeamClick={() => setMyTeamOpen(true)}
                   onMyProfileClick={() => setMyProfileOpen(true)}
+                  onRegisterClick={() => setPlayerRegOpen(true)}
                   onNotificationsClick={() => setNotificationsOpen(true)}
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
@@ -406,10 +408,7 @@ const Navigation = ({
           <PlayerRegistrationModal
             theme={theme}
             open={playerRegOpen}
-            onClose={() => {
-              setPlayerRegOpen(false);
-              if (user?.id) localStorage.setItem(`eml_registered_${user.id}`, '1');
-            }}
+            onClose={() => setPlayerRegOpen(false)}
           />
         )}
         {isLoggedIn && (

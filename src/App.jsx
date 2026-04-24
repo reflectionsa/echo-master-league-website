@@ -42,7 +42,7 @@ const App = () => {
           <Hero
             theme={theme}
             onTeamsClick={() => setTeamsOpen(true)}
-            onPlayersClick={() => { setMembersCategory(null); setMembersOpen(true); }}
+            onPlayersClick={() => { setMembersCategory('active'); setMembersOpen(true); }}
             onSubsClick={() => { setMembersCategory('subs'); setMembersOpen(true); }}
           />
         </Box>

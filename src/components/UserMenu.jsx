@@ -1,5 +1,5 @@
 import { Box, Button, Menu, Portal, HStack, VStack, Text, Badge, Image } from '@chakra-ui/react';
-import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList, Tv } from 'lucide-react';
+import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList, Tv, UserPlus } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { useNotifications } from '../hooks/useNotifications';
@@ -12,7 +12,7 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
   const { user, logout, isAdmin, isMod, isCaster, isPlayer } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
@@ -27,6 +27,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'admin-panel') onAdminPanelClick?.();
     if (details.value === 'my-team') onMyTeamClick?.();
     if (details.value === 'my-profile') onMyProfileClick?.();
+    if (details.value === 'register') onRegisterClick?.();
     if (details.value === 'notifications') onNotificationsClick?.();
     if (details.value === 'challenge') onChallengeClick?.();
     if (details.value === 'match-report') onMatchReportClick?.();
@@ -144,6 +145,20 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               <HStack gap="2">
                 <User size={14} />
                 <Text fontSize="sm">My Profile</Text>
+              </HStack>
+            </Menu.Item>
+
+            {/* Register / Update Region */}
+            <Menu.Item
+              value="register"
+              rounded="lg"
+              color={colors.textSecondary}
+              _hover={{ bg: colors.bgHover }}
+              cursor="pointer"
+            >
+              <HStack gap="2">
+                <UserPlus size={14} />
+                <Text fontSize="sm">Register / Set Region</Text>
               </HStack>
             </Menu.Item>
 

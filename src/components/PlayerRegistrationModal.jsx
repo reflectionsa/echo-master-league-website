@@ -22,6 +22,11 @@ const PlayerRegistrationModal = ({ open, onClose, theme }) => {
     if (!region) return;
     try {
       await registerProfile(region);
+      // Mark as fully registered — suppresses future auto-popups
+      if (user?.id) {
+        localStorage.setItem(`eml_registered_${user.id}`, '1');
+        localStorage.setItem(`eml_reg_seen_${user.id}`, '1');
+      }
       setDone(true);
       setTimeout(onClose, 1800);
     } catch { /* error shown via hook */ }

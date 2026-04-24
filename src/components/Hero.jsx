@@ -106,7 +106,7 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
               color={colors.textMuted}
               maxW="2xl"
             >
-              The Future of Competitive Echo VR
+              The Home of Competitive Echo VR
             </Text>
           </VStack>
 

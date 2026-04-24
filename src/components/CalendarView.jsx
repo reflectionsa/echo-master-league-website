@@ -11,42 +11,36 @@ const CalendarView = ({ theme, open, onClose }) => {
         <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            maxW="95vw"
-            maxH="90vh"
+            maxW="480px"
+            w="92vw"
             bg={emlColors.bgPrimary}
             border="1px solid"
             borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
           >
-            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
+            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium} py="3">
               <HStack justify="space-between">
                 <HStack gap="2">
-                  <Calendar size={24} color={emlColors.accentOrange} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
+                  <Calendar size={18} color={emlColors.accentOrange} />
+                  <Dialog.Title fontSize="lg" fontWeight="800" color={emlColors.textPrimary}>
                     League Calendar
                   </Dialog.Title>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" color="white" _hover={{ color: 'gray.300' }} />
+                  <CloseButton size="sm" color={emlColors.textSecondary} _hover={{ color: emlColors.textPrimary }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
-            <Dialog.Body p="6" overflowY="auto" display="flex" justifyContent="center" alignItems="center">
+            <Dialog.Body p="4">
               <Box
-                maxW="700px"
                 w="full"
                 bg={emlColors.bgElevated}
-                border="3px solid"
+                border="2px solid"
                 borderColor={emlColors.accentOrange}
-                rounded="2xl"
+                rounded="xl"
                 overflow="hidden"
-                boxShadow={`0 0 40px ${emlColors.accentOrange}99, 0 0 80px ${emlColors.accentOrange}4d`}
-                _hover={{
-                  transform: 'scale(1.02)',
-                  boxShadow: `0 0 50px ${emlColors.accentOrange}cc, 0 0 100px ${emlColors.accentOrange}66`
-                }}
-                transition="all 0.3s"
+                boxShadow={`0 0 20px ${emlColors.accentOrange}44`}
               >
                 <Image
                   src="https://echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png"
