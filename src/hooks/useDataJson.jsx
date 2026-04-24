@@ -25,8 +25,7 @@ const fetchDataJson = () => {
     if (_promise) return _promise;
 
     const base = import.meta.env.BASE_URL || '/';
-    // Cache-bust with timestamp so the browser never serves a stale cached copy
-    const url = `${base.endsWith('/') ? base : base + '/'}data.json?v=${Date.now()}`;
+    const url = `${base.endsWith('/') ? base : base + '/'}data.json`;
 
     _promise = fetch(url, { cache: 'no-cache' })
         .then(res => {

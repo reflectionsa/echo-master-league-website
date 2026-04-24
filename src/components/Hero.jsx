@@ -20,12 +20,6 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
       };
     }
 
-    console.log('All teams:', teams.length); // DEBUG
-    console.log('Teams status breakdown:', {
-      active: teams.filter(t => t.status === 'Active').length,
-      inactive: teams.filter(t => t.status === 'Inactive').length
-    }); // DEBUG
-
     // Only count active teams (4+ players)
     const activeTeams = teams.filter(t => t.status === 'Active').length;
 
@@ -44,8 +38,6 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
     });
 
     const activePlayers = allPlayers.size;
-
-    console.log('Stats calculated:', { activeTeams, activePlayers, subsCount }); // DEBUG
 
     return {
       activeTeams: activeTeams.toString(),

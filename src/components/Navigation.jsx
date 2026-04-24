@@ -1,33 +1,35 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
 import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import ThemeToggle from './ThemeToggle';
 import ThemePicker from './ThemePicker';
 import { getThemedColors } from '../theme/colors';
 import { useAuth } from '../hooks/useAuth';
 import LoginButton from './LoginButton';
 import UserMenu from './UserMenu';
-import ProductionSignup from './ProductionSignup';
-import AdminPanel from './AdminPanel';
-import AnnouncementsView from './AnnouncementsView';
-import AboutView from './AboutView';
-import CalendarView from './CalendarView';
-import StandingsView from './StandingsView';
-import MatchesView from './MatchesView';
-import MembersView from './MembersView';
-import TeamsView from './TeamsView';
-import RulesView from './RulesView';
-import BotView from './BotView';
-import MediaView from './MediaView';
-import LeaderboardView from './LeaderboardView';
-import CaptainsDashboard from './CaptainsDashboard';
-import CasterGreenRoom from './CasterGreenRoom';
-import NotificationsPanel from './NotificationsPanel';
-import TeamCreationModal from './TeamCreationModal';
-import TeamManagementPanel from './TeamManagementPanel';
-import PlayerRegistrationModal from './PlayerRegistrationModal';
-import ChallengeSystem from './ChallengeSystem';
-import MatchReportModal from './MatchReportModal';
+
+// Lazy-load all modal/panel/view components so they don't bloat the initial bundle
+const ProductionSignup = lazy(() => import('./ProductionSignup'));
+const AdminPanel = lazy(() => import('./AdminPanel'));
+const AnnouncementsView = lazy(() => import('./AnnouncementsView'));
+const AboutView = lazy(() => import('./AboutView'));
+const CalendarView = lazy(() => import('./CalendarView'));
+const StandingsView = lazy(() => import('./StandingsView'));
+const MatchesView = lazy(() => import('./MatchesView'));
+const MembersView = lazy(() => import('./MembersView'));
+const TeamsView = lazy(() => import('./TeamsView'));
+const RulesView = lazy(() => import('./RulesView'));
+const BotView = lazy(() => import('./BotView'));
+const MediaView = lazy(() => import('./MediaView'));
+const LeaderboardView = lazy(() => import('./LeaderboardView'));
+const CaptainsDashboard = lazy(() => import('./CaptainsDashboard'));
+const CasterGreenRoom = lazy(() => import('./CasterGreenRoom'));
+const NotificationsPanel = lazy(() => import('./NotificationsPanel'));
+const TeamCreationModal = lazy(() => import('./TeamCreationModal'));
+const TeamManagementPanel = lazy(() => import('./TeamManagementPanel'));
+const PlayerRegistrationModal = lazy(() => import('./PlayerRegistrationModal'));
+const ChallengeSystem = lazy(() => import('./ChallengeSystem'));
+const MatchReportModal = lazy(() => import('./MatchReportModal'));
 import { useNotifications } from '../hooks/useNotifications';
 
 const Navigation = ({
@@ -420,67 +422,69 @@ const Navigation = ({
         </Container>
       </Box>
 
-      {/* Overlay Views */}
-      <AnnouncementsView theme={theme} open={announcementsOpen} onClose={() => setAnnouncementsOpen(false)} />
-      <AboutView theme={theme} open={aboutOpen} onClose={() => setAboutOpen(false)} />
-      <CalendarView theme={theme} open={calendarOpen} onClose={() => setCalendarOpen(false)} />
-      <StandingsView theme={theme} open={standingsOpen} onClose={() => setStandingsOpen(false)} />
-      <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
-      <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
-      <TeamsView theme={theme} open={teamsOpen} onClose={() => setTeamsOpen(false)} />
-      <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
-      <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
-      <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
-      {(isAdmin || isMod) && (
-        <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
-      )}
-      {isLoggedIn && (
-        <CaptainsDashboard theme={theme} open={captainsDashOpen} onClose={() => setCaptainsDashOpen(false)} />
-      )}
-      {(isCaster || isAdmin) && (
-        <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
-      )}
-      {isLoggedIn && (
-        <NotificationsPanel theme={theme} open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
-      )}
-      {isLoggedIn && (
-        <TeamCreationModal theme={theme} open={teamCreateOpen} onClose={() => setTeamCreateOpen(false)} onCreated={(t) => { setMyTeamId(t.id); setTeamCreateOpen(false); }} />
-      )}
-      {isLoggedIn && myTeamId && (
-        <TeamManagementPanel theme={theme} open={teamManageOpen} onClose={() => setTeamManageOpen(false)} teamId={myTeamId} />
-      )}
-      {isLoggedIn && (
-        <PlayerRegistrationModal
-          theme={theme}
-          open={playerRegOpen}
-          onClose={() => {
-            setPlayerRegOpen(false);
-            if (user?.id) localStorage.setItem(`eml_registered_${user.id}`, '1');
-          }}
-        />
-      )}
-      {isLoggedIn && (
-        <ChallengeSystem theme={theme} open={challengeOpen} onClose={() => setChallengeOpen(false)} />
-      )}
-      {isLoggedIn && (
-        <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
-      )}
+      {/* Overlay Views — wrapped in Suspense so lazy chunks load on demand */}
+      <Suspense fallback={null}>
+        <AnnouncementsView theme={theme} open={announcementsOpen} onClose={() => setAnnouncementsOpen(false)} />
+        <AboutView theme={theme} open={aboutOpen} onClose={() => setAboutOpen(false)} />
+        <CalendarView theme={theme} open={calendarOpen} onClose={() => setCalendarOpen(false)} />
+        <StandingsView theme={theme} open={standingsOpen} onClose={() => setStandingsOpen(false)} />
+        <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
+        <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
+        <TeamsView theme={theme} open={teamsOpen} onClose={() => setTeamsOpen(false)} />
+        <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
+        <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
+        <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
+        {(isAdmin || isMod) && (
+          <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <CaptainsDashboard theme={theme} open={captainsDashOpen} onClose={() => setCaptainsDashOpen(false)} />
+        )}
+        {(isCaster || isAdmin) && (
+          <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <NotificationsPanel theme={theme} open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <TeamCreationModal theme={theme} open={teamCreateOpen} onClose={() => setTeamCreateOpen(false)} onCreated={(t) => { setMyTeamId(t.id); setTeamCreateOpen(false); }} />
+        )}
+        {isLoggedIn && myTeamId && (
+          <TeamManagementPanel theme={theme} open={teamManageOpen} onClose={() => setTeamManageOpen(false)} teamId={myTeamId} />
+        )}
+        {isLoggedIn && (
+          <PlayerRegistrationModal
+            theme={theme}
+            open={playerRegOpen}
+            onClose={() => {
+              setPlayerRegOpen(false);
+              if (user?.id) localStorage.setItem(`eml_registered_${user.id}`, '1');
+            }}
+          />
+        )}
+        {isLoggedIn && (
+          <ChallengeSystem theme={theme} open={challengeOpen} onClose={() => setChallengeOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
+        )}
 
-      {/* Auth-gated Modals */}
-      {isCaster && (
-        <ProductionSignup
-          theme={theme}
-          open={productionSignupOpen}
-          onClose={() => setProductionSignupOpen(false)}
-        />
-      )}
-      {(isAdmin || isMod) && (
-        <AdminPanel
-          theme={theme}
-          open={adminPanelOpen}
-          onClose={() => setAdminPanelOpen(false)}
-        />
-      )}
+        {/* Auth-gated Modals */}
+        {isCaster && (
+          <ProductionSignup
+            theme={theme}
+            open={productionSignupOpen}
+            onClose={() => setProductionSignupOpen(false)}
+          />
+        )}
+        {(isAdmin || isMod) && (
+          <AdminPanel
+            theme={theme}
+            open={adminPanelOpen}
+            onClose={() => setAdminPanelOpen(false)}
+          />
+        )}
+      </Suspense>
 
       {/* Mobile Bottom Navigation */}
       <Box
