@@ -26,11 +26,7 @@ const WORKER_URL =
   (import.meta.env.VITE_WORKER_URL &&
     import.meta.env.VITE_WORKER_URL !== 'undefined')
     ? import.meta.env.VITE_WORKER_URL
-    : null;
-
-if (!WORKER_URL) {
-  console.error('[Auth] VITE_WORKER_URL is not set. Login will not work until this is configured.');
-}
+    : 'https://eml-discord-oauth.aaliyahkarol101.workers.dev';
 
 function generateState() {
   const arr = new Uint8Array(16);
