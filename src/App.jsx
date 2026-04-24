@@ -16,7 +16,11 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <Box bg={colors.bgPrimary} minH="100vh" transition="background-color 0.3s ease">
+      <Box
+        bg={colors.bgCard}
+        minH="100vh"
+        transition="background-color 0.3s ease"
+      >
         <Navigation
           theme={theme}
           onThemeToggle={toggleTheme}
