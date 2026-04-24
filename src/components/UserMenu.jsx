@@ -1,5 +1,5 @@
 import { Box, Button, Menu, Portal, HStack, VStack, Text, Badge, Image } from '@chakra-ui/react';
-import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList } from 'lucide-react';
+import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList, Tv } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { useNotifications } from '../hooks/useNotifications';
@@ -12,8 +12,8 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick, onChallengeClick, onMatchReportClick }) => {
-  const { user, logout, isAdmin, isMod, isCaster } = useAuth();
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+  const { user, logout, isAdmin, isMod, isCaster, isPlayer } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
 
@@ -29,6 +29,8 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'notifications') onNotificationsClick?.();
     if (details.value === 'challenge') onChallengeClick?.();
     if (details.value === 'match-report') onMatchReportClick?.();
+    if (details.value === 'captains-dash') onCaptainsDashClick?.();
+    if (details.value === 'caster-greenroom') onCasterGreenRoomClick?.();
     if (details.value === 'logout') logout();
   };
 
@@ -144,37 +146,70 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               </HStack>
             </Menu.Item>
 
-            {/* Challenge Teams */}
-            <Menu.Item
-              value="challenge"
-              rounded="lg"
-              color={colors.accentOrange}
-              _hover={{ bg: colors.bgHover }}
-              cursor="pointer"
-            >
-              <HStack gap="2">
-                <Swords size={14} />
-                <Text fontSize="sm">Challenge Teams</Text>
-              </HStack>
-            </Menu.Item>
+            {/* Player actions */}
+            {isPlayer && (
+              <Menu.Item
+                value="captains-dash"
+                rounded="lg"
+                color="#fbbf24"
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <Shield size={14} />
+                  <Text fontSize="sm">Captain's Dashboard</Text>
+                </HStack>
+              </Menu.Item>
+            )}
 
-            {/* Report Match */}
-            <Menu.Item
-              value="match-report"
-              rounded="lg"
-              color={colors.accentCyan}
-              _hover={{ bg: colors.bgHover }}
-              cursor="pointer"
-            >
-              <HStack gap="2">
-                <ClipboardList size={14} />
-                <Text fontSize="sm">Report Match</Text>
-              </HStack>
-            </Menu.Item>
+            {isPlayer && (
+              <Menu.Item
+                value="challenge"
+                rounded="lg"
+                color={colors.accentOrange}
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <Swords size={14} />
+                  <Text fontSize="sm">Challenge Teams</Text>
+                </HStack>
+              </Menu.Item>
+            )}
+
+            {isPlayer && (
+              <Menu.Item
+                value="match-report"
+                rounded="lg"
+                color={colors.accentCyan}
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <ClipboardList size={14} />
+                  <Text fontSize="sm">Report Match</Text>
+                </HStack>
+              </Menu.Item>
+            )}
 
             <Menu.Separator borderColor={colors.borderMedium} my="1" />
 
-            {/* Caster-only: Production Signup */}
+            {/* Caster-only: Caster Green Room + Production Signup */}
+            {(isCaster || isAdmin) && (
+              <Menu.Item
+                value="caster-greenroom"
+                rounded="lg"
+                color="#00bfff"
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <Tv size={14} />
+                  <Text fontSize="sm">Caster Green Room</Text>
+                </HStack>
+              </Menu.Item>
+            )}
+
             {isCaster && (
               <Menu.Item
                 value="production-signup"

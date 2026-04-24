@@ -231,63 +231,6 @@ const Navigation = ({
                         <HStack gap="2"><BarChart2 size={14} /><span>Player Leaderboard</span></HStack>
                       </Menu.Item>
                     )}
-                    {isPlayer && <Menu.Separator />}
-                    {isPlayer && (
-                      <Menu.Item
-                        value="captains-dashboard"
-                        rounded="lg"
-                        py="1" px="3"
-                        fontSize="sm"
-                        color="#fbbf24"
-                        _hover={{ bg: colors.bgHover }}
-                        transition="all 0.15s ease"
-                        onClick={() => setCaptainsDashOpen(true)}
-                      >
-                        <HStack gap="2"><Shield size={14} /><span>Captain's Dashboard</span></HStack>
-                      </Menu.Item>
-                    )}
-                    {isPlayer && (
-                      <Menu.Item
-                        value="challenge"
-                        rounded="lg"
-                        py="1" px="3"
-                        fontSize="sm"
-                        color={colors.accentOrange}
-                        _hover={{ bg: colors.bgHover }}
-                        transition="all 0.15s ease"
-                        onClick={() => setChallengeOpen(true)}
-                      >
-                        <HStack gap="2"><Swords size={14} /><span>Challenge Teams</span></HStack>
-                      </Menu.Item>
-                    )}
-                    {isPlayer && (
-                      <Menu.Item
-                        value="match-report"
-                        rounded="lg"
-                        py="1" px="3"
-                        fontSize="sm"
-                        color={colors.accentCyan}
-                        _hover={{ bg: colors.bgHover }}
-                        transition="all 0.15s ease"
-                        onClick={() => setMatchReportOpen(true)}
-                      >
-                        <HStack gap="2"><ClipboardList size={14} /><span>Report Match</span></HStack>
-                      </Menu.Item>
-                    )}
-                    {(isCaster || isAdmin) && (
-                      <Menu.Item
-                        value="caster-greenroom"
-                        rounded="lg"
-                        py="1" px="3"
-                        fontSize="sm"
-                        color="#00bfff"
-                        _hover={{ bg: colors.bgHover }}
-                        transition="all 0.15s ease"
-                        onClick={() => setCasterGreenRoomOpen(true)}
-                      >
-                        <HStack gap="2"><Tv size={14} /><span>Caster Green Room</span></HStack>
-                      </Menu.Item>
-                    )}
                   </Menu.Content>
                 </Menu.Positioner>
               </Portal>
@@ -404,6 +347,8 @@ const Navigation = ({
                   onNotificationsClick={() => setNotificationsOpen(true)}
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
+                  onCaptainsDashClick={() => setCaptainsDashOpen(true)}
+                  onCasterGreenRoomClick={() => setCasterGreenRoomOpen(true)}
                 />
               ) : (
                 <LoginButton />
