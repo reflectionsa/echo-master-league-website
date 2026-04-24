@@ -838,28 +838,63 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             palette: 'orange',
                           },
                           {
+                            cmd: '/z_forfeit',
+                            desc: 'ADMIN: Forfeit a match between two teams (reconciliation).',
+                            palette: 'orange',
+                          },
+                          {
+                            cmd: '/z_player_register',
+                            desc: 'ADMIN: Register a player into the League (reconciliation). Executes immediately. Accepts either a Discord mention or a raw ID.',
+                            palette: 'green',
+                          },
+                          {
+                            cmd: '/z_player_unregister',
+                            desc: 'ADMIN: Unregister (remove) a player from the League (reconciliation). No dry-run/apply; executes immediately.',
+                            palette: 'red',
+                          },
+                          {
+                            cmd: '/z_team_create',
+                            desc: 'ADMIN: Create a team with an explicit captain (reconciliation).',
+                            palette: 'blue',
+                          },
+                          {
+                            cmd: '/z_team_disband',
+                            desc: 'ADMIN: Disband a team historically (reconciliation).',
+                            palette: 'red',
+                          },
+                          {
+                            cmd: '/z_team_player_add',
+                            desc: 'ADMIN: Add a player to a team historically (reconciliation).',
+                            palette: 'green',
+                          },
+                          {
+                            cmd: '/z_team_player_remove',
+                            desc: 'ADMIN: Remove a player from a team historically (reconciliation).',
+                            palette: 'red',
+                          },
+                          {
                             cmd: '/zadminfixroles',
-                            desc: 'Perform a manual accounting of server and league roles.',
+                            desc: 'Fix Discord Roles — perform a manual accounting of server and league roles.',
                             palette: 'blue',
                           },
                           {
                             cmd: '/zadminsuspend',
-                            desc: 'Manually suspend a player for a specific duration. Kicks the player from everything and adds them to the suspension list. If the player is a captain, their team is disbanded.',
+                            desc: 'Suspend a Player — manually suspend a player for a specific duration. Kicks the player from everything and adds them to the suspension list. If the player is a captain, their team is disbanded.',
                             palette: 'red',
                           },
                           {
-                            cmd: '/zdebugdbcache',
-                            desc: 'Debug the local database cache.',
-                            palette: 'yellow',
-                          },
-                          {
                             cmd: '/zadmingenerateuuid',
-                            desc: 'Perform UUID generation and related wizardry.',
+                            desc: 'Generate a UUID — perform UUID generation and related wizardry.',
                             palette: 'purple',
                           },
                           {
+                            cmd: '/zdebugdbcache',
+                            desc: 'Debug the local cache.',
+                            palette: 'yellow',
+                          },
+                          {
                             cmd: '/zdebugdbqueue',
-                            desc: 'Debug the pending database write queue.',
+                            desc: 'Debug the pending writes.',
                             palette: 'yellow',
                           },
                         ].map(({ cmd, desc, palette }) => (
