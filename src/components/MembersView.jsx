@@ -91,6 +91,8 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
     team.players.filter(Boolean).forEach(p => playersByCategory.inactive.push({ name: p, team: team.name, role: 'Player', status: 'Inactive' }));
   });
 
+  playersByCategory.active.sort((a, b) => a.name.localeCompare(b.name));
+
   const allPlayers = Object.values(playersByCategory).flat();
 
   const filtered = search ? allPlayers.filter(p =>

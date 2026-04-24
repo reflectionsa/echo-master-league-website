@@ -75,6 +75,8 @@ const MyProfileModal = ({ theme, open, onClose }) => {
 
   const handlePicUpload = (dataUrl) => {
     lsSet(`eml_profile_pic_${user.id}`, dataUrl);
+    const nameSlug = (displayName || '').replace(/\s+/g, '_').toLowerCase();
+    if (nameSlug) lsSet(`eml_player_pic_${nameSlug}`, dataUrl);
     setProfilePic(dataUrl);
   };
   const handleBannerUpload = (dataUrl) => {
@@ -83,6 +85,8 @@ const MyProfileModal = ({ theme, open, onClose }) => {
   };
   const saveBio = () => {
     lsSet(`eml_profile_bio_${user.id}`, bio);
+    const nameSlug = (displayName || '').replace(/\s+/g, '_').toLowerCase();
+    if (nameSlug) lsSet(`eml_player_bio_${nameSlug}`, bio);
     setEditingBio(false);
   };
 

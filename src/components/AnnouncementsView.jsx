@@ -14,13 +14,13 @@ const formatRelativeTime = (isoStr) => {
 };
 
 // Render Discord markdown-lite: bold **text** and links
-const renderContent = (text) => {
+const renderContent = (text, primaryColor) => {
   if (!text) return null;
   // Split on **bold** first
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <Text as="span" key={i} fontWeight="800" color="white">{part.slice(2, -2)}</Text>;
+      return <Text as="span" key={i} fontWeight="800" color={primaryColor}>{part.slice(2, -2)}</Text>;
     }
     // Simple URL linkification
     const urlParts = part.split(/(https?:\/\/[^\s]+)/g);
@@ -34,14 +34,14 @@ const renderContent = (text) => {
 
 const AnnouncementCard = ({ announcement, colors, index }) => (
   <Box
-    bg={index === 0 ? 'linear-gradient(135deg, rgba(255,107,43,0.08), rgba(124,58,237,0.06))' : '#111111'}
+    bg={index === 0 ? `linear-gradient(135deg, ${colors.accentOrange}0d, ${colors.accentPurple}0a)` : colors.bgSecondary}
     border="1px solid"
-    borderColor={index === 0 ? 'rgba(255,107,43,0.35)' : 'rgba(255,255,255,0.08)'}
+    borderColor={index === 0 ? `${colors.accentOrange}58` : colors.borderLight}
     rounded="2xl"
     overflow="hidden"
   >
     {/* Author + timestamp header */}
-    <HStack bg={index === 0 ? 'rgba(255,107,43,0.07)' : 'rgba(255,255,255,0.03)'} px="5" py="3" borderBottom="1px solid rgba(255,255,255,0.06)">
+    <HStack bg={index === 0 ? `${colors.accentOrange}12` : `${colors.textPrimary}08`} px="5" py="3" borderBottom="1px solid" borderColor={colors.borderLight}>
       <HStack gap="2" flex="1">
         {announcement.author?.avatar && (
           <Image src={announcement.author.avatar} alt={announcement.author.username} w="6" h="6" rounded="full" />
@@ -55,7 +55,7 @@ const AnnouncementCard = ({ announcement, colors, index }) => (
     {/* Content */}
     <Box px="5" py="4">
       <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.75" whiteSpace="pre-wrap">
-        {renderContent(announcement.content)}
+        {renderContent(announcement.content, colors.textPrimary)}
       </Text>
     </Box>
 
@@ -63,8 +63,8 @@ const AnnouncementCard = ({ announcement, colors, index }) => (
     {(announcement.attachments?.length > 0 || announcement.embedImages?.length > 0) && (
       <Box px="5" pb="5">
         {[...announcement.attachments, ...announcement.embedImages].map((img, i) => (
-          <Box key={i} rounded="xl" overflow="hidden" border="1px solid rgba(255,255,255,0.08)" mt={i > 0 ? '3' : '0'}>
-            <Image src={img.url} alt={img.filename || `Image ${i + 1}`} w="full" h="auto" maxH="480px" objectFit="contain" bg="#0a0a0a" />
+          <Box key={i} rounded="xl" overflow="hidden" border="1px solid" borderColor={colors.borderLight} mt={i > 0 ? '3' : '0'}>
+            <Image src={img.url} alt={img.filename || `Image ${i + 1}`} w="full" h="auto" maxH="480px" objectFit="contain" bg={colors.bgPrimary} />
           </Box>
         ))}
       </Box>
@@ -103,14 +103,15 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
           <Dialog.Content
             maxW="800px"
             maxH="90vh"
-            bg="#0a0a0a"
-            border="1px solid rgba(255,255,255,0.1)"
+            bg={colors.bgPrimary}
+            border="1px solid"
+            borderColor={colors.borderLight}
             rounded="2xl"
             overflow="hidden"
             display="flex"
             flexDir="column"
           >
-            <Dialog.Header bg="#0d0d0d" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
+            <Dialog.Header bg={colors.bgCard} borderBottom="1px solid" borderColor={colors.borderLight} px="6" py="4">
               <HStack justify="space-between">
                 <HStack gap="3">
                   <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="2" rounded="lg">

@@ -8,7 +8,11 @@ import { getBaseTier, tierInfo } from '../utils/tierUtils';
 
 const STATUS_FILTERS = ['All', 'Active', 'Inactive'];
 
+const slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
+const getTeamLogo = (name) => { try { return localStorage.getItem(`eml_team_logo_${slug(name)}`); } catch { return null; } };
+
 const TeamAvatar = ({ name, color }) => {
+  const logo = getTeamLogo(name);
   const initials = (name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
   return (
     <Box
@@ -19,8 +23,13 @@ const TeamAvatar = ({ name, color }) => {
       rounded="md"
       display="flex" alignItems="center" justifyContent="center"
       flexShrink={0}
+      overflow="hidden"
     >
-      <Text fontSize="sm" fontWeight="900" color={color} lineHeight="1">{initials}</Text>
+      {logo ? (
+        <Box as="img" src={logo} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      ) : (
+        <Text fontSize="sm" fontWeight="900" color={color} lineHeight="1">{initials}</Text>
+      )}
     </Box>
   );
 };
@@ -154,8 +163,8 @@ const TeamsView = ({ theme, open, onClose }) => {
                         <Text
                           key={label}
                           fontSize="10px"
-                          fontWeight="700"
-                          color={colors.textMuted}
+                          fontWeight="800"
+                          color={colors.textSecondary}
                           letterSpacing="wider"
                           textTransform="uppercase"
                           display={show === 'md' ? { base: 'none', md: 'block' } : 'block'}

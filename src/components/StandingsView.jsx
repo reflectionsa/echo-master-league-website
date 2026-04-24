@@ -9,6 +9,9 @@ import { getBaseTier, tierInfo } from '../utils/tierUtils';
 
 const TIER_FILTERS = ['All', 'Master', 'Diamond', 'Platinum', 'Gold'];
 
+const slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
+const getTeamLogo = (name) => { try { return localStorage.getItem(`eml_team_logo_${slug(name)}`); } catch { return null; } };
+
 // Colored ◆ icon per tier using tierInfo colors
 const TierDot = ({ tier, size = 'sm' }) => {
   const base = getBaseTier(tier);
@@ -17,8 +20,9 @@ const TierDot = ({ tier, size = 'sm' }) => {
   return <Box as="span" color={color} fontSize={size === 'sm' ? '10px' : '12px'} lineHeight="1">◆</Box>;
 };
 
-// Square initials avatar matching the reference
+// Square initials avatar — shows uploaded logo if available
 const TeamAvatar = ({ name, color }) => {
+  const logo = getTeamLogo(name);
   const initials = (name || '?')
     .split(/\s+/)
     .map(w => w[0])
@@ -34,8 +38,13 @@ const TeamAvatar = ({ name, color }) => {
       rounded="md"
       display="flex" alignItems="center" justifyContent="center"
       flexShrink={0}
+      overflow="hidden"
     >
-      <Text fontSize="xs" fontWeight="900" color={color} lineHeight="1">{initials}</Text>
+      {logo ? (
+        <Box as="img" src={logo} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      ) : (
+        <Text fontSize="xs" fontWeight="900" color={color} lineHeight="1">{initials}</Text>
+      )}
     </Box>
   );
 };
@@ -268,9 +277,14 @@ const StandingsView = ({ theme, open, onClose }) => {
                           {/* Tier */}
                           <Box display="flex" alignItems="center" gap="1.5">
                             <TierDot tier={team.tier} />
-                            <Text fontSize="xs" fontWeight="600" color={tierColor}>
-                              {team.tier || '—'}
-                            </Text>
+                            <Box>
+                              <Text fontSize="xs" fontWeight="600" color={tierColor}>
+                                {team.tier || '—'}
+                              </Text>
+                              {tInfo.badge && (
+                                <Text fontSize="9px" color={tierColor} letterSpacing="wider" lineHeight="1">{tInfo.badge}</Text>
+                              )}
+                            </Box>
                           </Box>
 
                           {/* MMR */}

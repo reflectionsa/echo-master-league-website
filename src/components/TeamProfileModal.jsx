@@ -5,6 +5,11 @@ import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 import { getTierImage, getBaseTier, getTierInfo } from '../utils/tierUtils';
 
+const _slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
+const lsRead = (key) => { try { return localStorage.getItem(key) || null; } catch { return null; } };
+const getTeamAsset = (name, type) => lsRead(`eml_team_${type}_${_slug(name)}`);
+const getPlayerPic = (name) => lsRead(`eml_player_pic_${_slug(name)}`);
+
 // Team championship history (mock data - replace with real data from sheets)
 const teamChampionships = {
   'Phoenix Rising': [
@@ -51,6 +56,10 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
     badge: '—',
   };
 
+  // localStorage-uploaded assets
+  const customBanner = getTeamAsset(teamName, 'banner');
+  const customLogo = getTeamAsset(teamName, 'logo');
+
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">
       <Portal>
@@ -89,6 +98,9 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                     justifyContent="center"
                     overflow="hidden"
                   >
+                    {customBanner && (
+                      <Box as="img" src={customBanner} alt="Team Banner" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                    )}
                     {/* G2-style diagonal stripe background */}
                     <Box
                       position="absolute"
@@ -116,8 +128,8 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                         filter: `drop-shadow(0 0 24px ${tierConfig.glowColor})`,
                       }}
                     >
-                      {team?.teamLogo?.url ? (
-                        <Image src={team.teamLogo.url} alt={teamName} w="150px" h="150px" objectFit="contain" />
+                      {team?.teamLogo?.url || customLogo ? (
+                        <Image src={customLogo || team.teamLogo.url} alt={teamName} w="150px" h="150px" objectFit={customLogo ? 'cover' : 'contain'} rounded={customLogo ? 'xl' : 'none'} />
                       ) : (
                         <Trophy size={80} color={tierConfig.color} opacity="0.7" />
                       )}
@@ -274,8 +286,20 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {/* Captain */}
                             <HStack justify="space-between">
                               <HStack gap="2">
-                                <Box bg="rgba(251,191,36,0.15)" border="1px solid rgba(251,191,36,0.3)" p="1" rounded="md">
-                                  <Trophy size={12} color="#fbbf24" />
+                                <Box
+                                  w="28px" h="28px"
+                                  bg={getPlayerPic(team?.captain) ? 'transparent' : 'rgba(251,191,36,0.15)'}
+                                  border="1px solid rgba(251,191,36,0.3)"
+                                  rounded="full"
+                                  overflow="hidden"
+                                  display="flex" alignItems="center" justifyContent="center"
+                                  flexShrink={0}
+                                >
+                                  {getPlayerPic(team?.captain) ? (
+                                    <Box as="img" src={getPlayerPic(team.captain)} alt={team.captain} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  ) : (
+                                    <Trophy size={12} color="#fbbf24" />
+                                  )}
                                 </Box>
                                 <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                   {team?.captain || 'N/A'}
@@ -288,8 +312,20 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {team?.coCaptain && (
                               <HStack justify="space-between">
                                 <HStack gap="2">
-                                  <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="1" rounded="md">
-                                    <Users size={12} color="#ff6b2b" />
+                                  <Box
+                                    w="28px" h="28px"
+                                    bg={getPlayerPic(team.coCaptain) ? 'transparent' : 'rgba(255,107,43,0.15)'}
+                                    border="1px solid rgba(255,107,43,0.3)"
+                                    rounded="full"
+                                    overflow="hidden"
+                                    display="flex" alignItems="center" justifyContent="center"
+                                    flexShrink={0}
+                                  >
+                                    {getPlayerPic(team.coCaptain) ? (
+                                      <Box as="img" src={getPlayerPic(team.coCaptain)} alt={team.coCaptain} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    ) : (
+                                      <Users size={12} color="#ff6b2b" />
+                                    )}
                                   </Box>
                                   <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                     {team.coCaptain}
@@ -303,8 +339,19 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {team?.players?.map((player, idx) => (
                               <HStack key={idx} justify="space-between">
                                 <HStack gap="2">
-                                  <Box bg={emlColors.accentBlue} p="1" rounded="md">
-                                    <Users size={12} color="white" />
+                                  <Box
+                                    w="28px" h="28px"
+                                    bg={getPlayerPic(player) ? 'transparent' : emlColors.accentBlue}
+                                    rounded="full"
+                                    overflow="hidden"
+                                    display="flex" alignItems="center" justifyContent="center"
+                                    flexShrink={0}
+                                  >
+                                    {getPlayerPic(player) ? (
+                                      <Box as="img" src={getPlayerPic(player)} alt={player} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    ) : (
+                                      <Users size={12} color="white" />
+                                    )}
                                   </Box>
                                   <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary} textTransform="uppercase">
                                     {player}

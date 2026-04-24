@@ -5,7 +5,11 @@ import { useState } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
 
-const playerProfilePictures = {
+const _slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
+const lsRead = (key) => { try { return localStorage.getItem(key) || null; } catch { return null; } };
+
+// Fallback static profile pictures for known players
+const staticProfilePictures = {
   'Krogers': 'https://static-cdn.jtvnw.net/jtv_user_pictures/424d11c2-415c-46c8-907a-d7cad7af2e96-profile_image-300x300.png',
   'Jaxxjh': 'https://cdn.discordapp.com/avatars/726952425012985906/d34d67b61edf0bac3783d93c30d8b1bb.webp?size=1024',
   'mikey': 'https://cdn.discordapp.com/avatars/841766167357816863/fbd3a5766f97a634f11fd8aa1e5db409.webp?size=1024',
@@ -31,6 +35,11 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
   const { team, playerRole, loading } = usePlayerProfile(playerName);
   const emlColors = getThemedColors(theme);
   const [teamModalOpen, setTeamModalOpen] = useState(false);
+
+  // Profile pic: prefer localStorage upload, fallback to static list
+  const savedPic = lsRead(`eml_player_pic_${_slug(playerName)}`);
+  const profilePic = savedPic || staticProfilePictures[playerName] || null;
+  const savedBio = lsRead(`eml_player_bio_${_slug(playerName)}`);
 
   const getRoleIcon = () => {
     if (playerRole === 'Captain') return <Shield size={16} />;
@@ -79,9 +88,9 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                       borderColor={emlColors.accentPurple}
                       overflow="hidden"
                     >
-                      {playerProfilePictures[playerName] ? (
+                      {profilePic ? (
                         <Image
-                          src={playerProfilePictures[playerName]}
+                          src={profilePic}
                           alt={playerName}
                           w="80px"
                           h="80px"
@@ -122,16 +131,20 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                     </VStack>
                   </VStack>
 
+                  {/* Bio */}
+                  {savedBio && (
+                    <Box
+                      bg={emlColors.bgCard}
+                      border="1px solid"
+                      borderColor={emlColors.borderMedium}
+                      rounded="xl"
+                      p="4"
+                    >
+                      <Text fontSize="sm" color={emlColors.textSecondary} style={{ whiteSpace: 'pre-wrap' }}>{savedBio}</Text>
+                    </Box>
+                  )}
+
                   <Box
-                    bg={emlColors.bgCard}
-                    border="1px solid"
-                    borderColor={emlColors.borderMedium}
-                    rounded="xl"
-                    p="4"
-                  >
-                    <VStack align="start" gap="3">
-                      <HStack gap="2">
-                        <Users size={16} color={emlColors.accentPurple} />
                         <Text fontSize="sm" fontWeight="700" color={emlColors.textMuted}>
                           Team
                         </Text>

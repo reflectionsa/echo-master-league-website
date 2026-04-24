@@ -18,9 +18,9 @@ const CHECKLIST_STEPS = [
     id: 'relay',
     icon: Key,
     color: '#00bfff',
-    title: 'Get Relay Code',
-    description: 'Request your relay code from the match coordinator or bot.',
-    detail: 'Use /getrelay in the EML bot channel. Both teams must use the same relay server.',
+    title: 'Get Spark Link',
+    description: 'Request your spark link from the match coordinator or bot.',
+    detail: 'Use /getspark in the EML bot channel. Both teams must use the same spark link to join the match lobby.',
   },
   {
     id: 'roster',
