@@ -1,11 +1,21 @@
 import {
   Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge,
-  Button, Tabs, Input, Textarea, Select, Spinner
+  Button, Tabs, Input, Textarea, Select, Spinner, createListCollection
 } from '@chakra-ui/react';
 import { Shield, FileText, Users, Trophy, Terminal, Zap, Video, UserX, AlertTriangle, ClipboardList } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
+
+const ticketTypeCollection = createListCollection({
+  items: [
+    { label: '🎥 Production / Cast Request', value: 'production' },
+    { label: '⚙️ Tech Support', value: 'tech-support' },
+    { label: '🏆 Match Support', value: 'match-support' },
+    { label: '📋 League Support', value: 'league-support' },
+    { label: '🖥️ Server Request', value: 'server-request' },
+  ],
+});
 import { emlApi } from '../hooks/useEmlApi';
 
 const WORKER_URL = import.meta.env.VITE_WORKER_URL;
@@ -582,24 +592,37 @@ const AdminPanel = ({ theme, open, onClose }) => {
                           >
                             <VStack gap="4" align="stretch">
                               <Select.Root
+                                collection={ticketTypeCollection}
                                 value={[ticketType]}
                                 onValueChange={(details) => setTicketType(details.value[0] ?? details.value)}
                                 size="sm"
                               >
-                                <Select.Trigger
-                                  bg={colors.bgPrimary}
-                                  color={colors.textPrimary}
-                                  border="1px solid"
-                                  borderColor={colors.borderMedium}
-                                  _focus={{ borderColor: colors.accentOrange }}
-                                />
-                                <Select.Content bg={colors.bgSecondary}>
-                                  <Select.Item value="production" label="🎥 Production / Cast Request" />
-                                  <Select.Item value="tech-support" label="⚙️ Tech Support" />
-                                  <Select.Item value="match-support" label="🏆 Match Support" />
-                                  <Select.Item value="league-support" label="📋 League Support" />
-                                  <Select.Item value="server-request" label="🖥️ Server Request" />
-                                </Select.Content>
+                                <Select.HiddenSelect />
+                                <Select.Control bg={colors.bgPrimary} rounded="lg">
+                                  <Select.Trigger
+                                    color={colors.textPrimary}
+                                    border="1px solid"
+                                    borderColor={colors.borderMedium}
+                                    _focus={{ borderColor: colors.accentOrange }}
+                                  >
+                                    <Select.ValueText />
+                                  </Select.Trigger>
+                                  <Select.IndicatorGroup>
+                                    <Select.Indicator />
+                                  </Select.IndicatorGroup>
+                                </Select.Control>
+                                <Portal>
+                                  <Select.Positioner>
+                                    <Select.Content bg={colors.bgSecondary}>
+                                      {ticketTypeCollection.items.map((item) => (
+                                        <Select.Item item={item} key={item.value}>
+                                          {item.label}
+                                          <Select.ItemIndicator />
+                                        </Select.Item>
+                                      ))}
+                                    </Select.Content>
+                                  </Select.Positioner>
+                                </Portal>
                               </Select.Root>
                               <Input
                                 placeholder="Match ID (e.g., match-week4-1)"
