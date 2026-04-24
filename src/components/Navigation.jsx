@@ -49,7 +49,7 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
-  const { isLoggedIn, isCaster, isAdmin, isMod, user, error: authError } = useAuth();
+  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError } = useAuth();
   const { unreadCount } = useNotifications();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -231,8 +231,8 @@ const Navigation = ({
                         <HStack gap="2"><BarChart2 size={14} /><span>Player Leaderboard</span></HStack>
                       </Menu.Item>
                     )}
-                    {isLoggedIn && <Menu.Separator />}
-                    {isLoggedIn && (
+                    {isPlayer && <Menu.Separator />}
+                    {isPlayer && (
                       <Menu.Item
                         value="captains-dashboard"
                         rounded="lg"
@@ -246,7 +246,7 @@ const Navigation = ({
                         <HStack gap="2"><Shield size={14} /><span>Captain's Dashboard</span></HStack>
                       </Menu.Item>
                     )}
-                    {isLoggedIn && (
+                    {isPlayer && (
                       <Menu.Item
                         value="challenge"
                         rounded="lg"
@@ -260,7 +260,7 @@ const Navigation = ({
                         <HStack gap="2"><Swords size={14} /><span>Challenge Teams</span></HStack>
                       </Menu.Item>
                     )}
-                    {isLoggedIn && (
+                    {isPlayer && (
                       <Menu.Item
                         value="match-report"
                         rounded="lg"
