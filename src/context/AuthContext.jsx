@@ -17,7 +17,11 @@ const DISCORD_CLIENT_ID =
 function getRedirectUri() {
   const env = import.meta.env.VITE_DISCORD_REDIRECT_URI;
   if (env && env !== 'undefined') return env;
-  // Build from window.location: origin + pathname, normalised to a trailing slash
+  // On pages.dev always use the exact registered URI
+  if (window.location.hostname === 'echo-master-league-website.pages.dev') {
+    return 'https://echo-master-league-website.pages.dev/';
+  }
+  // Local dev: build from window.location
   const base = window.location.origin + window.location.pathname.replace(/\/+$/, '');
   return base + '/';
 }
