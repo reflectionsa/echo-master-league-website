@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare R2
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -31,17 +31,14 @@ jobs:
         env:
           VITE_GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
           VITE_DISCORD_CLIENT_ID: "1477115120759996667"
-          VITE_DISCORD_REDIRECT_URI: "https://pub-4b2224a438874dac9ded8cbfadf07677.r2.dev/"
+          VITE_DISCORD_REDIRECT_URI: ${{ secrets.VITE_DISCORD_REDIRECT_URI }}
           VITE_WORKER_URL: ${{ secrets.VITE_WORKER_URL }}
 
-      - name: Deploy to R2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: auto
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          aws s3 sync ./dist s3://eml-website \
-            --endpoint-url https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com \
-            --no-progress \
-            --delete
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: echo-master-league
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

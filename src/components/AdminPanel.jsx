@@ -583,7 +583,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
                             <VStack gap="4" align="stretch">
                               <Select.Root
                                 value={[ticketType]}
-                                onValueChange={(details) => setTicketType(details.value)}
+                                onValueChange={(details) => setTicketType(details.value[0] ?? details.value)}
                                 size="sm"
                               >
                                 <Select.Trigger

@@ -29,6 +29,12 @@ body {
     50% { opacity: 0.5; transform: translateY(-50%) scale(1.6); }
 }
 
+/* Dropdown fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Smooth scrollbar styling - WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 12px;

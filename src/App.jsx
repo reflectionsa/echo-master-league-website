@@ -1,12 +1,14 @@
 import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTheme } from './hooks/useTheme';
+import { getThemedColors } from './theme/colors';
 import { AuthProvider } from './context/AuthContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 
 const App = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, colorScheme, mode, setColorScheme, setMode } = useTheme();
+  const colors = getThemedColors(theme);
   const [teamsOpen, setTeamsOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [membersCategory, setMembersCategory] = useState(null);
@@ -14,10 +16,14 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <Box bg="#0a0a0a" minH="100vh">
+      <Box bg={colors.bgPrimary} minH="100vh" transition="background-color 0.3s ease">
         <Navigation
           theme={theme}
           onThemeToggle={toggleTheme}
+          colorScheme={colorScheme}
+          mode={mode}
+          onColorSchemeChange={setColorScheme}
+          onModeChange={setMode}
           teamsOpen={teamsOpen}
           setTeamsOpen={setTeamsOpen}
           membersOpen={membersOpen}

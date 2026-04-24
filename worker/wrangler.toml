@@ -1,13 +1,14 @@
 name = "eml-discord-oauth"
 main = "discord-oauth.js"
 compatibility_date = "2024-01-01"
+account_id = "8c05412a18287bf9900d13441e676a7b"
 
 # KV namespace for production signups and role cache.
 # After creating: wrangler kv namespace create "EML_SIGNUPS"
 # Paste the returned id below, replacing REPLACE_WITH_KV_NAMESPACE_ID
 [[kv_namespaces]]
 binding = "EML_SIGNUPS"
-id = "b71dad6047bd4a81a9cbe884e5f26187"
+id = "4ddc5828171545fab6b07f17fe4ff294"
 
 [vars]
 # Your Discord Application ID (not secret - safe to commit)
@@ -19,7 +20,7 @@ DISCORD_CLIENT_ID = "1477115120759996667"
 DISCORD_GUILD_ID = "1182380144887865406"
 
 # Comma-separated list of allowed frontend origins (no trailing slash)
-ALLOWED_ORIGINS = "http://localhost:3000,https://reflectionsa.github.io"
+ALLOWED_ORIGINS = "http://localhost:3000,http://localhost:3001,https://reflectionsa.github.io,https://echo-master-league-website.pages.dev"
 
 # Static role ID → name map (RECOMMENDED - no bot token needed)
 # Steps to get role IDs:

@@ -1,7 +1,8 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
-import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList } from 'lucide-react';
+import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
+import ThemePicker from './ThemePicker';
 import { getThemedColors } from '../theme/colors';
 import { useAuth } from '../hooks/useAuth';
 import LoginButton from './LoginButton';
@@ -32,6 +33,10 @@ import { useNotifications } from '../hooks/useNotifications';
 const Navigation = ({
   theme,
   onThemeToggle,
+  colorScheme,
+  mode,
+  onColorSchemeChange,
+  onModeChange,
   teamsOpen,
   setTeamsOpen,
   membersOpen,
@@ -122,81 +127,106 @@ const Navigation = ({
                     rounded="xl"
                     boxShadow="2xl"
                     p="2"
+                    style={{ animation: 'fadeIn 0.15s ease' }}
                   >
                     <Menu.Item
                       value="announcements"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setAnnouncementsOpen(true)}
                     >
-                      Announcements & Updates
+                      <HStack gap="2"><Megaphone size={14} /><span>Announcements</span></HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="about"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setAboutOpen(true)}
                     >
-                      About EML
+                      <HStack gap="2"><Info size={14} /><span>About EML</span></HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="calendar"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setCalendarOpen(true)}
                     >
-                      Calendar
+                      <HStack gap="2"><CalendarDays size={14} /><span>Calendar</span></HStack>
                     </Menu.Item>
                     <Menu.Separator />
                     <Menu.Item
                       value="teams"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setTeamsOpen(true)}
                     >
-                      League Teams
+                      <HStack gap="2"><Users size={14} /><span>League Teams</span></HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="rules"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setRulesOpen(true)}
                     >
-                      League Rules
+                      <HStack gap="2"><BookOpen size={14} /><span>League Rules</span></HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="bot"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setBotOpen(true)}
                     >
-                      EML Discord Bot
+                      <HStack gap="2"><Bot size={14} /><span>EML Discord Bot</span></HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="media"
                       rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
                       onClick={() => setMediaOpen(true)}
                     >
-                      Highlights & Content
+                      <HStack gap="2"><Film size={14} /><span>Highlights & Content</span></HStack>
                     </Menu.Item>
                     {(isAdmin || isMod) && <Menu.Separator />}
                     {(isAdmin || isMod) && (
                       <Menu.Item
                         value="leaderboard"
                         rounded="lg"
+                        py="1" px="3"
+                        fontSize="sm"
                         color={colors.accentOrange}
                         _hover={{ bg: colors.bgHover }}
+                        transition="all 0.15s ease"
                         onClick={() => setLeaderboardOpen(true)}
                       >
-                        Player Leaderboard
+                        <HStack gap="2"><BarChart2 size={14} /><span>Player Leaderboard</span></HStack>
                       </Menu.Item>
                     )}
                     {isLoggedIn && <Menu.Separator />}
@@ -204,44 +234,56 @@ const Navigation = ({
                       <Menu.Item
                         value="captains-dashboard"
                         rounded="lg"
+                        py="1" px="3"
+                        fontSize="sm"
                         color="#fbbf24"
                         _hover={{ bg: colors.bgHover }}
+                        transition="all 0.15s ease"
                         onClick={() => setCaptainsDashOpen(true)}
                       >
-                        <Shield size={14} /> Captain's Dashboard
+                        <HStack gap="2"><Shield size={14} /><span>Captain's Dashboard</span></HStack>
                       </Menu.Item>
                     )}
                     {isLoggedIn && (
                       <Menu.Item
                         value="challenge"
                         rounded="lg"
+                        py="1" px="3"
+                        fontSize="sm"
                         color={colors.accentOrange}
                         _hover={{ bg: colors.bgHover }}
+                        transition="all 0.15s ease"
                         onClick={() => setChallengeOpen(true)}
                       >
-                        <Swords size={14} /> Challenge Teams
+                        <HStack gap="2"><Swords size={14} /><span>Challenge Teams</span></HStack>
                       </Menu.Item>
                     )}
                     {isLoggedIn && (
                       <Menu.Item
                         value="match-report"
                         rounded="lg"
+                        py="1" px="3"
+                        fontSize="sm"
                         color={colors.accentCyan}
                         _hover={{ bg: colors.bgHover }}
+                        transition="all 0.15s ease"
                         onClick={() => setMatchReportOpen(true)}
                       >
-                        <ClipboardList size={14} /> Report Match
+                        <HStack gap="2"><ClipboardList size={14} /><span>Report Match</span></HStack>
                       </Menu.Item>
                     )}
                     {(isCaster || isAdmin) && (
                       <Menu.Item
                         value="caster-greenroom"
                         rounded="lg"
+                        py="1" px="3"
+                        fontSize="sm"
                         color="#00bfff"
                         _hover={{ bg: colors.bgHover }}
+                        transition="all 0.15s ease"
                         onClick={() => setCasterGreenRoomOpen(true)}
                       >
-                        <Tv size={14} /> Caster Green Room
+                        <HStack gap="2"><Tv size={14} /><span>Caster Green Room</span></HStack>
                       </Menu.Item>
                     )}
                   </Menu.Content>
@@ -256,7 +298,8 @@ const Navigation = ({
                 variant="ghost"
                 onClick={() => setStandingsOpen(true)}
                 color={colors.textSecondary}
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
+                transition="all 0.15s ease"
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
               >
                 <Trophy size={14} /> Standings
               </Button>
@@ -265,7 +308,8 @@ const Navigation = ({
                 variant="ghost"
                 onClick={() => setMatchesOpen(true)}
                 color={colors.textSecondary}
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
+                transition="all 0.15s ease"
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
               >
                 <Calendar size={14} /> Matches
               </Button>
@@ -274,7 +318,8 @@ const Navigation = ({
                 variant="ghost"
                 onClick={() => setMembersOpen(true)}
                 color={colors.textSecondary}
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
+                transition="all 0.15s ease"
+                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
               >
                 <Users size={14} /> Members
               </Button>
@@ -362,6 +407,13 @@ const Navigation = ({
                 <LoginButton />
               )}
 
+              <ThemePicker
+                theme={theme}
+                colorScheme={colorScheme}
+                mode={mode}
+                onSchemeChange={onColorSchemeChange}
+                onModeChange={onModeChange}
+              />
               <ThemeToggle theme={theme} onToggle={onThemeToggle} />
             </HStack>
           </HStack>
