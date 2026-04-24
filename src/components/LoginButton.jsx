@@ -9,21 +9,26 @@ const LoginButton = ({ size = 'sm' }) => {
 
   if (error) {
     return (
-      <Tooltip content={error} placement="bottom">
-        <Button
-          size={size}
-          disabled
-          bg="red.600"
-          color="white"
-          _hover={{ bg: 'red.700' }}
-          fontWeight="600"
-          gap="2"
-          cursor="not-allowed"
-        >
-          <AlertCircle size={14} />
-          Login unavailable
-        </Button>
-      </Tooltip>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
+          <Button
+            size={size}
+            disabled
+            bg="red.600"
+            color="white"
+            _hover={{ bg: 'red.700' }}
+            fontWeight="600"
+            gap="2"
+            cursor="not-allowed"
+          >
+            <AlertCircle size={14} />
+            Login unavailable
+          </Button>
+        </Tooltip.Trigger>
+        <Tooltip.Positioner>
+          <Tooltip.Content>{error}</Tooltip.Content>
+        </Tooltip.Positioner>
+      </Tooltip.Root>
     );
   }
 
