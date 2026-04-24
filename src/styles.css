@@ -35,6 +35,24 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Close button always visible regardless of theme */
+[data-scope="close-button"] svg,
+button[aria-label*="Close"] svg,
+button[aria-label*="close"] svg {
+    color: inherit;
+}
+[data-scope="close-button"],
+button[aria-label*="Close"],
+button[aria-label*="close"] {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+[data-scope="close-button"]:hover,
+button[aria-label*="Close"]:hover,
+button[aria-label*="close"]:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
 /* Smooth scrollbar styling - WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 12px;
