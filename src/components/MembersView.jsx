@@ -7,7 +7,7 @@ import PlayerProfileModal from './PlayerProfileModal';
 import { getThemedColors } from '../theme/colors';
 
 const casters = ['trodd-', 'Dano McFabulous', 'Azalea', 'Cool-Whip', 'Sweetlyfe', 'Phaenom', 'Palidore', 'MyGuyChromium', 'Orthrua', 'Mountainous', 'Martiney_', 'hpenney2'];
-const moderators = ['caroline', 'aaliyah', 'arii', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'krogers', 'Dano McFabulous'];
+const moderators = ['caroline', 'aaliyah', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'Dano McFabulous'];
 
 // Actual player lists from EML data
 const subs = [];
@@ -59,12 +59,24 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
 
   casters.forEach(name => playersByCategory.casters.push({ name, team: 'EML Staff', role: 'Caster', status: 'Active' }));
 
+  // Build a quick lookup: player name (lowercase) -> team name
+  const playerTeamMap = {};
+  [...activeTeams, ...inactiveTeams].forEach(team => {
+    [team.captain, team.coCaptain, ...team.players].filter(Boolean).forEach(p => {
+      playerTeamMap[p.toLowerCase()] = team.name;
+    });
+  });
+
   const commissioners = ['caroline', 'aaliyah', 'dano mcfabulous'];
+  const moderatorNames = new Set(moderators.map(n => n.toLowerCase()));
+
   const moderatorPlayers = moderators.map(name => {
     const isCommissioner = commissioners.includes(name.toLowerCase());
+    const teamName = playerTeamMap[name.toLowerCase()] || null;
     return {
       name,
-      team: 'EML Staff',
+      team: teamName || 'EML Staff',
+      onTeam: !!teamName,
       role: 'Moderator',
       subtitle: isCommissioner ? 'Commissioner' : undefined,
       status: 'Active',
@@ -72,14 +84,19 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
     };
   });
 
-  // Sort to put Commissioners first
+  // Sort: Commissioners first, then alphabetical
   moderatorPlayers.sort((a, b) => {
     if (a.isCommissioner && !b.isCommissioner) return -1;
     if (!a.isCommissioner && b.isCommissioner) return 1;
-    return 0;
+    return a.name.localeCompare(b.name);
   });
 
   playersByCategory.moderators = moderatorPlayers;
+
+  // Remove mods from the active list so they don't appear twice
+  playersByCategory.active = playersByCategory.active.filter(
+    p => !moderatorNames.has(p.name.toLowerCase())
+  );
   leagueSubs.forEach(name => playersByCategory.subs.push({ name, team: 'Substitute Pool', role: 'Substitute', status: 'Active' }));
   creators.forEach(name => playersByCategory.creators.push({ name, team: 'Content Team', role: 'Creator', status: 'Active' }));
   connoisseurs.forEach(name => playersByCategory.connoisseurs.push({ name, team: 'Advisory Board', role: 'Connoisseur', status: 'Active' }));
@@ -310,9 +327,14 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                               <Text fontSize="sm" color={colors.textMuted}>
                                 {player.team}
                               </Text>
-                              <Badge colorPalette={currentCategory.color} size="xs">
-                                {player.role}
-                              </Badge>
+                              <HStack gap="1" flexWrap="wrap">
+                                <Badge colorPalette={currentCategory.color} size="xs">
+                                  {player.role}
+                                </Badge>
+                                {player.onTeam && (
+                                  <Badge colorPalette="blue" size="xs">On Team</Badge>
+                                )}
+                              </HStack>
                             </VStack>
                           </Box>
                         ))}
