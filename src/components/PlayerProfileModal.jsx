@@ -145,6 +145,15 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                   )}
 
                   <Box
+                    bg={emlColors.bgCard}
+                    border="1px solid"
+                    borderColor={emlColors.borderMedium}
+                    rounded="xl"
+                    p="4"
+                  >
+                    <VStack align="start" gap="3">
+                      <HStack gap="2">
+                        <Users size={16} color={emlColors.accentPurple} />
                         <Text fontSize="sm" fontWeight="700" color={emlColors.textMuted}>
                           Team
                         </Text>
