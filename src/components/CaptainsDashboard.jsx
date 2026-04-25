@@ -19,8 +19,8 @@ const CHECKLIST_STEPS = [
     icon: Key,
     color: '#00bfff',
     title: 'Get Spark Link',
-    description: 'Request your spark link from the match coordinator or bot.',
-    detail: 'Use /getspark in the EML bot channel. Both teams must use the same spark link to join the match lobby.',
+    description: 'Request your spark link from the match coordinator.',
+    detail: 'Create a ticket in #create-a-ticket and choose "Comp Server Request". Ask for your spark link there. Both teams must use the same spark link to join the match lobby.',
   },
   {
     id: 'roster',
@@ -35,8 +35,8 @@ const CHECKLIST_STEPS = [
     icon: FileText,
     color: '#fbbf24',
     title: 'Report Score',
-    description: 'Submit the final score with screenshot proof immediately after the match.',
-    detail: 'Post score + screenshot in #match-results. Both captains must agree on the result.',
+    description: 'Submit the final score immediately after the match.',
+    detail: 'Type the final score in your match ticket. Screenshots are recommended — and required if both captains cannot agree on the result.',
   },
 ];
 
