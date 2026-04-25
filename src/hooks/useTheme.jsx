@@ -33,6 +33,8 @@ export const useTheme = () => {
     const palette = COLOR_THEMES[scheme] || COLOR_THEMES.g2;
     const modeColors = palette[m] || palette.dark;
     document.documentElement.style.setProperty('--eml-accent', modeColors.accentOrange);
+    // Also update body background so the swirl bg tints correctly
+    document.body.style.background = modeColors.bgPrimary;
   }, [theme]);
 
   const toggleTheme = () => {

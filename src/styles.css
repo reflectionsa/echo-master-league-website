@@ -23,6 +23,37 @@ body {
     color: #ffffff;
 }
 
+/* ── Faint swirl background pattern ── */
+/* Uses an SVG turbulence filter rendered as a pseudo-element so it never */
+/* interferes with layout. Opacity 12-15% keeps it subtle. */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+    background-image:
+        radial-gradient(ellipse 80% 60% at 20% 30%, var(--eml-accent) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 70%, var(--eml-accent) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, var(--eml-accent) 0%, transparent 70%);
+    filter: blur(60px) saturate(1.5);
+    animation: swirlShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes swirlShift {
+    0%   { transform: scale(1)    rotate(0deg); }
+    33%  { transform: scale(1.05) rotate(3deg); }
+    66%  { transform: scale(0.97) rotate(-2deg); }
+    100% { transform: scale(1.03) rotate(2deg); }
+}
+
+/* Make sure all content sits above the background layer */
+#root {
+    position: relative;
+    z-index: 1;
+}
+
 /* G2-style animated pulse for live indicators */
 @keyframes pulse {
     0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
