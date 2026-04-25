@@ -3,9 +3,9 @@
  */
 export const tierImages = {
     Master: '/images/tiers/master.svg',
-    Diamond: '/images/tiers/diamond.svg',
-    Platinum: '/images/tiers/platinum.svg',
-    Gold: '/images/tiers/gold.svg',
+    Diamond: '/images/tiers/diamond.png',
+    Platinum: '/images/tiers/platinum.png',
+    Gold: '/images/tiers/gold.png',
 };
 
 /**
