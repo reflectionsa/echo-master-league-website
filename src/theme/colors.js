@@ -3,12 +3,12 @@
 
 export const emlColors = {
     // Backgrounds - G2 Dark Aesthetic
-    bgPrimary: 'transparent',                 // Transparent — shows background pattern
-    bgSecondary: 'rgba(17,17,17,0.55)',        // Very dark grey semi-transparent
-    bgTertiary: 'rgba(26,26,26,0.45)',         // Dark grey semi-transparent
-    bgCard: 'rgba(13,13,13,0.82)',             // Card backgrounds (semi-transparent)
-    bgElevated: 'rgba(30,30,30,0.80)',         // Elevated surfaces (semi-transparent)
-    bgHover: 'rgba(36,36,36,0.90)',            // Hover states
+    bgPrimary: '#0a0a0a',      // Near-black (G2 style)
+    bgSecondary: '#111111',    // Very dark grey
+    bgTertiary: '#1a1a1a',     // Dark grey
+    bgCard: '#0d0d0d',         // Card backgrounds
+    bgElevated: '#1e1e1e',     // Elevated surfaces
+    bgHover: '#242424',        // Hover states
 
     // Gradient Accents (G2 + Echo VR theme)
     accentOrange: '#ff6b2b',   // G2 signature orange
@@ -39,12 +39,12 @@ export const emlColors = {
 // Light mode color overrides
 export const emlColorsLight = {
     // Backgrounds
-    bgPrimary: 'transparent',                   // Transparent — shows background pattern
-    bgSecondary: 'rgba(224,231,255,0.55)',       // Light indigo semi-transparent
-    bgTertiary: 'rgba(199,210,254,0.45)',        // Mid indigo semi-transparent
-    bgCard: 'rgba(255,255,255,0.84)',            // Pure white cards (semi-transparent)
-    bgElevated: 'rgba(241,245,249,0.80)',        // Slightly elevated (semi-transparent)
-    bgHover: 'rgba(226,232,240,0.90)',           // Hover states
+    bgPrimary: '#f8fafc',      // Very light blue-gray
+    bgSecondary: '#e0e7ff',    // Light indigo
+    bgTertiary: '#c7d2fe',     // Mid indigo
+    bgCard: '#ffffff',         // Pure white cards
+    bgElevated: '#f1f5f9',     // Slightly elevated
+    bgHover: '#e2e8f0',        // Hover states
 
     // Gradient Accents (same vibrant colors work in light mode)
     accentOrange: '#f97316',   // Slightly darker orange
@@ -118,12 +118,12 @@ export const COLOR_THEMES = {
         label: 'G2 Classic',
         preview: ['#0a0a0a', '#ff6b2b', '#00bfff'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(17,17,17,0.55)',
-            bgTertiary: 'rgba(26,26,26,0.45)',
-            bgCard: 'rgba(13,13,13,0.82)',
-            bgElevated: 'rgba(30,30,30,0.80)',
-            bgHover: 'rgba(36,36,36,0.90)',
+            bgPrimary: '#0a0a0a',
+            bgSecondary: '#111111',
+            bgTertiary: '#1a1a1a',
+            bgCard: '#0d0d0d',
+            bgElevated: '#1e1e1e',
+            bgHover: '#242424',
             accentOrange: '#ff6b2b',
             accentPink: '#ff8c42',
             accentRose: '#ef4444',
@@ -143,12 +143,12 @@ export const COLOR_THEMES = {
             borderAccent: '#ff6b2b',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(224,231,255,0.55)',
-            bgTertiary: 'rgba(199,210,254,0.45)',
-            bgCard: 'rgba(255,255,255,0.84)',
-            bgElevated: 'rgba(241,245,249,0.80)',
-            bgHover: 'rgba(226,232,240,0.90)',
+            bgPrimary: '#f8fafc',
+            bgSecondary: '#e0e7ff',
+            bgTertiary: '#c7d2fe',
+            bgCard: '#ffffff',
+            bgElevated: '#f1f5f9',
+            bgHover: '#e2e8f0',
             accentOrange: '#f97316',
             accentPink: '#ec4899',
             accentRose: '#ef4444',
@@ -172,12 +172,12 @@ export const COLOR_THEMES = {
         label: 'Pink',
         preview: ['#1a0a12', '#ff4d9d', '#ff99cc'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(26,15,21,0.55)',
-            bgTertiary: 'rgba(35,21,32,0.45)',
-            bgCard: 'rgba(19,12,17,0.82)',
-            bgElevated: 'rgba(42,26,34,0.80)',
-            bgHover: 'rgba(51,30,42,0.90)',
+            bgPrimary: '#100a0e',
+            bgSecondary: '#1a0f15',
+            bgTertiary: '#231520',
+            bgCard: '#130c11',
+            bgElevated: '#2a1a22',
+            bgHover: '#331e2a',
             accentOrange: '#ff4d9d',
             accentPink: '#ff80bf',
             accentRose: '#ff2d78',
@@ -197,12 +197,12 @@ export const COLOR_THEMES = {
             borderAccent: '#ff4d9d',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(255,224,238,0.55)',
-            bgTertiary: 'rgba(255,192,221,0.45)',
-            bgCard: 'rgba(255,255,255,0.84)',
-            bgElevated: 'rgba(255,245,249,0.80)',
-            bgHover: 'rgba(255,214,232,0.90)',
+            bgPrimary: '#fff0f6',
+            bgSecondary: '#ffe0ee',
+            bgTertiary: '#ffc0dd',
+            bgCard: '#ffffff',
+            bgElevated: '#fff5f9',
+            bgHover: '#ffd6e8',
             accentOrange: '#e91e8c',
             accentPink: '#f472b6',
             accentRose: '#db2777',
@@ -226,12 +226,12 @@ export const COLOR_THEMES = {
         label: 'Tan',
         preview: ['#1a1410', '#c9a96e', '#e8d5b0'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(26,21,16,0.55)',
-            bgTertiary: 'rgba(37,32,24,0.45)',
-            bgCard: 'rgba(20,16,8,0.82)',
-            bgElevated: 'rgba(44,36,24,0.80)',
-            bgHover: 'rgba(53,44,31,0.90)',
+            bgPrimary: '#110e0a',
+            bgSecondary: '#1a1510',
+            bgTertiary: '#252018',
+            bgCard: '#141008',
+            bgElevated: '#2c2418',
+            bgHover: '#352c1f',
             accentOrange: '#c9a96e',
             accentPink: '#d4b896',
             accentRose: '#c0654a',
@@ -251,12 +251,12 @@ export const COLOR_THEMES = {
             borderAccent: '#c9a96e',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(245,230,200,0.55)',
-            bgTertiary: 'rgba(232,208,160,0.45)',
-            bgCard: 'rgba(255,253,245,0.84)',
-            bgElevated: 'rgba(250,240,216,0.80)',
-            bgHover: 'rgba(240,224,184,0.90)',
+            bgPrimary: '#fdf6e8',
+            bgSecondary: '#f5e6c8',
+            bgTertiary: '#e8d0a0',
+            bgCard: '#fffdf5',
+            bgElevated: '#faf0d8',
+            bgHover: '#f0e0b8',
             accentOrange: '#a0722a',
             accentPink: '#c09050',
             accentRose: '#a0442a',
@@ -280,12 +280,12 @@ export const COLOR_THEMES = {
         label: 'Camo',
         preview: ['#0d1208', '#4a7a2a', '#8aaa5a'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(17,24,8,0.55)',
-            bgTertiary: 'rgba(26,37,16,0.45)',
-            bgCard: 'rgba(13,18,8,0.82)',
-            bgElevated: 'rgba(32,46,20,0.80)',
-            bgHover: 'rgba(40,56,26,0.90)',
+            bgPrimary: '#0a0f06',
+            bgSecondary: '#111808',
+            bgTertiary: '#1a2510',
+            bgCard: '#0d1208',
+            bgElevated: '#202e14',
+            bgHover: '#28381a',
             accentOrange: '#8aaa3a',
             accentPink: '#aac85a',
             accentRose: '#c87840',
@@ -305,12 +305,12 @@ export const COLOR_THEMES = {
             borderAccent: '#8aaa3a',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(220,232,200,0.55)',
-            bgTertiary: 'rgba(192,212,160,0.45)',
-            bgCard: 'rgba(248,250,240,0.84)',
-            bgElevated: 'rgba(232,240,216,0.80)',
-            bgHover: 'rgba(208,224,176,0.90)',
+            bgPrimary: '#f0f5e8',
+            bgSecondary: '#dce8c8',
+            bgTertiary: '#c0d4a0',
+            bgCard: '#f8faf0',
+            bgElevated: '#e8f0d8',
+            bgHover: '#d0e0b0',
             accentOrange: '#4a7a18',
             accentPink: '#6a9a30',
             accentRose: '#8a4a18',
@@ -334,12 +334,12 @@ export const COLOR_THEMES = {
         label: 'Crimson',
         preview: ['#0f0306', '#dc143c', '#ff4d6d'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(26,5,9,0.55)',
-            bgTertiary: 'rgba(38,8,14,0.45)',
-            bgCard: 'rgba(19,4,7,0.82)',
-            bgElevated: 'rgba(32,6,16,0.80)',
-            bgHover: 'rgba(46,8,20,0.90)',
+            bgPrimary: '#0f0306',
+            bgSecondary: '#1a0509',
+            bgTertiary: '#26080e',
+            bgCard: '#130407',
+            bgElevated: '#200610',
+            bgHover: '#2e0814',
             accentOrange: '#dc143c',
             accentPink: '#ff4d6d',
             accentRose: '#ff0030',
@@ -359,12 +359,12 @@ export const COLOR_THEMES = {
             borderAccent: '#dc143c',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(255,224,228,0.55)',
-            bgTertiary: 'rgba(255,192,202,0.45)',
-            bgCard: 'rgba(255,255,255,0.84)',
-            bgElevated: 'rgba(255,245,246,0.80)',
-            bgHover: 'rgba(255,214,219,0.90)',
+            bgPrimary: '#fff0f2',
+            bgSecondary: '#ffe0e4',
+            bgTertiary: '#ffc0ca',
+            bgCard: '#ffffff',
+            bgElevated: '#fff5f6',
+            bgHover: '#ffd6db',
             accentOrange: '#b00020',
             accentPink: '#dc143c',
             accentRose: '#9b0000',
@@ -388,12 +388,12 @@ export const COLOR_THEMES = {
         label: 'Blue',
         preview: ['#030a14', '#1e6fff', '#38bdf8'],
         dark: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(5,15,30,0.55)',
-            bgTertiary: 'rgba(9,24,40,0.45)',
-            bgCard: 'rgba(4,12,24,0.82)',
-            bgElevated: 'rgba(12,26,46,0.80)',
-            bgHover: 'rgba(16,34,56,0.90)',
+            bgPrimary: '#030a14',
+            bgSecondary: '#050f1e',
+            bgTertiary: '#091828',
+            bgCard: '#040c18',
+            bgElevated: '#0c1a2e',
+            bgHover: '#102238',
             accentOrange: '#1e6fff',
             accentPink: '#38bdf8',
             accentRose: '#818cf8',
@@ -413,12 +413,12 @@ export const COLOR_THEMES = {
             borderAccent: '#1e6fff',
         },
         light: {
-            bgPrimary: 'transparent',
-            bgSecondary: 'rgba(219,238,255,0.55)',
-            bgTertiary: 'rgba(191,219,254,0.45)',
-            bgCard: 'rgba(255,255,255,0.84)',
-            bgElevated: 'rgba(245,249,255,0.80)',
-            bgHover: 'rgba(219,234,254,0.90)',
+            bgPrimary: '#f0f7ff',
+            bgSecondary: '#dbeeff',
+            bgTertiary: '#bfdbfe',
+            bgCard: '#ffffff',
+            bgElevated: '#f5f9ff',
+            bgHover: '#dbeafe',
             accentOrange: '#1d4ed8',
             accentPink: '#2563eb',
             accentRose: '#4f46e5',

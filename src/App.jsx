@@ -21,14 +21,7 @@ const App = () => {
         transition="background-color 0.3s ease"
         style={{ backgroundColor: colors.bgPrimary }}
       >
-        {/* Fixed background pattern overlay — sits above bg but below all content */}
-        <Box
-          className={`eml-bg-pattern eml-theme-${theme}`}
-          position="fixed"
-          inset="0"
-          pointerEvents="none"
-          zIndex="0"
-        />
+
         <Box position="relative" zIndex="1">
         <Navigation
           theme={theme}

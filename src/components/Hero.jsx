@@ -56,7 +56,7 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
     <Box
       position="relative"
       minH="70vh"
-      bg="transparent"
+      bg={`linear-gradient(135deg, ${colors.bgPrimary} 0%, ${colors.bgSecondary} 50%, ${colors.bgTertiary} 100%)`}
       overflow="hidden"
     >
       {/* Animated background elements */}
