@@ -16,19 +16,15 @@ const staticProfilePictures = {
   'Zu-Ko': 'https://cdn.discordapp.com/avatars/992867075657830400/7cbfc052ae88f6b7995d45c4bb94aa30.webp?size=1024',
 };
 
+const REN_CHAMPIONSHIPS = [
+  { season: 2, image: '/images/seasons/season2-champion.svg' },
+  { season: 3, image: '/images/seasons/season3-champion.svg' },
+];
+
 const seasonChampions = {
-  'Krogers': [
-    { season: 2, image: '/images/seasons/season2-champion.svg' },
-    { season: 3, image: '/images/seasons/season3-champion.svg' }
-  ],
-  'Jaxxjh': [
-    { season: 2, image: '/images/seasons/season2-champion.svg' },
-    { season: 3, image: '/images/seasons/season3-champion.svg' }
-  ],
-  'mikey': [
-    { season: 2, image: '/images/seasons/season2-champion.svg' },
-    { season: 3, image: '/images/seasons/season3-champion.svg' }
-  ],
+  'Krogers': REN_CHAMPIONSHIPS,
+  'Jaxxjh': REN_CHAMPIONSHIPS,
+  'mikey': REN_CHAMPIONSHIPS,
 };
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
