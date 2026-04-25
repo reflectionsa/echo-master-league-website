@@ -23,29 +23,97 @@ body {
     color: #ffffff;
 }
 
-/* ── Faint swirl background pattern ── */
-/* Uses an SVG turbulence filter rendered as a pseudo-element so it never */
-/* interferes with layout. Opacity 12-15% keeps it subtle. */
+/* ── Per-theme background patterns ── */
 body::before {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.12;
-    background-image:
-        radial-gradient(ellipse 80% 60% at 20% 30%, var(--eml-accent) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 70%, var(--eml-accent) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 50% 50%, var(--eml-accent) 0%, transparent 70%);
-    filter: blur(60px) saturate(1.5);
-    animation: swirlShift 20s ease-in-out infinite alternate;
+    background-repeat: repeat;
 }
 
-@keyframes swirlShift {
-    0%   { transform: scale(1)    rotate(0deg); }
-    33%  { transform: scale(1.05) rotate(3deg); }
-    66%  { transform: scale(0.97) rotate(-2deg); }
-    100% { transform: scale(1.03) rotate(2deg); }
+/* Dark mode: light (white-ish) lines */
+body:not(.eml-light)::before {
+    --pat: rgba(255, 255, 255, 0.13);
+    --pat-soft: rgba(255, 255, 255, 0.08);
+}
+
+/* Light mode: dark lines */
+body.eml-light::before {
+    --pat: rgba(0, 0, 0, 0.10);
+    --pat-soft: rgba(0, 0, 0, 0.06);
+}
+
+/* G2 / Orange – hexagon circuit grid */
+body.eml-theme-g2-dark::before,
+body.eml-theme-g2-light::before {
+    background-image:
+        repeating-linear-gradient(0deg,   var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(60deg,  var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(-60deg, var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 40px);
+    background-size: 46px 80px;
+}
+
+/* Pink – gentle concentric wave rings */
+body.eml-theme-pink-dark::before,
+body.eml-theme-pink-light::before {
+    background-image:
+        radial-gradient(circle at 0%   50%, transparent 58px, var(--pat) 60px, transparent 62px),
+        radial-gradient(circle at 100% 50%, transparent 58px, var(--pat) 60px, transparent 62px),
+        radial-gradient(circle at 50%  0%,  transparent 78px, var(--pat) 80px, transparent 82px),
+        radial-gradient(circle at 50% 100%, transparent 78px, var(--pat) 80px, transparent 82px);
+    background-size: 160px 120px;
+    background-repeat: repeat;
+}
+
+/* Tan – diamond crosshatch lattice */
+body.eml-theme-tan-dark::before,
+body.eml-theme-tan-light::before {
+    background-image:
+        repeating-linear-gradient(45deg,  var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 28px),
+        repeating-linear-gradient(-45deg, var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 28px);
+    background-size: 40px 40px;
+}
+
+/* Camo – organic scattered blobs */
+body.eml-theme-camo-dark::before,
+body.eml-theme-camo-light::before {
+    background-image:
+        radial-gradient(ellipse 16% 10% at 12% 20%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 12% 18% at 72% 12%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 18% 12% at 42% 55%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 10% 16% at 83% 70%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 14% 10% at 22% 82%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 16% 8%  at 60% 88%, var(--pat-soft) 0%, transparent 100%),
+        radial-gradient(ellipse 9%  14% at 90% 35%, var(--pat-soft) 0%, transparent 100%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/* Crimson – sharp diagonal slash lines */
+body.eml-theme-crimson-dark::before,
+body.eml-theme-crimson-light::before {
+    background-image:
+        repeating-linear-gradient(72deg, var(--pat) 0, var(--pat) 2px, transparent 2px, transparent 22px),
+        repeating-linear-gradient(72deg, var(--pat) 0, var(--pat) 1px, transparent 1px, transparent 11px);
+    background-size: 30px 30px;
+}
+
+/* Blue – concentric swirl rings at multiple focal points */
+body.eml-theme-blue-dark::before,
+body.eml-theme-blue-light::before {
+    background-image:
+        radial-gradient(circle at 20% 25%, transparent 57px, var(--pat) 59px, transparent 61px,
+                                           transparent 117px, var(--pat) 119px, transparent 121px),
+        radial-gradient(circle at 80% 75%, transparent 77px, var(--pat) 79px, transparent 81px,
+                                           transparent 157px, var(--pat) 159px, transparent 161px),
+        radial-gradient(circle at 50% 50%, transparent 97px, var(--pat) 99px, transparent 101px,
+                                           transparent 197px, var(--pat) 199px, transparent 201px),
+        radial-gradient(circle at 10% 80%, transparent 37px, var(--pat) 39px, transparent 41px),
+        radial-gradient(circle at 90% 20%, transparent 47px, var(--pat) 49px, transparent 51px);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 /* Make sure all content sits above the background layer */
