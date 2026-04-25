@@ -55,29 +55,44 @@ button[aria-label*="close"]:hover {
 
 /* Smooth scrollbar styling - WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ff6b2b;
+    background: rgba(255, 107, 43, 0.55);
     border-radius: 6px;
-    border: 2px solid #0a0a0a;
+    border: 2px solid transparent;
+    background-clip: padding-box;
     transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #ff8c42;
+    background: rgba(255, 107, 43, 0.8);
+    background-clip: padding-box;
 }
 
 /* Firefox scrollbar */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #ff6b2b #0a0a0a;
+    scrollbar-color: rgba(255, 107, 43, 0.55) transparent;
+}
+
+/* Light mode — darker scrollbar so it's visible on light backgrounds */
+body.eml-light ::-webkit-scrollbar-thumb {
+    background: rgba(180, 70, 10, 0.6);
+    background-clip: padding-box;
+}
+body.eml-light ::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 70, 10, 0.85);
+    background-clip: padding-box;
+}
+body.eml-light * {
+    scrollbar-color: rgba(180, 70, 10, 0.6) transparent;
 }
 
 /* Optimize scrolling performance for all scrollable containers */

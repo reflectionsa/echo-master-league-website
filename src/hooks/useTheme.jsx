@@ -18,6 +18,14 @@ export const useTheme = () => {
 
   useEffect(() => {
     localStorage.setItem('eml-theme', theme);
+    // Apply theme as a class on body so CSS (e.g. scrollbar) can target it
+    document.body.className = document.body.className
+      .replace(/\beml-theme-\S+/g, '')
+      .trim();
+    document.body.classList.add(`eml-theme-${theme}`);
+    // Also add light/dark mode class for generic selectors
+    document.body.classList.remove('eml-light', 'eml-dark');
+    document.body.classList.add(theme.endsWith('-light') ? 'eml-light' : 'eml-dark');
   }, [theme]);
 
   const toggleTheme = () => {
