@@ -11,13 +11,16 @@ const CalendarView = ({ theme, open, onClose }) => {
         <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            maxW="480px"
-            w="92vw"
+            maxW="1100px"
+            w="96vw"
+            maxH="92vh"
             bg={emlColors.bgPrimary}
             border="1px solid"
             borderColor={emlColors.borderMedium}
             rounded="2xl"
             overflow="hidden"
+            display="flex"
+            flexDirection="column"
           >
             <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium} py="3">
               <HStack justify="space-between">
@@ -32,7 +35,7 @@ const CalendarView = ({ theme, open, onClose }) => {
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
-            <Dialog.Body p="4">
+            <Dialog.Body p="4" overflowY="auto" flex="1">
               <Box
                 w="full"
                 bg={emlColors.bgElevated}
@@ -46,6 +49,7 @@ const CalendarView = ({ theme, open, onClose }) => {
                   src="https://echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png"
                   alt="EML League Calendar"
                   w="full"
+                  h="auto"
                   objectFit="contain"
                 />
               </Box>
