@@ -57,7 +57,7 @@ const Navigation = ({
   const colors = getThemedColors(theme);
   const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, refreshProfile } = useAuth();
   const { unreadCount } = useNotifications();
-  const { team: myTeamData } = useMyTeam();
+  const { team: myTeamData, isOnTeam, loading: teamsLoading } = useMyTeam();
   const { matches: schedule } = useSchedule();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -86,12 +86,12 @@ const Navigation = ({
     if (authError) console.error('[EML Auth]', authError);
   }, [authError]);
 
-  // Auto-open registration modal only for users who haven't registered yet
+  // Auto-open registration modal only for users who haven't registered and aren't already on a team
   useEffect(() => {
-    if (isLoggedIn && isRegistered === false) {
+    if (isLoggedIn && isRegistered === false && !teamsLoading && !isOnTeam) {
       setPlayerRegOpen(true);
     }
-  }, [isLoggedIn, isRegistered]);
+  }, [isLoggedIn, isRegistered, teamsLoading, isOnTeam]);
 
   // Saturday 12pm EST reminder — notify captain if Mon–Fri matches are unsubmitted
   useEffect(() => {
