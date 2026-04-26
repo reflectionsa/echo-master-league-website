@@ -226,7 +226,7 @@ const MatchReportModal = ({ open, onClose, theme }) => {
                         rounded="xl" p="4"
                       >
                         <Text fontSize="sm" color={colors.textMuted}>
-                          No matches available to report right now. Matches appear on or after their scheduled day.
+                          No matches available to submit right now. Matches appear on or after their scheduled day.
                         </Text>
                       </Box>
                     ) : (
