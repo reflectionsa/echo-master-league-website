@@ -115,7 +115,7 @@ export const getThemedColors = (theme, colorBlind = false) => {
 
 export const COLOR_THEMES = {
     g2: {
-        label: 'G2 Classic',
+        label: 'Classic',
         preview: ['#0a0a0a', '#ff6b2b', '#00bfff'],
         dark: {
             bgPrimary: '#0a0a0a',
