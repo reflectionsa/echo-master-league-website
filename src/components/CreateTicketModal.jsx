@@ -1,7 +1,7 @@
 import {
   Dialog, Portal, Box, VStack, HStack, Text, Button, CloseButton,
 } from '@chakra-ui/react';
-import { Ticket, ExternalLink, ChevronRight, AlertCircle, Shield, Swords, HelpCircle, Server, Tv } from 'lucide-react';
+import { Ticket, ExternalLink, ChevronRight, Trophy, Cpu, Swords, Server, Tv } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 // EML create-a-ticket Discord channel
@@ -9,46 +9,39 @@ const DISCORD_TICKET_URL = 'https://discord.com/channels/1182380144887865406/118
 
 const TICKET_TYPES = [
   {
-    id: 'score-dispute',
-    icon: Swords,
-    title: 'Score Dispute',
-    description: 'Disagree with a submitted match result? Open a ticket with proof (screenshots/video).',
-    color: '#ef4444',
+    id: 'league-support',
+    icon: Trophy,
+    title: 'League Support',
+    description: 'General league questions, registration issues, team problems, rule clarifications, or anything admin-related.',
+    color: '#f59e0b',
   },
   {
-    id: 'rule-question',
-    icon: Shield,
-    title: 'Rule Question / Clarification',
-    description: 'Not sure about a rule or need an official ruling from staff? Ask here.',
-    color: '#7c3aed',
-  },
-  {
-    id: 'server-request',
-    icon: Server,
-    title: 'Server Request',
-    description: 'Need a dedicated competitive server for a match? Request one before your match day.',
+    id: 'tech-support',
+    icon: Cpu,
+    title: 'Tech Support',
+    description: 'Having technical issues with the site, Discord bot, or league tools? Get help from the tech team here.',
     color: '#3b82f6',
   },
   {
-    id: 'production-cast',
-    icon: Tv,
-    title: 'Production / Cast Request',
-    description: 'Want your match to be cast or need a caster assigned? Submit a cast request.',
-    color: '#00bfff',
+    id: 'match-support',
+    icon: Swords,
+    title: 'Match Support',
+    description: 'Score disputes, no-shows, scheduling conflicts, or any issue directly related to a scheduled match.',
+    color: '#ef4444',
   },
   {
-    id: 'general-support',
-    icon: HelpCircle,
-    title: 'General League Support',
-    description: 'Anything else — team issues, registration problems, scheduling conflicts, or admin help.',
+    id: 'comp-server-request',
+    icon: Server,
+    title: 'Comp Server Request',
+    description: 'Need a dedicated competitive server for your match? Submit a request before your match day.',
     color: '#10b981',
   },
   {
-    id: 'report-player',
-    icon: AlertCircle,
-    title: 'Report a Player / Team',
-    description: 'Report unsportsmanlike conduct, cheating, or violations of the EML Code of Conduct.',
-    color: '#f59e0b',
+    id: 'request-cast',
+    icon: Tv,
+    title: 'Request Cast',
+    description: 'Want your match cast or need a caster assigned? Submit a cast request and the production team will reach out.',
+    color: '#00bfff',
   },
 ];
 
@@ -179,6 +172,32 @@ const CreateTicketModal = ({ open, onClose, theme }) => {
                 <Text fontSize="2xs" color={colors.textMuted} textAlign="center">
                   You must be a member of the EML Discord to open a ticket.
                 </Text>
+
+                {/* Fallback server link */}
+                <Box
+                  bg={colors.bgSecondary}
+                  border="1px solid"
+                  borderColor={colors.borderLight}
+                  rounded="xl"
+                  p="3"
+                  textAlign="center"
+                >
+                  <Text fontSize="xs" color={colors.textMuted} mb="1">
+                    If you can't make a ticket above, go to this server and start a ticket:
+                  </Text>
+                  <Text
+                    as="a"
+                    href="https://discord.gg/Gj8tQ6QARj"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    fontSize="xs"
+                    fontWeight="700"
+                    color={colors.accentBlue}
+                    _hover={{ color: colors.accentPurple, textDecoration: 'underline' }}
+                  >
+                    https://discord.gg/Gj8tQ6QARj
+                  </Text>
+                </Box>
               </VStack>
             </Dialog.Body>
           </Dialog.Content>
