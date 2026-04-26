@@ -9,6 +9,11 @@ import { getThemedColors } from '../theme/colors';
 const casters = ['trodd-', 'Dano McFabulous', 'Azalea', 'Cool-Whip', 'Sweetlyfe', 'Phaenom', 'Palidore', 'MyGuyChromium', 'Orthrua', 'Mountainous', 'Martiney_', 'hpenney2'];
 const moderators = ['caroline', 'aaliyah', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'Dano McFabulous'];
 
+// Name aliases: display name -> alternate roster name(s) to check for team lookup
+const MOD_ALIASES = {
+  'ryanjs1020': ['ryanjs4', 'ryanjs1020'],
+};
+
 // Actual player lists from EML data
 const subs = [];
 const creators = [];
@@ -72,7 +77,8 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
 
   const moderatorPlayers = moderators.map(name => {
     const isCommissioner = commissioners.includes(name.toLowerCase());
-    const teamName = playerTeamMap[name.toLowerCase()] || null;
+    const aliases = MOD_ALIASES[name.toLowerCase()] || [name.toLowerCase()];
+    const teamName = aliases.map(a => playerTeamMap[a]).find(Boolean) || null;
     return {
       name,
       team: teamName || 'EML Staff',
@@ -216,7 +222,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                           >
                             <VStack align="start" gap="2">
                               <HStack justify="space-between" w="full">
-                                <Text fontWeight="700" fontSize="md" color={colors.textPrimary}>
+                                <Text fontWeight="700" fontSize="md" color={colors.textPrimary} fontVariant="small-caps">
                                   {player.name}
                                 </Text>
                                 <Badge colorPalette={player.role === 'Captain' ? 'yellow' : player.role === 'Co-Captain' ? 'orange' : player.role === 'Caster' ? 'purple' : player.role === 'Moderator' ? 'red' : 'blue'} size="sm">
@@ -316,7 +322,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             transition="all 0.2s"
                           >
                             <VStack align="start" gap="2">
-                              <Text fontWeight="700" fontSize="md" color={colors.textPrimary}>
+                              <Text fontWeight="700" fontSize="md" color={colors.textPrimary} fontVariant="small-caps">
                                 {player.name}
                               </Text>
                               {player.subtitle && (
