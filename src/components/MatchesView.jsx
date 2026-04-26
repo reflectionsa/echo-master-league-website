@@ -220,6 +220,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                     <Box overflowX="auto">
                       <Table.Root size="md" variant="outline">
                         <Table.Header bg={emlColors.bgTertiary}>
+                          <Table.Row>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 1</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted} textAlign="center">SCORE</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 2</Table.ColumnHeader>
