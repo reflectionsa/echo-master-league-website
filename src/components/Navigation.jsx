@@ -55,9 +55,10 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
-  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, refreshProfile } = useAuth();
+  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, playerProfile, isOnTeam: authIsOnTeam, refreshProfile } = useAuth();
   const { unreadCount } = useNotifications();
-  const { team: myTeamData, isOnTeam, loading: teamsLoading } = useMyTeam();
+  const { team: myTeamData, isOnTeam: rosterIsOnTeam, loading: teamsLoading } = useMyTeam();
+  const isOnTeam = authIsOnTeam || rosterIsOnTeam;
   const { matches: schedule } = useSchedule();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -86,12 +87,13 @@ const Navigation = ({
     if (authError) console.error('[EML Auth]', authError);
   }, [authError]);
 
-  // Auto-open registration modal only for users who haven't registered and aren't already on a team
+  // Auto-open registration modal only when profile is confirmed not found (false, not null=loading)
+  // and the user is not already on a team per either auth profile or roster lookup
   useEffect(() => {
-    if (isLoggedIn && isRegistered === false && !teamsLoading && !isOnTeam) {
+    if (isLoggedIn && playerProfile === false && !teamsLoading && !isOnTeam) {
       setPlayerRegOpen(true);
     }
-  }, [isLoggedIn, isRegistered, teamsLoading, isOnTeam]);
+  }, [isLoggedIn, playerProfile, teamsLoading, isOnTeam]);
 
   // Saturday 12pm EST reminder — notify captain if Mon–Fri matches are unsubmitted
   useEffect(() => {
