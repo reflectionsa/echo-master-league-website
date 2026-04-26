@@ -66,7 +66,7 @@ const NotificationsPanel = ({ open, onClose, theme }) => {
       <Portal>
         <Dialog.Backdrop bg="rgba(0,0,0,0.75)" backdropFilter="blur(8px)" />
         <Dialog.Positioner>
-          <Dialog.Content bg="#0d0d0d" border="1px solid rgba(255,255,255,0.1)" rounded="2xl" boxShadow="0 24px 80px rgba(0,0,0,0.6)" maxH="85vh" display="flex" flexDir="column">
+          <Dialog.Content bg="#0d0d0d" border="1px solid rgba(255,255,255,0.1)" rounded="2xl" overflow="hidden" boxShadow="0 24px 80px rgba(0,0,0,0.6)" maxH="85vh" display="flex" flexDir="column">
             <Dialog.Header bg="#111111" borderBottom="1px solid rgba(255,255,255,0.08)" px="5" py="4">
               <HStack justify="space-between">
                 <HStack gap="3">
@@ -87,7 +87,7 @@ const NotificationsPanel = ({ open, onClose, theme }) => {
                       <CheckCheck size={12} /> Mark all read
                     </Button>
                   )}
-                  <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textMuted} /></Dialog.CloseTrigger>
+                  <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} /></Dialog.CloseTrigger>
                 </HStack>
               </HStack>
             </Dialog.Header>

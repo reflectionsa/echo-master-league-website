@@ -127,7 +127,7 @@ const AnnouncementsView = ({ theme, open, onClose }) => {
                     <RefreshCw size={14} />
                   </Box>
                   <Dialog.CloseTrigger asChild>
-                    <CloseButton size="sm" color={colors.textMuted} />
+                    <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                   </Dialog.CloseTrigger>
                 </HStack>
               </HStack>

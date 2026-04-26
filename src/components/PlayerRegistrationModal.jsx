@@ -42,6 +42,7 @@ const PlayerRegistrationModal = ({ open, onClose, theme, onSuccess }) => {
             bg="#0d0d0d"
             border="1px solid rgba(255,107,43,0.3)"
             rounded="2xl"
+            overflow="hidden"
             boxShadow="0 0 60px rgba(255,107,43,0.15)"
           >
             <Dialog.Header bg="#111111" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
@@ -55,7 +56,7 @@ const PlayerRegistrationModal = ({ open, onClose, theme, onSuccess }) => {
                     <Text fontSize="xs" color={colors.textMuted}>Complete your EML profile</Text>
                   </VStack>
                 </HStack>
-                <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textMuted} /></Dialog.CloseTrigger>
+                <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} /></Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
 

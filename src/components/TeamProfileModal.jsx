@@ -75,20 +75,21 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">
       <Portal>
-        <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
+        <Dialog.Backdrop bg={`${emlColors.bgPrimary}cc`} backdropFilter="blur(12px)" />
         <Dialog.Positioner>
           <Dialog.Content
-            bg="#0d0d0d"
+            bg={emlColors.bgPrimary}
             border="1px solid"
             borderColor={tierConfig.borderColor}
             rounded="2xl"
             maxH="90vh"
+            overflow="hidden"
             display="flex"
             flexDirection="column"
             boxShadow={`0 0 60px ${tierConfig.glowColor}`}
           >
             <Dialog.CloseTrigger asChild position="absolute" top="4" right="4" zIndex="10">
-              <CloseButton size="sm" color={emlColors.textMuted} />
+              <CloseButton size="sm" color={emlColors.textPrimary} _hover={{ color: emlColors.accentOrange }} />
             </Dialog.CloseTrigger>
 
             <Dialog.Body p="0" overflowY="auto" flex="1">
@@ -218,7 +219,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                   </Box>
 
                   {/* ─── MAIN CONTENT ────────────────────────────────────────────────────────── */}
-                  <Box p="8" bg="#0d0d0d">
+                  <Box p="8" bg={emlColors.bgPrimary}>
                     <VStack align="stretch" gap="6">
                       {/* Team name + MMR row — G2 style */}
                       <HStack gap="4" align="center" justify="space-between" flexWrap="wrap">
@@ -237,7 +238,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                             {team?.tier && (
                               <HStack
                                 gap="2"
-                                bg="rgba(255,255,255,0.05)"
+                            bg={emlColors.bgElevated}
                                 border="1px solid"
                                 borderColor={tierConfig.borderColor}
                                 px="3"
@@ -292,7 +293,7 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
                           borderColor={emlColors.borderLight}
                           rounded="xl"
                           p="4"
-                          bg="#111111"
+                          bg={emlColors.bgCard}
                         >
                           <VStack align="stretch" gap="3">
                             {/* Captain */}

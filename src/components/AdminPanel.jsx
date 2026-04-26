@@ -233,7 +233,7 @@ const AdminPanel = ({ theme, open, onClose }) => {
                   </Badge>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="md" color={colors.textMuted} />
+                  <CloseButton size="md" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>

@@ -120,7 +120,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
             <Menu.Item
               value="notifications"
               rounded="lg"
-              color={colors.textSecondary}
+              color={colors.textPrimary}
               _hover={{ bg: colors.bgHover }}
               cursor="pointer"
             >
@@ -139,7 +139,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
             <Menu.Item
               value="my-profile"
               rounded="lg"
-              color={colors.textSecondary}
+              color={colors.textPrimary}
               _hover={{ bg: colors.bgHover }}
               cursor="pointer"
             >
@@ -153,7 +153,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
             <Menu.Item
               value="register"
               rounded="lg"
-              color={colors.textSecondary}
+              color={colors.textPrimary}
               _hover={{ bg: colors.bgHover }}
               cursor="pointer"
             >
@@ -167,7 +167,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
             <Menu.Item
               value="my-team"
               rounded="lg"
-              color={colors.textSecondary}
+              color={colors.textPrimary}
               _hover={{ bg: colors.bgHover }}
               cursor="pointer"
             >
@@ -182,7 +182,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               <Menu.Item
                 value="captains-dash"
                 rounded="lg"
-                color="#fbbf24"
+                color={colors.accentOrange}
                 _hover={{ bg: colors.bgHover }}
                 cursor="pointer"
               >
@@ -245,7 +245,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               <Menu.Item
                 value="caster-greenroom"
                 rounded="lg"
-                color="#00bfff"
+                color={colors.accentBlue}
                 _hover={{ bg: colors.bgHover }}
                 cursor="pointer"
               >

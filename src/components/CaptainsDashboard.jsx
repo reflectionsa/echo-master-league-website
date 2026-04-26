@@ -64,6 +64,7 @@ const CaptainsDashboard = ({ open, onClose, theme }) => {
             border="1px solid rgba(255,107,43,0.3)"
             rounded="2xl"
             maxH="90vh"
+            overflow="hidden"
             boxShadow="0 0 60px rgba(255,107,43,0.2)"
           >
             <Dialog.Header bg="#111111" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
@@ -102,7 +103,7 @@ const CaptainsDashboard = ({ open, onClose, theme }) => {
                     </Text>
                   </Box>
                   <Dialog.CloseTrigger asChild>
-                    <CloseButton size="sm" color={colors.textMuted} />
+                    <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                   </Dialog.CloseTrigger>
                 </HStack>
               </HStack>

@@ -76,7 +76,7 @@ const TeamsView = ({ theme, open, onClose }) => {
               {/* Close */}
               <Box position="absolute" top="4" right="4" zIndex="2">
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="sm" color={colors.textMuted} _hover={{ color: colors.textPrimary }} />
+                  <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </Box>
 

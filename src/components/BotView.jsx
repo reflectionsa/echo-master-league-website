@@ -78,7 +78,7 @@ const BotView = ({ theme, open, onClose }) => {
                   </Dialog.Title>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" />
+                  <CloseButton size="lg" color={emlColors.textPrimary} _hover={{ color: emlColors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>

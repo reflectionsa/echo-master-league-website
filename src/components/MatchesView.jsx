@@ -110,7 +110,7 @@ const VodEmbed = ({ url, matchLabel }) => {
           rounded="xl"
           overflow="hidden"
           border="1px solid rgba(255,107,43,0.25)"
-          bg="#0d0d0d"
+          bg="rgba(0,0,0,0.6)"
         >
           <Box position="relative" style={{ paddingBottom: '56.25%' }}>
             <iframe
@@ -134,6 +134,9 @@ const MatchesView = ({ theme, open, onClose }) => {
   const { matchResults, loading: resultsLoading } = useMatchResults();
 
   const upcoming = matches.filter(m => m.status === 'Scheduled' || m.status === 'Live');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const overdueMatches = upcoming.filter(m => m.matchDate && m.matchDate < today && m.status === 'Scheduled');
+  const futureMatches = upcoming.filter(m => !m.matchDate || m.matchDate >= today || m.status === 'Live');
   const scheduled = matches.filter(m => m.status === 'Scheduled');
 
   // Dynamically find the most recent week that has results
@@ -166,7 +169,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                   </Dialog.Title>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" />
+                  <CloseButton size="lg" color={emlColors.textPrimary} _hover={{ color: emlColors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
@@ -216,9 +219,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                   <Tabs.Content value="results">
                     <Box overflowX="auto">
                       <Table.Root size="md" variant="outline">
-                        <Table.Header bg="#111111">
-                          <Table.Row>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>WEEK</Table.ColumnHeader>
+                        <Table.Header bg={emlColors.bgTertiary}>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 1</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted} textAlign="center">SCORE</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>TEAM 2</Table.ColumnHeader>
@@ -284,8 +285,54 @@ const MatchesView = ({ theme, open, onClose }) => {
 
                   <Tabs.Content value="upcoming">
                     <Box overflowX="auto">
+                      {/* ── Overdue matches (past date, not yet submitted) ── */}
+                      {overdueMatches.length > 0 && (
+                        <Box mb="4">
+                          <HStack gap="2" px="1" mb="2">
+                            <Box w="2" h="2" rounded="full" bg={emlColors.semantic.loss} />
+                            <Text fontSize="xs" fontWeight="700" color={emlColors.semantic.loss} textTransform="uppercase" letterSpacing="wider">
+                              Overdue — Score must be submitted by Sunday 11:59 PM EST
+                            </Text>
+                          </HStack>
+                          <Table.Root size="md" variant="outline">
+                            <Table.Header bg={`${emlColors.semantic.loss}18`}>
+                              <Table.Row>
+                                <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.semantic.loss}>DATE</Table.ColumnHeader>
+                                <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.semantic.loss}>HOME</Table.ColumnHeader>
+                                <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.semantic.loss} textAlign="center">STATUS</Table.ColumnHeader>
+                                <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.semantic.loss}>AWAY</Table.ColumnHeader>
+                              </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                              {overdueMatches.map(match => {
+                                const teams = match.participatingTeams?.linkedItems || [];
+                                return (
+                                  <Table.Row key={match.id} bg={`${emlColors.semantic.loss}08`} _hover={{ bg: `${emlColors.semantic.loss}14` }}>
+                                    <Table.Cell>
+                                      <VStack align="start" gap="0">
+                                        <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
+                                          {match.matchDate?.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                        </Text>
+                                        <Badge bg={`${emlColors.semantic.loss}22`} color={emlColors.semantic.loss} fontSize="2xs" px="1.5" rounded="sm">OVERDUE</Badge>
+                                      </VStack>
+                                    </Table.Cell>
+                                    <Table.Cell><Text fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" fontSize="sm">{teams[0]?.name || 'TBA'}</Text></Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                      <Badge bg={`${emlColors.semantic.loss}22`} color={emlColors.semantic.loss} border={`1px solid ${emlColors.semantic.loss}44`} px="2" rounded="md" fontSize="xs" fontWeight="700">
+                                        Awaiting Score
+                                      </Badge>
+                                    </Table.Cell>
+                                    <Table.Cell><Text fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" fontSize="sm">{teams[1]?.name || 'TBA'}</Text></Table.Cell>
+                                  </Table.Row>
+                                );
+                              })}
+                            </Table.Body>
+                          </Table.Root>
+                        </Box>
+                      )}
+
                       <Table.Root size="md" variant="outline">
-                        <Table.Header bg="#111111">
+                        <Table.Header bg={emlColors.bgTertiary}>
                           <Table.Row>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>DATE</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>HOME</Table.ColumnHeader>
@@ -295,10 +342,10 @@ const MatchesView = ({ theme, open, onClose }) => {
                           </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                          {upcoming.map(match => {
+                          {futureMatches.map(match => {
                             const teams = match.participatingTeams?.linkedItems || [];
                             return (
-                              <Table.Row key={match.id} _hover={{ bg: 'rgba(255,255,255,0.03)' }}>
+                              <Table.Row key={match.id} _hover={{ bg: emlColors.bgHover }}>
                                 <Table.Cell>
                                   <VStack align="start" gap="0">
                                     <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
@@ -335,7 +382,7 @@ const MatchesView = ({ theme, open, onClose }) => {
                   <Tabs.Content value="scheduled">
                     <Box overflowX="auto">
                       <Table.Root size="md" variant="outline">
-                        <Table.Header bg="#111111">
+                        <Table.Header bg={emlColors.bgTertiary}>
                           <Table.Row>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>SCHEDULED</Table.ColumnHeader>
                             <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>HOME</Table.ColumnHeader>

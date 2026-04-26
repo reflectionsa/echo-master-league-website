@@ -148,7 +148,7 @@ const TeamManagementPanel = ({ open, onClose, teamId, theme, onTeamUpdate }) => 
       <Portal>
         <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
         <Dialog.Positioner>
-          <Dialog.Content bg="#0d0d0d" border="1px solid rgba(255,107,43,0.3)" rounded="2xl" boxShadow="0 0 60px rgba(255,107,43,0.15)" maxH="90vh" display="flex" flexDir="column">
+          <Dialog.Content bg="#0d0d0d" border="1px solid rgba(255,107,43,0.3)" rounded="2xl" overflow="hidden" boxShadow="0 0 60px rgba(255,107,43,0.15)" maxH="90vh" display="flex" flexDir="column">
             <Dialog.Header bg="#111111" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
               <HStack justify="space-between">
                 <HStack gap="3">
@@ -160,7 +160,7 @@ const TeamManagementPanel = ({ open, onClose, teamId, theme, onTeamUpdate }) => 
                     <Text fontSize="xs" color={colors.textMuted}>{team?.players?.length || 0} players · {team?.tier} · {team?.region}</Text>
                   </VStack>
                 </HStack>
-                <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textMuted} /></Dialog.CloseTrigger>
+                <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} /></Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
 

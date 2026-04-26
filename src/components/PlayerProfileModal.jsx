@@ -1,6 +1,7 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Badge, CloseButton, Image } from '@chakra-ui/react';
-import { User, Users, Shield, Award } from 'lucide-react';
+import { User, Users, Shield, Award, History } from 'lucide-react';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
+import { useTeamHistory } from '../hooks/useTeamHistory';
 import { useState, useEffect } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
@@ -30,6 +31,7 @@ const seasonChampions = {
 
 const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
   const { team, playerRole, loading } = usePlayerProfile(playerName);
+  const { getPlayerHistory, loading: historyLoading } = useTeamHistory();
   const emlColors = getThemedColors(theme);
   const [teamModalOpen, setTeamModalOpen] = useState(false);
 
@@ -70,9 +72,10 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
               border="1px solid"
               borderColor={emlColors.accentPurple}
               rounded="2xl"
+              overflow="hidden"
             >
               <Dialog.CloseTrigger asChild position="absolute" top="4" right="4">
-                <CloseButton size="sm" />
+                <CloseButton size="sm" color={emlColors.textPrimary} _hover={{ color: emlColors.accentPurple }} />
               </Dialog.CloseTrigger>
 
               {loading ? (
@@ -199,6 +202,43 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                       MMR starts at 800 for all players
                     </Text>
                   </Box>
+
+                  {/* Previous Teams from Team History sheet */}
+                  {!historyLoading && (() => {
+                    const history = getPlayerHistory(playerName);
+                    const previousTeams = history.filter(h => h.team !== team?.name);
+                    if (!previousTeams.length) return null;
+                    return (
+                      <Box
+                        bg={emlColors.bgCard}
+                        border="1px solid"
+                        borderColor={emlColors.borderMedium}
+                        rounded="xl"
+                        p="4"
+                      >
+                        <VStack align="start" gap="3">
+                          <HStack gap="2">
+                            <History size={16} color={emlColors.textMuted} />
+                            <Text fontSize="sm" fontWeight="700" color={emlColors.textMuted}>
+                              Previous Teams
+                            </Text>
+                          </HStack>
+                          <VStack align="stretch" gap="2" w="full">
+                            {previousTeams.map((h, i) => (
+                              <HStack key={i} justify="space-between" px="3" py="2" bg={emlColors.bgSecondary} rounded="lg">
+                                <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>{h.team}</Text>
+                                {h.season && (
+                                  <Badge bg={`${emlColors.accentPurple}22`} color={emlColors.accentPurple} border={`1px solid ${emlColors.accentPurple}44`} size="xs" px="2" rounded="md">
+                                    {h.season}
+                                  </Badge>
+                                )}
+                              </HStack>
+                            ))}
+                          </VStack>
+                        </VStack>
+                      </Box>
+                    );
+                  })()}
                 </VStack>
               )}
             </Dialog.Content>

@@ -239,7 +239,7 @@ const MyTeamView = ({ theme, open, onClose }) => {
             {/* Close button */}
             <Box position="absolute" top="4" right="4" zIndex="10">
               <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" color={colors.textMuted} _hover={{ color: colors.textPrimary }} />
+                <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
               </Dialog.CloseTrigger>
             </Box>
 

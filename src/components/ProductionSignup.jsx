@@ -101,7 +101,7 @@ const ProductionSignup = ({ theme, open, onClose }) => {
                   <Badge colorPalette="orange" size="sm">Casters Only</Badge>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="md" color={colors.textMuted} />
+                  <CloseButton size="md" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>

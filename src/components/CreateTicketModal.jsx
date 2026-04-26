@@ -64,7 +64,7 @@ const CreateTicketModal = ({ open, onClose, theme }) => {
             rounded="2xl"
             boxShadow={`0 0 60px ${colors.accentPurple}22`}
             maxH="90vh"
-            overflowY="auto"
+            overflow="hidden"
           >
             <Dialog.Header
               bg={colors.bgSecondary}
@@ -95,12 +95,12 @@ const CreateTicketModal = ({ open, onClose, theme }) => {
                   </VStack>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="sm" color={colors.textMuted} />
+                  <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
 
-            <Dialog.Body p="5">
+            <Dialog.Body p="5" overflowY="auto">
               <VStack align="stretch" gap="3">
 
                 {/* Intro */}

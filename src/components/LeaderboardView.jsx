@@ -29,7 +29,7 @@ const LeaderboardView = ({ theme, open, onClose }) => {
                   </Dialog.Title>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" />
+                  <CloseButton size="lg" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>

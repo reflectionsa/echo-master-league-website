@@ -154,6 +154,7 @@ const MatchReportModal = ({ open, onClose, theme }) => {
             border="1px solid"
             borderColor={colors.borderAccent}
             rounded="2xl"
+            overflow="hidden"
             boxShadow={`0 0 60px ${colors.accentOrange}22`}
           >
             <Dialog.Header
@@ -182,7 +183,7 @@ const MatchReportModal = ({ open, onClose, theme }) => {
                   </VStack>
                 </HStack>
                 <Dialog.CloseTrigger asChild>
-                  <CloseButton size="sm" color={colors.textMuted} />
+                  <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
                 </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
