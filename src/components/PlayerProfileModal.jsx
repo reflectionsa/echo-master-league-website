@@ -206,7 +206,10 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
                   {/* Previous Teams from Team History sheet */}
                   {!historyLoading && (() => {
                     const history = getPlayerHistory(playerName);
-                    const previousTeams = history.filter(h => h.team !== team?.name);
+                    const seen = new Set();
+                    const previousTeams = history
+                      .filter(h => h.team && h.team !== team?.name)
+                      .filter(h => { if (seen.has(h.team)) return false; seen.add(h.team); return true; });
                     if (!previousTeams.length) return null;
                     return (
                       <Box
