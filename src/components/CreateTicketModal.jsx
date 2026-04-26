@@ -183,7 +183,7 @@ const CreateTicketModal = ({ open, onClose, theme }) => {
                   textAlign="center"
                 >
                   <Text fontSize="xs" color={colors.textMuted} mb="1">
-                    If you can't make a ticket above, go to this server and start a ticket:
+                    If you can't make any of those tickets, make one in here:
                   </Text>
                   <Text
                     as="a"
