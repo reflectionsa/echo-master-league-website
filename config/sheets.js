@@ -36,7 +36,7 @@ export const GOOGLE_SHEETS_CONFIG = {
     playerLeaderboard: 'Player Leaderboard!A:E', // Player Name, PSR, Overall Rating, MVP, Team
     matches: 'Proposed Match Results!A:J', // Proposed match results (first section)
     cooldownList: 'Cooldown List!A:C',    // Player Name, Team Left, Expires
-    teamHistory: 'Team History!A:Z',       // Player Name, Team Name, Season, etc.
+    teamHistory: 'Player Team History!A:Z', // Player Name, Team
     teamRoles: 'Team Roles!A:D',          // Team Name, Player Name, Captain, Co-Captain
     matchResults: 'Match Results!A:P',    // Week through Result (first section only)
     forfeits: 'Forfeits!A:P',             // Forfeited matches (first section only)
