@@ -29,7 +29,7 @@ ALLOWED_ORIGINS = "http://localhost:3000,http://localhost:3001,http://localhost:
 #   3. Right-click each role > Copy Role ID
 # Replace the placeholder IDs below with your actual role IDs.
 # Keep the quotes inside the JSON string escaped.
-DISCORD_ROLE_MAP = '{"1182380145084993593":"Commissioner","1209744291975405658":"Board","1182380145084993591":"League Mod","1196604058182623342":"League Mod EU","1209743670421753946":"Casters","1248390263940972596":"PlayerNA","1248628874099560498":"PlayerEU","1182380145047249000":"CaptainNA","1248402146546815030":"CoCaptainNA"}'
+DISCORD_ROLE_MAP = '{"1182380145084993593":"Commissioner","1209744291975405658":"Board","1182380145084993591":"League Mod","1196604058182623342":"League Mod EU","1209743670421753946":"Casters","1248390263940972596":"PlayerNA","1248628874099560498":"PlayerEU","1182380145047249000":"CaptainNA","1248402146546815030":"CoCaptainNA","1250483551699472385":"League Sub"}'
 
 # Ticket channel IDs for each support type
 TICKET_CHANNEL_PRODUCTION = "1196103170930258000"

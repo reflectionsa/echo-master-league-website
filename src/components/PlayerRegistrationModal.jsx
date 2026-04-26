@@ -11,7 +11,7 @@ const REGIONS = [
   { id: 'OCE', label: 'Oceania', flag: '🌏', description: 'OCE/AU servers · AEST primetime' },
 ];
 
-const PlayerRegistrationModal = ({ open, onClose, theme }) => {
+const PlayerRegistrationModal = ({ open, onClose, theme, onSuccess }) => {
   const colors = getThemedColors(theme);
   const { user } = useAuth();
   const { registerProfile, loading, error } = useTeamManagement();
@@ -27,6 +27,7 @@ const PlayerRegistrationModal = ({ open, onClose, theme }) => {
         localStorage.setItem(`eml_registered_${user.id}`, '1');
         localStorage.setItem(`eml_reg_seen_${user.id}`, '1');
       }
+      onSuccess?.();
       setDone(true);
       setTimeout(onClose, 1800);
     } catch { /* error shown via hook */ }

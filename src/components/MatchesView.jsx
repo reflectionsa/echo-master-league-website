@@ -175,17 +175,39 @@ const MatchesView = ({ theme, open, onClose }) => {
                 <Center py="20"><Spinner size="xl" color={emlColors.accentOrange} /></Center>
               ) : (
                 <Tabs.Root defaultValue="results">
-                  <Tabs.List mb="6" bg="#111111" border="1px solid rgba(255,255,255,0.08)" p="1" rounded="xl">
-                    <Tabs.Trigger value="results" fontWeight="600" color={emlColors.textSecondary}
-                      _selected={{ color: emlColors.accentOrange, bg: 'rgba(255,107,43,0.12)' }}>
+                  <Tabs.List
+                    mb="6"
+                    bg={emlColors.bgSecondary}
+                    border="1px solid"
+                    borderColor={emlColors.borderMedium}
+                    p="1"
+                    rounded="xl"
+                  >
+                    <Tabs.Trigger
+                      value="results"
+                      fontWeight="600"
+                      color={emlColors.textSecondary}
+                      _selected={{ color: emlColors.accentOrange, bg: `${emlColors.accentOrange}22`, rounded: 'lg' }}
+                      _hover={{ color: emlColors.textPrimary }}
+                    >
                       Match Results (Week {latestWeek})
                     </Tabs.Trigger>
-                    <Tabs.Trigger value="upcoming" fontWeight="600" color={emlColors.textSecondary}
-                      _selected={{ color: emlColors.accentOrange, bg: 'rgba(255,107,43,0.12)' }}>
+                    <Tabs.Trigger
+                      value="upcoming"
+                      fontWeight="600"
+                      color={emlColors.textSecondary}
+                      _selected={{ color: emlColors.accentOrange, bg: `${emlColors.accentOrange}22`, rounded: 'lg' }}
+                      _hover={{ color: emlColors.textPrimary }}
+                    >
                       Upcoming Matches
                     </Tabs.Trigger>
-                    <Tabs.Trigger value="scheduled" fontWeight="600" color={emlColors.textSecondary}
-                      _selected={{ color: emlColors.accentOrange, bg: 'rgba(255,107,43,0.12)' }}>
+                    <Tabs.Trigger
+                      value="scheduled"
+                      fontWeight="600"
+                      color={emlColors.textSecondary}
+                      _selected={{ color: emlColors.accentOrange, bg: `${emlColors.accentOrange}22`, rounded: 'lg' }}
+                      _hover={{ color: emlColors.textPrimary }}
+                    >
                       Scheduled
                     </Tabs.Trigger>
                   </Tabs.List>

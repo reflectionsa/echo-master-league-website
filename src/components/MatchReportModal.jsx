@@ -1,41 +1,62 @@
-import { Dialog, Portal, Box, VStack, HStack, Text, Button, CloseButton, Badge, Input } from '@chakra-ui/react';
-import { useState } from 'react';
-import { FileText, AlertTriangle, CheckCircle, Flag } from 'lucide-react';
+import {
+  Dialog, Portal, Box, VStack, HStack, Text, Button, CloseButton, Badge, Input,
+} from '@chakra-ui/react';
+import { useState, useMemo } from 'react';
+import { ClipboardList, CheckCircle, ChevronDown } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 import { useMatchReport } from '../hooks/useMatchReport';
+import { useMyTeam } from '../hooks/useMyTeam';
+import { useSchedule } from '../hooks/useSchedule';
+import { useTeamRoles } from '../hooks/useTeamRoles';
+import { emlApi } from '../hooks/useEmlApi';
 
-const RoundInput = ({ round, team1, team2, onChange }) => (
-  <Box bg="#111111" border="1px solid rgba(255,255,255,0.08)" rounded="xl" p="4">
-    <Text fontSize="xs" color="rgba(255,255,255,0.4)" textTransform="uppercase" letterSpacing="wider" mb="3">Round {round}</Text>
+// ─── helpers ──────────────────────────────────────────────────────────────────
+
+function startOfDay(d) {
+  const x = new Date(d); x.setHours(0, 0, 0, 0); return x;
+}
+
+// ─── RoundInput ───────────────────────────────────────────────────────────────
+
+const RoundInput = ({ round, team1, team2, onChange, colors }) => (
+  <Box bg={colors.bgCard} border="1px solid" borderColor={colors.borderMedium} rounded="xl" p="4">
+    <Text fontSize="xs" color={colors.textMuted} textTransform="uppercase" letterSpacing="wider" mb="3">Round {round}</Text>
     <HStack gap="4" justify="center">
       <VStack gap="1" align="center">
-        <Text fontSize="xs" color="rgba(255,255,255,0.4)">Your Team</Text>
+        <Text fontSize="xs" color={colors.textMuted}>Your Team</Text>
         <Input
           type="number" min="0" max="20" value={team1 ?? ''}
           onChange={e => onChange('team1', parseInt(e.target.value) || 0)}
-          w="16" textAlign="center" fontWeight="800" fontSize="xl" color="white"
-          bg="#0a0a0a" border="1px solid rgba(255,255,255,0.1)" rounded="lg"
-          _focus={{ borderColor: '#ff6b2b', outline: 'none' }}
+          w="16" textAlign="center" fontWeight="800" fontSize="xl" color={colors.textPrimary}
+          bg={colors.bgPrimary} border="1px solid" borderColor={colors.borderMedium} rounded="lg"
+          _focus={{ borderColor: colors.accentOrange, outline: 'none' }}
         />
       </VStack>
-      <Text fontSize="lg" color="rgba(255,255,255,0.25)" fontWeight="700" mt="4">—</Text>
+      <Text fontSize="lg" color={colors.textSubtle} fontWeight="700" mt="4">—</Text>
       <VStack gap="1" align="center">
-        <Text fontSize="xs" color="rgba(255,255,255,0.4)">Opponent</Text>
+        <Text fontSize="xs" color={colors.textMuted}>Opponent</Text>
         <Input
           type="number" min="0" max="20" value={team2 ?? ''}
           onChange={e => onChange('team2', parseInt(e.target.value) || 0)}
-          w="16" textAlign="center" fontWeight="800" fontSize="xl" color="white"
-          bg="#0a0a0a" border="1px solid rgba(255,255,255,0.1)" rounded="lg"
-          _focus={{ borderColor: '#ff6b2b', outline: 'none' }}
+          w="16" textAlign="center" fontWeight="800" fontSize="xl" color={colors.textPrimary}
+          bg={colors.bgPrimary} border="1px solid" borderColor={colors.borderMedium} rounded="lg"
+          _focus={{ borderColor: colors.accentOrange, outline: 'none' }}
         />
       </VStack>
     </HStack>
   </Box>
 );
 
-const MatchReportModal = ({ open, onClose, matchId, myTeam, opponentTeam, theme }) => {
+// ─── Main component ───────────────────────────────────────────────────────────
+
+const MatchReportModal = ({ open, onClose, theme }) => {
   const colors = getThemedColors(theme);
-  const { reportMatch, disputeMatch, loading, error } = useMatchReport();
+  const { team: myTeam } = useMyTeam();
+  const { matches: schedule, loading: schedLoading } = useSchedule();
+  const { teams: allTeams } = useTeamRoles();
+  const { reportMatch, loading: reporting, error } = useMatchReport();
+
+  const [selectedMatchId, setSelectedMatchId] = useState('');
   const [rounds, setRounds] = useState([
     { team1: '', team2: '' },
     { team1: '', team2: '' },
@@ -43,95 +64,239 @@ const MatchReportModal = ({ open, onClose, matchId, myTeam, opponentTeam, theme 
   ]);
   const [forfeit, setForfeit] = useState(false);
   const [forfeitTeam, setForfeitTeam] = useState('');
-  const [mode, setMode] = useState('report'); // 'report' | 'dispute'
-  const [disputeReason, setDisputeReason] = useState('');
   const [done, setDone] = useState(null);
+
+  // ─── Build eligible opponent list ─────────────────────────────────────────
+  // Rules:
+  //   • Only matches where myTeam is one of the two teams
+  //   • Show on/after the match's scheduled day (so future weeks don't appear early)
+  //   • Show past unsubmitted matches (status ≠ confirmed/completed/resolved)
+  const eligibleMatches = useMemo(() => {
+    if (!myTeam || !schedule?.length) return [];
+    const today = startOfDay(new Date());
+    const myName = myTeam.name;
+
+    return schedule
+      .filter(m => {
+        const items = m.participatingTeams?.linkedItems || [];
+        const names = items.map(t => t.name);
+        if (!names.includes(myName)) return false;
+        if (['Completed', 'confirmed', 'resolved'].includes(m.status)) return false;
+        const matchDay = startOfDay(m.matchDate);
+        return matchDay <= today;
+      })
+      .map(m => {
+        const items = m.participatingTeams?.linkedItems || [];
+        const opponentName = items.find(t => t.name !== myName)?.name || '';
+        return { matchId: m.id, label: opponentName, week: m.week, date: m.matchDate };
+      });
+  }, [myTeam, schedule]);
+
+  const selectedMatch = eligibleMatches.find(m => m.matchId === selectedMatchId);
+  const opponentTeam = selectedMatch?.label || '';
 
   const setRound = (i, key, val) => {
     setRounds(prev => prev.map((r, idx) => idx === i ? { ...r, [key]: val } : r));
   };
 
-  // Determine which rounds to show (Bo3 - stop after 2 wins)
+  // Bo3 — stop after 2 wins
   const team1Wins = rounds.reduce((w, r) => w + (r.team1 > r.team2 ? 1 : 0), 0);
   const team2Wins = rounds.reduce((w, r) => w + (r.team2 > r.team1 ? 1 : 0), 0);
-  const roundsToShow = (team1Wins >= 2 || team2Wins >= 2) ? rounds.findIndex((_, i) => {
-    const w1 = rounds.slice(0, i + 1).reduce((w, r) => w + (r.team1 > r.team2 ? 1 : 0), 0);
-    const w2 = rounds.slice(0, i + 1).reduce((w, r) => w + (r.team2 > r.team1 ? 1 : 0), 0);
-    return w1 >= 2 || w2 >= 2;
-  }) + 1 : 3;
+  const roundsToShow = (team1Wins >= 2 || team2Wins >= 2)
+    ? rounds.findIndex((_, i) => {
+        const w1 = rounds.slice(0, i + 1).reduce((w, r) => w + (r.team1 > r.team2 ? 1 : 0), 0);
+        const w2 = rounds.slice(0, i + 1).reduce((w, r) => w + (r.team2 > r.team1 ? 1 : 0), 0);
+        return w1 >= 2 || w2 >= 2;
+      }) + 1
+    : 3;
+
+  // Notify opponent captain & co-captain via worker
+  const notifyOpponent = async (oppName, roundData) => {
+    if (!oppName || !allTeams?.length) return;
+    const oppTeamData = allTeams.find(t => t.name === oppName);
+    if (!oppTeamData) return;
+    const scoreText = roundData.map((r, i) => `R${i + 1}: ${r.team1}–${r.team2}`).join(' | ');
+    const notif = {
+      type: 'match_result_proposed',
+      title: 'Match Result Proposed',
+      body: `${myTeam?.name} submitted scores vs your team: ${scoreText} — please confirm.`,
+    };
+    const targets = [oppTeamData.captainDiscordId, oppTeamData.coCaptainDiscordId].filter(Boolean);
+    await Promise.all(
+      targets.map(id =>
+        emlApi('POST', '/notifications/push', { userId: id, notification: notif }).catch(() => {})
+      )
+    );
+  };
 
   const handleReport = async () => {
+    if (!selectedMatchId) return;
     try {
-      const result = await reportMatch(matchId, myTeam, rounds.slice(0, roundsToShow), forfeit, forfeitTeam);
-      setDone(result.report.status === 'confirmed' ? 'confirmed' : 'pending');
+      const result = await reportMatch(
+        selectedMatchId, myTeam?.name, rounds.slice(0, roundsToShow), forfeit, forfeitTeam
+      );
+      await notifyOpponent(opponentTeam, rounds.slice(0, roundsToShow));
+      setDone(result.report?.status === 'confirmed' ? 'confirmed' : 'pending');
     } catch { /* error shown */ }
   };
 
-  const handleDispute = async () => {
-    try {
-      await disputeMatch(matchId, disputeReason);
-      setDone('disputed');
-    } catch { /* error shown */ }
-  };
+  const canSubmit = selectedMatchId && (forfeit
+    ? !!forfeitTeam
+    : rounds.some(r => r.team1 !== '' || r.team2 !== ''));
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="md">
       <Portal>
         <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
         <Dialog.Positioner>
-          <Dialog.Content bg="#0d0d0d" border="1px solid rgba(255,107,43,0.3)" rounded="2xl" boxShadow="0 0 60px rgba(255,107,43,0.15)">
-            <Dialog.Header bg="#111111" borderBottom="1px solid rgba(255,255,255,0.08)" px="6" py="4">
+          <Dialog.Content
+            bg={colors.bgCard}
+            border="1px solid"
+            borderColor={colors.borderAccent}
+            rounded="2xl"
+            boxShadow={`0 0 60px ${colors.accentOrange}22`}
+          >
+            <Dialog.Header
+              bg={colors.bgSecondary}
+              borderBottom="1px solid"
+              borderColor={colors.borderMedium}
+              px="6" py="4"
+            >
               <HStack justify="space-between">
                 <HStack gap="3">
-                  <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="2" rounded="lg">
-                    <FileText size={18} color="#ff6b2b" />
+                  <Box
+                    bg={`${colors.accentOrange}22`}
+                    border="1px solid"
+                    borderColor={`${colors.accentOrange}44`}
+                    p="2" rounded="lg"
+                  >
+                    <ClipboardList size={18} color={colors.accentOrange} />
                   </Box>
                   <VStack align="start" gap="0">
-                    <Dialog.Title fontSize="md" fontWeight="800" color={colors.textPrimary}>Report Match</Dialog.Title>
-                    <Text fontSize="xs" color={colors.textMuted}>{myTeam || 'Your Team'} vs {opponentTeam || 'Opponent'}</Text>
+                    <Dialog.Title fontSize="md" fontWeight="800" color={colors.textPrimary}>
+                      Match Result Propose
+                    </Dialog.Title>
+                    <Text fontSize="xs" color={colors.textMuted}>
+                      {myTeam?.name ? `${myTeam.name} · ` : ''}Submit your week's match scores
+                    </Text>
                   </VStack>
                 </HStack>
-                <Dialog.CloseTrigger asChild><CloseButton size="sm" color={colors.textMuted} /></Dialog.CloseTrigger>
+                <Dialog.CloseTrigger asChild>
+                  <CloseButton size="sm" color={colors.textMuted} />
+                </Dialog.CloseTrigger>
               </HStack>
             </Dialog.Header>
 
             <Dialog.Body p="5">
               {done ? (
                 <VStack gap="4" py="6" textAlign="center">
-                  {done === 'confirmed' && <><CheckCircle size={40} color="#22c55e" /><Text fontSize="md" fontWeight="700" color="#22c55e">Match Confirmed!</Text><Text fontSize="sm" color={colors.textMuted}>Both captains agree. Result recorded.</Text></>}
-                  {done === 'pending' && <><CheckCircle size={40} color="#fbbf24" /><Text fontSize="md" fontWeight="700" color="#fbbf24">Report Submitted</Text><Text fontSize="sm" color={colors.textMuted}>Waiting for opponent captain to confirm.</Text></>}
-                  {done === 'disputed' && <><AlertTriangle size={40} color="#ef4444" /><Text fontSize="md" fontWeight="700" color="#ef4444">Dispute Filed</Text><Text fontSize="sm" color={colors.textMuted}>An admin will review the match.</Text></>}
-                  <Button size="sm" bg="#111111" border="1px solid rgba(255,255,255,0.1)" color={colors.textMuted} rounded="lg" onClick={onClose}>Close</Button>
+                  <CheckCircle size={40} color={done === 'confirmed' ? '#22c55e' : '#fbbf24'} />
+                  <Text fontSize="md" fontWeight="700" color={done === 'confirmed' ? '#22c55e' : '#fbbf24'}>
+                    {done === 'confirmed' ? 'Match Confirmed!' : 'Result Submitted'}
+                  </Text>
+                  <Text fontSize="sm" color={colors.textMuted}>
+                    {done === 'confirmed'
+                      ? 'Both captains agree — result recorded.'
+                      : 'The opposing captain & co-captain have been notified to confirm.'}
+                  </Text>
+                  <Button
+                    size="sm"
+                    bg={colors.bgElevated}
+                    border="1px solid" borderColor={colors.borderMedium}
+                    color={colors.textMuted} rounded="lg"
+                    onClick={onClose}
+                  >
+                    Close
+                  </Button>
                 </VStack>
               ) : (
                 <VStack gap="4" align="stretch">
-                  {/* Mode toggle */}
-                  <HStack gap="2">
-                    {['report', 'dispute'].map(m => (
-                      <Button key={m} size="sm" bg={mode === m ? 'rgba(255,107,43,0.15)' : '#111111'}
-                        border="1px solid" borderColor={mode === m ? 'rgba(255,107,43,0.4)' : 'rgba(255,255,255,0.08)'}
-                        color={mode === m ? '#ff6b2b' : colors.textMuted} rounded="lg" fontWeight="700"
-                        onClick={() => setMode(m)}>
-                        {m === 'report' ? <><FileText size={12} /> Report Score</> : <><Flag size={12} /> File Dispute</>}
-                      </Button>
-                    ))}
-                  </HStack>
 
-                  {mode === 'report' ? (
+                  {/* ─── Opponent selector ─────────────────────────────── */}
+                  <VStack align="stretch" gap="1">
+                    <Text fontSize="xs" fontWeight="700" color={colors.textMuted} textTransform="uppercase" letterSpacing="wider">
+                      Select Opponent
+                    </Text>
+                    {schedLoading ? (
+                      <Text fontSize="sm" color={colors.textMuted}>Loading schedule…</Text>
+                    ) : eligibleMatches.length === 0 ? (
+                      <Box
+                        bg={colors.bgSecondary}
+                        border="1px solid" borderColor={colors.borderMedium}
+                        rounded="xl" p="4"
+                      >
+                        <Text fontSize="sm" color={colors.textMuted}>
+                          No matches available to report right now. Matches appear on or after their scheduled day.
+                        </Text>
+                      </Box>
+                    ) : (
+                      <Box position="relative">
+                        <Box
+                          as="select"
+                          value={selectedMatchId}
+                          onChange={e => {
+                            setSelectedMatchId(e.target.value);
+                            setRounds([{ team1: '', team2: '' }, { team1: '', team2: '' }, { team1: '', team2: '' }]);
+                            setForfeit(false); setForfeitTeam('');
+                          }}
+                          style={{
+                            width: '100%',
+                            background: colors.bgSecondary,
+                            border: `1px solid ${selectedMatchId ? colors.accentOrange : colors.borderMedium}`,
+                            borderRadius: '12px',
+                            color: selectedMatchId ? colors.textPrimary : colors.textMuted,
+                            padding: '10px 36px 10px 14px',
+                            fontSize: '14px', fontWeight: '600',
+                            appearance: 'none', cursor: 'pointer',
+                          }}
+                        >
+                          <option value="">— Choose opponent —</option>
+                          {eligibleMatches.map(m => (
+                            <option key={m.matchId} value={m.matchId} style={{ background: colors.bgCard }}>
+                              {m.label}{m.week ? ` (Week ${m.week})` : ''}
+                            </option>
+                          ))}
+                        </Box>
+                        <Box position="absolute" right="3" top="50%" transform="translateY(-50%)" pointerEvents="none">
+                          <ChevronDown size={14} color={colors.textMuted} />
+                        </Box>
+                      </Box>
+                    )}
+                  </VStack>
+
+                  {/* ─── Score entry ────────────────────────────────────── */}
+                  {selectedMatchId && (
                     <>
-                      {/* Forfeit toggle */}
-                      <HStack gap="3" bg="#111111" border="1px solid rgba(255,255,255,0.08)" rounded="xl" p="3" cursor="pointer" onClick={() => setForfeit(f => !f)}>
-                        <Box w="4" h="4" bg={forfeit ? '#ff6b2b' : 'transparent'} border="2px solid" borderColor={forfeit ? '#ff6b2b' : 'rgba(255,255,255,0.2)'} rounded="sm" />
+                      <HStack
+                        gap="3"
+                        bg={colors.bgSecondary}
+                        border="1px solid"
+                        borderColor={forfeit ? `${colors.accentOrange}44` : colors.borderMedium}
+                        rounded="xl" p="3" cursor="pointer"
+                        onClick={() => setForfeit(f => !f)}
+                      >
+                        <Box
+                          w="4" h="4"
+                          bg={forfeit ? colors.accentOrange : 'transparent'}
+                          border="2px solid"
+                          borderColor={forfeit ? colors.accentOrange : colors.borderMedium}
+                          rounded="sm" flexShrink={0}
+                        />
                         <Text fontSize="sm" color={colors.textPrimary}>Mark as Forfeit</Text>
                       </HStack>
 
                       {forfeit ? (
                         <VStack gap="2" align="stretch">
                           <Text fontSize="xs" color={colors.textMuted}>Which team forfeited?</Text>
-                          {[myTeam, opponentTeam].filter(Boolean).map(t => (
-                            <Box key={t} bg={forfeitTeam === t ? 'rgba(239,68,68,0.1)' : '#111111'}
-                              border="1px solid" borderColor={forfeitTeam === t ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.08)'}
-                              rounded="xl" p="3" cursor="pointer" onClick={() => setForfeitTeam(t)}>
+                          {[myTeam?.name, opponentTeam].filter(Boolean).map(t => (
+                            <Box
+                              key={t}
+                              bg={forfeitTeam === t ? 'rgba(239,68,68,0.1)' : colors.bgSecondary}
+                              border="1px solid"
+                              borderColor={forfeitTeam === t ? 'rgba(239,68,68,0.4)' : colors.borderMedium}
+                              rounded="xl" p="3" cursor="pointer"
+                              onClick={() => setForfeitTeam(t)}
+                            >
                               <Text fontSize="sm" fontWeight="700" color={forfeitTeam === t ? '#ef4444' : colors.textPrimary}>{t}</Text>
                             </Box>
                           ))}
@@ -139,37 +304,39 @@ const MatchReportModal = ({ open, onClose, matchId, myTeam, opponentTeam, theme 
                       ) : (
                         <>
                           {Array.from({ length: roundsToShow }).map((_, i) => (
-                            <RoundInput key={i} round={i + 1} team1={rounds[i]?.team1} team2={rounds[i]?.team2}
-                              onChange={(key, val) => setRound(i, key, val)} />
+                            <RoundInput
+                              key={i} round={i + 1}
+                              team1={rounds[i]?.team1} team2={rounds[i]?.team2}
+                              onChange={(key, val) => setRound(i, key, val)}
+                              colors={colors}
+                            />
                           ))}
                           {roundsToShow < 3 && (
-                            <Badge bg="rgba(34,197,94,0.1)" color="#22c55e" border="1px solid rgba(34,197,94,0.3)" textAlign="center" py="1" fontSize="xs">
+                            <Badge
+                              bg="rgba(34,197,94,0.1)" color="#22c55e"
+                              border="1px solid rgba(34,197,94,0.3)"
+                              textAlign="center" py="1" fontSize="xs"
+                            >
                               Bo3 ends after 2 wins — {roundsToShow} round{roundsToShow > 1 ? 's' : ''} played
                             </Badge>
                           )}
                         </>
                       )}
 
-                      {error && <Text fontSize="xs" color="#ef4444" bg="rgba(239,68,68,0.1)" border="1px solid rgba(239,68,68,0.3)" p="3" rounded="lg">{error}</Text>}
+                      {error && (
+                        <Text fontSize="xs" color="#ef4444" bg="rgba(239,68,68,0.1)" border="1px solid rgba(239,68,68,0.3)" p="3" rounded="lg">
+                          {error}
+                        </Text>
+                      )}
 
-                      <Button bg="linear-gradient(135deg,#ff6b2b,#ff8c42)" color="white" fontWeight="700" rounded="xl" loading={loading}
-                        disabled={!forfeit && rounds.every(r => r.team1 === '' && r.team2 === '')}
-                        onClick={handleReport}>
-                        Submit Report
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <VStack gap="2" align="stretch">
-                        <Text fontSize="xs" color={colors.textMuted}>Describe the issue with this match.</Text>
-                        <Box as="textarea" rows={4} value={disputeReason} onChange={e => setDisputeReason(e.target.value)}
-                          placeholder="Explain what happened..." maxLength={500}
-                          style={{ background: '#111111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: 'white', padding: '12px', fontSize: '13px', resize: 'vertical', width: '100%' }} />
-                      </VStack>
-                      {error && <Text fontSize="xs" color="#ef4444" bg="rgba(239,68,68,0.1)" border="1px solid rgba(239,68,68,0.3)" p="3" rounded="lg">{error}</Text>}
-                      <Button bg="rgba(239,68,68,0.15)" border="1px solid rgba(239,68,68,0.4)" color="#ef4444" fontWeight="700" rounded="xl" loading={loading}
-                        disabled={!disputeReason.trim()} onClick={handleDispute}>
-                        File Dispute
+                      <Button
+                        bg={`linear-gradient(135deg, ${colors.accentOrange}, ${colors.accentPink})`}
+                        color="white" fontWeight="700" rounded="xl"
+                        loading={reporting}
+                        disabled={!canSubmit}
+                        onClick={handleReport}
+                      >
+                        Submit Result
                       </Button>
                     </>
                   )}

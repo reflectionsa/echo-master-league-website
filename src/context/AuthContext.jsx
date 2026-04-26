@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => loadStoredUser());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [playerProfile, setPlayerProfile] = useState(null); // null=unchecked, false=not found, object=registered
   const callbackHandled = useRef(false);
 
   const login = useCallback(() => {
@@ -85,8 +86,32 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
     setUser(null);
+    setPlayerProfile(null);
     setError(null);
   }, []);
+
+  // Fetch player profile from worker KV to check registration status and team membership
+  const fetchProfile = useCallback((userId) => {
+    fetch(`${WORKER_URL}/player/${userId}`)
+      .then(res => res.ok ? res.json() : Promise.reject(res.status))
+      .then(data => setPlayerProfile(data.player))
+      .catch(status => {
+        if (status === 404) setPlayerProfile(false);
+        // On network error leave as null — don't show modal
+      });
+  }, []);
+
+  const refreshProfile = useCallback(() => {
+    if (user?.id) fetchProfile(user.id);
+  }, [user?.id, fetchProfile]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!user?.id) {
+      setPlayerProfile(null);
+      return;
+    }
+    fetchProfile(user.id);
+  }, [user?.id, fetchProfile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle OAuth callback — runs once on mount when ?code= is present in URL
   useEffect(() => {
@@ -143,6 +168,9 @@ export const AuthProvider = ({ children }) => {
   const isMod = user?.appRole === 'mod' || isAdmin;
   const isCaster = user?.appRole === 'caster' || isAdmin;
   const isPlayer = ['player', 'caster', 'mod', 'admin'].includes(user?.appRole);
+  const isLeagueSub = Array.isArray(user?.guildRoles) && user.guildRoles.includes('League Sub');
+  const isRegistered = playerProfile !== null && playerProfile !== false;
+  const isOnTeam = isRegistered && !!playerProfile?.teamId;
 
   return (
     <AuthContext.Provider value={{
@@ -155,7 +183,12 @@ export const AuthProvider = ({ children }) => {
       isMod,
       isCaster,
       isPlayer,
+      isLeagueSub,
       isLoggedIn: !!user,
+      playerProfile,
+      isRegistered,
+      isOnTeam,
+      refreshProfile,
     }}>
       {children}
     </AuthContext.Provider>

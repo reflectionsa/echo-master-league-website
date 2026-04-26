@@ -60,6 +60,7 @@ const STATIC_ROLE_NAME_MAP = {
   'CaptainNA': 'player',
   'Co-Captain': 'player',  // matches DISCORD_ROLE_MAP exactly
   'CoCaptainNA': 'player',  // fallback variant
+  'League Sub': 'player',  // league substitutes get player-level access
 };
 
 function mapRoleNamesToAppRole(roleNames) {
@@ -857,6 +858,15 @@ async function handleNotificationsRead(request, env, cors) {
   return jsonResponse({ success: true }, 200, cors);
 }
 
+async function handleNotificationsPush(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch { return jsonResponse({ error: 'Invalid JSON' }, 400, cors); }
+  const { userId, notification } = body;
+  if (!userId || !notification) return jsonResponse({ error: 'Missing userId or notification' }, 400, cors);
+  await pushNotification(env, userId, notification);
+  return jsonResponse({ success: true }, 200, cors);
+}
+
 // ─── Announcements (Discord Channel) ─────────────────────────────────────────
 
 const ANNOUNCEMENTS_CHANNEL_ID = '1461811148482412835';
@@ -1032,6 +1042,28 @@ async function handleTeamAssetsSet(request, env, cors) {
   return jsonResponse({ success: true, assets }, 200, cors);
 }
 
+// ─── Player Avatar Routes ─────────────────────────────────────────────────────
+
+async function handlePlayerAvatarGet(nameSlug, env, cors) {
+  const data = await kvGet(env, `player_avatar:${nameSlug}`);
+  return jsonResponse({ avatarUrl: data?.avatarUrl || null }, 200, cors);
+}
+
+async function handlePlayerAvatarSet(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch { return jsonResponse({ error: 'Invalid JSON' }, 400, cors); }
+  const { nameSlug, avatarUrl } = body;
+  if (!nameSlug) return jsonResponse({ error: 'Missing nameSlug' }, 400, cors);
+
+  if (avatarUrl && !avatarUrl.startsWith('data:image/png;base64,') && !avatarUrl.startsWith('data:image/jpeg;base64,'))
+    return jsonResponse({ error: 'Only PNG and JPG images are allowed' }, 400, cors);
+  if (avatarUrl && avatarUrl.length * 0.75 > 2 * 1024 * 1024)
+    return jsonResponse({ error: 'Avatar too large (max 2MB)' }, 400, cors);
+
+  await kvPut(env, `player_avatar:${nameSlug}`, { nameSlug, avatarUrl: avatarUrl || null, updatedAt: new Date().toISOString() });
+  return jsonResponse({ success: true }, 200, cors);
+}
+
 // ─── Player Banner Routes ─────────────────────────────────────────────────────
 
 async function handlePlayerBannerGet(discordId, env, cors) {
@@ -1078,6 +1110,15 @@ export default {
 
     // Players
     if (request.method === 'POST' && path === '/player/register') return handlePlayerRegister(request, env, cors);
+    // Player avatar (custom profile picture, keyed by name slug)
+    const playerAvatarGet = path.match(/^\/player\/avatar\/([^/]+)$/);
+    if (request.method === 'GET' && playerAvatarGet) return handlePlayerAvatarGet(decodeURIComponent(playerAvatarGet[1]), env, cors);
+    if (request.method === 'POST' && path === '/player/avatar') return handlePlayerAvatarSet(request, env, cors);
+    // Player banner
+    const playerBannerGet = path.match(/^\/player\/banner\/([^/]+)$/);
+    if (request.method === 'GET' && playerBannerGet) return handlePlayerBannerGet(decodeURIComponent(playerBannerGet[1]), env, cors);
+    if (request.method === 'POST' && path === '/player/banner') return handlePlayerBannerSet(request, env, cors);
+    // Player profile (must come after the more specific /player/avatar and /player/banner routes)
     const playerGet = path.match(/^\/player\/([^/]+)$/);
     if (request.method === 'GET' && playerGet) return handlePlayerGet(playerGet[1], env, cors);
 
@@ -1111,6 +1152,7 @@ export default {
     const notifsGet = path.match(/^\/notifications\/([^/]+)$/);
     if (request.method === 'GET' && notifsGet) return handleNotificationsGet(notifsGet[1], env, cors);
     if (request.method === 'POST' && path === '/notifications/read') return handleNotificationsRead(request, env, cors);
+    if (request.method === 'POST' && path === '/notifications/push') return handleNotificationsPush(request, env, cors);
 
     // Announcements
     if (request.method === 'GET' && path === '/announcements') return handleAnnouncementsGet(env, cors);

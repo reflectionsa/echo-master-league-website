@@ -1,5 +1,5 @@
 import { Box, Button, Menu, Portal, HStack, VStack, Text, Badge, Image } from '@chakra-ui/react';
-import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList, Tv, UserPlus } from 'lucide-react';
+import { ChevronDown, LogOut, Shield, Mic2, User, Users, Bell, Swords, ClipboardList, Tv, UserPlus, Ticket } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { useNotifications } from '../hooks/useNotifications';
@@ -12,7 +12,7 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCreateTicketClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
   const { user, logout, isAdmin, isMod, isCaster, isPlayer } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
@@ -31,6 +31,7 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'notifications') onNotificationsClick?.();
     if (details.value === 'challenge') onChallengeClick?.();
     if (details.value === 'match-report') onMatchReportClick?.();
+    if (details.value === 'create-ticket') onCreateTicketClick?.();
     if (details.value === 'captains-dash') onCaptainsDashClick?.();
     if (details.value === 'caster-greenroom') onCasterGreenRoomClick?.();
     if (details.value === 'logout') logout();
@@ -217,7 +218,22 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
               >
                 <HStack gap="2">
                   <ClipboardList size={14} />
-                  <Text fontSize="sm">Report Match</Text>
+                  <Text fontSize="sm">Match Result Propose</Text>
+                </HStack>
+              </Menu.Item>
+            )}
+
+            {isPlayer && (
+              <Menu.Item
+                value="create-ticket"
+                rounded="lg"
+                color={colors.accentPurple}
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <Ticket size={14} />
+                  <Text fontSize="sm">Create a Ticket</Text>
                 </HStack>
               </Menu.Item>
             )}

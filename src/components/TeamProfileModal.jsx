@@ -4,6 +4,8 @@ import { useTeamProfile } from '../hooks/useTeamProfile';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 import { getTierImage, getBaseTier, getTierInfo } from '../utils/tierUtils';
+import { useState, useEffect } from 'react';
+import { emlApi } from '../hooks/useEmlApi';
 
 const _slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
 const lsRead = (key) => { try { return localStorage.getItem(key) || null; } catch { return null; } };
@@ -56,9 +58,19 @@ const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
     badge: '—',
   };
 
-  // localStorage-uploaded assets
-  const customBanner = getTeamAsset(teamName, 'banner');
-  const customLogo = getTeamAsset(teamName, 'logo');
+  // Worker assets (visible to all users) override localStorage
+  const [workerAssets, setWorkerAssets] = useState({ logoUrl: null, bannerUrl: null });
+  useEffect(() => {
+    if (!open || !teamName) return;
+    setWorkerAssets({ logoUrl: null, bannerUrl: null });
+    emlApi('GET', `/team/assets/${encodeURIComponent(_slug(teamName))}`)
+      .then(d => { if (d.assets) setWorkerAssets(d.assets); })
+      .catch(() => {});
+  }, [open, teamName]);
+
+  // localStorage-uploaded assets as fallback
+  const customBanner = workerAssets.bannerUrl || getTeamAsset(teamName, 'banner');
+  const customLogo = workerAssets.logoUrl || getTeamAsset(teamName, 'logo');
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="xl">

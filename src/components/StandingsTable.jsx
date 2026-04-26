@@ -81,8 +81,8 @@ const StandingsTable = ({ teams, theme }) => {
                     as="button"
                     fontSize="md"
                     fontWeight="700"
-                    color={themedColors.accentPurple}
-                    _hover={{ textDecoration: 'underline', color: themedColors.accentOrange }}
+                    color={themedColors.accentOrange}
+                    _hover={{ textDecoration: 'underline', color: themedColors.accentBlue }}
                     onClick={() => setSelectedTeam(team.name)}
                     cursor="pointer"
                   >
@@ -123,7 +123,7 @@ const StandingsTable = ({ teams, theme }) => {
                   </Text>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  <Text fontSize="lg" fontWeight="800" color={themedColors.accentPurple}>
+                  <Text fontSize="lg" fontWeight="800" color={themedColors.accentOrange}>
                     {team.leaguePoints ?? 0}
                   </Text>
                 </Table.Cell>

@@ -7,6 +7,10 @@ import { getThemedColors } from '../theme/colors';
 import { useAuth } from '../hooks/useAuth';
 import LoginButton from './LoginButton';
 import UserMenu from './UserMenu';
+import { useNotifications } from '../hooks/useNotifications';
+import { useMyTeam } from '../hooks/useMyTeam';
+import { useSchedule } from '../hooks/useSchedule';
+import { emlApi } from '../hooks/useEmlApi';
 
 // Lazy-load all modal/panel/view components so they don't bloat the initial bundle
 const ProductionSignup = lazy(() => import('./ProductionSignup'));
@@ -32,7 +36,7 @@ const ChallengeSystem = lazy(() => import('./ChallengeSystem'));
 const MatchReportModal = lazy(() => import('./MatchReportModal'));
 const MyTeamView = lazy(() => import('./MyTeamView'));
 const MyProfileModal = lazy(() => import('./MyProfileModal'));
-import { useNotifications } from '../hooks/useNotifications';
+const CreateTicketModal = lazy(() => import('./CreateTicketModal'));
 
 const Navigation = ({
   theme,
@@ -51,8 +55,10 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
-  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError } = useAuth();
+  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, refreshProfile } = useAuth();
   const { unreadCount } = useNotifications();
+  const { team: myTeamData } = useMyTeam();
+  const { matches: schedule } = useSchedule();
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -71,6 +77,7 @@ const Navigation = ({
   const [playerRegOpen, setPlayerRegOpen] = useState(false);
   const [challengeOpen, setChallengeOpen] = useState(false);
   const [matchReportOpen, setMatchReportOpen] = useState(false);
+  const [createTicketOpen, setCreateTicketOpen] = useState(false);
   const [myTeamOpen, setMyTeamOpen] = useState(false);
   const [myProfileOpen, setMyProfileOpen] = useState(false);
   const [myTeamId, setMyTeamId] = useState(null);
@@ -79,16 +86,58 @@ const Navigation = ({
     if (authError) console.error('[EML Auth]', authError);
   }, [authError]);
 
-  // Auto-open registration modal on first login (only if never seen)
+  // Auto-open registration modal only for users who haven't registered yet
   useEffect(() => {
-    if (isLoggedIn && user?.id) {
-      const seenKey = `eml_reg_seen_${user.id}`;
-      if (!localStorage.getItem(seenKey)) {
-        localStorage.setItem(seenKey, '1'); // mark as seen so X-close won't re-popup
-        setPlayerRegOpen(true);
-      }
+    if (isLoggedIn && isRegistered === false) {
+      setPlayerRegOpen(true);
     }
-  }, [isLoggedIn, user?.id]);
+  }, [isLoggedIn, isRegistered]);
+
+  // Saturday 12pm EST reminder — notify captain if Mon–Fri matches are unsubmitted
+  useEffect(() => {
+    if (!isLoggedIn || !isPlayer || !user?.id || !myTeamData || !schedule?.length) return;
+
+    const now = new Date();
+    // Saturday = 6 in getDay(). Check time >= 12:00 EST (UTC-5 = 17:00 UTC, UTC-4 DST = 16:00 UTC).
+    // Use simple UTC offset: 12pm EST = 17:00 UTC (standard) or 16:00 UTC (DST)
+    const utcHour = now.getUTCHours();
+    const isSaturday = now.getUTCDay() === 6;
+    const isPast12EST = utcHour >= 16; // 12pm ET ≈ 16 UTC (DST) or 17 UTC (std)
+    if (!isSaturday || !isPast12EST) return;
+
+    // Don't send the same reminder twice in one day
+    const reminderKey = `eml_sat_reminder_${user.id}_${now.toISOString().slice(0, 10)}`;
+    try { if (localStorage.getItem(reminderKey)) return; } catch { return; }
+
+    // Find this week's Mon–Fri matches involving my team that have no confirmed result
+    const weekStart = new Date(now);
+    weekStart.setUTCDate(now.getUTCDate() - 6); // 6 days back from Saturday = Monday
+    weekStart.setUTCHours(0, 0, 0, 0);
+
+    const unsubmitted = schedule.filter(m => {
+      const items = m.participatingTeams?.linkedItems || [];
+      const involvesMe = items.some(t => t.name === myTeamData.name);
+      if (!involvesMe) return false;
+      if (['Completed', 'confirmed', 'resolved'].includes(m.status)) return false;
+      const md = new Date(m.matchDate);
+      const dayOfWeek = md.getDay();
+      return md >= weekStart && dayOfWeek >= 1 && dayOfWeek <= 5; // Mon–Fri
+    });
+
+    if (unsubmitted.length === 0) return;
+
+    // Push notification to this captain/co-captain
+    emlApi('POST', '/notifications/push', {
+      userId: user.id,
+      notification: {
+        type: 'score_reminder',
+        title: '⏰ Score Submission Reminder',
+        body: `You have ${unsubmitted.length} unsubmitted match result${unsubmitted.length > 1 ? 's' : ''} from this week. Please submit before Sunday 11:59 PM EST.`,
+      },
+    }).catch(() => {});
+
+    try { localStorage.setItem(reminderKey, '1'); } catch { /* ignore */ }
+  }, [isLoggedIn, isPlayer, user?.id, myTeamData, schedule]);
 
   return (
     <>
@@ -354,6 +403,7 @@ const Navigation = ({
                   onNotificationsClick={() => setNotificationsOpen(true)}
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
+                  onCreateTicketClick={() => setCreateTicketOpen(true)}
                   onCaptainsDashClick={() => setCaptainsDashOpen(true)}
                   onCasterGreenRoomClick={() => setCasterGreenRoomOpen(true)}
                 />
@@ -409,6 +459,7 @@ const Navigation = ({
             theme={theme}
             open={playerRegOpen}
             onClose={() => setPlayerRegOpen(false)}
+            onSuccess={refreshProfile}
           />
         )}
         {isLoggedIn && (
@@ -416,6 +467,9 @@ const Navigation = ({
         )}
         {isLoggedIn && (
           <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
+        )}
+        {isLoggedIn && (
+          <CreateTicketModal theme={theme} open={createTicketOpen} onClose={() => setCreateTicketOpen(false)} />
         )}
         {isLoggedIn && (
           <MyTeamView theme={theme} open={myTeamOpen} onClose={() => setMyTeamOpen(false)} />

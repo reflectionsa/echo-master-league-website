@@ -1,9 +1,10 @@
 import { Dialog, Portal, Box, VStack, HStack, Text, Spinner, Center, Badge, CloseButton, Image } from '@chakra-ui/react';
 import { User, Users, Shield, Award } from 'lucide-react';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
+import { emlApi } from '../hooks/useEmlApi';
 
 const _slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
 const lsRead = (key) => { try { return localStorage.getItem(key) || null; } catch { return null; } };
@@ -32,10 +33,19 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
   const emlColors = getThemedColors(theme);
   const [teamModalOpen, setTeamModalOpen] = useState(false);
 
-  // Profile pic: prefer localStorage upload, fallback to static list
+  // Profile pic: prefer worker KV, then localStorage, then static list
+  const [workerPic, setWorkerPic] = useState(null);
   const savedPic = lsRead(`eml_player_pic_${_slug(playerName)}`);
-  const profilePic = savedPic || staticProfilePictures[playerName] || null;
+  const profilePic = workerPic || savedPic || staticProfilePictures[playerName] || null;
   const savedBio = lsRead(`eml_player_bio_${_slug(playerName)}`);
+
+  useEffect(() => {
+    if (!open || !playerName) return;
+    setWorkerPic(null);
+    emlApi('GET', `/player/avatar/${encodeURIComponent(_slug(playerName))}`)
+      .then(d => { if (d.avatarUrl) setWorkerPic(d.avatarUrl); })
+      .catch(() => {});
+  }, [open, playerName]);
 
   const getRoleIcon = () => {
     if (playerRole === 'Captain') return <Shield size={16} />;
