@@ -17,8 +17,8 @@ export const useMyTeam = () => {
   const { team, myRole } = useMemo(() => {
     if (!isLoggedIn || !user || !teams?.length) return { team: null, myRole: null };
 
-    // Match on Discord global name and username (case-insensitive)
-    const names = [user.globalName, user.username]
+    // Match on server nickname, global display name, and username (case-insensitive)
+    const names = [user.nick, user.globalName, user.username]
       .filter(Boolean)
       .map(n => n.toLowerCase());
 

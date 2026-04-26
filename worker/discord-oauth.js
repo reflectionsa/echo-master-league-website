@@ -205,10 +205,12 @@ async function handleAuthCallback(request, env, cors) {
     headers: { Authorization: `Bearer ${access_token}` },
   });
 
+  let serverNick = null;
   if (memberRes.ok) {
     const member = await memberRes.json();
     guildRoleIds = member.roles || [];
     guildRoleNames = await resolveRoleNames(guildRoleIds, env);
+    serverNick = member.nick || null;
   } else if (memberRes.status === 404) {
     // User is not in the EML guild — they log in as 'viewer'
     guildRoleNames = [];
@@ -229,6 +231,7 @@ async function handleAuthCallback(request, env, cors) {
     id: discordUser.id,
     username: discordUser.username,
     globalName: discordUser.global_name || discordUser.username,
+    nick: serverNick,
     avatar: avatarUrl,
     guildRoles: guildRoleNames,
     appRole,
