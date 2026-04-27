@@ -5,7 +5,7 @@ import { getThemedColors } from '../theme/colors';
 import { useNotifications } from '../hooks/useNotifications';
 
 const ROLE_CONFIG = {
-  admin: { label: 'Admin', colorPalette: 'red', Icon: Shield },
+  admin: { label: 'Admin', colorPalette: 'pink', Icon: Shield },
   mod: { label: 'Mod', colorPalette: 'purple', Icon: Shield },
   caster: { label: 'Caster', colorPalette: 'orange', Icon: Mic2 },
   player: { label: 'Player', colorPalette: 'blue', Icon: Users },

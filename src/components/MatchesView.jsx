@@ -204,15 +204,6 @@ const MatchesView = ({ theme, open, onClose }) => {
                     >
                       Upcoming Matches
                     </Tabs.Trigger>
-                    <Tabs.Trigger
-                      value="scheduled"
-                      fontWeight="600"
-                      color={emlColors.textSecondary}
-                      _selected={{ color: emlColors.accentOrange, bg: `${emlColors.accentOrange}22`, rounded: 'lg' }}
-                      _hover={{ color: emlColors.textPrimary }}
-                    >
-                      Scheduled
-                    </Tabs.Trigger>
                   </Tabs.List>
 
                   {/* Match Results Tab */}
@@ -380,43 +371,6 @@ const MatchesView = ({ theme, open, onClose }) => {
                     </Box>
                   </Tabs.Content>
 
-                  <Tabs.Content value="scheduled">
-                    <Box overflowX="auto">
-                      <Table.Root size="md" variant="outline">
-                        <Table.Header bg={emlColors.bgTertiary}>
-                          <Table.Row>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>SCHEDULED</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>HOME</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted} textAlign="center">STATUS</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>AWAY</Table.ColumnHeader>
-                            <Table.ColumnHeader fontWeight="700" fontSize="xs" textTransform="uppercase" color={emlColors.textMuted}>STREAM</Table.ColumnHeader>
-                          </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                          {scheduled.map(match => {
-                            const teams = match.participatingTeams?.linkedItems || [];
-                            return (
-                              <Table.Row key={match.id} _hover={{ bg: emlColors.bgElevated }}>
-                                <Table.Cell>
-                                  <Text fontSize="sm" fontWeight="600" color={emlColors.textPrimary}>
-                                    {match.matchDate?.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                                  </Text>
-                                </Table.Cell>
-                                <Table.Cell><Text fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" fontSize="sm">{teams[0]?.name || 'TBA'}</Text></Table.Cell>
-                                <Table.Cell textAlign="center">
-                                  <MatchStatusBadge status="Scheduled" />
-                                </Table.Cell>
-                                <Table.Cell><Text fontWeight="700" color={emlColors.textPrimary} textTransform="uppercase" fontSize="sm">{teams[1]?.name || 'TBA'}</Text></Table.Cell>
-                                <Table.Cell>
-                                  <Text fontSize="xs" color={emlColors.textMuted}>TBD</Text>
-                                </Table.Cell>
-                              </Table.Row>
-                            );
-                          })}
-                        </Table.Body>
-                      </Table.Root>
-                    </Box>
-                  </Tabs.Content>
                 </Tabs.Root>
               )}
             </Dialog.Body>
