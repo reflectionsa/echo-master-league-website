@@ -49,17 +49,18 @@ export const useSchedule = () => {
 
     // Upcoming/scheduled matches from the Upcoming Matches sheet tab
     const upcoming = (upcomingData || []).map((row, idx) => {
-      const team1 = row['Team 1'] || row['Home Team'] || row['team1'] || row['Team'] || '';
-      const team2 = row['Team 2'] || row['Away Team'] || row['team2'] || '';
+      const team1 = row['Team A'] || row['Team 1'] || row['Home Team'] || '';
+      const team2 = row['Team B'] || row['Team 2'] || row['Away Team'] || '';
       if (!team1 && !team2) return null;
 
-      const matchDate = parseDate(row['Match Date'] || row['Date'] || row['date'] || '');
-      const rawStatus = row['Status'] || row['status'] || 'Scheduled';
+      const matchDate = parseDate(row['Match Date'] || row['Date'] || '');
+      const rawStatus = row['Match Type'] || row['Status'] || row['status'] || 'Scheduled';
+      // "Assigned" in Match Type means it's scheduled
       let status = 'Scheduled';
       if (rawStatus.toLowerCase().includes('live')) status = 'Live';
       else if (rawStatus.toLowerCase().includes('complete')) status = 'Completed';
 
-      const streamUrl = row['Stream Link'] || row['Stream URL'] || row['stream_link'] || '';
+      const streamUrl = row['Stream Link'] || row['Stream URL'] || '';
       const team1Data = teams.find(t => t.name === team1);
       const team2Data = teams.find(t => t.name === team2);
 

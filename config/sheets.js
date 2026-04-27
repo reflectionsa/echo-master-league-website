@@ -31,7 +31,7 @@ export const GOOGLE_SHEETS_CONFIG = {
   // Sheet names and ranges (limited to primary data section to avoid duplicate columns)
   ranges: {
     rosterWide: '_RosterWide!A:H',        // Team, Captain, Co-Captain (CC) Player, Player×4, Status
-    upcomingMatches: 'Upcoming Matches!A:Z', // Match schedule ✓ WORKING
+    upcomingMatches: 'Upcoming Matches!A2:Z', // skip title row 1; headers: Match Type | Match Date | Match Time (ET) | Team A | Team B
     rankings: 'Rankings!A:D',             // team name, Rating, Rank, Active
     playerLeaderboard: 'Player Leaderboard!A:E', // Player Name, PSR, Overall Rating, MVP, Team
     matches: 'Proposed Match Results!A:J', // Proposed match results (first section)
