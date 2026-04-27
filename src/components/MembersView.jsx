@@ -222,7 +222,9 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                           >
                             <VStack align="start" gap="2">
                               <HStack justify="space-between" w="full">
-                                <Text fontWeight="700" fontSize="md" color={colors.textPrimary} fontVariant="small-caps">
+                                <Text fontWeight="700" fontSize="md" color={colors.textPrimary}
+                                  fontVariant={['moderators','casters'].includes(player.role?.toLowerCase()) ? 'small-caps' : 'normal'}
+                                >
                                   {player.name}
                                 </Text>
                                 <Badge colorPalette={player.role === 'Captain' ? 'yellow' : player.role === 'Co-Captain' ? 'orange' : player.role === 'Caster' ? 'purple' : player.role === 'Moderator' ? 'red' : 'blue'} size="sm">
@@ -322,10 +324,11 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                             transition="all 0.2s"
                           >
                             <VStack align="start" gap="2">
-                              <Text fontWeight="700" fontSize="md" color={colors.textPrimary} fontVariant="small-caps">
+                              <Text fontWeight="700" fontSize="md" color={colors.textPrimary}
+                                fontVariant={['moderators','casters'].includes(selectedCategory) ? 'small-caps' : 'normal'}
+                              >
                                 {player.name}
                               </Text>
-                              {player.subtitle && (
                                 <Text fontSize="xs" color={colors.accentOrange} fontWeight="600">
                                   {player.subtitle}
                                 </Text>

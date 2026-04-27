@@ -8,9 +8,9 @@ const getTeamMatchHistory = (teamName, matchResults) => {
   if (!matchResults || !teamName) return [];
 
   const teamMatches = matchResults
-    .filter(match => match.team1 === teamName || match.team2 === teamName)
+    .filter(match => match.team1?.toLowerCase() === teamName.toLowerCase() || match.team2?.toLowerCase() === teamName.toLowerCase())
     .map(match => {
-      const isTeam1 = match.team1 === teamName;
+      const isTeam1 = match.team1?.toLowerCase() === teamName.toLowerCase();
       const teamScore = isTeam1 ? match.team1Score : match.team2Score;
       const opponentScore = isTeam1 ? match.team2Score : match.team1Score;
       const opponent = isTeam1 ? match.team2 : match.team1;
@@ -70,8 +70,8 @@ export const useTeamProfile = (teamName) => {
     setLoading(true);
     setError(null);
 
-    // Find team in roster data
-    const foundTeam = teams.find(t => t.name === teamName);
+    // Find team in roster data (case-insensitive)
+    const foundTeam = teams.find(t => t.name.toLowerCase() === teamName.toLowerCase());
 
     if (!foundTeam) {
       setError('Team not found');
@@ -79,8 +79,8 @@ export const useTeamProfile = (teamName) => {
       return;
     }
 
-    // Get actual tier and MMR from standings data
-    const standingsData = standings.find(s => s.team === teamName);
+    // Get actual tier and MMR from standings data (case-insensitive)
+    const standingsData = standings.find(s => s.team?.toLowerCase() === teamName.toLowerCase());
 
     // Parse tier from standings (e.g., "Diamond 1" -> "Diamond")
     let tier = 'Unranked';
