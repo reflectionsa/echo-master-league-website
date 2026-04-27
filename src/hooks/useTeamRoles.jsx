@@ -186,5 +186,5 @@ export const useTeamRoles = () => {
         return { teams: jsonTeams, loading: false, error: null, refetch: () => { } };
     }
 
-    return { teams, loading: loading || rankingsLoading, error, refetch };
+    return { teams, loading: jsonLoading || loading || rankingsLoading, error, refetch };
 };
