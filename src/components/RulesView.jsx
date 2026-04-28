@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Input, Badge } from '@chakra-ui/react';
-import { FileText, ExternalLink, Search, X } from 'lucide-react';
+import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Input, Badge, Accordion } from '@chakra-ui/react';
+import { FileText, ExternalLink, Search, X, ChevronDown } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 const RULES_SECTIONS = [
@@ -368,37 +368,64 @@ const RulesView = ({ theme, open, onClose }) => {
                     <Text color={emlColors.textMuted} fontSize="sm">No rules match your search.</Text>
                   </Box>
                 ) : (
-                  filteredSections.map((section, sIdx) => (
-                    <Box
-                      key={sIdx}
-                      bg={emlColors.bgTertiary}
-                      rounded="xl"
-                      border="1px solid"
-                      borderColor={emlColors.borderMedium}
-                      overflow="hidden"
-                    >
-                      <Box
-                        px="5"
-                        py="3"
-                        bg={`${emlColors.accentOrange}18`}
-                        borderBottom="1px solid"
+                  <Accordion.Root
+                    collapsible
+                    multiple
+                    defaultValue={search.trim() ? filteredSections.map((_, i) => `section-${i}`) : []}
+                  >
+                    {filteredSections.map((section, sIdx) => (
+                      <Accordion.Item
+                        key={sIdx}
+                        value={`section-${sIdx}`}
+                        bg={emlColors.bgTertiary}
+                        rounded="xl"
+                        border="1px solid"
                         borderColor={emlColors.borderMedium}
+                        mb="3"
+                        overflow="hidden"
                       >
-                        <Text fontWeight="700" fontSize="sm" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
-                          {highlightText(section.title, search)}
-                        </Text>
-                      </Box>
-                      <VStack align="stretch" gap="0" divideY="1px">
-                        {section.items.map((item, iIdx) => (
-                          <Box key={iIdx} px="5" py="3">
-                            <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="tall">
-                              {highlightText(item, search)}
+                        <Accordion.ItemTrigger
+                          px="5"
+                          py="4"
+                          bg={`${emlColors.accentOrange}14`}
+                          _hover={{ bg: `${emlColors.accentOrange}22` }}
+                          cursor="pointer"
+                          transition="background 0.15s"
+                        >
+                          <HStack justify="space-between" flex="1">
+                            <Text fontWeight="700" fontSize="sm" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
+                              {highlightText(section.title, search)}
                             </Text>
-                          </Box>
-                        ))}
-                      </VStack>
-                    </Box>
-                  ))
+                            <HStack gap="2">
+                              <Badge size="xs" variant="subtle" colorPalette="orange">
+                                {section.items.length}
+                              </Badge>
+                              <Accordion.ItemIndicator>
+                                <ChevronDown size={16} color={emlColors.accentOrange} />
+                              </Accordion.ItemIndicator>
+                            </HStack>
+                          </HStack>
+                        </Accordion.ItemTrigger>
+                        <Accordion.ItemContent>
+                          <VStack align="stretch" gap="0">
+                            {section.items.map((item, iIdx) => (
+                              <Box
+                                key={iIdx}
+                                px="5"
+                                py="3"
+                                borderTop="1px solid"
+                                borderColor={emlColors.borderMedium}
+                              >
+                                <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="tall">
+                                  {highlightText(item, search)}
+                                </Text>
+                              </Box>
+                            ))}
+                          </VStack>
+                        </Accordion.ItemContent>
+                      </Accordion.Item>
+                    ))}
+                  </Accordion.Root>
                 )}
 
                 <Box
