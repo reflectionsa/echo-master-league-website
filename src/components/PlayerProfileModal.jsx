@@ -255,6 +255,7 @@ const PlayerProfileModal = ({ open, onClose, playerName, theme }) => {
           onClose={() => setTeamModalOpen(false)}
           teamId={team.id}
           teamName={team.name}
+          teamData={team}
           theme={theme}
         />
       )}

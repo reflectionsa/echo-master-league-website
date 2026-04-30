@@ -246,12 +246,12 @@ const RulesView = ({ theme, open, onClose }) => {
 
   const filteredSections = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return RULES_SECTIONS;
-    return RULES_SECTIONS.map((section) => {
+    if (!q) return RULES_SECTIONS.map((section, idx) => ({ ...section, originalIndex: idx }));
+    return RULES_SECTIONS.map((section, idx) => {
       const titleMatch = section.title.toLowerCase().includes(q);
       const matchedItems = section.items.filter((item) => item.toLowerCase().includes(q));
       if (titleMatch || matchedItems.length > 0) {
-        return { ...section, items: titleMatch ? section.items : matchedItems };
+        return { ...section, originalIndex: idx, items: titleMatch ? section.items : matchedItems };
       }
       return null;
     }).filter(Boolean);
@@ -373,58 +373,79 @@ const RulesView = ({ theme, open, onClose }) => {
                     multiple
                     defaultValue={search.trim() ? filteredSections.map((_, i) => `section-${i}`) : []}
                   >
-                    {filteredSections.map((section, sIdx) => (
-                      <Accordion.Item
-                        key={sIdx}
-                        value={`section-${sIdx}`}
-                        bg={emlColors.bgTertiary}
-                        rounded="xl"
-                        border="1px solid"
-                        borderColor={emlColors.borderMedium}
-                        mb="3"
-                        overflow="hidden"
-                      >
-                        <Accordion.ItemTrigger
-                          px="5"
-                          py="4"
-                          bg={`${emlColors.accentOrange}14`}
-                          _hover={{ bg: `${emlColors.accentOrange}22` }}
-                          cursor="pointer"
-                          transition="background 0.15s"
+                    {filteredSections.map((section, sIdx) => {
+                      const sectionNum = section.originalIndex + 1;
+                      return (
+                        <Accordion.Item
+                          key={sIdx}
+                          value={`section-${sIdx}`}
+                          bg={emlColors.bgTertiary}
+                          rounded="xl"
+                          border="1px solid"
+                          borderColor={emlColors.borderMedium}
+                          mb="3"
+                          overflow="hidden"
                         >
-                          <HStack justify="space-between" flex="1">
-                            <Text fontWeight="700" fontSize="sm" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
-                              {highlightText(section.title, search)}
-                            </Text>
-                            <HStack gap="2">
-                              <Badge size="xs" variant="subtle" colorPalette="orange">
-                                {section.items.length}
-                              </Badge>
-                              <Accordion.ItemIndicator>
-                                <ChevronDown size={16} color={emlColors.accentOrange} />
-                              </Accordion.ItemIndicator>
-                            </HStack>
-                          </HStack>
-                        </Accordion.ItemTrigger>
-                        <Accordion.ItemContent>
-                          <VStack align="stretch" gap="0">
-                            {section.items.map((item, iIdx) => (
-                              <Box
-                                key={iIdx}
-                                px="5"
-                                py="3"
-                                borderTop="1px solid"
-                                borderColor={emlColors.borderMedium}
-                              >
-                                <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="tall">
-                                  {highlightText(item, search)}
+                          <Accordion.ItemTrigger
+                            px="5"
+                            py="4"
+                            bg={`${emlColors.accentOrange}14`}
+                            _hover={{ bg: `${emlColors.accentOrange}22` }}
+                            cursor="pointer"
+                            transition="background 0.15s"
+                          >
+                            <HStack justify="space-between" flex="1">
+                              <HStack gap="2" align="center">
+                                <Text fontWeight="800" fontSize="sm" color={emlColors.accentOrange} fontFamily="mono" flexShrink={0}>
+                                  {sectionNum}.0
                                 </Text>
-                              </Box>
-                            ))}
-                          </VStack>
-                        </Accordion.ItemContent>
-                      </Accordion.Item>
-                    ))}
+                                <Text fontWeight="700" fontSize="sm" color={emlColors.accentOrange} textTransform="uppercase" letterSpacing="wider">
+                                  {highlightText(section.title, search)}
+                                </Text>
+                              </HStack>
+                              <HStack gap="2" flexShrink={0}>
+                                <Badge size="xs" variant="subtle" colorPalette="orange">
+                                  {section.items.length}
+                                </Badge>
+                                <Accordion.ItemIndicator>
+                                  <ChevronDown size={16} color={emlColors.accentOrange} />
+                                </Accordion.ItemIndicator>
+                              </HStack>
+                            </HStack>
+                          </Accordion.ItemTrigger>
+                          <Accordion.ItemContent>
+                            <VStack align="stretch" gap="0">
+                              {section.items.map((item, iIdx) => (
+                                <Box
+                                  key={iIdx}
+                                  px="5"
+                                  py="3"
+                                  borderTop="1px solid"
+                                  borderColor={emlColors.borderMedium}
+                                >
+                                  <HStack gap="3" align="start">
+                                    <Text
+                                      fontSize="xs"
+                                      fontWeight="600"
+                                      color={emlColors.accentOrange}
+                                      fontFamily="mono"
+                                      flexShrink={0}
+                                      mt="0.5"
+                                      opacity={0.7}
+                                    >
+                                      {sectionNum}.{iIdx + 1}
+                                    </Text>
+                                    <Text fontSize="sm" color={emlColors.textSecondary} lineHeight="tall">
+                                      {highlightText(item, search)}
+                                    </Text>
+                                  </HStack>
+                                </Box>
+                              ))}
+                            </VStack>
+                          </Accordion.ItemContent>
+                        </Accordion.Item>
+                      );
+                    })}
                   </Accordion.Root>
                 )}
 

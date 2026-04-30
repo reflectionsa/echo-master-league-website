@@ -46,7 +46,7 @@ const getTeamMatchHistory = (teamName, matchResults) => {
   return teamMatches.sort((a, b) => b.matchDate - a.matchDate);
 };
 
-export const useTeamProfile = (teamName) => {
+export const useTeamProfile = (teamName, preloadedTeam = null) => {
   const [team, setTeam] = useState(null);
   const [matchHistory, setMatchHistory] = useState([]);
   const [mmr, setMMR] = useState(800);
@@ -62,7 +62,8 @@ export const useTeamProfile = (teamName) => {
       return;
     }
 
-    if (standingsLoading || matchResultsLoading || teamsLoading) {
+    // If preloadedTeam is available, don't wait for teams to load
+    if (standingsLoading || matchResultsLoading || (teamsLoading && !preloadedTeam)) {
       setLoading(true);
       return;
     }
@@ -70,8 +71,8 @@ export const useTeamProfile = (teamName) => {
     setLoading(true);
     setError(null);
 
-    // Find team in roster data (case-insensitive)
-    const foundTeam = teams.find(t => t.name.toLowerCase() === teamName.toLowerCase());
+    // Find team in roster data (case-insensitive + trimmed), fall back to preloaded data
+    const foundTeam = teams.find(t => t.name.toLowerCase().trim() === teamName.toLowerCase().trim()) || preloadedTeam;
 
     if (!foundTeam) {
       setError('Team not found');
@@ -107,7 +108,7 @@ export const useTeamProfile = (teamName) => {
     setMMR(standingsData?.mmr || 800);
     setMatchHistory(getTeamMatchHistory(teamName, matchResults));
     setLoading(false);
-  }, [teamName, standings, standingsLoading, matchResults, matchResultsLoading, teams, teamsLoading]);
+  }, [teamName, preloadedTeam, standings, standingsLoading, matchResults, matchResultsLoading, teams, teamsLoading]);
 
   return { team, matchHistory, mmr, loading, error };
 };

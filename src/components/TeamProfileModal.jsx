@@ -44,8 +44,8 @@ const teamHistory = {
   // Add more teams as needed
 };
 
-const TeamProfileModal = ({ open, onClose, teamName, theme }) => {
-  const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName);
+const TeamProfileModal = ({ open, onClose, teamName, teamData, theme }) => {
+  const { team, matchHistory, mmr, loading, error } = useTeamProfile(teamName, teamData || null);
   const { needsColorBlindSupport } = useAccessibility();
   const emlColors = getThemedColors(theme, needsColorBlindSupport);
   const baseTier = getBaseTier(team?.tier);
