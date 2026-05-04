@@ -18,6 +18,7 @@ const AdminPanel = lazy(() => import('./AdminPanel'));
 const AnnouncementsView = lazy(() => import('./AnnouncementsView'));
 const AboutView = lazy(() => import('./AboutView'));
 const CalendarView = lazy(() => import('./CalendarView'));
+const ResourcesView = lazy(() => import('./ResourcesView'));
 const StandingsView = lazy(() => import('./StandingsView'));
 const MatchesView = lazy(() => import('./MatchesView'));
 const MembersView = lazy(() => import('./MembersView'));
@@ -63,6 +64,7 @@ const Navigation = ({
   const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const [matchesOpen, setMatchesOpen] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
   const [botOpen, setBotOpen] = useState(false);
@@ -212,16 +214,16 @@ const Navigation = ({
                       <HStack gap="2"><Info size={14} /><span>About EML</span></HStack>
                     </Menu.Item>
                     <Menu.Item
-                      value="calendar"
+                      value="resources"
                       rounded="lg"
                       py="1" px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setCalendarOpen(true)}
+                      onClick={() => setResourcesOpen(true)}
                     >
-                      <HStack gap="2"><CalendarDays size={14} /><span>Calendar</span></HStack>
+                      <HStack gap="2"><CalendarDays size={14} /><span>Resources</span></HStack>
                     </Menu.Item>
                     <Menu.Separator />
                     <Menu.Item
@@ -431,6 +433,7 @@ const Navigation = ({
         <AnnouncementsView theme={theme} open={announcementsOpen} onClose={() => setAnnouncementsOpen(false)} />
         <AboutView theme={theme} open={aboutOpen} onClose={() => setAboutOpen(false)} />
         <CalendarView theme={theme} open={calendarOpen} onClose={() => setCalendarOpen(false)} />
+        <ResourcesView theme={theme} open={resourcesOpen} onClose={() => setResourcesOpen(false)} />
         <StandingsView theme={theme} open={standingsOpen} onClose={() => setStandingsOpen(false)} />
         <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
         <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
