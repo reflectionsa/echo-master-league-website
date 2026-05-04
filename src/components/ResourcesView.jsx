@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Image, Badge } from '@chakra-ui/react';
-import { Calculator, BookOpen, Bot, CalendarDays, Users, Shield, ExternalLink, Terminal, FileText, Archive, Trophy, BarChart2, ScrollText } from 'lucide-react';
+import { Calculator, BookOpen, Bot, CalendarDays, Users, Shield, ExternalLink, Terminal, FileText, Archive, Trophy, BarChart2, ScrollText, Clock, GitBranch } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 // ─────────────────────────────────────────────────────────────────
@@ -961,11 +961,23 @@ const ARCHIVED_SEASONS = [
     badge: 'Preseason',
     badgeColor: '#8b5cf6',
     description: 'Break the MMR — the inaugural EML preseason tournament.',
-    links: [
-      { label: 'Season Hub', url: 'https://echomasterleague.com/2024-break-the-mmr-tournament-preseason/', icon: 'hub' },
-      { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-btmmr-team-rankings/', icon: 'rankings' },
-      { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-btmmr-team-rosters/', icon: 'rosters' },
-      { label: 'Matches & Results', url: 'https://echomasterleague.com/2024-btmmr-season-matches-and-results/', icon: 'matches' },
+    champion: '🥇 Ignite  ·  🥈 Redshift Esports',
+    categories: [
+      {
+        label: 'Season Info',
+        links: [
+          { label: 'Season Hub', url: 'https://echomasterleague.com/2024-break-the-mmr-tournament-preseason/', icon: 'hub' },
+          { label: 'Full Bracket', url: 'https://challonge.com/iw14x5kx', icon: 'bracket' },
+        ],
+      },
+      {
+        label: 'Data',
+        links: [
+          { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-btmmr-team-rankings/', icon: 'rankings' },
+          { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-btmmr-team-rosters/', icon: 'rosters' },
+          { label: 'Matches & Results', url: 'https://echomasterleague.com/2024-btmmr-season-matches-and-results/', icon: 'matches' },
+        ],
+      },
     ],
   },
   {
@@ -975,13 +987,24 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 1',
     badgeColor: '#f59e0b',
     description: 'The first official EML season.',
-    links: [
-      { label: 'Season Hub', url: 'https://echomasterleague.com/season-1/', icon: 'hub' },
-      { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-season-1-team-rankings/', icon: 'rankings' },
-      { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-season-1-team-rosters/', icon: 'rosters' },
-      { label: 'Team Statistics', url: 'https://echomasterleague.com/2024-season-1-team-statistics/', icon: 'stats' },
-      { label: 'Registered Players', url: 'https://echomasterleague.com/2024-season-1-registered-players/', icon: 'players' },
-      { label: 'League Subs', url: 'https://echomasterleague.com/2024-season-1-registered-league-subs/', icon: 'subs' },
+    categories: [
+      {
+        label: 'Season Info',
+        links: [
+          { label: 'Season Hub', url: 'https://echomasterleague.com/season-1/', icon: 'hub' },
+        ],
+      },
+      {
+        label: 'Teams & Players',
+        links: [
+          { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-season-1-team-rankings/', icon: 'rankings' },
+          { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-season-1-team-rosters/', icon: 'rosters' },
+          { label: 'Team Statistics', url: 'https://echomasterleague.com/2024-season-1-team-statistics/', icon: 'stats' },
+          { label: 'Registered Players', url: 'https://echomasterleague.com/2024-season-1-registered-players/', icon: 'players' },
+          { label: 'League Subs', url: 'https://echomasterleague.com/2024-season-1-registered-league-subs/', icon: 'subs' },
+          { label: 'Cooldown List', url: 'https://echomasterleague.com/2024-season-1-cooldown-list/', icon: 'cooldown' },
+        ],
+      },
     ],
   },
   {
@@ -991,13 +1014,23 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 2',
     badgeColor: '#f97316',
     description: 'The second EML season.',
-    links: [
-      { label: 'Season Hub', url: 'https://echomasterleague.com/2024-season-2-na/', icon: 'hub' },
-      { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-season-2-team-rankings/', icon: 'rankings' },
-      { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-season-2-team-rosters/', icon: 'rosters' },
-      { label: 'Team Statistics', url: 'https://echomasterleague.com/2024-season-2-team-statistics/', icon: 'stats' },
-      { label: 'Registered Players', url: 'https://echomasterleague.com/2024-season-2-registered-players/', icon: 'players' },
-      { label: 'League Subs', url: 'https://echomasterleague.com/2024-season-2-registered-league-subs/', icon: 'subs' },
+    categories: [
+      {
+        label: 'Season Info',
+        links: [
+          { label: 'Season Hub', url: 'https://echomasterleague.com/2024-season-2-na/', icon: 'hub' },
+        ],
+      },
+      {
+        label: 'Teams & Players',
+        links: [
+          { label: 'Team Rankings', url: 'https://echomasterleague.com/2024-season-2-team-rankings/', icon: 'rankings' },
+          { label: 'Team Rosters', url: 'https://echomasterleague.com/2024-season-2-team-rosters/', icon: 'rosters' },
+          { label: 'Team Statistics', url: 'https://echomasterleague.com/2024-season-2-team-statistics/', icon: 'stats' },
+          { label: 'Registered Players', url: 'https://echomasterleague.com/2024-season-2-registered-players/', icon: 'players' },
+          { label: 'League Subs', url: 'https://echomasterleague.com/2024-season-2-registered-league-subs/', icon: 'subs' },
+        ],
+      },
     ],
   },
   {
@@ -1007,13 +1040,23 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 3',
     badgeColor: '#ef4444',
     description: 'The third EML season.',
-    links: [
-      { label: 'Season Hub', url: 'https://echomasterleague.com/2025-season-3-na/', icon: 'hub' },
-      { label: 'Team Rankings', url: 'https://echomasterleague.com/2025-season-3-team-rankings/', icon: 'rankings' },
-      { label: 'Team Rosters', url: 'https://echomasterleague.com/2025-season-3-team-rosters/', icon: 'rosters' },
-      { label: 'Team Statistics', url: 'https://echomasterleague.com/2025-season-3-team-statistics/', icon: 'stats' },
-      { label: 'Registered Players', url: 'https://echomasterleague.com/2025-season-3-registered-players/', icon: 'players' },
-      { label: 'League Subs', url: 'https://echomasterleague.com/2025-season-3-registered-league-subs/', icon: 'subs' },
+    categories: [
+      {
+        label: 'Season Info',
+        links: [
+          { label: 'Season Hub', url: 'https://echomasterleague.com/2025-season-3-na/', icon: 'hub' },
+        ],
+      },
+      {
+        label: 'Teams & Players',
+        links: [
+          { label: 'Team Rankings', url: 'https://echomasterleague.com/2025-season-3-team-rankings/', icon: 'rankings' },
+          { label: 'Team Rosters', url: 'https://echomasterleague.com/2025-season-3-team-rosters/', icon: 'rosters' },
+          { label: 'Team Statistics', url: 'https://echomasterleague.com/2025-season-3-team-statistics/', icon: 'stats' },
+          { label: 'Registered Players', url: 'https://echomasterleague.com/2025-season-3-registered-players/', icon: 'players' },
+          { label: 'League Subs', url: 'https://echomasterleague.com/2025-season-3-registered-league-subs/', icon: 'subs' },
+        ],
+      },
     ],
   },
 ];
@@ -1025,6 +1068,8 @@ const linkIcon = (icon, color) => {
   if (icon === 'rosters') return <Users size={size} color={color} />;
   if (icon === 'stats') return <BarChart2 size={size} color={color} />;
   if (icon === 'matches') return <CalendarDays size={size} color={color} />;
+  if (icon === 'cooldown') return <Clock size={size} color={color} />;
+  if (icon === 'bracket') return <GitBranch size={size} color={color} />;
   return <ExternalLink size={size} color={color} />;
 };
 
@@ -1032,13 +1077,13 @@ const ArchivedSeasonsTab = ({ colors }) => (
   <VStack gap="5" align="stretch">
     <Box p="3" bg={`${colors.accentOrange}11`} border="1px solid" borderColor={`${colors.accentOrange}33`} rounded="lg">
       <Text fontSize="sm" color={colors.textMuted}>
-        Browse stats, rosters, and results from all past EML seasons. Links open on the official EML website.
+        Browse stats, rosters, and results from all past EML seasons. Click any button to open the data on the official EML website.
       </Text>
     </Box>
     {ARCHIVED_SEASONS.map((season) => (
       <Box key={season.id} bg={colors.bgElevated} border="1px solid" borderColor={colors.borderMedium} rounded="xl" overflow="hidden">
         {/* Season header */}
-        <HStack px="4" py="3" bg={colors.bgSecondary} borderBottom="1px solid" borderColor={colors.borderMedium} gap="3">
+        <HStack px="4" py="3" bg={colors.bgSecondary} borderBottom="1px solid" borderColor={colors.borderMedium} gap="3" flexWrap="wrap">
           <Box
             bg={`${season.badgeColor}22`}
             color={season.badgeColor}
@@ -1048,39 +1093,60 @@ const ArchivedSeasonsTab = ({ colors }) => (
             fontSize="xs"
             fontWeight="800"
             letterSpacing="wide"
+            flexShrink="0"
           >
             {season.badge}
           </Box>
-          <Box>
+          <Box flex="1">
             <Text fontSize="md" fontWeight="800" color={colors.textPrimary}>{season.label}</Text>
             <Text fontSize="xs" color={colors.textMuted}>{season.year} · {season.description}</Text>
+            {season.champion && (
+              <Text fontSize="xs" color={season.badgeColor} fontWeight="700" mt="0.5">{season.champion}</Text>
+            )}
           </Box>
         </HStack>
-        {/* Links grid */}
-        <Box p="3">
-          <HStack gap="2" flexWrap="wrap">
-            {season.links.map((link) => (
-              <Box
-                key={link.label}
-                display="inline-flex"
-                alignItems="center"
-                gap="1.5"
-                px="3"
-                py="1.5"
-                bg={colors.bgSecondary}
-                border="1px solid"
-                borderColor={colors.borderMedium}
-                rounded="lg"
-                fontSize="xs"
-                fontWeight="600"
-                color={colors.textSecondary}
-              >
-                {linkIcon(link.icon, 'currentColor')}
-                {link.label}
-              </Box>
-            ))}
-          </HStack>
-        </Box>
+        {/* Categorized links */}
+        <VStack align="stretch" gap="0" divideY="1px" divideColor={colors.borderMedium}>
+          {season.categories.map((cat) => (
+            <Box key={cat.label} px="4" py="3">
+              <Text fontSize="10px" fontWeight="800" color={colors.textMuted} textTransform="uppercase" letterSpacing="wider" mb="2">
+                {cat.label}
+              </Text>
+              <HStack gap="2" flexWrap="wrap">
+                {cat.links.map((link) => (
+                  <Box
+                    key={link.label}
+                    as="button"
+                    display="inline-flex"
+                    alignItems="center"
+                    gap="1.5"
+                    px="3"
+                    py="1.5"
+                    bg={colors.bgSecondary}
+                    border="1px solid"
+                    borderColor={colors.borderMedium}
+                    rounded="lg"
+                    fontSize="xs"
+                    fontWeight="600"
+                    color={colors.textSecondary}
+                    cursor="pointer"
+                    transition="all 0.15s ease"
+                    _hover={{
+                      bg: `${season.badgeColor}18`,
+                      borderColor: season.badgeColor,
+                      color: season.badgeColor,
+                      transform: 'translateY(-1px)',
+                    }}
+                    onClick={() => window.open(link.url, '_blank', 'noopener,noreferrer')}
+                  >
+                    {linkIcon(link.icon, 'currentColor')}
+                    {link.label}
+                  </Box>
+                ))}
+              </HStack>
+            </Box>
+          ))}
+        </VStack>
       </Box>
     ))}
   </VStack>
