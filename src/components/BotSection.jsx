@@ -1,5 +1,5 @@
-import { Box, Container, VStack, Text, HStack, Code, Grid, Button, Accordion } from '@chakra-ui/react';
-import { Terminal, Bot, Zap, ExternalLink, Calendar, Users, Trophy, Search } from 'lucide-react';
+import { Box, Container, VStack, Text, HStack, Code, Button, Accordion } from '@chakra-ui/react';
+import { Terminal, Bot, ExternalLink, Calendar, Users, Trophy, Search, BookOpen, Shield } from 'lucide-react';
 import { emlColors } from '../theme/colors';
 
 const commandCategories = [
@@ -73,66 +73,72 @@ const BotSection = ({ theme }) => {
             </Text>
           </VStack>
 
-          <Accordion.Root collapsible w="full" defaultValue={['season-info']}>
-            {commandCategories.map((category, idx) => (
-              <Accordion.Item key={idx} value={category.title.toLowerCase().replace(/\s+/g, '-')} bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
-                <Accordion.ItemTrigger p="5" _hover={{ bg: `${emlColors.bgElevated}dd` }}>
-                  <HStack gap="3" flex="1">
-                    <category.icon size={20} color={emlColors.accentOrange} />
-                    <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{category.title}</Text>
-                  </HStack>
-                  <Accordion.ItemIndicator />
-                </Accordion.ItemTrigger>
-                <Accordion.ItemContent>
-                  <VStack align="stretch" gap="2" px="5" pb="5">
-                    {category.commands.map(cmd => (
-                      <HStack key={cmd.cmd} gap="3" p="3" bg={emlColors.bgElevated} rounded="lg">
-                        <Code bg={emlColors.bgTertiary} px="2" py="1" rounded="md" fontSize="sm" fontWeight="600" color={emlColors.accentOrange}>
-                          {cmd.cmd}
-                        </Code>
-                        <Text fontSize="sm" color={emlColors.textMuted} flex="1">{cmd.desc}</Text>
-                      </HStack>
+          <Accordion.Root collapsible w="full">
+            <Accordion.Item value="bot-instructions" bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
+              <Accordion.ItemTrigger p="5" _hover={{ bg: `${emlColors.bgElevated}dd` }}>
+                <HStack gap="3" flex="1">
+                  <BookOpen size={20} color={emlColors.accentOrange} />
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>EML Bot Instructions</Text>
+                </HStack>
+                <Accordion.ItemIndicator />
+              </Accordion.ItemTrigger>
+              <Accordion.ItemContent>
+                <Box px="5" pb="5">
+                  <Accordion.Root collapsible defaultValue={['season-info']}>
+                    {commandCategories.map((category, idx) => (
+                      <Accordion.Item key={idx} value={category.title.toLowerCase().replace(/\s+/g, '-')} bg={emlColors.bgPrimary} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
+                        <Accordion.ItemTrigger p="4" _hover={{ bg: `${emlColors.bgPrimary}dd` }}>
+                          <HStack gap="3" flex="1">
+                            <category.icon size={18} color={emlColors.accentOrange} />
+                            <Text fontSize="md" fontWeight="700" color={emlColors.textPrimary}>{category.title}</Text>
+                          </HStack>
+                          <Accordion.ItemIndicator />
+                        </Accordion.ItemTrigger>
+                        <Accordion.ItemContent>
+                          <VStack align="stretch" gap="2" px="4" pb="4">
+                            {category.commands.map(cmd => (
+                              <HStack key={cmd.cmd} gap="3" p="3" bg={emlColors.bgElevated} rounded="lg">
+                                <Code bg={emlColors.bgTertiary} px="2" py="1" rounded="md" fontSize="sm" fontWeight="600" color={emlColors.accentOrange}>
+                                  {cmd.cmd}
+                                </Code>
+                                <Text fontSize="sm" color={emlColors.textMuted} flex="1">{cmd.desc}</Text>
+                              </HStack>
+                            ))}
+                          </VStack>
+                        </Accordion.ItemContent>
+                      </Accordion.Item>
                     ))}
-                  </VStack>
-                </Accordion.ItemContent>
-              </Accordion.Item>
-            ))}
+                  </Accordion.Root>
+                </Box>
+              </Accordion.ItemContent>
+            </Accordion.Item>
+
+            <Accordion.Item value="ap-system" bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
+              <Accordion.ItemTrigger p="5" _hover={{ bg: `${emlColors.bgElevated}dd` }}>
+                <HStack gap="3" flex="1">
+                  <Shield size={20} color={emlColors.accentOrange} />
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>AP System</Text>
+                </HStack>
+                <Accordion.ItemIndicator />
+              </Accordion.ItemTrigger>
+              <Accordion.ItemContent>
+                <VStack align="start" gap="3" px="5" pb="5">
+                  <Text fontSize="sm" color={emlColors.textMuted}>
+                    Track player performance, rankings, and statistics with our comprehensive AP (Activity Points) tracking system.
+                  </Text>
+                  <Button
+                    size="sm"
+                    colorPalette="orange"
+                    onClick={() => window.open('https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSJmIGHxYlgMAy2Wvlz-pSx27iDTjBdzQbe7BCSu6qXCHk1kBTxwDJu0yAQuy0Msm3KLnIY2MwvMC8t/pubhtml', '_blank')}
+                    w="full"
+                  >
+                    <ExternalLink size={14} />
+                    View AP System
+                  </Button>
+                </VStack>
+              </Accordion.ItemContent>
+            </Accordion.Item>
           </Accordion.Root>
-
-          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap="6" w="full">
-            <Box bg={emlColors.bgElevated} p="6" rounded="2xl" border="1px solid" borderColor={emlColors.borderMedium}>
-              <HStack gap="3" mb="4">
-                <Zap size={20} color={emlColors.accentOrange} />
-                <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>Features</Text>
-              </HStack>
-              <VStack align="start" gap="2">
-                {['Automated match reminders and notifications', 'Real-time score tracking and updates', 'Team management and roster changes', 'Tournament bracket generation'].map(feature => (
-                  <Text key={feature} fontSize="sm" color={emlColors.textMuted}>• {feature}</Text>
-                ))}
-              </VStack>
-            </Box>
-
-            <Box bg={emlColors.bgElevated} p="6" rounded="2xl" border="1px solid" borderColor={emlColors.borderMedium}>
-              <HStack gap="3" mb="4">
-                <Terminal size={20} color={emlColors.accentOrange} />
-                <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>AP System</Text>
-              </HStack>
-              <VStack align="start" gap="3">
-                <Text fontSize="sm" color={emlColors.textMuted}>
-                  Track player performance, rankings, and statistics with our comprehensive AP (Activity Points) tracking system.
-                </Text>
-                <Button
-                  size="sm"
-                  colorPalette="orange"
-                  onClick={() => window.open('https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSJmIGHxYlgMAy2Wvlz-pSx27iDTjBdzQbe7BCSu6qXCHk1kBTxwDJu0yAQuy0Msm3KLnIY2MwvMC8t/pubhtml', '_blank')}
-                  w="full"
-                >
-                  <ExternalLink size={14} />
-                  View AP System
-                </Button>
-              </VStack>
-            </Box>
-          </Grid>
         </VStack>
       </Container>
     </Box>
