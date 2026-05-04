@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Image, Badge } from '@chakra-ui/react';
-import { Calculator, BookOpen, Bot, CalendarDays, Users, Shield, ExternalLink, Terminal, FileText, Archive, Trophy, BarChart2, ScrollText, Clock, GitBranch } from 'lucide-react';
+import { Box, HStack, VStack, Text, Button, Image, Badge } from '@chakra-ui/react';
+import { Calculator, BookOpen, Bot, CalendarDays, Users, Shield, ExternalLink, Terminal, FileText, Archive, Trophy, GitBranch } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 // ─────────────────────────────────────────────────────────────────
@@ -953,6 +953,324 @@ const APSystemTab = ({ colors }) => (
 // ARCHIVED SEASONS DATA & COMPONENT
 // ─────────────────────────────────────────────────────────────────
 
+// Rank badge color helper
+const getRankColor = (rank) => {
+  if (!rank) return '#9ca3af';
+  if (rank === 'Master') return '#fbbf24';
+  if (rank.startsWith('Diamond')) return '#67e8f9';
+  if (rank.startsWith('Platinum')) return '#c084fc';
+  if (rank.startsWith('Gold')) return '#fb923c';
+  return '#9ca3af';
+};
+
+const BTMMR_RANKINGS = [
+  {rank:1,team:'Ignite',rating:1068,tier:'Master'},{rank:2,team:'200',rating:1004,tier:'Master'},{rank:3,team:'Redshift Esports',rating:951,tier:'Master'},{rank:4,team:'Yam Time',rating:940,tier:'Master'},{rank:5,team:'Frug',rating:932,tier:'Master'},
+  {rank:6,team:'FLAPS',rating:930,tier:'Diamond 4'},{rank:7,team:'syzygy',rating:916,tier:'Diamond 4'},{rank:8,team:'W_Motion',rating:908,tier:'Diamond 4'},{rank:9,team:'GDK',rating:905,tier:'Diamond 4'},{rank:10,team:'Lightbulwb',rating:905,tier:'Diamond 4'},
+  {rank:11,team:'Steez',rating:896,tier:'Diamond 3'},{rank:12,team:'unreliable',rating:885,tier:'Diamond 3'},{rank:13,team:'Disc Functional Halos',rating:871,tier:'Diamond 2'},{rank:14,team:'Plan C',rating:864,tier:'Diamond 1'},{rank:15,team:'Cherries On Top',rating:864,tier:'Diamond 1'},
+  {rank:16,team:'Toxic',rating:858,tier:'Diamond 1'},{rank:17,team:'Pocket',rating:857,tier:'Diamond 1'},{rank:18,team:'Royal Ducks',rating:855,tier:'Diamond 1'},{rank:19,team:'Site 13',rating:848,tier:'Platinum 4'},{rank:20,team:'Bloom',rating:847,tier:'Platinum 4'},
+  {rank:21,team:'Cerberus',rating:841,tier:'Platinum 4'},{rank:22,team:'X2A',rating:840,tier:'Platinum 4'},{rank:23,team:'Coast',rating:840,tier:'Platinum 4'},{rank:24,team:'Entropic Force',rating:837,tier:'Platinum 4'},{rank:25,team:'Embers',rating:830,tier:'Platinum 3'},
+  {rank:26,team:'Cutest Telecommuters',rating:827,tier:'Platinum 3'},{rank:27,team:'MEN',rating:824,tier:'Platinum 3'},{rank:28,team:'Awaken',rating:819,tier:'Platinum 3'},{rank:29,team:'Armada',rating:817,tier:'Platinum 2'},{rank:30,team:'gods',rating:812,tier:'Platinum 2'},
+  {rank:31,team:'Evolve',rating:807,tier:'Platinum 2'},{rank:32,team:'Trendsetters',rating:807,tier:'Platinum 2'},{rank:33,team:'Dragonfly',rating:806,tier:'Platinum 2'},{rank:34,team:'Crawl-Space',rating:805,tier:'Platinum 2'},{rank:35,team:'nebula',rating:804,tier:'Platinum 2'},
+  {rank:36,team:'Fallen',rating:800,tier:'Platinum 1'},{rank:37,team:'Ace',rating:799,tier:'Platinum 1'},{rank:38,team:'Silly Billies',rating:798,tier:'Platinum 1'},{rank:39,team:'Rose',rating:798,tier:'Platinum 1'},{rank:40,team:'Tilted Towers',rating:796,tier:'Platinum 1'},
+  {rank:41,team:'No Gravity',rating:792,tier:'Platinum 1'},{rank:42,team:'Nutter Butters',rating:792,tier:'Platinum 1'},{rank:43,team:'Destruction',rating:789,tier:'Platinum 1'},{rank:44,team:'Unstoppabulls',rating:785,tier:'Gold 4'},{rank:45,team:'Fallen Kings',rating:783,tier:'Gold 4'},
+  {rank:46,team:'slap happy',rating:780,tier:'Gold 4'},{rank:47,team:'Till the End',rating:778,tier:'Gold 4'},{rank:48,team:'The Top Bananas',rating:777,tier:'Gold 4'},{rank:49,team:'Divine',rating:777,tier:'Gold 4'},{rank:50,team:'Lyfe',rating:777,tier:'Gold 4'},
+  {rank:51,team:'Zero-G',rating:776,tier:'Gold 4'},{rank:52,team:'Serendipity',rating:775,tier:'Gold 4'},{rank:53,team:'Nameless',rating:774,tier:'Gold 4'},{rank:54,team:'25',rating:767,tier:'Gold 4'},{rank:55,team:'Firetruck',rating:763,tier:'Gold 4'},
+  {rank:56,team:'Checkmate',rating:759,tier:'Gold 3'},{rank:57,team:'LOOKSMAXXERS',rating:753,tier:'Gold 3'},{rank:58,team:'Frost',rating:752,tier:'Gold 3'},{rank:59,team:'IRONY',rating:751,tier:'Gold 3'},{rank:60,team:'Vengeance',rating:751,tier:'Gold 3'},
+  {rank:61,team:'Origin',rating:750,tier:'Gold 3'},{rank:62,team:'Reel 2 Reel',rating:747,tier:'Gold 3'},{rank:63,team:'REFLEX',rating:745,tier:'Gold 3'},{rank:64,team:'Rift',rating:744,tier:'Gold 3'},{rank:65,team:'Praise the Lord',rating:742,tier:'Gold 3'},
+  {rank:66,team:'Paradox',rating:740,tier:'Gold 3'},{rank:67,team:'Swing or Get Swung',rating:739,tier:'Gold 3'},{rank:68,team:'Porch Pirates',rating:733,tier:'Gold 2'},{rank:69,team:"Kamiawookie's",rating:727,tier:'Gold 2'},{rank:70,team:'GRIM REAPERS',rating:725,tier:'Gold 2'},
+  {rank:71,team:'Grim Tide',rating:724,tier:'Gold 2'},{rank:72,team:"Pick N' Flick",rating:721,tier:'Gold 2'},{rank:73,team:'Potentia',rating:717,tier:'Gold 2'},{rank:74,team:'Dragon Ball Z',rating:714,tier:'Gold 2'},{rank:75,team:'HORIZON',rating:708,tier:'Gold 2'},
+  {rank:76,team:'The Cole4989',rating:693,tier:'Gold 1'},{rank:77,team:'Spacial Fusion',rating:689,tier:'Gold 1'},{rank:78,team:'VOLTAGE',rating:684,tier:'Gold 1'},{rank:79,team:'Kronos',rating:676,tier:'Gold 1'},{rank:80,team:"Slingin' Biscuits",rating:660,tier:'Gold 1'},{rank:81,team:"Etern1ty",rating:559,tier:'Gold 1'},
+];
+
+const BTMMR_ROSTERS = [
+  {team:'Cerberus',captain:'Orthrua',members:['Feels_','Want','Funeral','Jakee-','OpaL1ght']},
+  {team:'Ignite',captain:'Matheu',members:['Dwagin','KjtimpA','cole','Time-','Prize']},
+  {team:'Ace',captain:'arcticsplash-',members:['Phantom','Highway-','CxshCarti']},
+  {team:'W_Motion',captain:'BallinDawg34',members:['Balinbabs69','TickleJerk','BallinGecko69','BallinJJTripleOG']},
+  {team:'Redshift Esports',captain:'TheLaw-',members:['Chrome','Swagwor_','Mozzy-','BigBOT_','Nips']},
+  {team:'200',captain:'Ohnstuds',members:['n4rwh4le','Jaxxjh','ComradeMrBacon','Krogers','Camspin12']},
+  {team:'Yam Time',captain:'Toki',members:['aero','Tusuna','Solarp','Milkyway','wa']},
+  {team:'VOLTAGE',captain:'MOB_GUY',members:['Farsight_','Moxxie-','spaz','QuieT','Awesome_Abola']},
+  {team:'Reel 2 Reel',captain:'Chowtown93',members:['Talldude1080','Odin0314','Everrest','SirBlur','Decay']},
+  {team:'Till the End',captain:'The_precise1',members:['Jmbjmb98','Romeo','Kay_1220','alx_14','ophiuroid']},
+  {team:'Trendsetters',captain:'Deadline',members:['LEFTNOSTRILL-','shake','Quanxi','Logic_','yesmarkramsey']},
+  {team:'slap happy',captain:'kingkrip-',members:['boom-_','ZuckitZuckerberg','B00BIS','Bmo','person']},
+  {team:'Embers',captain:'Cool-Whip',members:['Wiggles-','Paronym','Sam_0.0-','X','b love']},
+  {team:'Frug',captain:'Raptured9',members:['Suprum','Beot','Ryanjs1020','Emptyi','PrinceXizor']},
+  {team:'Dragon Ball Z',captain:'Gamma2-',members:['Casyn_06','Invincible-','Burnt-','moky','flighty']},
+  {team:'Entropic Force',captain:'Snek-',members:['xyzzy-','Arch','MrMarcus04','WhiteDragon','TheOccamy']},
+  {team:'Silly Billies',captain:'adore',members:['blackshoe4','Voltage Gaming','guinea2018','Maxieboi014','Mitchlle']},
+  {team:'Lightbulwb',captain:'Shorty',members:['Razor','BrainBot07','babytru3','Layla','ducknub']},
+  {team:'Armada',captain:'mrcake-',members:['Sinnoh','ItzDevil','Sova-_','alienq','Ion_ic']},
+  {team:'unreliable',captain:'judah',members:['brady','chubs','randalff','Icy']},
+  {team:'Grim Tide',captain:'GT_Ceriel',members:['BigTeo','Doon_']},
+  {team:'Spacial Fusion',captain:'Spike4887',members:['Quackless','kornywitch','southernlydiscomfort','Panda_Cub25','falconjaksi']},
+  {team:'Porch Pirates',captain:'Biggie-_',members:['Sock','Lilwimp-','Oasis-_-','Noctem','Broofy-']},
+  {team:'Evolve',captain:'halfcourt',members:['Inferno-_','JJ_Lock','xKrispier_Friesx','SweetLyfe']},
+  {team:'gods',captain:'ExSalaryMan',members:['HonoredOne','SorcererKiller','KingOfCurses']},
+  {team:'Site 13',captain:'Semple',members:['Vix','Hyzer-','lightskinmurderman','Requiem','Daity']},
+  {team:'Tilted Towers',captain:'Gooseskywalker',members:['MyGuyChromium','Publix','vrguy-']},
+];
+
+const S1_RANKINGS = [
+  {rank:1,team:'Ignite',rating:1060,tier:'Master'},{rank:2,team:'Ghostmen',rating:944,tier:'Master'},{rank:3,team:'200',rating:941,tier:'Master'},{rank:4,team:'Forged',rating:937,tier:'Master'},{rank:5,team:'Goon Squad',rating:926,tier:'Master'},
+  {rank:6,team:'quest',rating:917,tier:'Master'},{rank:7,team:'apples',rating:899,tier:'Diamond 4'},{rank:8,team:'Entropic Force',rating:892,tier:'Diamond 4'},{rank:9,team:'Yam Time',rating:881,tier:'Diamond 3'},{rank:10,team:'Redshift',rating:879,tier:'Diamond 3'},
+  {rank:11,team:'Lurk',rating:878,tier:'Diamond 3'},{rank:12,team:'MitchIles EKittens',rating:871,tier:'Diamond 3'},{rank:13,team:'USAF',rating:866,tier:'Diamond 2'},{rank:14,team:'Awaken',rating:866,tier:'Diamond 2'},{rank:15,team:'Cerberus',rating:860,tier:'Diamond 2'},
+  {rank:16,team:'syzygy',rating:856,tier:'Diamond 2'},{rank:17,team:'Frug',rating:851,tier:'Diamond 1'},{rank:18,team:'Brick',rating:843,tier:'Platinum 4'},{rank:19,team:'kitty meow meows',rating:841,tier:'Platinum 4'},{rank:20,team:'Disc Functional Halos',rating:839,tier:'Platinum 4'},
+  {rank:21,team:'Blue Lock',rating:833,tier:'Platinum 4'},{rank:22,team:'Ball Barbers',rating:831,tier:'Platinum 4'},{rank:23,team:'The Wolfpack',rating:829,tier:'Platinum 4'},{rank:24,team:'Solar Strikers',rating:826,tier:'Platinum 3'},{rank:25,team:'GDK',rating:823,tier:'Platinum 3'},
+  {rank:26,team:'zero',rating:823,tier:'Platinum 3'},{rank:27,team:'Ace',rating:819,tier:'Platinum 3'},{rank:28,team:'Tickle Time',rating:818,tier:'Platinum 3'},{rank:29,team:'Petting Zoo',rating:815,tier:'Platinum 3'},{rank:30,team:'Kittens',rating:815,tier:'Platinum 2'},
+  {rank:31,team:'Infinity',rating:812,tier:'Platinum 2'},{rank:32,team:'Enigma',rating:807,tier:'Platinum 2'},{rank:33,team:'VOLTAGE',rating:806,tier:'Platinum 2'},{rank:34,team:'nuttybuddies',rating:806,tier:'Platinum 2'},{rank:35,team:'Trendsetters',rating:805,tier:'Platinum 2'},
+  {rank:36,team:'Santas Little Helpers',rating:804,tier:'Platinum 2'},{rank:37,team:'Astro',rating:803,tier:'Platinum 2'},{rank:38,team:'The Powerpuff Girls',rating:800,tier:'Platinum 1'},{rank:39,team:'Paragon',rating:799,tier:'Platinum 1'},{rank:40,team:'No Gravity V2',rating:797,tier:'Platinum 1'},
+  {rank:41,team:'Rebirth',rating:795,tier:'Platinum 1'},{rank:42,team:'Kangorillaz',rating:795,tier:'Platinum 1'},{rank:43,team:'Extra',rating:793,tier:'Platinum 1'},{rank:44,team:'AMR House',rating:790,tier:'Platinum 1'},{rank:45,team:'Electrolytes',rating:790,tier:'Platinum 1'},
+  {rank:46,team:'On The Spot',rating:788,tier:'Gold 4'},{rank:47,team:'Hitbox',rating:787,tier:'Gold 4'},{rank:48,team:'PowerRangwers',rating:786,tier:'Gold 4'},{rank:49,team:'Spectral Surge',rating:786,tier:'Gold 4'},
+];
+
+const S1_ROSTERS = [
+  {team:'200',captain:'Jaxxjh',members:['Krogers','Rias','aiden','mikey','n4rwh4le']},
+  {team:'Apples',captain:'Lukeski',members:['Feels_','Jay','zekey']},
+  {team:'Awaken',captain:'zMarc',members:['K1N3-','Augmenter','Enz','Lecaner']},
+  {team:'Ball Barbers',captain:'Nanox',members:['iRazor','Sigma123','Vision','asphu']},
+  {team:'Cerberus',captain:'Orthrua',members:['Alien','Ohnstuds','OpaL1ght']},
+  {team:'Cringe',captain:'The_precise1',members:['Jmbjmb98','Alx_14','jag7274','ophiuroid','romeo']},
+  {team:'Echoalition',captain:'Chuklz_Olot',members:['Nagini_-','BTHawk','MartianManTN','Panda_Cub25','dastammen']},
+  {team:'Echoholics',captain:'SirCaptainSpoon',members:['Smoothridin','Bay53','abchew2','bracara','victoriashton']},
+  {team:'Entourage',captain:'abcdefgh1jklmnop',members:['Bartstar','Jacob','hunterwildin','lxfny']},
+  {team:'Entropic Force',captain:'MrMarcus04',members:['Snek-','Amanda_-','TheOccamy','WhiteDragon','xyzzy-']},
+  {team:'FLAM35',captain:'Sloth',members:['Scootin_bootin','Brady','SOLO','yusuf']},
+  {team:'Forged',captain:'X',members:['Coastermaster77','EpicSauce-','Paronym','Unknown-','sinnoh']},
+  {team:'Formula 3',captain:'Kai',members:['Angel','BOT','BerZerK']},
+  {team:'Frug',captain:'Raptured9',members:['ryanjs4','Beot','PrinceXizor','Suprumbuns']},
+  {team:'Goon Squad',captain:'Dwagin',members:['Vipen','cole','oc','ryan.norton']},
+  {team:'Ignite',captain:'matheu',members:['TheLaw-','KjtimpA','Swagwor_']},
+  {team:'Lurk',captain:'whak',members:['Funeral','Spy','hunter','ko']},
+  {team:'Mictlan',captain:'ItSilverZ',members:['w3lden5','DavLoy','GabAiz','UltraTMZ']},
+  {team:'Mitchiles Ekittens',captain:'guinea2018',members:['Goofyy-','Moxxie-','requis']},
+  {team:'Moonlit Black Cats',captain:'KyoKitsuneTenshi',members:['FROSTY_mbc','De-Focus','ItchyNutz','Smi1es-','rileywinter']},
+  {team:'Parallax',captain:'sh0es-',members:['Synx','CanadianViper-','Mcdonalds']},
+  {team:'RESTART',captain:'Wand_of_Sparking',members:['Igris','Juy_Guy','Shiloh']},
+  {team:'REVIVE',captain:'The-Royal-Chef',members:['Langer','Gears','HeyyNayy','InDev-','smith']},
+  {team:'Roid Rage',captain:'Kibo827',members:['Beast-','Brae-','elias']},
+  {team:'Santas Little Helpers',captain:'biggiejones',members:['doofusinc','Billy','Dragon','jaws-']},
+];
+
+const S2_RANKINGS = [
+  {rank:1,team:'200',rating:1005,tier:'Master'},{rank:2,team:'whatever',rating:931,tier:'Master'},{rank:3,team:'AETHER',rating:907,tier:'Diamond 4'},{rank:4,team:'Ignite',rating:905,tier:'Diamond 4'},{rank:5,team:'USAF',rating:891,tier:'Master'},
+  {rank:6,team:'ALDI',rating:886,tier:'Diamond 4'},{rank:7,team:'Blunt Rollaz',rating:883,tier:'Diamond 4'},{rank:8,team:'Anomalington',rating:878,tier:'Diamond 4'},{rank:9,team:'mhm',rating:873,tier:'Diamond 3'},{rank:10,team:'GirlBoss',rating:866,tier:'Master'},
+  {rank:11,team:'Mitchiles Ekittens',rating:860,tier:'Diamond 2'},{rank:12,team:'Blue-x',rating:860,tier:'Diamond 2'},{rank:13,team:'Cerberus',rating:856,tier:'Diamond 2'},{rank:14,team:'quest 2',rating:850,tier:'Diamond 1'},{rank:15,team:'Forged',rating:847,tier:'Master'},
+  {rank:16,team:'Santas Little Helpers',rating:847,tier:'Diamond 1'},{rank:17,team:'buns',rating:837,tier:'Platinum 4'},{rank:18,team:'Chrome heart',rating:837,tier:'Platinum 4'},{rank:19,team:'creemie milk',rating:836,tier:'Platinum 4'},{rank:20,team:'V-2',rating:835,tier:'Platinum 4'},
+  {rank:21,team:'W Motion',rating:833,tier:'Platinum 4'},{rank:22,team:'Gooses_N_Nooses',rating:831,tier:'Platinum 4'},{rank:23,team:'Mechanical brilliance',rating:818,tier:'Platinum 3'},{rank:24,team:'Grilled Cheese Obama Sandwich',rating:817,tier:'Platinum 3'},{rank:25,team:'Tech Support',rating:815,tier:'Platinum 3'},
+  {rank:26,team:'Blue Lock',rating:806,tier:'Platinum 2'},{rank:27,team:'Interfectors',rating:806,tier:'Platinum 2'},{rank:28,team:'GDK',rating:806,tier:'Platinum 2'},{rank:29,team:'VOLTAGE',rating:805,tier:'Platinum 2'},{rank:30,team:'laststand',rating:804,tier:'Platinum 2'},
+  {rank:31,team:'AOE',rating:804,tier:'Platinum 2'},{rank:32,team:'Silly Billies',rating:802,tier:'Platinum 2'},{rank:33,team:'Cringe',rating:798,tier:'Platinum 1'},{rank:34,team:'P5RCENT',rating:792,tier:'Platinum 1'},{rank:35,team:'Fabulous Flamingos',rating:791,tier:'Platinum 1'},
+  {rank:36,team:'utopia',rating:786,tier:'Gold 4'},{rank:37,team:'etc',rating:781,tier:'Gold 4'},{rank:38,team:'mf doom',rating:779,tier:'Gold 4'},{rank:39,team:'ragebait',rating:778,tier:'Gold 4'},{rank:40,team:'Haven',rating:772,tier:'Gold 4'},
+  {rank:41,team:'The Munchies',rating:771,tier:'Gold 3'},{rank:42,team:'Euphoria',rating:771,tier:'Gold 3'},{rank:43,team:'etc dot',rating:771,tier:'Gold 3'},{rank:44,team:'Dawnbringers',rating:770,tier:'Gold 3'},{rank:45,team:'Xforce',rating:768,tier:'Gold 3'},
+  {rank:46,team:'Lethal Company Employees',rating:768,tier:'Gold 3'},{rank:47,team:'The Titanic Swim Team',rating:768,tier:'Gold 3'},{rank:48,team:'Entourage',rating:767,tier:'Gold 3'},{rank:49,team:'Corvus',rating:766,tier:'Gold 3'},{rank:50,team:'Lurk',rating:765,tier:'Gold 3'},
+  {rank:51,team:'Formula 3',rating:765,tier:'Gold 3'},{rank:52,team:'Hadzabe Tribe',rating:764,tier:'Gold 3'},{rank:53,team:'X3D',rating:763,tier:'Gold 3'},{rank:54,team:'X-Men',rating:763,tier:'Gold 3'},{rank:55,team:'Cv1 Poopers',rating:762,tier:'Gold 3'},
+  {rank:56,team:'Echoalition',rating:761,tier:'Gold 3'},{rank:57,team:'YNS',rating:758,tier:'Gold 3'},{rank:58,team:'Ancient Athletes',rating:756,tier:'Gold 3'},{rank:59,team:'fists of fury',rating:754,tier:'Gold 3'},{rank:60,team:'Naruto',rating:751,tier:'Gold 2'},
+  {rank:61,team:'Echos Finest',rating:748,tier:'Gold 2'},{rank:62,team:'The Sunsets',rating:745,tier:'Gold 2'},{rank:63,team:'ONYX',rating:741,tier:'Gold 2'},{rank:64,team:'Spacial Fusion',rating:733,tier:'Gold 2'},{rank:65,team:'Low Expectations',rating:730,tier:'Gold 2'},
+  {rank:66,team:'Echoteers',rating:727,tier:'Gold 2'},{rank:67,team:'Origin',rating:721,tier:'Gold 1'},{rank:68,team:'Parallax',rating:705,tier:'Gold 1'},{rank:69,team:'Dark Inferno',rating:671,tier:'Gold 1'},{rank:70,team:'SANTAS RIZZING LEGO BIKER GANG',rating:665,tier:'Gold 1'},
+];
+
+const S2_ROSTERS = [
+  {team:'200',captain:'Jaxxjh',members:['Krogers','ComradeMrBacon','Carti','aiden','mikey']},
+  {team:'Blue-x',captain:'Brady',members:['Aiden-x','Hyzer','Requiem','Rhinopillrager','Semple']},
+  {team:'buns',captain:'JuicyFr',members:['Tyler','Finn-','Mas','Mountainous']},
+  {team:'Cerberus',captain:'Orthrua',members:['Doon','Feels_','Festive','Funeral','OpaL1ght']},
+  {team:'Chrome heart',captain:'Luv',members:['nya','Nagi','jack']},
+  {team:'Cringe',captain:'Jmbjmb98',members:['romeo','Abel156','Alx_14','ophiuroid','shakeNbakeN-']},
+  {team:'Echoalition',captain:'Chuklz_Olot',members:['Nagini_-','BTHawk','MartianManTN','Panda_Cub25','dastammen']},
+  {team:'Echoteers',captain:'ryrytheflyguy',members:['BroxSlev','8B1t_Blitz-','ManWithNoName','Park','iSuBiEz']},
+  {team:'etc dot',captain:'Ins1ght_',members:['Jor','fallaw','hunter']},
+  {team:'Fabulous Flamingos',captain:'Encara-',members:['Ohnstuds','Scavar','iso','mahker']},
+  {team:'Forged',captain:'XRawrs',members:['Coastermaster77','BigBOT_','Matt-','Paronym','acorn302']},
+  {team:'GirlBoss',captain:'Cat',members:['dippedpotato','caroline','cole']},
+  {team:'Gooses_N_Nooses',captain:'DuckwithDownSyndrome',members:['Juy_Guy','SYNOHawk','Wand_of_Sparking','groupofnuns']},
+  {team:'Hadzabe Tribe',captain:'Bob',members:['Slothy','Darkscope5','Nocturne','splat261']},
+  {team:'Interfectors',captain:'MilkyBoiVR',members:['Goessl','Parsec','mad','santi gimenez']},
+  {team:'Mitchiles Ekittens',captain:'RicochetRobert94',members:['GangsterGeorge27','Band1t','Moxxie-','imgonnadoit','placementpeter70']},
+  {team:'Parallax',captain:'Lowes-',members:['Synx','Home Depot','Pariah','niva-']},
+  {team:'Santas Little Helpers',captain:'biggiejones',members:['doofusinc','Billy','Dragon','jaws-']},
+  {team:'SANTAS RIZZING LEGO BIKER GANG',captain:'medium_fry',members:['myfriends_freakyy','Kibo827','Patriotic ghost']},
+  {team:'Silly Billies',captain:'adore',members:['blackshoe4','Voltage Gaming','guinea2018','Maxieboi014','Mitchlle']},
+  {team:'Spacial Fusion',captain:'spike4887',members:['QuackLess','AngelicSn1per','Devquan','memeC50','yesmarkramsey']},
+  {team:'Tech Support',captain:'Ins1ght_',members:['Jor','fallaw','hunter']},
+  {team:'The Titanic Swim Team',captain:'ryrytheflyguy',members:['BroxSlev','8B1t_Blitz-','ManWithNoName','Park']},
+  {team:'V-2',captain:'V1ZIX',members:['Mountainous','Daiki Aomine','FDA-','Frosty','mbck13']},
+  {team:'whatever',captain:'matheu',members:['Dwagin','Decay','Rev','kj','lowz']},
+];
+
+const S3_RANKINGS = [
+  {rank:1,team:'chaos',rating:997,tier:'Master'},{rank:2,team:'200',rating:996,tier:'Master'},{rank:3,team:'Riptide',rating:928,tier:'Diamond 4'},{rank:4,team:'frug',rating:916,tier:'Master'},{rank:5,team:'quest 3',rating:893,tier:'Diamond 4'},
+  {rank:6,team:'Dragon Slayers',rating:893,tier:'Diamond 4'},{rank:7,team:'Astral',rating:891,tier:'Diamond 4'},{rank:8,team:'Sesquipedalian',rating:890,tier:'Diamond 4'},{rank:9,team:'WLDCRD',rating:885,tier:'Master'},{rank:10,team:'Forged',rating:879,tier:'Master'},
+  {rank:11,team:'Velocity',rating:852,tier:'Diamond 1'},{rank:12,team:'Ragnarok',rating:850,tier:'Diamond 1'},{rank:13,team:'Deceit',rating:849,tier:'Diamond 1'},{rank:14,team:'Mitchiles Ekittens',rating:846,tier:'Diamond 1'},{rank:15,team:'Zone Echo',rating:845,tier:'Diamond 1'},
+  {rank:16,team:'Ravens',rating:834,tier:'Platinum 4'},{rank:17,team:'SEN',rating:831,tier:'Platinum 4'},{rank:18,team:'Renamed',rating:822,tier:'Platinum 3'},{rank:19,team:'Green-Bean',rating:821,tier:'Platinum 3'},{rank:20,team:'Lethal',rating:821,tier:'Platinum 3'},
+  {rank:21,team:'Cream Squad',rating:815,tier:'Platinum 3'},{rank:22,team:'Generation',rating:814,tier:'Platinum 3'},{rank:23,team:'WBW',rating:812,tier:'Platinum 2'},{rank:24,team:'G-3',rating:808,tier:'Platinum 2'},{rank:25,team:'Frontier',rating:808,tier:'Platinum 2'},
+  {rank:26,team:'Surge',rating:807,tier:'Platinum 2'},{rank:27,team:'Gooses_N_Nooses',rating:806,tier:'Platinum 2'},{rank:28,team:'The Kardashians',rating:806,tier:'Platinum 2'},{rank:29,team:'team name',rating:798,tier:'Platinum 1'},{rank:30,team:'Cerberus',rating:795,tier:'Platinum 1'},
+  {rank:31,team:'Floaties',rating:794,tier:'Platinum 1'},{rank:32,team:'Artificial',rating:794,tier:'Platinum 1'},{rank:33,team:'Dystopia',rating:789,tier:'Gold 4'},{rank:34,team:'Fineapples',rating:787,tier:'Gold 4'},{rank:35,team:'Triple A',rating:786,tier:'Gold 4'},
+  {rank:36,team:'Gooney Toons',rating:786,tier:'Gold 4'},{rank:37,team:'Blue-x',rating:784,tier:'Gold 4'},{rank:38,team:'awaken',rating:784,tier:'Gold 4'},{rank:39,team:'Povek',rating:781,tier:'Gold 4'},{rank:40,team:'The Bone Dust Bandits',rating:780,tier:'Gold 4'},
+  {rank:41,team:'Tech Support',rating:777,tier:'Gold 4'},{rank:42,team:'Ctrl',rating:775,tier:'Gold 4'},{rank:43,team:'rubberduckies',rating:770,tier:'Gold 3'},{rank:44,team:'ABL',rating:769,tier:'Gold 3'},{rank:45,team:'placement',rating:767,tier:'Gold 3'},
+  {rank:46,team:'BTW',rating:766,tier:'Gold 3'},{rank:47,team:'rebirth',rating:766,tier:'Gold 3'},{rank:48,team:'applsaus',rating:764,tier:'Gold 3'},{rank:49,team:'Spacial Fusion',rating:764,tier:'Gold 3'},{rank:50,team:'HMmm',rating:763,tier:'Gold 3'},
+  {rank:51,team:'flake by c418',rating:762,tier:'Gold 3'},{rank:52,team:'Crosshairs',rating:760,tier:'Gold 3'},{rank:53,team:'Blue Lock',rating:757,tier:'Gold 3'},{rank:54,team:'Vegas',rating:756,tier:'Gold 3'},{rank:55,team:'Koi Fish',rating:747,tier:'Gold 2'},
+  {rank:56,team:'Balance',rating:745,tier:'Gold 2'},{rank:57,team:'cabin crew simulator',rating:740,tier:'Gold 2'},{rank:58,team:'Parallax',rating:738,tier:'Gold 2'},{rank:59,team:'Paragon',rating:736,tier:'Gold 2'},{rank:60,team:'Echoalition',rating:735,tier:'Gold 2'},
+  {rank:61,team:'nexus',rating:731,tier:'Gold 2'},{rank:62,team:'Dark Samurais',rating:727,tier:'Gold 2'},{rank:63,team:'BOOOOOOOOOOOOMshakalaka',rating:726,tier:'Gold 2'},{rank:64,team:'The Sproutlings',rating:724,tier:'Gold 2'},{rank:65,team:'Celestial',rating:721,tier:'Gold 2'},
+  {rank:66,team:'Silly Billies',rating:720,tier:'Gold 2'},{rank:67,team:'Miroh',rating:717,tier:'Gold 1'},{rank:68,team:'SANTAS RIZZING LEGO BIKER GANG',rating:701,tier:'Gold 1'},
+];
+
+const S3_ROSTERS = [
+  {team:'200',captain:'Jaxxjh',members:['Krogers','ComradeMrBacon','Rin','mikey','n4rwh4le']},
+  {team:'Astral',captain:'XKing-',members:['ioah','Uzu-','manta','weep']},
+  {team:'BOOOOOOOOOOOOMshakalaka',captain:'Medium_Fry',members:['Small_Fry','LeftNostrill','Nokk','Yuki-']},
+  {team:'Cerberus',captain:'Orthrua',members:['Doon','Brady','Killerduderob-','OpaL1ght']},
+  {team:'chaos',captain:'only',members:['Milkyway','Prize','Zu-Ko','kj','shinrii']},
+  {team:'Dragon Slayers',captain:'PureCosmo',members:['Shush','Spin','Vipen']},
+  {team:'Echoalition',captain:'Nagini_-',members:['Bass5','Panda_Cub25','Purpl3Princ3','dastammen']},
+  {team:'Floaties',captain:'Jmbjmb98',members:['The_precise1','Abel156','Amanda_-','everest','shakeNbakeN-']},
+  {team:'Forged',captain:'Coastermaster77',members:['Pause-','Matt-','Paronym','acorn302']},
+  {team:'frug',captain:'ryanjs4',members:['Beot','Emptyi','PrinceXizor','Raptured9','Suprumbuns']},
+  {team:'G-3',captain:'biggiejones',members:['doofusinc','Awesome On A Toaster','Billy','Nibblez-','mahker']},
+  {team:'Generation',captain:'Akashi-',members:['Daiki Aomine','Kuroko-','Murasakibara_','babytru3','linky']},
+  {team:'Gooses_N_Nooses',captain:'DuckwithDownSyndrome',members:['Juy_Guy','Kibo827','Wand_of_Sparking','alyssaaaa','groupofnuns']},
+  {team:'Green-Bean',captain:'KARA',members:['Bob','D4RK_VR666','Zain','crusader']},
+  {team:'Interfectors',captain:'MilkyBoiVR',members:['Goessl','Parsec','mad','santi gimenez']},
+  {team:'Koi Fish',captain:'Special-Man',members:['Slothy','D4rk','ZestyBoyAdam']},
+  {team:'Lethal',captain:'lulu-',members:['DarkArrow-','Deadline','Seann-','bbtitan1','dumplin']},
+  {team:'Miroh',captain:'ZombieMagikarp1',members:['Sam_00-','Chrxs','DaveJTuck']},
+  {team:'Mitchiles Ekittens',captain:'ImportantIvan88',members:['Band1t','EssentialEvan70','FundamentalFinn61']},
+  {team:'Riptide',captain:'Spirit',members:['cole','Chrome','Rivoltra','ryan.norton']},
+  {team:'Sesquipedalian',captain:'Decay',members:['EpicDeathHawk55','EpicSauce-','GhostDuck','Hollow-','jack']},
+  {team:'Spacial Fusion',captain:'spike4887',members:['QuackLess','AngelicSn1per','Devquan','memeC50','yesmarkramsey']},
+  {team:'Surge',captain:'IceBergg12',members:['BaltiBro','Blitz_05','fasf_on_fent','legxnd']},
+  {team:'Triple A',captain:'-Dem0n h3x-',members:['Synx','Pz','greflin','monarch','viva']},
+  {team:'Velocity',captain:'Ry-',members:['Tylr','Aweigh','ConnerCC','Triumph']},
+  {team:'WLDCRD',captain:'sinnoh',members:['Fletcherus','Ryruff','gtyler-','hunaveli','insight']},
+  {team:'Zone Echo',captain:'DarTerrorPeanut',members:['sam','This Is A Joke','jag7274','waffledlife','zMarc']},
+];
+
+// ── Rankings Table ──
+const RankingsTable = ({ data, colors }) => {
+  const [showAll, setShowAll] = React.useState(false);
+  const visible = showAll ? data : data.slice(0, 20);
+  return (
+    <Box>
+      <Box overflowX="auto">
+        <Box as="table" w="100%" style={{ borderCollapse: 'collapse' }}>
+          <Box as="thead">
+            <Box as="tr" bg={colors.bgSecondary}>
+              {['#','Team','Rating','Rank'].map((h) => (
+                <Box key={h} as="th" px="3" py="2" fontSize="10px" fontWeight="800" color={colors.textMuted} textTransform="uppercase" letterSpacing="wider" textAlign={h === 'Rating' ? 'right' : 'left'}>{h}</Box>
+              ))}
+            </Box>
+          </Box>
+          <Box as="tbody">
+            {visible.map((row, i) => (
+              <Box as="tr" key={row.rank} bg={i < 3 ? `${colors.accentOrange}0d` : 'transparent'} _hover={{ bg: `${colors.textPrimary}08` }} style={{ transition: 'background 0.15s' }}>
+                <Box as="td" px="3" py="2" fontSize="sm" fontWeight="700" color={colors.textMuted} w="40px">
+                  {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : row.rank}
+                </Box>
+                <Box as="td" px="3" py="2" fontSize="sm" fontWeight="700" color={i < 3 ? colors.accentOrange : colors.textPrimary}>{row.team}</Box>
+                <Box as="td" px="3" py="2" fontSize="sm" color={colors.textSecondary} textAlign="right">{row.rating}</Box>
+                <Box as="td" px="3" py="2">
+                  <Box as="span" px="2" py="0.5" rounded="full" fontSize="11px" fontWeight="700" style={{ background: `${getRankColor(row.tier)}22`, color: getRankColor(row.tier) }}>{row.tier}</Box>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Box>
+      {data.length > 20 && (
+        <Box as="button" mt="2" mx="3" mb="1" px="3" py="1.5" fontSize="xs" fontWeight="600" color={colors.accentOrange} border="1px solid" borderColor={`${colors.accentOrange}44`} rounded="lg" bg="transparent" cursor="pointer" onClick={() => setShowAll(v => !v)}>
+          {showAll ? `Show Top 20 ▲` : `Show All ${data.length} Teams ▼`}
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+// ── Rosters Grid ──
+const RostersGrid = ({ data, colors }) => {
+  const active = data.filter(t => t.members.some(m => m));
+  return (
+    <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(220px, 1fr))" gap="3" p="3">
+      {active.map((t) => (
+        <Box key={t.team} bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium} rounded="xl" p="3">
+          <Text fontSize="sm" fontWeight="800" color={colors.accentOrange} mb="1">{t.team}</Text>
+          <Text fontSize="xs" color={colors.textMuted} mb="1.5">👑 {t.captain}</Text>
+          <VStack align="stretch" gap="0.5">
+            {t.members.filter(Boolean).map((m, i) => (
+              <Text key={i} fontSize="xs" color={colors.textSecondary}>· {m.trim()}</Text>
+            ))}
+          </VStack>
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
+// ── Season data panel ──
+const SeasonPanel = ({ season, colors }) => {
+  const [view, setView] = React.useState(null);
+  const tabs = [];
+  if (season.rankings) tabs.push({ key: 'rankings', label: '🏆 Rankings' });
+  if (season.rosters) tabs.push({ key: 'rosters', label: '👥 Rosters' });
+  if (season.bracketUrl) tabs.push({ key: 'bracket', label: '🎯 Bracket' });
+
+  return (
+    <Box>
+      <HStack gap="2" p="3" flexWrap="wrap">
+        {tabs.map(tab => (
+          <Box
+            key={tab.key}
+            as="button"
+            px="3" py="1.5"
+            bg={view === tab.key ? `${season.badgeColor}22` : colors.bgSecondary}
+            border="1px solid"
+            borderColor={view === tab.key ? season.badgeColor : colors.borderMedium}
+            rounded="lg"
+            fontSize="xs"
+            fontWeight="600"
+            color={view === tab.key ? season.badgeColor : colors.textSecondary}
+            cursor="pointer"
+            transition="all 0.15s"
+            onClick={() => setView(v => v === tab.key ? null : tab.key)}
+          >
+            {tab.label}
+          </Box>
+        ))}
+        {season.bracketUrl && (
+          <Box
+            as="a"
+            href={season.bracketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            px="3" py="1.5"
+            bg={colors.bgSecondary}
+            border="1px solid"
+            borderColor={colors.borderMedium}
+            rounded="lg"
+            fontSize="xs"
+            fontWeight="600"
+            color={colors.textSecondary}
+            display="inline-flex"
+            alignItems="center"
+            gap="1"
+          >
+            <GitBranch size={12} /> View Bracket <ExternalLink size={10} />
+          </Box>
+        )}
+      </HStack>
+      {view === 'rankings' && season.rankings && (
+        <Box borderTop="1px solid" borderColor={colors.borderMedium}>
+          <RankingsTable data={season.rankings} colors={colors} />
+        </Box>
+      )}
+      {view === 'rosters' && season.rosters && (
+        <Box borderTop="1px solid" borderColor={colors.borderMedium}>
+          <RostersGrid data={season.rosters} colors={colors} />
+        </Box>
+      )}
+    </Box>
+  );
+};
+
 const ARCHIVED_SEASONS = [
   {
     id: 'btmmr',
@@ -962,22 +1280,9 @@ const ARCHIVED_SEASONS = [
     badgeColor: '#8b5cf6',
     description: 'Break the MMR — the inaugural EML preseason tournament.',
     champion: '🥇 Ignite  ·  🥈 Redshift Esports',
-    categories: [
-      {
-        label: 'Season Info',
-        links: [
-          { label: 'Full Bracket', icon: 'bracket', extUrl: 'https://challonge.com/iw14x5kx' },
-        ],
-      },
-      {
-        label: 'Data',
-        links: [
-          { label: 'Team Rankings', icon: 'rankings', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtqi55OCReOAtJvbPo74Y_USJj_VDW0r_OYOoHC07DrOx-r4tJLJrRoYMQX2XTbLV5tFWF0bo1qtOD/pubhtml?gid=619009985&single=true&widget=true&headers=false' },
-          { label: 'Team Rosters', icon: 'rosters', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtqi55OCReOAtJvbPo74Y_USJj_VDW0r_OYOoHC07DrOx-r4tJLJrRoYMQX2XTbLV5tFWF0bo1qtOD/pubhtml?gid=2021031332&single=true&widget=true&headers=false' },
-          { label: 'Matches & Results', icon: 'matches', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtqi55OCReOAtJvbPo74Y_USJj_VDW0r_OYOoHC07DrOx-r4tJLJrRoYMQX2XTbLV5tFWF0bo1qtOD/pubhtml?gid=454313587&single=true&widget=true&headers=false' },
-        ],
-      },
-    ],
+    bracketUrl: 'https://challonge.com/iw14x5kx',
+    rankings: BTMMR_RANKINGS,
+    rosters: BTMMR_ROSTERS,
   },
   {
     id: 's1',
@@ -986,19 +1291,9 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 1',
     badgeColor: '#f59e0b',
     description: 'The first official EML season.',
-    categories: [
-      {
-        label: 'Teams & Players',
-        links: [
-          { label: 'Team Rankings', icon: 'rankings', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQKYDR4yiZ1CL0QclcBiV1azVclwlIyO8I6EIYOfk5V8k2-EvbxEx35cVpyQgoOn_WYqItNIkcKH7jq/pubhtml?gid=619009985&single=true&widget=true&headers=false' },
-          { label: 'Team Rosters', icon: 'rosters', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnP2rTWXNXRDAuieiO8ZuBgSzD4u8AptbEf1zCJU-9aHCiGdosw1geJp3dBpz_X7hITalZpFddyOfz/pubhtml?gid=0&single=true&widget=true&headers=false' },
-          { label: 'Team Statistics', icon: 'stats', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQKYDR4yiZ1CL0QclcBiV1azVclwlIyO8I6EIYOfk5V8k2-EvbxEx35cVpyQgoOn_WYqItNIkcKH7jq/pubhtml?gid=1523615511&single=true&widget=true&headers=false' },
-          { label: 'Registered Players', icon: 'players', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnP2rTWXNXRDAuieiO8ZuBgSzD4u8AptbEf1zCJU-9aHCiGdosw1geJp3dBpz_X7hITalZpFddyOfz/pubhtml?gid=218539113&single=true&widget=true&headers=false' },
-          { label: 'League Subs', icon: 'subs', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnP2rTWXNXRDAuieiO8ZuBgSzD4u8AptbEf1zCJU-9aHCiGdosw1geJp3dBpz_X7hITalZpFddyOfz/pubhtml?gid=1457988890&single=true&widget=true&headers=false' },
-          { label: 'Cooldown List', icon: 'cooldown', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTIvdXGBkVZB5ZFdMVUCZqe8e8DbOj6UbSAeqBP0uzYAY5Z1q37c-ZVG7iV96_cOlX-0jsgNLYXfe6B/pubhtml?gid=1479764525&single=true&widget=true&headers=false' },
-        ],
-      },
-    ],
+    champion: '🥇 Ignite',
+    rankings: S1_RANKINGS,
+    rosters: S1_ROSTERS,
   },
   {
     id: 's2',
@@ -1007,24 +1302,10 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 2',
     badgeColor: '#f97316',
     description: 'The second EML season.',
-    categories: [
-      {
-        label: 'Season Info',
-        links: [
-          { label: 'Finals Bracket', icon: 'bracket', extUrl: 'https://challonge.com/EML_Season_2_Finals' },
-        ],
-      },
-      {
-        label: 'Teams & Players',
-        links: [
-          { label: 'Team Rankings', icon: 'rankings', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ9DiHnIUn2fLxJxHrmidSv-0rLorbdKxYh7L_ahhum5nFla3_vd64Fqw7gR8lXNObaNV60rRgZzEd/pubhtml?gid=619009985&single=true&widget=true&headers=false' },
-          { label: 'Team Rosters', icon: 'rosters', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScrC0JMT62zO3C9g4E5qL9SmxnXGFA9HEJT9HrMcJszT1grZ_8Ddj3vVCXZY5LEdgEFHTz-gXbWmSP/pubhtml?gid=0&single=true&widget=true&headers=false' },
-          { label: 'Team Statistics', icon: 'stats', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQ5Y5_CWzqM_Mcy-w9Bd2ItVpFKZqNqtufHYKEiKQ2aBDgjvK_DuP9XM0TMhUGXBkDIiumktZF8goz/pubhtml?gid=1523615511&single=true&widget=true&headers=false' },
-          { label: 'Registered Players', icon: 'players', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScrC0JMT62zO3C9g4E5qL9SmxnXGFA9HEJT9HrMcJszT1grZ_8Ddj3vVCXZY5LEdgEFHTz-gXbWmSP/pubhtml?gid=218539113&single=true&widget=true&headers=false' },
-          { label: 'League Subs', icon: 'subs', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScrC0JMT62zO3C9g4E5qL9SmxnXGFA9HEJT9HrMcJszT1grZ_8Ddj3vVCXZY5LEdgEFHTz-gXbWmSP/pubhtml?gid=1457988890&single=true&widget=true&headers=false' },
-        ],
-      },
-    ],
+    champion: '🥇 200',
+    bracketUrl: 'https://challonge.com/EML_Season_2_Finals',
+    rankings: S2_RANKINGS,
+    rosters: S2_ROSTERS,
   },
   {
     id: 's3',
@@ -1033,171 +1314,38 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 3',
     badgeColor: '#ef4444',
     description: 'The third EML season.',
-    categories: [
-      {
-        label: 'Teams & Players',
-        links: [
-          { label: 'Team Rankings', icon: 'rankings', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUM3wrnyecbRz1QIyXwnrztPrhyd11f4NBWBmIkfm5UyVYs0rocw18BnZPg_GUrnB2-UYRXd6Ug_S/pubhtml?gid=619009985&single=true&widget=true&headers=false' },
-          { label: 'Team Rosters', icon: 'rosters', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm3mpyCjnrbnF7Qk1zFgthxoTDCMxZIsubQDrP6SumUe1fhJw0UaUZtQrSRz_U6r7cmJ1QxHf03rPP/pubhtml?gid=0&single=true&widget=true&headers=false' },
-          { label: 'Team Statistics', icon: 'stats', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQmUM3wrnyecbRz1QIyXwnrztPrhyd11f4NBWBmIkfm5UyVYs0rocw18BnZPg_GUrnB2-UYRXd6Ug_S/pubhtml?gid=1523615511&single=true&widget=true&headers=false' },
-          { label: 'Registered Players', icon: 'players', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm3mpyCjnrbnF7Qk1zFgthxoTDCMxZIsubQDrP6SumUe1fhJw0UaUZtQrSRz_U6r7cmJ1QxHf03rPP/pubhtml?gid=218539113&single=true&widget=true&headers=false' },
-          { label: 'League Subs', icon: 'subs', sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm3mpyCjnrbnF7Qk1zFgthxoTDCMxZIsubQDrP6SumUe1fhJw0UaUZtQrSRz_U6r7cmJ1QxHf03rPP/pubhtml?gid=1457988890&single=true&widget=true&headers=false' },
-        ],
-      },
-    ],
+    champion: '🥇 chaos  ·  🥈 200',
+    rankings: S3_RANKINGS,
+    rosters: S3_ROSTERS,
   },
 ];
 
-const linkIcon = (icon, color) => {
-  const size = 13;
-  if (icon === 'hub') return <ScrollText size={size} color={color} />;
-  if (icon === 'rankings') return <Trophy size={size} color={color} />;
-  if (icon === 'rosters') return <Users size={size} color={color} />;
-  if (icon === 'stats') return <BarChart2 size={size} color={color} />;
-  if (icon === 'matches') return <CalendarDays size={size} color={color} />;
-  if (icon === 'cooldown') return <Clock size={size} color={color} />;
-  if (icon === 'bracket') return <GitBranch size={size} color={color} />;
-  return <ExternalLink size={size} color={color} />;
-};
-
-const ArchivedSeasonsTab = ({ colors }) => {
-  const [activeSheet, setActiveSheet] = React.useState(null); // { title, url }
-
-  return (
-    <>
-      {/* Inline sheet viewer dialog */}
-      {activeSheet && (
-        <Dialog.Root open={!!activeSheet} onOpenChange={(e) => !e.open && setActiveSheet(null)} size="full">
-          <Portal>
-            <Dialog.Backdrop bg="blackAlpha.800" backdropFilter="blur(8px)" />
-            <Dialog.Positioner>
-              <Dialog.Content
-                maxW="1100px"
-                w="95vw"
-                maxH="90vh"
-                bg={colors.bgPrimary}
-                border="1px solid"
-                borderColor={colors.borderMedium}
-                rounded="2xl"
-                overflow="hidden"
-                display="flex"
-                flexDirection="column"
-              >
-                <Dialog.Header borderBottom="1px solid" borderColor={colors.borderMedium} py="3" px="4" flexShrink="0">
-                  <HStack justify="space-between">
-                    <HStack gap="2">
-                      <Archive size={16} color={colors.accentOrange} />
-                      <Dialog.Title fontSize="md" fontWeight="700" color={colors.textPrimary}>
-                        {activeSheet.title}
-                      </Dialog.Title>
-                    </HStack>
-                    <Dialog.CloseTrigger asChild>
-                      <CloseButton size="sm" color={colors.textSecondary} _hover={{ color: colors.textPrimary }} />
-                    </Dialog.CloseTrigger>
-                  </HStack>
-                </Dialog.Header>
-                <Box flex="1" overflow="hidden">
-                  <Box
-                    as="iframe"
-                    src={activeSheet.url}
-                    w="100%"
-                    h="100%"
-                    border="none"
-                    title={activeSheet.title}
-                  />
-                </Box>
-              </Dialog.Content>
-            </Dialog.Positioner>
-          </Portal>
-        </Dialog.Root>
-      )}
-
-      <VStack gap="5" align="stretch">
-        <Box p="3" bg={`${colors.accentOrange}11`} border="1px solid" borderColor={`${colors.accentOrange}33`} rounded="lg">
-          <Text fontSize="sm" color={colors.textMuted}>
-            Browse stats, rosters, and results from all past EML seasons. Click any button to view the data inline.
-          </Text>
-        </Box>
-        {ARCHIVED_SEASONS.map((season) => (
-          <Box key={season.id} bg={colors.bgElevated} border="1px solid" borderColor={colors.borderMedium} rounded="xl" overflow="hidden">
-            {/* Season header */}
-            <HStack px="4" py="3" bg={colors.bgSecondary} borderBottom="1px solid" borderColor={colors.borderMedium} gap="3" flexWrap="wrap">
-              <Box
-                bg={`${season.badgeColor}22`}
-                color={season.badgeColor}
-                px="2.5"
-                py="0.5"
-                rounded="full"
-                fontSize="xs"
-                fontWeight="800"
-                letterSpacing="wide"
-                flexShrink="0"
-              >
-                {season.badge}
-              </Box>
-              <Box flex="1">
-                <Text fontSize="md" fontWeight="800" color={colors.textPrimary}>{season.label}</Text>
-                <Text fontSize="xs" color={colors.textMuted}>{season.year} · {season.description}</Text>
-                {season.champion && (
-                  <Text fontSize="xs" color={season.badgeColor} fontWeight="700" mt="0.5">{season.champion}</Text>
-                )}
-              </Box>
-            </HStack>
-            {/* Categorized links */}
-            <VStack align="stretch" gap="0" divideY="1px" divideColor={colors.borderMedium}>
-              {season.categories.map((cat) => (
-                <Box key={cat.label} px="4" py="3">
-                  <Text fontSize="10px" fontWeight="800" color={colors.textMuted} textTransform="uppercase" letterSpacing="wider" mb="2">
-                    {cat.label}
-                  </Text>
-                  <HStack gap="2" flexWrap="wrap">
-                    {cat.links.map((link) => (
-                      <Box
-                        key={link.label}
-                        as="button"
-                        display="inline-flex"
-                        alignItems="center"
-                        gap="1.5"
-                        px="3"
-                        py="1.5"
-                        bg={colors.bgSecondary}
-                        border="1px solid"
-                        borderColor={colors.borderMedium}
-                        rounded="lg"
-                        fontSize="xs"
-                        fontWeight="600"
-                        color={colors.textSecondary}
-                        cursor="pointer"
-                        transition="all 0.15s ease"
-                        _hover={{
-                          bg: `${season.badgeColor}18`,
-                          borderColor: season.badgeColor,
-                          color: season.badgeColor,
-                          transform: 'translateY(-1px)',
-                        }}
-                        onClick={() => {
-                          if (link.sheetUrl) {
-                            setActiveSheet({ title: `${season.label} — ${link.label}`, url: link.sheetUrl });
-                          } else if (link.extUrl) {
-                            window.open(link.extUrl, '_blank', 'noopener,noreferrer');
-                          }
-                        }}
-                      >
-                        {linkIcon(link.icon, 'currentColor')}
-                        {link.label}
-                        {link.extUrl && <ExternalLink size={10} style={{ marginLeft: 2, opacity: 0.6 }} />}
-                      </Box>
-                    ))}
-                  </HStack>
-                </Box>
-              ))}
-            </VStack>
+const ArchivedSeasonsTab = ({ colors }) => (
+  <VStack gap="5" align="stretch">
+    <Box p="3" bg={`${colors.accentOrange}11`} border="1px solid" borderColor={`${colors.accentOrange}33`} rounded="lg">
+      <Text fontSize="sm" color={colors.textMuted}>
+        Browse rankings and rosters from all past EML seasons. Click the buttons to expand data inline.
+      </Text>
+    </Box>
+    {ARCHIVED_SEASONS.map((season) => (
+      <Box key={season.id} bg={colors.bgElevated} border="1px solid" borderColor={colors.borderMedium} rounded="xl" overflow="hidden">
+        <HStack px="4" py="3" bg={colors.bgSecondary} borderBottom="1px solid" borderColor={colors.borderMedium} gap="3" flexWrap="wrap">
+          <Box bg={`${season.badgeColor}22`} color={season.badgeColor} px="2.5" py="0.5" rounded="full" fontSize="xs" fontWeight="800" letterSpacing="wide" flexShrink="0">
+            {season.badge}
           </Box>
-        ))}
-      </VStack>
-    </>
-  );
-};
+          <Box flex="1">
+            <Text fontSize="md" fontWeight="800" color={colors.textPrimary}>{season.label}</Text>
+            <Text fontSize="xs" color={colors.textMuted}>{season.year} · {season.description}</Text>
+            {season.champion && (
+              <Text fontSize="xs" color={season.badgeColor} fontWeight="700" mt="0.5">{season.champion}</Text>
+            )}
+          </Box>
+        </HStack>
+        <SeasonPanel season={season} colors={colors} />
+      </Box>
+    ))}
+  </VStack>
+);
 
 // ─────────────────────────────────────────────────────────────────
 // MAIN COMPONENT
