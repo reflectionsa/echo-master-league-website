@@ -1,4 +1,4 @@
-import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badge, Button, CloseButton, Tabs, Collapse } from '@chakra-ui/react';
+import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badge, Button, CloseButton, Tabs } from '@chakra-ui/react';
 import { Calendar, ExternalLink, Play, Clock, CheckCircle, AlertCircle, Loader, Radio } from 'lucide-react';
 import { useState } from 'react';
 import { useSchedule } from '../hooks/useSchedule';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, HStack, VStack, Text, Button, Image, Badge, Dialog, Portal } from '@chakra-ui/react';
+import { Box, HStack, VStack, Text, Button, Image, Badge, Dialog, Portal, CloseButton } from '@chakra-ui/react';
 import { Calculator, BookOpen, Bot, CalendarDays, Users, Shield, ExternalLink, Terminal, FileText, Archive, Trophy, GitBranch } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
