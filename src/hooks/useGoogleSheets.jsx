@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+const POLL_INTERVAL_MS = 2 * 60 * 1000; // re-fetch every 2 minutes
 
 /**
  * Custom hook to fetch data from Google Sheets
@@ -11,6 +13,7 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const prevDataRef = useRef(undefined); // undefined = not yet loaded
 
   const fetchData = async () => {
     if (!spreadsheetId || !range || !apiKey) {
@@ -68,6 +71,14 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
         return obj;
       });
 
+      // Detect changes after initial load and dispatch notification
+      const newDataStr = JSON.stringify(transformedData);
+      if (prevDataRef.current !== undefined && prevDataRef.current !== newDataStr) {
+        const sheetLabel = range?.split('!')?.[0] || 'Data';
+        window.dispatchEvent(new CustomEvent('eml:datachanged', { detail: { section: sheetLabel } }));
+      }
+      prevDataRef.current = newDataStr;
+
       setData(transformedData);
     } catch (err) {
       console.error('Google Sheets fetch error:', err);
@@ -79,6 +90,8 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
 
   useEffect(() => {
     fetchData();
+    const interval = setInterval(fetchData, POLL_INTERVAL_MS);
+    return () => clearInterval(interval);
   }, [spreadsheetId, range, apiKey]);
 
   return { data, loading, error, refetch: fetchData };

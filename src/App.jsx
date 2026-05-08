@@ -5,6 +5,7 @@ import { getThemedColors } from './theme/colors';
 import { AuthProvider } from './context/AuthContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
+import DataChangeNotifier from './components/DataChangeNotifier';
 
 const App = () => {
   const { theme, toggleTheme, colorScheme, mode, setColorScheme, setMode } = useTheme();
@@ -50,6 +51,7 @@ const App = () => {
         </Box>
         </Box>
       </Box>
+      <DataChangeNotifier theme={theme} />
     </AuthProvider>
   );
 };

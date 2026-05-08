@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+const POLL_INTERVAL_MS = 2 * 60 * 1000; // re-poll every 2 minutes
 
 // Module-level cache with TTL so a single fetch serves all hooks in the same render cycle
 // but stale data is refreshed automatically
@@ -60,31 +62,49 @@ export const useDataJson = (section) => {
     const [data, setData] = useState(null);   // null = not yet loaded
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const prevDataRef = useRef(undefined); // undefined = not yet loaded
 
     useEffect(() => {
         let cancelled = false;
 
-        fetchDataJson()
-            .then(json => {
-                if (cancelled) return;
-                // If data.json itself is stale, return empty so hooks fall back to live Sheets
-                if (isDataStale(json)) {
-                    console.info(`[useDataJson] data.json is stale (lastUpdated: ${json.lastUpdated}), using live Sheets for "${section}"`);
-                    setData([]);
+        const load = () => {
+            fetchDataJson()
+                .then(json => {
+                    if (cancelled) return;
+                    // If data.json itself is stale, return empty so hooks fall back to live Sheets
+                    if (isDataStale(json)) {
+                        console.info(`[useDataJson] data.json is stale (lastUpdated: ${json.lastUpdated}), using live Sheets for "${section}"`);
+                        setData([]);
+                        setLoading(false);
+                        return;
+                    }
+                    const sectionData = json[section];
+                    const newData = Array.isArray(sectionData) ? sectionData : sectionData ?? null;
+                    const newDataStr = JSON.stringify(newData);
+                    if (prevDataRef.current !== undefined && prevDataRef.current !== newDataStr) {
+                        window.dispatchEvent(new CustomEvent('eml:datachanged', { detail: { section } }));
+                    }
+                    prevDataRef.current = newDataStr;
+                    setData(newData);
                     setLoading(false);
-                    return;
-                }
-                const sectionData = json[section];
-                setData(Array.isArray(sectionData) ? sectionData : sectionData ?? null);
-                setLoading(false);
-            })
-            .catch(err => {
-                if (cancelled) return;
-                setError(err.message);
-                setLoading(false);
-            });
+                })
+                .catch(err => {
+                    if (cancelled) return;
+                    setError(err.message);
+                    setLoading(false);
+                });
+        };
 
-        return () => { cancelled = true; };
+        load();
+        const interval = setInterval(() => {
+            invalidateDataJsonCache();
+            load();
+        }, POLL_INTERVAL_MS);
+
+        return () => {
+            cancelled = true;
+            clearInterval(interval);
+        };
     }, [section]);
 
     return { data, loading, error };

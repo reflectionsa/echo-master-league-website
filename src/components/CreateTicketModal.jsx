@@ -33,7 +33,7 @@ const TICKET_TYPES = [
     id: 'comp-server-request',
     icon: Server,
     title: 'Comp Server Request',
-    description: 'Need a dedicated competitive server for your match? Submit a request before your match day.',
+    description: 'Need a dedicated competitive server for your match? Submit a request before your match time.',
     color: '#10b981',
   },
   {
