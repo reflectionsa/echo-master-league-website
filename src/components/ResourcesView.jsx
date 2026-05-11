@@ -1099,7 +1099,7 @@ const S2_ROSTERS = [
 ];
 
 const S3_RANKINGS = [
-  {rank:1,team:'chaos',rating:997,tier:'Master'},{rank:2,team:'200',rating:996,tier:'Master'},{rank:3,team:'Riptide',rating:928,tier:'Diamond 4'},{rank:4,team:'frug',rating:916,tier:'Master'},{rank:5,team:'quest 3',rating:893,tier:'Diamond 4'},
+  {rank:1,team:'200',rating:997,tier:'Master'},{rank:2,team:'chaos',rating:996,tier:'Master'},{rank:3,team:'Riptide',rating:928,tier:'Diamond 4'},{rank:4,team:'frug',rating:916,tier:'Master'},{rank:5,team:'quest 3',rating:893,tier:'Diamond 4'},
   {rank:6,team:'Dragon Slayers',rating:893,tier:'Diamond 4'},{rank:7,team:'Astral',rating:891,tier:'Diamond 4'},{rank:8,team:'Sesquipedalian',rating:890,tier:'Diamond 4'},{rank:9,team:'WLDCRD',rating:885,tier:'Master'},{rank:10,team:'Forged',rating:879,tier:'Master'},
   {rank:11,team:'Velocity',rating:852,tier:'Diamond 1'},{rank:12,team:'Ragnarok',rating:850,tier:'Diamond 1'},{rank:13,team:'Deceit',rating:849,tier:'Diamond 1'},{rank:14,team:'Mitchiles Ekittens',rating:846,tier:'Diamond 1'},{rank:15,team:'Zone Echo',rating:845,tier:'Diamond 1'},
   {rank:16,team:'Ravens',rating:834,tier:'Platinum 4'},{rank:17,team:'SEN',rating:831,tier:'Platinum 4'},{rank:18,team:'Renamed',rating:822,tier:'Platinum 3'},{rank:19,team:'Green-Bean',rating:821,tier:'Platinum 3'},{rank:20,team:'Lethal',rating:821,tier:'Platinum 3'},
@@ -1314,7 +1314,7 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 3',
     badgeColor: '#ef4444',
     description: 'The third EML season.',
-    champion: '🥇 chaos  ·  🥈 200',
+    champion: '🥇 200  ·  🥈 chaos',
     rankings: S3_RANKINGS,
     rosters: S3_ROSTERS,
   },
