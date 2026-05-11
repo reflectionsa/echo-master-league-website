@@ -81,7 +81,7 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
 
       setData(transformedData);
     } catch (err) {
-      console.error('Google Sheets fetch error:', err);
+      console.warn('[EML] Google Sheets unavailable (check API key domain restrictions):', err.message);
       setError(err.message);
     } finally {
       setLoading(false);

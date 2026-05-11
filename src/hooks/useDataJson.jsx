@@ -9,7 +9,7 @@ let _cacheTime = null;
 let _promise = null;
 
 const CACHE_TTL_MS = 5 * 60 * 1000;       // Re-fetch data.json every 5 minutes
-const STALE_THRESHOLD_MS = 2 * 60 * 60 * 1000; // If lastUpdated > 2 hrs ago → fall through to live Sheets
+const STALE_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000; // If lastUpdated > 7 days ago → fall through to live Sheets
 
 const isCacheValid = () => {
     if (!_cache || !_cacheTime) return false;
