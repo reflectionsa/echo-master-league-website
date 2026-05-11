@@ -9,6 +9,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "deploy": "npm run build && gh-pages -d dist",
+        "deploy:cf": "npm run build && wrangler pages deploy dist --project-name=echo-master-league-website",
         "data": "powershell -ExecutionPolicy Bypass -File scripts/build-data-json.ps1"
     },
     "dependencies": {

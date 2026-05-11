@@ -4,8 +4,9 @@ import { useTeamRoles } from '../hooks/useTeamRoles';
 import { useLeagueSubs } from '../hooks/useLeagueSubs';
 import { useMemo } from 'react';
 import { getThemedColors } from '../theme/colors';
+import LiveMatchPulse from './LiveMatchPulse';
 
-const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
+const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick, onMatchesClick }) => {
   const { teams, loading: teamsLoading } = useTeamRoles();
   const { count: subsCount, loading: subsLoading } = useLeagueSubs();
   const colors = getThemedColors(theme);
@@ -109,6 +110,9 @@ const Hero = ({ theme, onTeamsClick, onPlayersClick, onSubsClick }) => {
               The Home of Competitive Echo VR
             </Text>
           </VStack>
+
+          {/* Live Match Pulse */}
+          <LiveMatchPulse theme={theme} onMatchesClick={onMatchesClick} />
 
           {/* Stats */}
           <HStack gap={{ base: '3', md: '8' }} flexWrap="wrap" justify="center" mt="6">

@@ -6,6 +6,12 @@ import { AuthProvider } from './context/AuthContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import DataChangeNotifier from './components/DataChangeNotifier';
+import FloatingShapes from './components/FloatingShapes';
+import AnnouncementsSection from './components/AnnouncementsSection';
+import MatchesOfWeek from './components/MatchesOfWeek';
+import SeasonHighlight from './components/SeasonHighlight';
+import SeasonCountdown from './components/SeasonCountdown';
+import MatchesView from './components/MatchesView';
 
 const App = () => {
   const { theme, toggleTheme, colorScheme, mode, setColorScheme, setMode } = useTheme();
@@ -14,6 +20,7 @@ const App = () => {
   const [membersOpen, setMembersOpen] = useState(false);
   const [membersCategory, setMembersCategory] = useState(null);
   const [standingsOpen, setStandingsOpen] = useState(false);
+  const [matchesOpen, setMatchesOpen] = useState(false);
 
   return (
     <AuthProvider>
@@ -22,6 +29,8 @@ const App = () => {
         transition="background-color 0.3s ease"
         style={{ backgroundColor: colors.bgPrimary }}
       >
+        {/* Ambient floating geometric shapes (fixed, behind all content) */}
+        <FloatingShapes />
 
         <Box position="relative" zIndex="1">
         <Navigation
@@ -47,10 +56,21 @@ const App = () => {
             onTeamsClick={() => setTeamsOpen(true)}
             onPlayersClick={() => { setMembersCategory('active'); setMembersOpen(true); }}
             onSubsClick={() => { setMembersCategory('subs'); setMembersOpen(true); }}
+            onMatchesClick={() => setMatchesOpen(true)}
           />
+          {/* Season highlight rotator */}
+          <SeasonHighlight theme={theme} />
+          {/* Live/recent match cards for this week */}
+          <MatchesOfWeek theme={theme} />
+          {/* Announcements pulled live from Discord */}
+          <AnnouncementsSection theme={theme} />
+          {/* Between-seasons countdown hype */}
+          <SeasonCountdown theme={theme} />
         </Box>
         </Box>
       </Box>
+      {/* Matches modal — triggered by LiveMatchPulse or nav */}
+      <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
       <DataChangeNotifier theme={theme} />
     </AuthProvider>
   );
