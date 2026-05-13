@@ -11269,43 +11269,75 @@
     "cooldownPlayers":  [
                             {
                                 "id":  1,
-                                "playerName":  "Aascher",
-                                "team":  "Error",
-                                "cooldownUntil":  "2026-05-04",
+                                "playerName":  "-Dem0n h3x-",
+                                "team":  "Ardent",
+                                "cooldownUntil":  "2026-05-18",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-05-04"
+                                "eligibleDate":  "2026-05-18"
                             },
                             {
                                 "id":  2,
-                                "playerName":  "Dyno_Nugz",
-                                "team":  "Error",
-                                "cooldownUntil":  "2026-05-04",
+                                "playerName":  "Sjq",
+                                "team":  "Algorithm",
+                                "cooldownUntil":  "2026-05-18",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-05-04"
+                                "eligibleDate":  "2026-05-18"
                             },
                             {
                                 "id":  3,
-                                "playerName":  "kash",
-                                "team":  "Error",
-                                "cooldownUntil":  "2026-05-04",
+                                "playerName":  "gixk5",
+                                "team":  "Algorithm",
+                                "cooldownUntil":  "2026-05-18",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-05-04"
+                                "eligibleDate":  "2026-05-18"
                             },
                             {
                                 "id":  4,
-                                "playerName":  "Meatman-",
-                                "team":  "Error",
-                                "cooldownUntil":  "2026-05-04",
+                                "playerName":  "Azura",
+                                "team":  "Valiants",
+                                "cooldownUntil":  "2026-05-18",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-05-04"
+                                "eligibleDate":  "2026-05-18"
                             },
                             {
                                 "id":  5,
-                                "playerName":  "Shlumas",
-                                "team":  "Error",
-                                "cooldownUntil":  "2026-05-04",
+                                "playerName":  "Bambooopanda",
+                                "team":  "Ardent",
+                                "cooldownUntil":  "2026-05-18",
                                 "reason":  "Team Transfer",
-                                "eligibleDate":  "2026-05-04"
+                                "eligibleDate":  "2026-05-18"
+                            },
+                            {
+                                "id":  6,
+                                "playerName":  "Whittyy-",
+                                "team":  "Ardent",
+                                "cooldownUntil":  "2026-05-18",
+                                "reason":  "Team Transfer",
+                                "eligibleDate":  "2026-05-18"
+                            },
+                            {
+                                "id":  7,
+                                "playerName":  "Typical",
+                                "team":  "Ardent",
+                                "cooldownUntil":  "2026-05-18",
+                                "reason":  "Team Transfer",
+                                "eligibleDate":  "2026-05-18"
+                            },
+                            {
+                                "id":  8,
+                                "playerName":  "carter",
+                                "team":  "Ardent",
+                                "cooldownUntil":  "2026-05-18",
+                                "reason":  "Team Transfer",
+                                "eligibleDate":  "2026-05-18"
+                            },
+                            {
+                                "id":  9,
+                                "playerName":  "Light Fury",
+                                "team":  "Surge",
+                                "cooldownUntil":  "2026-05-18",
+                                "reason":  "Team Transfer",
+                                "eligibleDate":  "2026-05-18"
                             }
                         ],
     "leagueSubs":  [

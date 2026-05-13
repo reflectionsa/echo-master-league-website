@@ -2,7 +2,7 @@ import {
   Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge,
   Button, Tabs, Input, Textarea, Select, Spinner, createListCollection
 } from '@chakra-ui/react';
-import { Shield, FileText, Users, Trophy, Terminal, Zap, Video, UserX, AlertTriangle, ClipboardList } from 'lucide-react';
+import { Shield, FileText, Users, Trophy, Terminal, Zap, Video, UserX, AlertTriangle, ClipboardList, ChevronDown } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
@@ -59,6 +59,19 @@ const AdminPanel = ({ theme, open, onClose }) => {
   const [matchAdminNote, setMatchAdminNote] = useState('');
   const [matchAdminLoading, setMatchAdminLoading] = useState(false);
   const [matchAdminMsg, setMatchAdminMsg] = useState('');
+
+  // Command form state
+  const [selectedCmd, setSelectedCmd] = useState(null);
+  const [cmdMsg, setCmdMsg] = useState('');
+  const [cmdLoading, setCmdLoading] = useState(false);
+  const [teamCreateName, setTeamCreateName] = useState('');
+  const [teamCreateCaptain, setTeamCreateCaptain] = useState('');
+  const [teamDisbandId, setTeamDisbandId] = useState('');
+  const [teamPlayerAddTeamId, setTeamPlayerAddTeamId] = useState('');
+  const [teamPlayerAddPlayerId, setTeamPlayerAddPlayerId] = useState('');
+  const [teamPlayerRemoveTeamId, setTeamPlayerRemoveTeamId] = useState('');
+  const [teamPlayerRemovePlayerId, setTeamPlayerRemovePlayerId] = useState('');
+  const [suspendDuration, setSuspendDuration] = useState('');
 
   // Audit log
   const [auditLog, setAuditLog] = useState([]);
@@ -199,6 +212,117 @@ const AdminPanel = ({ theme, open, onClose }) => {
     }
   };
 
+  const renderCmdForm = (cmd) => {
+    const inp = {
+      bg: colors.bgPrimary,
+      color: colors.textPrimary,
+      border: '1px solid',
+      borderColor: colors.borderMedium,
+      size: 'sm',
+      _placeholder: { color: colors.textSubtle },
+      _focus: { borderColor: colors.accentOrange },
+    };
+    switch (cmd) {
+      case '/zadminmatchentry':
+      case '/z_forfeit':
+        return (
+          <>
+            <Input placeholder="Match ID (e.g. match-week4-1)" value={matchAdminId} onChange={e => setMatchAdminId(e.target.value)} {...inp} />
+            <Input placeholder="Winner Team ID" value={matchAdminWinner} onChange={e => setMatchAdminWinner(e.target.value)} {...inp} />
+            <Input placeholder="Admin note (optional)" value={matchAdminNote} onChange={e => setMatchAdminNote(e.target.value)} {...inp} />
+          </>
+        );
+      case '/z_player_register':
+      case '/z_player_unregister':
+        return (
+          <>
+            <Input placeholder="Player Discord ID or mention" value={playerAdminId} onChange={e => setPlayerAdminId(e.target.value)} {...inp} />
+            <Input placeholder="Reason (optional)" value={playerAdminReason} onChange={e => setPlayerAdminReason(e.target.value)} {...inp} />
+          </>
+        );
+      case '/z_team_create':
+        return (
+          <>
+            <Input placeholder="Team name" value={teamCreateName} onChange={e => setTeamCreateName(e.target.value)} {...inp} />
+            <Input placeholder="Captain Discord ID" value={teamCreateCaptain} onChange={e => setTeamCreateCaptain(e.target.value)} {...inp} />
+          </>
+        );
+      case '/z_team_disband':
+        return <Input placeholder="Team ID" value={teamDisbandId} onChange={e => setTeamDisbandId(e.target.value)} {...inp} />;
+      case '/z_team_player_add':
+        return (
+          <>
+            <Input placeholder="Team ID" value={teamPlayerAddTeamId} onChange={e => setTeamPlayerAddTeamId(e.target.value)} {...inp} />
+            <Input placeholder="Player Discord ID" value={teamPlayerAddPlayerId} onChange={e => setTeamPlayerAddPlayerId(e.target.value)} {...inp} />
+          </>
+        );
+      case '/z_team_player_remove':
+        return (
+          <>
+            <Input placeholder="Team ID" value={teamPlayerRemoveTeamId} onChange={e => setTeamPlayerRemoveTeamId(e.target.value)} {...inp} />
+            <Input placeholder="Player Discord ID" value={teamPlayerRemovePlayerId} onChange={e => setTeamPlayerRemovePlayerId(e.target.value)} {...inp} />
+          </>
+        );
+      case '/zadminsuspend':
+        return (
+          <>
+            <Input placeholder="Player Discord ID" value={playerAdminId} onChange={e => setPlayerAdminId(e.target.value)} {...inp} />
+            <Input placeholder="Duration (e.g. 7d, 30d, permanent)" value={suspendDuration} onChange={e => setSuspendDuration(e.target.value)} {...inp} />
+            <Input placeholder="Reason" value={playerAdminReason} onChange={e => setPlayerAdminReason(e.target.value)} {...inp} />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const handleCmdSubmit = async (cmd) => {
+    setCmdLoading(true);
+    setCmdMsg('');
+    try {
+      switch (cmd) {
+        case '/zadminmatchentry':
+          await emlApi('POST', '/admin/match', { adminDiscordId: user.id, matchId: matchAdminId, action: 'force_report', winner: matchAdminWinner, note: matchAdminNote });
+          setCmdMsg('Match result recorded.');
+          break;
+        case '/z_forfeit':
+          await emlApi('POST', '/admin/match', { adminDiscordId: user.id, matchId: matchAdminId, action: 'forfeit', winner: matchAdminWinner, note: matchAdminNote });
+          setCmdMsg('Match forfeited.');
+          break;
+        case '/z_player_register':
+          await emlApi('POST', '/admin/player', { adminDiscordId: user.id, targetDiscordId: playerAdminId, action: 'register', reason: playerAdminReason });
+          setCmdMsg('Player registered.');
+          break;
+        case '/z_player_unregister':
+          await emlApi('POST', '/admin/player', { adminDiscordId: user.id, targetDiscordId: playerAdminId, action: 'unregister', reason: playerAdminReason });
+          setCmdMsg('Player unregistered.');
+          break;
+        case '/z_team_create':
+          await emlApi('POST', '/admin/team', { adminDiscordId: user.id, teamName: teamCreateName, captainDiscordId: teamCreateCaptain, action: 'create' });
+          setCmdMsg('Team created.');
+          break;
+        case '/z_team_disband':
+          await emlApi('POST', '/admin/team', { adminDiscordId: user.id, teamId: teamDisbandId, action: 'disband' });
+          setCmdMsg('Team disbanded.');
+          break;
+        case '/z_team_player_add':
+          await emlApi('POST', '/admin/team', { adminDiscordId: user.id, teamId: teamPlayerAddTeamId, playerDiscordId: teamPlayerAddPlayerId, action: 'add_player' });
+          setCmdMsg('Player added to team.');
+          break;
+        case '/z_team_player_remove':
+          await emlApi('POST', '/admin/team', { adminDiscordId: user.id, teamId: teamPlayerRemoveTeamId, playerDiscordId: teamPlayerRemovePlayerId, action: 'remove_player' });
+          setCmdMsg('Player removed from team.');
+          break;
+        case '/zadminsuspend':
+          await emlApi('POST', '/admin/player', { adminDiscordId: user.id, targetDiscordId: playerAdminId, action: 'ban', reason: playerAdminReason, duration: suspendDuration });
+          setCmdMsg('Player suspended.');
+          break;
+        default:
+          setCmdMsg('No backend integration for this command.');
+      }
+    } catch (e) { setCmdMsg(e.message || 'Error executing command.'); } finally { setCmdLoading(false); }
+  };
+
   if (!isAdmin && !isMod) return null;
 
   return (
@@ -322,48 +446,6 @@ const AdminPanel = ({ theme, open, onClose }) => {
                       _hover={{ bg: colors.bgHover }}
                     >
                       <Terminal size={14} /> Bot Commands
-                    </Tabs.Trigger>
-                    <Tabs.Trigger
-                      value="team-ctrl"
-                      justifyContent="flex-start"
-                      gap="2"
-                      rounded="lg"
-                      px="3"
-                      py="2"
-                      fontSize="sm"
-                      color={colors.textSecondary}
-                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
-                      _hover={{ bg: colors.bgHover }}
-                    >
-                      <Users size={14} /> Teams
-                    </Tabs.Trigger>
-                    <Tabs.Trigger
-                      value="player-ctrl"
-                      justifyContent="flex-start"
-                      gap="2"
-                      rounded="lg"
-                      px="3"
-                      py="2"
-                      fontSize="sm"
-                      color={colors.textSecondary}
-                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
-                      _hover={{ bg: colors.bgHover }}
-                    >
-                      <UserX size={14} /> Players
-                    </Tabs.Trigger>
-                    <Tabs.Trigger
-                      value="match-ctrl"
-                      justifyContent="flex-start"
-                      gap="2"
-                      rounded="lg"
-                      px="3"
-                      py="2"
-                      fontSize="sm"
-                      color={colors.textSecondary}
-                      _selected={{ bg: colors.bgHover, color: colors.accentOrange }}
-                      _hover={{ bg: colors.bgHover }}
-                    >
-                      <AlertTriangle size={14} /> Match Ctrl
                     </Tabs.Trigger>
                     <Tabs.Trigger
                       value="audit"
@@ -821,225 +903,95 @@ const AdminPanel = ({ theme, open, onClose }) => {
 
                     {/* Bot Commands */}
                     <Tabs.Content value="botcommands" p="6">
-                      <VStack align="start" gap="5">
+                      <VStack align="start" gap="4">
                         <VStack align="start" gap="1">
                           <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>
-                            Bot Commands Reference
+                            Bot Commands
                           </Text>
                           <Text fontSize="sm" color={colors.textMuted}>
-                            Director and Server Mod slash commands available in Discord.
+                            Click a command to expand and fill in the parameters, then execute.
                           </Text>
                         </VStack>
 
                         {[
-                          {
-                            cmd: '/zadminmatchentry',
-                            desc: 'Enter a match result on behalf of two teams.',
-                            color: colors.accentOrange,
-                            label: 'Match',
-                          },
-                          {
-                            cmd: '/z_forfeit',
-                            desc: 'ADMIN: Forfeit a match between two teams (reconciliation).',
-                            color: colors.accentOrange,
-                            label: 'Match',
-                          },
-                          {
-                            cmd: '/z_player_register',
-                            desc: 'ADMIN: Register a player into the League (reconciliation). Executes immediately. Accepts either a Discord mention or a raw ID.',
-                            color: colors.accentBlue,
-                            label: 'Player',
-                          },
-                          {
-                            cmd: '/z_player_unregister',
-                            desc: 'ADMIN: Unregister (remove) a player from the League (reconciliation). No dry-run/apply; executes immediately.',
-                            color: colors.accentBlue,
-                            label: 'Player',
-                          },
-                          {
-                            cmd: '/z_team_create',
-                            desc: 'ADMIN: Create a team with an explicit captain (reconciliation).',
-                            color: colors.accentBlue,
-                            label: 'Team',
-                          },
-                          {
-                            cmd: '/z_team_disband',
-                            desc: 'ADMIN: Disband a team historically (reconciliation).',
-                            color: colors.accentBlue,
-                            label: 'Team',
-                          },
-                          {
-                            cmd: '/z_team_player_add',
-                            desc: 'ADMIN: Add a player to a team historically (reconciliation).',
-                            color: colors.accentBlue,
-                            label: 'Team',
-                          },
-                          {
-                            cmd: '/z_team_player_remove',
-                            desc: 'ADMIN: Remove a player from a team historically (reconciliation).',
-                            color: colors.accentBlue,
-                            label: 'Team',
-                          },
-                          {
-                            cmd: '/zadminfixroles',
-                            desc: 'Fix Discord Roles — perform a manual accounting of server and league roles.',
-                            color: colors.accentOrange,
-                            label: 'Roles',
-                          },
-                          {
-                            cmd: '/zadminsuspend',
-                            desc: 'Suspend a Player — manually suspend a player for a specific duration. Kicks the player from everything and adds them to the suspension list. If the player is a captain, their team is disbanded.',
-                            color: colors.accentOrange,
-                            label: 'Moderation',
-                          },
-                          {
-                            cmd: '/zadmingenerateuuid',
-                            desc: 'Generate a UUID — perform UUID generation and related wizardry.',
-                            color: colors.accentBlue,
-                            label: 'Utility',
-                          },
-                          {
-                            cmd: '/zdebugdbcache',
-                            desc: 'Debug the local cache.',
-                            color: colors.accentBlue,
-                            label: 'Debug',
-                          },
-                          {
-                            cmd: '/zdebugdbqueue',
-                            desc: 'Debug the pending writes.',
-                            color: colors.accentBlue,
-                            label: 'Debug',
-                          },
-                        ].map(({ cmd, desc, color, label }) => (
+                          { cmd: '/zadminmatchentry', desc: 'Enter a match result on behalf of two teams.', color: colors.accentOrange, label: 'Match', hasForm: true },
+                          { cmd: '/z_forfeit', desc: 'ADMIN: Forfeit a match between two teams (reconciliation).', color: colors.accentOrange, label: 'Match', hasForm: true },
+                          { cmd: '/z_player_register', desc: 'ADMIN: Register a player into the League. Accepts a Discord mention or raw ID.', color: colors.accentBlue, label: 'Player', hasForm: true },
+                          { cmd: '/z_player_unregister', desc: 'ADMIN: Unregister (remove) a player from the League. Executes immediately.', color: colors.accentBlue, label: 'Player', hasForm: true },
+                          { cmd: '/z_team_create', desc: 'ADMIN: Create a team with an explicit captain (reconciliation).', color: colors.accentBlue, label: 'Team', hasForm: true },
+                          { cmd: '/z_team_disband', desc: 'ADMIN: Disband a team historically (reconciliation).', color: colors.accentBlue, label: 'Team', hasForm: true },
+                          { cmd: '/z_team_player_add', desc: 'ADMIN: Add a player to a team historically (reconciliation).', color: colors.accentBlue, label: 'Team', hasForm: true },
+                          { cmd: '/z_team_player_remove', desc: 'ADMIN: Remove a player from a team historically (reconciliation).', color: colors.accentBlue, label: 'Team', hasForm: true },
+                          { cmd: '/zadminfixroles', desc: 'Fix Discord Roles — perform a manual accounting of server and league roles.', color: colors.accentOrange, label: 'Roles', hasForm: false },
+                          { cmd: '/zadminsuspend', desc: 'Suspend a Player — manually suspend a player for a specific duration. If the player is a captain, their team is disbanded.', color: colors.accentOrange, label: 'Moderation', hasForm: true },
+                          { cmd: '/zadmingenerateuuid', desc: 'Generate a UUID — perform UUID generation and related wizardry.', color: colors.accentBlue, label: 'Utility', hasForm: false },
+                          { cmd: '/zdebugdbcache', desc: 'Debug the local cache.', color: colors.accentBlue, label: 'Debug', hasForm: false },
+                          { cmd: '/zdebugdbqueue', desc: 'Debug the pending writes.', color: colors.accentBlue, label: 'Debug', hasForm: false },
+                        ].map(({ cmd, desc, color, label, hasForm }) => (
                           <Box
                             key={cmd}
                             w="full"
-                            p="4"
                             rounded="xl"
                             bg={colors.bgSecondary}
                             border="1px solid"
-                            borderColor={colors.borderMedium}
+                            borderColor={selectedCmd === cmd ? `${color}66` : colors.borderMedium}
+                            overflow="hidden"
+                            transition="border-color 0.2s"
                           >
-                            <HStack align="flex-start" gap="3">
+                            <HStack
+                              p="4"
+                              gap="3"
+                              cursor={hasForm ? 'pointer' : 'default'}
+                              onClick={() => {
+                                if (!hasForm) return;
+                                if (selectedCmd !== cmd) setCmdMsg('');
+                                setSelectedCmd(selectedCmd === cmd ? null : cmd);
+                              }}
+                              _hover={hasForm ? { bg: colors.bgHover } : {}}
+                              transition="background 0.15s"
+                            >
                               <Terminal size={16} color={color} style={{ marginTop: 2, flexShrink: 0 }} />
                               <VStack align="start" gap="1" flex="1">
                                 <HStack gap="2" flexWrap="wrap">
-                                  <Text
-                                    fontFamily="mono"
-                                    fontWeight="700"
-                                    fontSize="sm"
-                                    color={colors.textPrimary}
-                                  >
-                                    {cmd}
-                                  </Text>
-                                  <Box
-                                    px="2"
-                                    py="0.5"
-                                    rounded="md"
-                                    fontSize="xs"
-                                    fontWeight="700"
-                                    bg={`${color}22`}
-                                    color={color}
-                                    border="1px solid"
-                                    borderColor={`${color}44`}
-                                    letterSpacing="wide"
-                                  >
-                                    {label}
-                                  </Box>
+                                  <Text fontFamily="mono" fontWeight="700" fontSize="sm" color={colors.textPrimary}>{cmd}</Text>
+                                  <Box px="2" py="0.5" rounded="md" fontSize="xs" fontWeight="700" bg={`${color}22`} color={color} border="1px solid" borderColor={`${color}44`} letterSpacing="wide">{label}</Box>
                                 </HStack>
-                                <Text fontSize="xs" color={colors.textSecondary}>
-                                  {desc}
-                                </Text>
+                                <Text fontSize="xs" color={colors.textSecondary}>{desc}</Text>
                               </VStack>
+                              {hasForm && (
+                                <ChevronDown
+                                  size={16}
+                                  color={colors.textMuted}
+                                  style={{ transform: selectedCmd === cmd ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }}
+                                />
+                              )}
                             </HStack>
+
+                            {selectedCmd === cmd && hasForm && (
+                              <Box px="4" pb="4" borderTop="1px solid" borderColor={colors.borderMedium}>
+                                <VStack gap="3" align="stretch" mt="3">
+                                  {renderCmdForm(cmd)}
+                                  {cmdMsg && (
+                                    <Text fontSize="xs" color={cmdMsg.includes('Error') || cmdMsg.includes('fail') ? '#ef4444' : '#22c55e'}>
+                                      {cmdMsg}
+                                    </Text>
+                                  )}
+                                  <Button
+                                    colorPalette="orange"
+                                    size="sm"
+                                    alignSelf="flex-end"
+                                    onClick={() => handleCmdSubmit(cmd)}
+                                    loading={cmdLoading}
+                                  >
+                                    Execute
+                                  </Button>
+                                </VStack>
+                              </Box>
+                            )}
                           </Box>
                         ))}
                       </VStack>
                     </Tabs.Content>
-
-                    {/* --- New Admin Tabs --- */}
-
-                    {/* Teams Admin */}
-                    <Tabs.Content value="team-ctrl" p="6">
-                    <VStack align="start" gap="5">
-                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Team Management</Text>
-                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
-                        <VStack gap="3" align="stretch">
-                          <Input placeholder="Team ID" value={teamAdminId} onChange={e => setTeamAdminId(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                          <HStack gap="3">
-                            <Input placeholder="New Tier (Master/Diamond/...)" value={teamAdminTier} onChange={e => setTeamAdminTier(e.target.value)}
-                              bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                              _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                            <Input placeholder="New ELO" type="number" value={teamAdminElo} onChange={e => setTeamAdminElo(e.target.value)}
-                              bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                              _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                          </HStack>
-                          {teamAdminMsg && <Text fontSize="xs" color={teamAdminMsg.includes('updated') ? '#22c55e' : '#ef4444'}>{teamAdminMsg}</Text>}
-                          <Button colorPalette="orange" size="sm" alignSelf="flex-end" onClick={handleAdminTeam} loading={teamAdminLoading}>Update Team</Button>
-                        </VStack>
-                      </Box>
-                    </VStack>
-                  </Tabs.Content>
-
-                  {/* Players Admin */}
-                  <Tabs.Content value="player-ctrl" p="6">
-                    <VStack align="start" gap="5">
-                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Player Management</Text>
-                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
-                        <VStack gap="3" align="stretch">
-                          <Input placeholder="Player Discord ID" value={playerAdminId} onChange={e => setPlayerAdminId(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: '#ef4444' }} />
-                          <HStack gap="2">
-                            {['ban', 'unban'].map(a => (
-                              <Button key={a} size="sm" bg={playerAdminAction === a ? 'rgba(239,68,68,0.15)' : '#0a0a0a'}
-                                border="1px solid" borderColor={playerAdminAction === a ? 'rgba(239,68,68,0.4)' : colors.borderMedium}
-                                color={playerAdminAction === a ? '#ef4444' : colors.textMuted} rounded="lg" fontWeight="700"
-                                onClick={() => setPlayerAdminAction(a)}>{a.charAt(0).toUpperCase() + a.slice(1)}</Button>
-                            ))}
-                          </HStack>
-                          <Input placeholder="Reason" value={playerAdminReason} onChange={e => setPlayerAdminReason(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: '#ef4444' }} />
-                          {playerAdminMsg && <Text fontSize="xs" color={playerAdminMsg.includes('banned') || playerAdminMsg.includes('unbanned') ? '#22c55e' : '#ef4444'}>{playerAdminMsg}</Text>}
-                          <Button colorPalette="red" size="sm" alignSelf="flex-end" onClick={handleAdminPlayer} loading={playerAdminLoading}>Apply Action</Button>
-                        </VStack>
-                      </Box>
-                    </VStack>
-                  </Tabs.Content>
-
-                  {/* Match Control */}
-                  <Tabs.Content value="match-ctrl" p="6">
-                    <VStack align="start" gap="5">
-                      <Text fontWeight="700" fontSize="lg" color={colors.textPrimary}>Match Control</Text>
-                      <Box w="full" p="5" rounded="xl" bg={colors.bgSecondary} border="1px solid" borderColor={colors.borderMedium}>
-                        <VStack gap="3" align="stretch">
-                          <Input placeholder="Match ID" value={matchAdminId} onChange={e => setMatchAdminId(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                          <HStack gap="2" flexWrap="wrap">
-                            {['force_report', 'forfeit', 'swap_teams'].map(a => (
-                              <Button key={a} size="sm" bg={matchAdminAction === a ? 'rgba(255,107,43,0.15)' : '#0a0a0a'}
-                                border="1px solid" borderColor={matchAdminAction === a ? 'rgba(255,107,43,0.4)' : colors.borderMedium}
-                                color={matchAdminAction === a ? '#ff6b2b' : colors.textMuted} rounded="lg" fontWeight="700"
-                                onClick={() => setMatchAdminAction(a)}>{a.replace(/_/g, ' ')}</Button>
-                            ))}
-                          </HStack>
-                          <Input placeholder="Winner team ID (if applicable)" value={matchAdminWinner} onChange={e => setMatchAdminWinner(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                          <Input placeholder="Admin note" value={matchAdminNote} onChange={e => setMatchAdminNote(e.target.value)}
-                            bg={colors.bgPrimary} color={colors.textPrimary} border="1px solid" borderColor={colors.borderMedium} size="sm"
-                            _placeholder={{ color: colors.textSubtle }} _focus={{ borderColor: colors.accentOrange }} />
-                          {matchAdminMsg && <Text fontSize="xs" color={matchAdminMsg.includes('updated') ? '#22c55e' : '#ef4444'}>{matchAdminMsg}</Text>}
-                          <Button colorPalette="orange" size="sm" alignSelf="flex-end" onClick={handleAdminMatch} loading={matchAdminLoading}>Execute</Button>
-                        </VStack>
-                      </Box>
-                    </VStack>
-                  </Tabs.Content>
-
                   {/* Audit Log */}
                   <Tabs.Content value="audit" p="6">
                     <VStack align="start" gap="5" w="full">
