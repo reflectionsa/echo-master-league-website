@@ -352,17 +352,6 @@ const RulesView = ({ theme, open, onClose }) => {
               }}
             >
               <VStack gap="5" align="stretch">
-                <Button
-                  colorPalette="orange"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => window.open('https://echomasterleague.com/eml-league-rules/', '_blank')}
-                  alignSelf="flex-end"
-                >
-                  <ExternalLink size={14} />
-                  View on EML Website
-                </Button>
-
                 {filteredSections.length === 0 ? (
                   <Box textAlign="center" py="12">
                     <Text color={emlColors.textMuted} fontSize="sm">No rules match your search.</Text>

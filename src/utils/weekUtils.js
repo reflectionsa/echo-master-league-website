@@ -10,7 +10,7 @@ const SEASON_START_DATE = new Date('2026-02-02T00:00:00-05:00'); // ET midnight
 const WEEK_NAMES = [
     '', 'One', 'Two', 'Three', 'Four', 'Five',
     'Six', 'Seven', 'Eight', 'Nine', 'Ten',
-    'Eleven', 'Twelve',
+    'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
 ];
 
 /**

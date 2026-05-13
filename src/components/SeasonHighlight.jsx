@@ -54,7 +54,18 @@ const HighlightCard = ({ match, colors, visible }) => {
             Season Highlight
           </Text>
           {match.week && (
-            <Badge variant="outline" colorPalette="gray" fontSize="2xs">Week {match.week}</Badge>
+            <Badge
+              bg="rgba(255,255,255,0.15)"
+              color="white"
+              border="1px solid rgba(255,255,255,0.35)"
+              fontSize="2xs"
+              fontWeight="800"
+              px="2"
+              py="0.5"
+              rounded="full"
+            >
+              Week {match.week}
+            </Badge>
           )}
         </HStack>
 

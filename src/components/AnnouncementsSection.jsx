@@ -2,7 +2,6 @@ import { Box, Container, VStack, Text, HStack, Badge, Grid, Image, Spinner, Cent
 import { Bell, RefreshCw, Clock, AlertCircle } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 import { useAnnouncements } from '../hooks/useAnnouncements';
-import { getCurrentSeasonWeek, getWeekName, getWeekDateRange } from '../utils/weekUtils';
 
 const formatRelativeTime = (isoStr) => {
   if (!isoStr) return '';
@@ -73,12 +72,11 @@ const AnnouncementCard = ({ ann, index, colors }) => {
 };
 
 const FallbackCards = ({ colors }) => {
-  const w = getCurrentSeasonWeek();
   const items = [
-    { title: `Season 4 Week ${getWeekName(w)} Matches Posted!`, date: getWeekDateRange(w), category: 'Announcement', summary: 'Matches are live. Schedule by Friday noon EDT and play by Sunday.' },
-    { title: 'Replay Files Policy', date: getWeekDateRange(w), category: 'Rules', summary: 'A replay file is required for cheating reports.' },
-    { title: 'Pause Rules Reminder', date: getWeekDateRange(w), category: 'Rules', summary: '1 between-round and 1 during-round pause per team (5 min, extendable to 15 for tech).' },
-    { title: 'Staff Applications Open', date: getWeekDateRange(w), category: 'Update', summary: 'Use /staff app. Looking for Casters, Camera Ops, Helpers, Future Mods.' },
+    { title: 'Season 4 Finals — 8 Teams Qualified!', date: 'May 11 – May 17', category: 'Finals', summary: 'Ren, WLDCRD, frug, Big Silly Monkeys, Skyline, Eleven Point Five, Vicious, and Banshee advance to the Season 4 Finals!' },
+    { title: 'Finals Bracket on Challonge', date: 'May 11 – May 17', category: 'Announcement', summary: 'View the bracket and make your predictions at challonge.com/EML_Season_4_Finals.' },
+    { title: 'Tune In May 16–17 Starting 6:00 PM EST', date: 'May 16 – May 17', category: 'Broadcast', summary: 'Watch live on twitch.tv/echomasterleague and twitch.tv/echomasterleague_2.' },
+    { title: 'Good Luck to All Finalists!', date: 'May 11 – May 17', category: 'Update', summary: 'Eight teams, one champion. The Season 4 Finals are here — GLHF!' },
   ];
   return (
     <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap="6" w="full">
