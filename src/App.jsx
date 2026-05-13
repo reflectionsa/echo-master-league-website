@@ -30,7 +30,7 @@ const App = () => {
         style={{ backgroundColor: colors.bgPrimary }}
       >
         {/* Ambient floating geometric shapes (fixed, behind all content) */}
-        <FloatingShapes colorScheme={colorScheme} />
+        <FloatingShapes colorScheme={colorScheme} mode={mode} />
 
         <Box position="relative" zIndex="1">
         <Navigation

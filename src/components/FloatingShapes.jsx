@@ -247,8 +247,9 @@ const ShapeEl = ({ pos, type, color, index }) => {
   }
 };
 
-const FloatingShapes = ({ colorScheme = 'g2' }) => {
+const FloatingShapes = ({ colorScheme = 'g2', mode = 'dark' }) => {
   const config = THEME_CONFIGS[colorScheme] || THEME_CONFIGS.g2;
+  const isLight = mode === 'light';
   return (
     <div
       style={{
@@ -257,7 +258,7 @@ const FloatingShapes = ({ colorScheme = 'g2' }) => {
         overflow: 'hidden',
         pointerEvents: 'none',
         zIndex: 2,
-        mixBlendMode: 'screen',
+        mixBlendMode: isLight ? 'multiply' : 'screen',
       }}
       aria-hidden="true"
     >
