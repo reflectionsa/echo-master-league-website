@@ -3,6 +3,7 @@ import { Users, Shield, Star, Radio, Video, Clock, UserX, Search, ChevronLeft } 
 import { useState, useEffect } from 'react';
 import { useTeamRoles } from '../hooks/useTeamRoles';
 import { useLeagueSubs } from '../hooks/useLeagueSubs';
+import { useCooldownList } from '../hooks/useCooldownList';
 import PlayerProfileModal from './PlayerProfileModal';
 import { getThemedColors } from '../theme/colors';
 
@@ -18,7 +19,6 @@ const MOD_ALIASES = {
 const subs = [];
 const creators = [];
 const connoisseurs = [];
-const cooldownPlayers = [];
 
 const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const colors = getThemedColors(theme);
@@ -27,6 +27,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const { teams } = useTeamRoles();
   const { subs: leagueSubs } = useLeagueSubs();
+  const { cooldownPlayers: cooldownData } = useCooldownList();
 
   // Reset to the correct category whenever the modal opens or initialCategory changes
   useEffect(() => {
@@ -106,7 +107,7 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
   leagueSubs.forEach(name => playersByCategory.subs.push({ name, team: 'Substitute Pool', role: 'Substitute', status: 'Active' }));
   creators.forEach(name => playersByCategory.creators.push({ name, team: 'Content Team', role: 'Creator', status: 'Active' }));
   connoisseurs.forEach(name => playersByCategory.connoisseurs.push({ name, team: 'Advisory Board', role: 'Connoisseur', status: 'Active' }));
-  cooldownPlayers.forEach(name => playersByCategory.cooldown.push({ name, team: 'Transfer Cooldown', role: 'Player', status: 'Cooldown' }));
+  cooldownData.forEach(p => playersByCategory.cooldown.push({ name: p.playerName, team: p.team || 'Transfer Cooldown', role: 'Player', status: 'Cooldown', eligibleDate: p.eligibleDate || p.cooldownUntil }));
 
   inactiveTeams.forEach(team => {
     if (team.captain) playersByCategory.inactive.push({ name: team.captain, team: team.name, role: 'Captain', status: 'Inactive' });
@@ -290,15 +291,15 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                                   </Text>
                                 </Table.Cell>
                                 <Table.Cell>
-                                  <Badge colorPalette="green" px="2.5" py="1" rounded="full" fontSize="xs" fontWeight="700">
-                                    Active
+                                  <Badge colorPalette="yellow" px="2.5" py="1" rounded="full" fontSize="xs" fontWeight="700">
+                                    Cooldown
                                   </Badge>
                                 </Table.Cell>
                                 <Table.Cell>
                                   <HStack gap="1">
                                     <Clock size={14} color={colors.accentOrange} />
                                     <Text fontSize="sm" fontWeight="600" color={colors.accentOrange}>
-                                      2/20/26
+                                      {player.eligibleDate || 'N/A'}
                                     </Text>
                                   </HStack>
                                 </Table.Cell>
