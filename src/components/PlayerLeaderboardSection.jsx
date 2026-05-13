@@ -13,9 +13,9 @@ const PlayerRow = ({ player, idx, statKey, statLabel, colors }) => {
 
     return (
         <Box
-            bg={idx < 3 ? 'rgba(255,107,43,0.05)' : '#111111'}
+            bg={idx < 3 ? 'rgba(255,107,43,0.05)' : colors.bgSecondary}
             border="1px solid"
-            borderColor={idx < 3 ? 'rgba(255,107,43,0.25)' : 'rgba(255,255,255,0.07)'}
+            borderColor={idx < 3 ? 'rgba(255,107,43,0.25)' : colors.borderMedium}
             p={{ base: '3', md: '4' }}
             rounded="xl"
             w="full"
@@ -130,7 +130,7 @@ const PlayerLeaderboardSection = ({ theme }) => {
     const topPlayers = (leaderboard || []).slice(0, 10);
 
     return (
-        <Box id="player-leaderboard" py="16" bg="#0a0a0a">
+        <Box id="player-leaderboard" py="16" bg={colors.bgPrimary}>
             <Container maxW="5xl">
                 <VStack gap="10">
                     {/* Header */}
@@ -163,8 +163,9 @@ const PlayerLeaderboardSection = ({ theme }) => {
                         <Tabs.Root defaultValue="rating" w="full">
                             <Tabs.List
                                 mb="6"
-                                bg="#111111"
-                                border="1px solid rgba(255,255,255,0.08)"
+                                bg={colors.bgSecondary}
+                                border="1px solid"
+                                borderColor={colors.borderMedium}
                                 p="1"
                                 rounded="xl"
                                 flexWrap="wrap"
