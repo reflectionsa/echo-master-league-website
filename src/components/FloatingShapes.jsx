@@ -11,20 +11,20 @@
 
 // Shared positions/timings — only shape type & color change per theme
 const BASE_POSITIONS = [
-  { left: 5,  top: 12, size: 90,  dur: 20, delay: 0,   opacity: 0.22, anim: 'a' },
-  { left: 88, top: 18, size: 44,  dur: 14, delay: -3,  opacity: 0.20, anim: 'b' },
-  { left: 48, top: 4,  size: 65,  dur: 22, delay: -7,  opacity: 0.18, anim: 'drift' },
-  { left: 73, top: 68, size: 38,  dur: 16, delay: -5,  opacity: 0.20, anim: 'a' },
-  { left: 18, top: 78, size: 100, dur: 24, delay: -2,  opacity: 0.18, anim: 'b' },
-  { left: 62, top: 42, size: 55,  dur: 17, delay: -9,  opacity: 0.20, anim: 'drift' },
-  { left: 33, top: 58, size: 32,  dur: 12, delay: -4,  opacity: 0.22, anim: 'a' },
-  { left: 8,  top: 48, size: 50,  dur: 19, delay: -6,  opacity: 0.18, anim: 'b' },
-  { left: 80, top: 43, size: 58,  dur: 18, delay: -1,  opacity: 0.20, anim: 'drift' },
-  { left: 14, top: 28, size: 75,  dur: 21, delay: -8,  opacity: 0.16, anim: 'a' },
-  { left: 44, top: 84, size: 28,  dur: 13, delay: -3,  opacity: 0.22, anim: 'b' },
-  { left: 68, top: 10, size: 68,  dur: 26, delay: -11, opacity: 0.18, anim: 'drift' },
-  { left: 25, top: 92, size: 42,  dur: 15, delay: -5,  opacity: 0.20, anim: 'a' },
-  { left: 55, top: 72, size: 30,  dur: 23, delay: -7,  opacity: 0.18, anim: 'b' },
+  { left: 5,  top: 12, size: 90,  dur: 20, delay: 0,   opacity: 0.09, anim: 'a' },
+  { left: 88, top: 18, size: 44,  dur: 14, delay: -3,  opacity: 0.08, anim: 'b' },
+  { left: 48, top: 4,  size: 65,  dur: 22, delay: -7,  opacity: 0.07, anim: 'drift' },
+  { left: 73, top: 68, size: 38,  dur: 16, delay: -5,  opacity: 0.08, anim: 'a' },
+  { left: 18, top: 78, size: 100, dur: 24, delay: -2,  opacity: 0.07, anim: 'b' },
+  { left: 62, top: 42, size: 55,  dur: 17, delay: -9,  opacity: 0.08, anim: 'drift' },
+  { left: 33, top: 58, size: 32,  dur: 12, delay: -4,  opacity: 0.09, anim: 'a' },
+  { left: 8,  top: 48, size: 50,  dur: 19, delay: -6,  opacity: 0.07, anim: 'b' },
+  { left: 80, top: 43, size: 58,  dur: 18, delay: -1,  opacity: 0.08, anim: 'drift' },
+  { left: 14, top: 28, size: 75,  dur: 21, delay: -8,  opacity: 0.06, anim: 'a' },
+  { left: 44, top: 84, size: 28,  dur: 13, delay: -3,  opacity: 0.09, anim: 'b' },
+  { left: 68, top: 10, size: 68,  dur: 26, delay: -11, opacity: 0.07, anim: 'drift' },
+  { left: 25, top: 92, size: 42,  dur: 15, delay: -5,  opacity: 0.08, anim: 'a' },
+  { left: 55, top: 72, size: 30,  dur: 23, delay: -7,  opacity: 0.07, anim: 'b' },
 ];
 
 const THEME_CONFIGS = {
