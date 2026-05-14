@@ -11,6 +11,7 @@ import { useMyTeam } from '../hooks/useMyTeam';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { getBaseTier, tierInfo } from '../utils/tierUtils';
+import { emlApi } from '../hooks/useEmlApi';
 
 // ─── localStorage helpers ──────────────────────────────────────────────────────
 const slug = (str) => (str || '').replace(/\s+/g, '_').toLowerCase();
@@ -164,26 +165,43 @@ const MyTeamView = ({ theme, open, onClose }) => {
   const [socials, setSocials] = useState({ discord: '', twitch: '', youtube: '', twitter: '' });
   const [editingSocials, setEditingSocials] = useState(false);
 
-  // Load persisted data when team changes
+  // Load persisted data when team changes — prefer worker KV, fallback to localStorage
   useEffect(() => {
     if (!team?.name) return;
-    setTeamLogo(getTeamAsset(team.name, 'logo'));
-    setTeamBanner(getTeamAsset(team.name, 'banner'));
     setBio(lsGet(`eml_team_bio_${slug(team.name)}`) || '');
     setRecruiting(lsGet(`eml_team_recruiting_${slug(team.name)}`) === 'true');
     try {
       const saved = lsGet(`eml_team_socials_${slug(team.name)}`);
       if (saved) setSocials(JSON.parse(saved));
     } catch {}
+    // Load logo/banner from localStorage immediately, then upgrade from worker
+    setTeamLogo(getTeamAsset(team.name, 'logo'));
+    setTeamBanner(getTeamAsset(team.name, 'banner'));
+    emlApi('GET', `/team/assets/${encodeURIComponent(slug(team.name))}`)
+      .then(d => {
+        if (d.logoUrl) { setTeamLogo(d.logoUrl); setTeamAsset(team.name, 'logo', d.logoUrl); }
+        if (d.bannerUrl) { setTeamBanner(d.bannerUrl); setTeamAsset(team.name, 'banner', d.bannerUrl); }
+      })
+      .catch(() => {});
   }, [team?.name]);
 
   const handleLogoUpload = (dataUrl) => {
     setTeamAsset(team.name, 'logo', dataUrl);
     setTeamLogo(dataUrl);
+    emlApi('POST', '/team/assets', {
+      teamSlug: slug(team.name),
+      captainDiscordId: user?.id,
+      logoUrl: dataUrl,
+    }).catch(() => {});
   };
   const handleBannerUpload = (dataUrl) => {
     setTeamAsset(team.name, 'banner', dataUrl);
     setTeamBanner(dataUrl);
+    emlApi('POST', '/team/assets', {
+      teamSlug: slug(team.name),
+      captainDiscordId: user?.id,
+      bannerUrl: dataUrl,
+    }).catch(() => {});
   };
   const saveBio = () => {
     lsSet(`eml_team_bio_${slug(team.name)}`, bio);

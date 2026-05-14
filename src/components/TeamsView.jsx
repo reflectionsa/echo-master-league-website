@@ -1,19 +1,31 @@
 import { Box, Dialog, Portal, CloseButton, HStack, Text, Input, InputGroup, Button, Spinner, Center } from '@chakra-ui/react';
 import { Users, Search, Shield, Crown } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import TeamProfileModal from './TeamProfileModal';
 import { useTeamRoles } from '../hooks/useTeamRoles';
 import { getThemedColors } from '../theme/colors';
 import { getBaseTier, tierInfo } from '../utils/tierUtils';
+import { emlApi } from '../hooks/useEmlApi';
 
 const STATUS_FILTERS = ['All', 'Active', 'Inactive'];
 
 const slug = (s) => (s || '').replace(/\s+/g, '_').toLowerCase();
-const getTeamLogo = (name) => { try { return localStorage.getItem(`eml_team_logo_${slug(name)}`); } catch { return null; } };
+const getLsLogo = (name) => { try { return localStorage.getItem(`eml_team_logo_${slug(name)}`); } catch { return null; } };
 
 const TeamAvatar = ({ name, color }) => {
-  const logo = getTeamLogo(name);
+  const [logo, setLogo] = useState(() => getLsLogo(name));
   const initials = (name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+  useEffect(() => {
+    emlApi('GET', `/team/assets/${encodeURIComponent(slug(name))}`)
+      .then(d => {
+        if (d.logoUrl) {
+          setLogo(d.logoUrl);
+          try { localStorage.setItem(`eml_team_logo_${slug(name)}`, d.logoUrl); } catch {}
+        }
+      })
+      .catch(() => {});
+  }, [name]);
   return (
     <Box
       w="38px" h="38px" minW="38px"
