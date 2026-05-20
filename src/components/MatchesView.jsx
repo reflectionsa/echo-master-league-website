@@ -1,11 +1,12 @@
 import { Box, Dialog, Portal, Table, Text, HStack, VStack, Spinner, Center, Badge, Button, CloseButton, Tabs } from '@chakra-ui/react';
-import { Calendar, ExternalLink, Play, Clock, CheckCircle, AlertCircle, Loader, Radio } from 'lucide-react';
+import { Calendar, ExternalLink, Play, Clock, CheckCircle, AlertCircle, Loader, Radio, Archive } from 'lucide-react';
 import { useState } from 'react';
 import { useSchedule } from '../hooks/useSchedule';
 import { useMatchResults } from '../hooks/useMatchResults';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { getThemedColors } from '../theme/colors';
 import { getCurrentSeasonWeek } from '../utils/weekUtils';
+import { CURRENT_SEASON_ACTIVE, CURRENT_SEASON_NUMBER } from '../utils/seasonConfig';
 
 /** Extract YouTube video ID from various URL formats */
 const getYouTubeId = (url) => {
@@ -174,7 +175,20 @@ const MatchesView = ({ theme, open, onClose }) => {
               </HStack>
             </Dialog.Header>
             <Dialog.Body p="6" overflowY="auto">
-              {loading || resultsLoading ? (
+              {!CURRENT_SEASON_ACTIVE ? (
+                <Center py="20" flexDirection="column" gap="4">
+                  <Box color={emlColors.accentOrange} opacity={0.7}><Archive size={44} /></Box>
+                  <Text fontSize="xl" fontWeight="800" color={emlColors.textPrimary}>
+                    Season {CURRENT_SEASON_NUMBER} Has Concluded
+                  </Text>
+                  <Text fontSize="sm" color={emlColors.textMuted} textAlign="center" maxW="360px">
+                    Season {CURRENT_SEASON_NUMBER} match data is archived. View all results in{' '}
+                    <Text as="span" color={emlColors.accentOrange} fontWeight="700">
+                      Resources → Archived Seasons
+                    </Text>.
+                  </Text>
+                </Center>
+              ) : loading || resultsLoading ? (
                 <Center py="20"><Spinner size="xl" color={emlColors.accentOrange} /></Center>
               ) : (
                 <Tabs.Root defaultValue="results">

@@ -1145,6 +1145,26 @@ const S3_ROSTERS = [
   {team:'Zone Echo',captain:'DarTerrorPeanut',members:['sam','This Is A Joke','jag7274','waffledlife','zMarc']},
 ];
 
+// ── Season 4 Data ─────────────────────────────────────────────────────────────
+const S4_RANKINGS = [
+  {rank:1,team:'Ren',rating:null,tier:'Master'},{rank:2,team:'WLDCRD',rating:null,tier:'Master'},{rank:3,team:'frug',rating:null,tier:'Master'},
+  {rank:4,team:'Big Silly Monkeys',rating:null,tier:'Master'},{rank:5,team:'Skyline',rating:null,tier:'Master'},
+  {rank:6,team:'Yam Time',rating:903,tier:'Diamond 4'},{rank:7,team:'Banshee',rating:894,tier:'Diamond 4'},{rank:8,team:'Eleven Point Five',rating:892,tier:'Diamond 4'},
+  {rank:9,team:'Horizon',rating:878,tier:'Diamond 4'},{rank:10,team:'Zone Echo',rating:857,tier:'Diamond 2'},
+  {rank:11,team:'Vicious',rating:857,tier:'Diamond 2'},{rank:12,team:'The Omens',rating:856,tier:'Diamond 2'},{rank:13,team:'The Goonies',rating:856,tier:'Diamond 2'},
+  {rank:14,team:'Its Giving MSMF',rating:854,tier:'Diamond 2'},{rank:15,team:'Milk2',rating:849,tier:'Diamond 2'},
+  {rank:16,team:'oblock',rating:837,tier:'Platinum 4'},{rank:17,team:'Bandits Garden',rating:837,tier:'Platinum 4'},{rank:18,team:'Good Vibes Only',rating:835,tier:'Platinum 4'},
+  {rank:19,team:'UV3',rating:825,tier:'Platinum 4'},{rank:20,team:'lawnmower',rating:823,tier:'Platinum 3'},
+  {rank:21,team:'Impermanence',rating:820,tier:'Platinum 3'},{rank:22,team:'Vitality',rating:815,tier:'Platinum 3'},{rank:23,team:'Astraeus',rating:812,tier:'Platinum 2'},
+  {rank:24,team:'rent free',rating:805,tier:'Platinum 2'},{rank:25,team:'Valiants',rating:803,tier:'Platinum 2'},
+  {rank:26,team:'DDLC CatBoys',rating:798,tier:'Platinum 1'},{rank:27,team:'Mystic',rating:791,tier:'Platinum 1'},
+  {rank:28,team:'Momentum',rating:788,tier:'Gold 4'},{rank:29,team:'Surge',rating:788,tier:'Gold 4'},{rank:30,team:'special sock',rating:785,tier:'Gold 4'},
+  {rank:31,team:'Conk Goblins',rating:781,tier:'Gold 4'},{rank:32,team:'CRUNK',rating:776,tier:'Gold 4'},{rank:33,team:'Nexus',rating:776,tier:'Gold 4'},
+  {rank:34,team:'HELIX',rating:767,tier:'Gold 3'},{rank:35,team:'W',rating:767,tier:'Gold 3'},{rank:36,team:'Ardent',rating:766,tier:'Gold 3'},
+  {rank:37,team:'very pro echo vr gamer kittens',rating:747,tier:'Gold 2'},{rank:38,team:'Algorithm',rating:729,tier:'Gold 2'},
+  {rank:39,team:'BAN',rating:728,tier:'Gold 1'},{rank:40,team:'armada',rating:718,tier:'Gold 1'},{rank:41,team:'Direct',rating:691,tier:'Gold 1'},
+];
+
 // ── Rankings Table ──
 const RankingsTable = ({ data, colors }) => {
   const [showAll, setShowAll] = React.useState(false);
@@ -1317,6 +1337,17 @@ const ARCHIVED_SEASONS = [
     champion: '🥇 200  ·  🥈 chaos',
     rankings: S3_RANKINGS,
     rosters: S3_ROSTERS,
+  },
+  {
+    id: 's4',
+    label: 'Season 4 NA',
+    year: '2026',
+    badge: 'Season 4',
+    badgeColor: '#3b82f6',
+    description: 'The fourth EML season. Concluded May 2026.',
+    champion: '🥇 Ren',
+    bracketUrl: 'https://challonge.com/EML_Season_4_Finals',
+    rankings: S4_RANKINGS,
   },
 ];
 

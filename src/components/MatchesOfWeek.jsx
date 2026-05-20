@@ -10,6 +10,7 @@ import { getThemedColors } from '../theme/colors';
 import { useMatchResults } from '../hooks/useMatchResults';
 import { useSchedule } from '../hooks/useSchedule';
 import { getCurrentSeasonWeek, getWeekName } from '../utils/weekUtils';
+import { CURRENT_SEASON_ACTIVE } from '../utils/seasonConfig';
 
 const getYtId = (url) => {
   if (!url) return null;
@@ -210,7 +211,7 @@ const MatchesOfWeek = ({ theme }) => {
     ...featured.map(m => ({ ...m, status: m.status || 'Completed' })),
   ].slice(0, 6);
 
-  if (!loading && allMatches.length === 0) return null;
+  if (!CURRENT_SEASON_ACTIVE || (!loading && allMatches.length === 0)) return null;
 
   return (
     <Box py="20" bg={colors.bgPrimary} position="relative">

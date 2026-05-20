@@ -8,6 +8,7 @@ import { Box, HStack, Text, VStack, Badge } from '@chakra-ui/react';
 import { Star, ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 import { useMatchResults } from '../hooks/useMatchResults';
+import { CURRENT_SEASON_ACTIVE } from '../utils/seasonConfig';
 
 const pickHighlights = (matchResults, max = 5) => {
   const completed = matchResults.filter(
@@ -129,7 +130,7 @@ const SeasonHighlight = ({ theme }) => {
     return () => clearInterval(t);
   }, [next, highlights.length]);
 
-  if (loading || highlights.length === 0) return null;
+  if (!CURRENT_SEASON_ACTIVE || loading || highlights.length === 0) return null;
 
   return (
     <Box py="10" bg={colors.bgSecondary} position="relative">

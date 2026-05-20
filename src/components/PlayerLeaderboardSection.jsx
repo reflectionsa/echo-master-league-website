@@ -1,8 +1,9 @@
 import { Box, Container, VStack, Text, HStack, Spinner, Center, Badge, Tabs } from '@chakra-ui/react';
-import { Award, Crown, TrendingUp, Target, Shield, Zap } from 'lucide-react';
+import { Award, Crown, TrendingUp, Target, Shield, Zap, Archive } from 'lucide-react';
 import { usePlayerLeaderboard } from '../hooks/usePlayerLeaderboard';
 import { getThemedColors } from '../theme/colors';
 import SparklineChart, { generateTrendData } from './SparklineChart';
+import { CURRENT_SEASON_ACTIVE, CURRENT_SEASON_NUMBER } from '../utils/seasonConfig';
 
 // Medal colors for top 3
 const medalColor = (idx) => (idx === 0 ? '#fbbf24' : idx === 1 ? '#d1d5db' : '#cd7f32');
@@ -128,6 +129,27 @@ const PlayerLeaderboardSection = ({ theme }) => {
     const players = leaderboard || [];
 
     const topPlayers = (leaderboard || []).slice(0, 10);
+
+    if (!CURRENT_SEASON_ACTIVE) {
+        return (
+            <Box id="player-leaderboard" py="16" bg={colors.bgPrimary}>
+                <Container maxW="5xl">
+                    <Center flexDirection="column" gap="4" py="10">
+                        <Box color={colors.accentOrange} opacity={0.7}><Archive size={40} /></Box>
+                        <Text fontSize="xl" fontWeight="800" color={colors.textPrimary}>
+                            Season {CURRENT_SEASON_NUMBER} Has Concluded
+                        </Text>
+                        <Text fontSize="sm" color={colors.textMuted} textAlign="center" maxW="340px">
+                            Player leaderboard data is archived. View Season {CURRENT_SEASON_NUMBER} records in{' '}
+                            <Text as="span" color={colors.accentOrange} fontWeight="700">
+                                Resources → Archived Seasons
+                            </Text>.
+                        </Text>
+                    </Center>
+                </Container>
+            </Box>
+        );
+    }
 
     return (
         <Box id="player-leaderboard" py="16" bg={colors.bgPrimary}>

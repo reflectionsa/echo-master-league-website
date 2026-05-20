@@ -1,11 +1,12 @@
 import { Box, Dialog, Portal, Text, HStack, Spinner, Center, CloseButton, Input, InputGroup, Button } from '@chakra-ui/react';
-import { Search } from 'lucide-react';
+import { Search, Archive } from 'lucide-react';
 import { useState } from 'react';
 import { useStandings } from '../hooks/useStandings';
 import { useAccessibility } from '../hooks/useAccessibility';
 import TeamProfileModal from './TeamProfileModal';
 import { getThemedColors } from '../theme/colors';
 import { getBaseTier, tierInfo } from '../utils/tierUtils';
+import { CURRENT_SEASON_ACTIVE, CURRENT_SEASON_NUMBER } from '../utils/seasonConfig';
 
 const TIER_FILTERS = ['All', 'Master', 'Diamond', 'Platinum', 'Gold'];
 
@@ -66,6 +67,23 @@ const StandingsView = ({ theme, open, onClose }) => {
     const matchesTier = tierFilter === 'All' || getBaseTier(team.tier) === tierFilter;
     return matchesSearch && matchesTier;
   });
+
+  // ── Archived season banner ─────────────────────────────────────────────────
+  const archivedBody = !CURRENT_SEASON_ACTIVE && (
+    <Center py="16" flexDirection="column" gap="4">
+      <Box color={colors.accentOrange} opacity={0.7}><Archive size={40} /></Box>
+      <Text fontSize="xl" fontWeight="800" color={colors.textPrimary}>
+        Season {CURRENT_SEASON_NUMBER} Has Concluded
+      </Text>
+      <Text fontSize="sm" color={colors.textMuted} textAlign="center" maxW="320px">
+        Season {CURRENT_SEASON_NUMBER} standings are archived. View them in{' '}
+        <Text as="span" color={colors.accentOrange} fontWeight="700">
+          Resources → Archived Seasons
+        </Text>.
+      </Text>
+    </Center>
+  );
+  // ───────────────────────────────────────────────────────────────────────────
 
   return (
     <>
@@ -161,7 +179,7 @@ const StandingsView = ({ theme, open, onClose }) => {
 
               {/* Table */}
               <Box flexGrow={1} overflowY="auto" px={{ base: '5', md: '8' }} pb="8">
-                {loading ? (
+                {archivedBody ? archivedBody : loading ? (
                   <Center py="16"><Spinner size="xl" color={colors.accentOrange} /></Center>
                 ) : error ? (
                   <Center py="16">
