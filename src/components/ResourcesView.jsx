@@ -1345,7 +1345,7 @@ const ARCHIVED_SEASONS = [
     badge: 'Season 4',
     badgeColor: '#3b82f6',
     description: 'The fourth EML season. Concluded May 2026.',
-    champion: '🥇 Ren',
+    champion: '🥇 Ren  ·  🥈 frug',
     bracketUrl: 'https://challonge.com/EML_Season_4_Finals',
     rankings: S4_RANKINGS,
   },
