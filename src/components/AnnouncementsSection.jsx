@@ -73,10 +73,10 @@ const AnnouncementCard = ({ ann, index, colors }) => {
 
 const FallbackCards = ({ colors }) => {
   const items = [
-    { title: 'Season 4 Finals — 8 Teams Qualified!', date: 'May 11 – May 17', category: 'Finals', summary: 'Ren, WLDCRD, frug, Big Silly Monkeys, Skyline, Eleven Point Five, Vicious, and Banshee advance to the Season 4 Finals!' },
-    { title: 'Finals Bracket on Challonge', date: 'May 11 – May 17', category: 'Announcement', summary: 'View the bracket and make your predictions at challonge.com/EML_Season_4_Finals.' },
-    { title: 'Tune In May 16–17 Starting 6:00 PM EST', date: 'May 16 – May 17', category: 'Broadcast', summary: 'Watch live on twitch.tv/echomasterleague and twitch.tv/echomasterleague_2.' },
-    { title: 'Good Luck to All Finalists!', date: 'May 11 – May 17', category: 'Update', summary: 'Eight teams, one champion. The Season 4 Finals are here — GLHF!' },
+    { title: 'Season 4 Has Concluded!', date: 'May 2026', category: 'Season Update', summary: 'Season 4 of the Echo Master League has officially concluded. Thank you to all teams and players who competed!' },
+    { title: 'Season 5 Coming June 29, 2026', date: 'June 29, 2026', category: 'Announcement', summary: 'Season 5 kicks off June 29, 2026 ET. Stay tuned for registration info, schedule announcements, and more!' },
+    { title: 'Thank You to All Season 4 Participants', date: 'May 2026', category: 'Update', summary: 'Huge shoutout to every team, player, caster, and staff member who made Season 4 incredible.' },
+    { title: 'Stay Connected', date: 'May 2026', category: 'Update', summary: 'Join the EML Discord for the latest updates on Season 5 registration, schedule, and announcements.' },
   ];
   return (
     <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap="6" w="full">

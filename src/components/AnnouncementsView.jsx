@@ -74,26 +74,21 @@ const AnnouncementCard = ({ announcement, colors, index }) => (
 // Hardcoded fallback shown when Discord API is unavailable
 const FallbackAnnouncement = ({ colors }) => {
   return (
-    <Box bg="linear-gradient(135deg, rgba(255,107,43,0.08), rgba(124,58,237,0.06))" border="1px solid rgba(255,107,43,0.35)" rounded="2xl" p="6">
-      <HStack justify="space-between" mb="4" flexWrap="wrap" gap="2">
-        <Badge bg="rgba(255,107,43,0.15)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.3)" fontWeight="800">SEASON 4 — FINALS</Badge>
-        <HStack gap="1" fontSize="xs" color={colors.textMuted}><Calendar size={12} /><Text>May 11 – May 17</Text></HStack>
-      </HStack>
-      <Text fontSize="xl" fontWeight="800" color={colors.textPrimary} mb="3">Season 4 Finals — 8 Teams Qualified!</Text>
-      <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7" mb="3">
-        Your 8 Master Qualified teams are: <Text as="span" fontWeight="700" color={colors.textPrimary}>Ren, WLDCRD, frug, Big Silly Monkeys, Skyline, Eleven Point Five, Vicious,</Text> and <Text as="span" fontWeight="700" color={colors.textPrimary}>Banshee</Text>.
-      </Text>
-      <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7" mb="3">
-        View the bracket and make predictions: <Text as="a" href="https://challonge.com/EML_Season_4_Finals" target="_blank" rel="noopener noreferrer" color="#ff6b2b" fontWeight="600">challonge.com/EML_Season_4_Finals</Text>
-      </Text>
-      <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7">
-        Tune in <Text as="span" fontWeight="700" color={colors.textPrimary}>May 16–17 starting at 6:00 PM EST</Text> on{' '}
-        <Text as="a" href="https://www.twitch.tv/echomasterleague" target="_blank" rel="noopener noreferrer" color="#ff6b2b" fontWeight="600">twitch.tv/echomasterleague</Text>
-        {' '}and{' '}
-        <Text as="a" href="https://www.twitch.tv/echomasterleague_2" target="_blank" rel="noopener noreferrer" color="#ff6b2b" fontWeight="600">twitch.tv/echomasterleague_2</Text>.
-        {' '}Good luck to all teams!
-      </Text>
-    </Box>
+    <VStack gap="4" align="stretch">
+      <Box bg="linear-gradient(135deg, rgba(255,107,43,0.08), rgba(124,58,237,0.06))" border="1px solid rgba(255,107,43,0.35)" rounded="2xl" p="6">
+        <HStack justify="space-between" mb="4" flexWrap="wrap" gap="2">
+          <Badge bg="rgba(255,107,43,0.15)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.3)" fontWeight="800">SEASON UPDATE</Badge>
+          <HStack gap="1" fontSize="xs" color={colors.textMuted}><Calendar size={12} /><Text>May 2026</Text></HStack>
+        </HStack>
+        <Text fontSize="xl" fontWeight="800" color={colors.textPrimary} mb="3">Season 4 Has Concluded!</Text>
+        <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7" mb="3">
+          Season 4 of the Echo Master League has officially concluded. Thank you to every team, player, caster, and staff member who made it incredible.
+        </Text>
+        <Text fontSize="sm" color={colors.textSecondary} lineHeight="1.7">
+          <Text as="span" fontWeight="700" color={colors.textPrimary}>Season 5 begins June 29, 2026 ET.</Text> Stay tuned to the EML Discord for registration details, schedule announcements, and more.
+        </Text>
+      </Box>
+    </VStack>
   );
 };
 
