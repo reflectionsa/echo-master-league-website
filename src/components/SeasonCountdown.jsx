@@ -60,8 +60,7 @@ const SeasonCountdown = ({ theme }) => {
   const colors = getThemedColors(theme);
   const [remaining, setRemaining] = useState(calcRemaining);
 
-  useEffect(() => {
-    const t = setInterval(() => setRemaining(calcRemaining()), 1000);
+  useEffect(() => {    const t = setInterval(() => setRemaining(calcRemaining()), 1000);
     return () => clearInterval(t);
   }, []);
 
@@ -83,6 +82,13 @@ const SeasonCountdown = ({ theme }) => {
       position="relative"
       overflow="hidden"
     >
+      <style>{`
+        @keyframes eml-countdown-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(255,107,43,0.3); }
+          50%       { box-shadow: 0 0 40px rgba(255,107,43,0.6), 0 0 80px rgba(0,191,255,0.2); }
+        }
+        .eml-countdown-card { animation: eml-countdown-glow 3s ease-in-out infinite; }
+      `}</style>
       {/* Ambient glow */}
       <Box position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)"
         w="600px" h="300px" bg={`${colors.accentOrange}10`} rounded="full" filter="blur(80px)" pointerEvents="none" />

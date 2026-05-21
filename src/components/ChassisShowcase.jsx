@@ -18,6 +18,7 @@
 import { useState } from 'react';
 import { Box, Container, VStack, HStack, Text, Badge } from '@chakra-ui/react';
 import { Play, Trophy, Radio } from 'lucide-react';
+import ParticlePulseDot from './ParticlePulseDot';
 import { getThemedColors } from '../theme/colors';
 
 /* ─── Echo VR Visor SVG ─────────────────────────────────────────────────────── */
@@ -182,6 +183,15 @@ const ChassisShowcase = ({ theme, event }) => {
       position="relative"
       overflow="hidden"
     >
+      <style>{`
+        @keyframes eml-spin-chassis-slow {
+          0%   { transform: rotateY(0deg) scale(1); }
+          50%  { transform: rotateY(180deg) scale(1.04); }
+          100% { transform: rotateY(360deg) scale(1); }
+        }
+        .eml-chassis-spin { animation: eml-spin-chassis-slow 8s linear infinite; transform-style: preserve-3d; }
+        .eml-chassis-paused { animation-play-state: paused; }
+      `}</style>
       {/* Ambient glow */}
       <Box position="absolute" top="50%" left="30%" transform="translate(-50%,-50%)"
         w="400px" h="400px" bg={`${c1}18`} rounded="full" filter="blur(80px)" pointerEvents="none" />
@@ -199,7 +209,7 @@ const ChassisShowcase = ({ theme, event }) => {
               </Text>
               {live && (
                 <HStack gap="1.5" bg="rgba(239,68,68,0.12)" border="1px solid rgba(239,68,68,0.35)" px="2" py="0.5" rounded="full">
-                  <span className="eml-live-dot" style={{ width: 7, height: 7 }} />
+                  <ParticlePulseDot size={7} />
                   <Text fontSize="2xs" fontWeight="800" color="#ef4444" letterSpacing="wider">LIVE</Text>
                 </HStack>
               )}

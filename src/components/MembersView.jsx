@@ -8,7 +8,7 @@ import PlayerProfileModal from './PlayerProfileModal';
 import { getThemedColors } from '../theme/colors';
 
 const casters = ['trodd-', 'Dano McFabulous', 'Azalea', 'Cool-Whip', 'Sweetlyfe', 'Phaenom', 'Palidore', 'MyGuyChromium', 'Orthrua', 'Mountainous', 'Martiney_', 'hpenney2'];
-const moderators = ['caroline', 'aaliyah', 'azalea', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'Dano McFabulous'];
+const moderators = ['caroline', 'aaliyah', 'trodd', 'waffledlife', 'sam', 'ryanjs1020', 'CyanoTex', 'cole', 'coastermaster77', 'Dano McFabulous'];
 
 // Name aliases: display name -> alternate roster name(s) to check for team lookup
 const MOD_ALIASES = {

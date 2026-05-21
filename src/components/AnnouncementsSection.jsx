@@ -1,5 +1,6 @@
 import { Box, Container, VStack, Text, HStack, Badge, Grid, Image, Spinner, Center } from '@chakra-ui/react';
 import { Bell, RefreshCw, Clock, AlertCircle } from 'lucide-react';
+import ParticlePulseDot from './ParticlePulseDot';
 import { getThemedColors } from '../theme/colors';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 
@@ -112,7 +113,7 @@ const AnnouncementsSection = ({ theme }) => {
               <Text fontSize="sm" fontWeight="700" color={colors.accentOrange} textTransform="uppercase" letterSpacing="wider">Latest News</Text>
               {displayed.length > 0 && (
                 <HStack gap="1.5" bg="rgba(239,68,68,0.12)" border="1px solid rgba(239,68,68,0.35)" px="2" py="0.5" rounded="full">
-                  <span className="eml-live-dot" style={{ width: 7, height: 7 }} />
+                  <ParticlePulseDot size={7} />
                   <Text fontSize="2xs" fontWeight="800" color="#ef4444" letterSpacing="wider">LIVE</Text>
                 </HStack>
               )}

@@ -4,6 +4,7 @@
  */
 import { Box, HStack, Text, VStack } from '@chakra-ui/react';
 import { Radio, ExternalLink } from 'lucide-react';
+import ParticlePulseDot from './ParticlePulseDot';
 import { useSchedule } from '../hooks/useSchedule';
 import { getThemedColors } from '../theme/colors';
 
@@ -43,7 +44,7 @@ const LiveMatchPulse = ({ theme, onMatchesClick }) => {
       aria-live="polite"
     >
       {/* Pulse dot */}
-      <span className="eml-live-dot" aria-hidden="true" />
+      <ParticlePulseDot size={10} />
 
       <VStack gap="0" align="start">
         <HStack gap="2">

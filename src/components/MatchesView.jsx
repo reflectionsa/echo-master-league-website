@@ -38,36 +38,44 @@ const MatchStatusBadge = ({ status }) => {
   const cfg = statusMap[status] || statusMap.Scheduled;
   const Icon = cfg.icon;
   return (
-    <Box
-      display="inline-flex"
-      alignItems="center"
-      gap="1.5"
-      px="2.5"
-      py="1"
-      rounded="full"
-      bg={cfg.bg}
-      border="1px solid"
-      borderColor={cfg.border}
-      position="relative"
-    >
-      {cfg.pulse && (
-        <Box
-          position="absolute"
-          top="50%"
-          left="8px"
-          transform="translateY(-50%)"
-          w="6px"
-          h="6px"
-          rounded="full"
-          bg={cfg.color}
-          animation="pulse 1.5s ease-in-out infinite"
-        />
-      )}
-      <Icon size={10} color={cfg.color} style={{ marginLeft: cfg.pulse ? '10px' : 0 }} />
-      <Text fontSize="2xs" fontWeight="800" color={cfg.color} letterSpacing="wider">
-        {cfg.label}
-      </Text>
-    </Box>
+    <>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+          50% { opacity: 0.5; transform: translateY(-50%) scale(1.6); }
+        }
+      `}</style>
+      <Box
+        display="inline-flex"
+        alignItems="center"
+        gap="1.5"
+        px="2.5"
+        py="1"
+        rounded="full"
+        bg={cfg.bg}
+        border="1px solid"
+        borderColor={cfg.border}
+        position="relative"
+      >
+        {cfg.pulse && (
+          <Box
+            position="absolute"
+            top="50%"
+            left="8px"
+            transform="translateY(-50%)"
+            w="6px"
+            h="6px"
+            rounded="full"
+            bg={cfg.color}
+            animation="pulse 1.5s ease-in-out infinite"
+          />
+        )}
+        <Icon size={10} color={cfg.color} style={{ marginLeft: cfg.pulse ? '10px' : 0 }} />
+        <Text fontSize="2xs" fontWeight="800" color={cfg.color} letterSpacing="wider">
+          {cfg.label}
+        </Text>
+      </Box>
+    </>
   );
 };
 

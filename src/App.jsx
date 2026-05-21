@@ -1,8 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
+import { ParticlesProvider } from '@tsparticles/react';
 import { useTheme } from './hooks/useTheme';
 import { getThemedColors } from './theme/colors';
 import { AuthProvider } from './context/AuthContext';
+import { particlesInit } from './utils/particlesInit';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import DataChangeNotifier from './components/DataChangeNotifier';
@@ -23,6 +25,7 @@ const App = () => {
   const [matchesOpen, setMatchesOpen] = useState(false);
 
   return (
+    <ParticlesProvider init={particlesInit}>
     <AuthProvider>
       <Box
         minH="100vh"
@@ -73,6 +76,7 @@ const App = () => {
       <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
       <DataChangeNotifier theme={theme} />
     </AuthProvider>
+    </ParticlesProvider>
   );
 };
 

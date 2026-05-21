@@ -29,18 +29,6 @@ body {
     z-index: 1;
 }
 
-/* G2-style animated pulse for live indicators */
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
-    50% { opacity: 0.5; transform: translateY(-50%) scale(1.6); }
-}
-
-/* Dropdown fade-in animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
 /* Close button always visible regardless of theme */
 [data-scope="close-button"] svg,
 button[aria-label*="Close"] svg,
@@ -132,32 +120,6 @@ body.eml-light * {
     scroll-behavior: smooth;
 }
 
-/* ─── Floating Background Shapes ────────────────────────────────────────────── */
-@keyframes eml-float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33%       { transform: translateY(-28px) rotate(6deg); }
-    66%       { transform: translateY(-14px) rotate(-4deg); }
-}
-@keyframes eml-float-b {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33%       { transform: translateY(20px) rotate(-8deg); }
-    66%       { transform: translateY(8px) rotate(5deg); }
-}
-@keyframes eml-drift {
-    0%, 100% { transform: translateX(0px) translateY(0px); }
-    25%       { transform: translateX(18px) translateY(-12px); }
-    50%       { transform: translateX(-10px) translateY(-22px); }
-    75%       { transform: translateX(-20px) translateY(-8px); }
-}
-.eml-shape {
-    position: absolute;
-    pointer-events: none;
-    will-change: transform;
-}
-.eml-shape-float-a { animation: eml-float var(--dur, 18s) var(--delay, 0s) ease-in-out infinite; }
-.eml-shape-float-b { animation: eml-float-b var(--dur, 18s) var(--delay, 0s) ease-in-out infinite; }
-.eml-shape-drift   { animation: eml-drift var(--dur, 20s) var(--delay, 0s) ease-in-out infinite; }
-
 /* ─── 3D Player Flip Card ────────────────────────────────────────────────────── */
 .eml-flip-card {
     perspective: 1100px;
@@ -185,67 +147,4 @@ body.eml-light * {
 }
 .eml-flip-back {
     transform: rotateY(180deg);
-}
-
-/* ─── Chassis Showcase Spin ──────────────────────────────────────────────────── */
-@keyframes eml-spin-chassis {
-    0%   { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-}
-@keyframes eml-spin-chassis-slow {
-    0%   { transform: rotateY(0deg) scale(1); }
-    50%  { transform: rotateY(180deg) scale(1.04); }
-    100% { transform: rotateY(360deg) scale(1); }
-}
-.eml-chassis-spin {
-    animation: eml-spin-chassis-slow 8s linear infinite;
-    transform-style: preserve-3d;
-}
-.eml-chassis-paused {
-    animation-play-state: paused;
-}
-
-/* ─── Live Pulse Ring ─────────────────────────────────────────────────────────── */
-@keyframes eml-pulse-ring {
-    0%   { transform: scale(0.85); opacity: 0.9; }
-    70%  { transform: scale(1.4);  opacity: 0; }
-    100% { transform: scale(1.4);  opacity: 0; }
-}
-@keyframes eml-pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.7; transform: scale(1.15); }
-}
-.eml-live-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: #ef4444;
-    position: relative;
-    display: inline-block;
-    animation: eml-pulse-dot 1.4s ease-in-out infinite;
-}
-.eml-live-dot::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: rgba(239,68,68,0.4);
-    animation: eml-pulse-ring 1.4s ease-out infinite;
-}
-
-/* ─── Season Countdown ────────────────────────────────────────────────────────── */
-@keyframes eml-countdown-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(255,107,43,0.3); }
-    50%       { box-shadow: 0 0 40px rgba(255,107,43,0.6), 0 0 80px rgba(0,191,255,0.2); }
-}
-.eml-countdown-card {
-    animation: eml-countdown-glow 3s ease-in-out infinite;
-}
-
-/* ─── Highlight Rotate ─────────────────────────────────────────────────────────── */
-@keyframes eml-slide-in {
-    from { opacity: 0; transform: translateX(32px) scale(0.97); }
-    to   { opacity: 1; transform: translateX(0) scale(1); }
-}
-.eml-highlight-enter {
-    animation: eml-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }

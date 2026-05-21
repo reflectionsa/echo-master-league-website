@@ -11,6 +11,7 @@ import { useMatchResults } from '../hooks/useMatchResults';
 import { useSchedule } from '../hooks/useSchedule';
 import { getCurrentSeasonWeek, getWeekName } from '../utils/weekUtils';
 import { CURRENT_SEASON_ACTIVE } from '../utils/seasonConfig';
+import ParticlePulseDot from './ParticlePulseDot';
 
 const getYtId = (url) => {
   if (!url) return null;
@@ -136,7 +137,7 @@ const MatchCard = ({ match, colors, featured = false }) => {
           bg={cfg.bg} border={`1px solid ${cfg.border}`}
           px="2.5" py="1" rounded="full"
         >
-          {cfg.pulse && <span className="eml-live-dot" style={{ width: 7, height: 7 }} />}
+          {cfg.pulse && <ParticlePulseDot size={7} />}
           <Text fontSize="2xs" fontWeight="800" color={cfg.color} letterSpacing="wider">{cfg.label}</Text>
         </Box>
         <HStack gap="1" fontSize="xs" color={colors.textMuted}>

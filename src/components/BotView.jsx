@@ -128,31 +128,6 @@ const BotView = ({ theme, open, onClose }) => {
                     </Accordion.ItemContent>
                   </Accordion.Item>
 
-                  <Accordion.Item value="ap-system" bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
-                    <Accordion.ItemTrigger p="5" _hover={{ bg: `${emlColors.bgElevated}dd` }}>
-                      <HStack gap="3" flex="1">
-                        <Shield size={20} color={emlColors.accentOrange} />
-                        <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>AP System</Text>
-                      </HStack>
-                      <Accordion.ItemIndicator />
-                    </Accordion.ItemTrigger>
-                    <Accordion.ItemContent>
-                      <VStack align="start" gap="3" px="5" pb="5">
-                        <Text fontSize="sm" color={emlColors.textMuted}>
-                          Track player performance, rankings, and statistics with our comprehensive AP tracking system.
-                        </Text>
-                        <Button
-                          size="sm"
-                          colorPalette="orange"
-                          onClick={() => window.open('https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSJmIGHxYlgMAy2Wvlz-pSx27iDTjBdzQbe7BCSu6qXCHk1kBTxwDJu0yAQuy0Msm3KLnIY2MwvMC8t/pubhtml', '_blank')}
-                          w="full"
-                        >
-                          <ExternalLink size={14} />
-                          View AP System
-                        </Button>
-                      </VStack>
-                    </Accordion.ItemContent>
-                  </Accordion.Item>
                 </Accordion.Root>
               </VStack>
             </Dialog.Body>

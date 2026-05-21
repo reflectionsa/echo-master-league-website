@@ -35,6 +35,15 @@ const PlayerFlipCard = ({ player, theme, onClick, width = '180px', height = '240
   const bgGradient = BG_ACCENTS[roleConfig.accentIdx];
 
   return (
+    <>
+      <style>{`
+        @keyframes eml-drift {
+          0%, 100% { transform: translateX(0px) translateY(0px); }
+          25%       { transform: translateX(18px) translateY(-12px); }
+          50%       { transform: translateX(-10px) translateY(-22px); }
+          75%       { transform: translateX(-20px) translateY(-8px); }
+        }
+      `}</style>
     <div
       className="eml-flip-card"
       style={{ width, height, display: 'inline-block' }}
@@ -153,6 +162,7 @@ const PlayerFlipCard = ({ player, theme, onClick, width = '180px', height = '240
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -134,6 +134,13 @@ const SeasonHighlight = ({ theme }) => {
 
   return (
     <Box py="10" bg={colors.bgSecondary} position="relative">
+      <style>{`
+        @keyframes eml-slide-in {
+          from { opacity: 0; transform: translateX(32px) scale(0.97); }
+          to   { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        .eml-highlight-enter { animation: eml-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+      `}</style>
       <Box maxW="3xl" mx="auto" px={{ base: '4', md: '8' }}>
         <VStack gap="5">
           <HStack gap="2" justify="center">
