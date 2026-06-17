@@ -307,27 +307,53 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
 
               ) : !isOnTeam ? (
                 /* ─── NO TEAM STATE ─────────────────────────────────────────────── */
-                <Center h="420px" flexDirection="column" gap="4" p="8">
-                  <Box fontSize="5xl" opacity="0.2" lineHeight="1">⚔️</Box>
-                  <Text fontSize="2xl" fontWeight="900" color={colors.textPrimary}>You're not on a team yet</Text>
-                  <Text color={colors.textMuted} textAlign="center" maxW="360px" lineHeight="1.6">
-                    Create your first team and invite your squad to compete in the league.
-                    Once your team is created, you'll see your roster, stats, and join requests here.
-                  </Text>
-                  {onCreateTeam ? (
-                    <Button
-                      size="md"
-                      bg="linear-gradient(135deg, #2f6fff 0%, #1c8dff 100%)"
-                      color="white"
-                      rounded="full"
-                      px="8"
-                      py="4"
-                      onClick={onCreateTeam}
-                      _hover={{ opacity: 0.95 }}
-                    >
-                      + Create Your First Team
-                    </Button>
-                  ) : null}
+                <Center h="420px" p="8">
+                  <Box
+                    w="full"
+                    maxW="520px"
+                    bg={colors.bgSecondary}
+                    border="1px solid"
+                    borderColor={colors.borderMedium}
+                    rounded="3xl"
+                    p="10"
+                    boxShadow={`0 20px 80px ${colors.bgPrimary}80`}
+                  >
+                    <VStack align="center" gap="4">
+                      <Box
+                        w="72px"
+                        h="72px"
+                        bg={colors.bgPrimary}
+                        border="1px solid"
+                        borderColor={colors.borderMedium}
+                        rounded="2xl"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <User size={30} color={colors.textPrimary} />
+                      </Box>
+                      <VStack gap="2" textAlign="center">
+                        <Text fontSize="2xl" fontWeight="900" color={colors.textPrimary}>You're not on any teams yet</Text>
+                        <Text color={colors.textMuted} maxW="380px" lineHeight="1.7">
+                          Create your first team and invite your squad to get started.
+                        </Text>
+                      </VStack>
+                      {onCreateTeam ? (
+                        <Button
+                          size="md"
+                          bg="linear-gradient(135deg, #2f6fff 0%, #1c8dff 100%)"
+                          color="white"
+                          rounded="full"
+                          px="8"
+                          py="4"
+                          onClick={onCreateTeam}
+                          _hover={{ opacity: 0.95 }}
+                        >
+                          + Create Your First Team
+                        </Button>
+                      ) : null}
+                    </VStack>
+                  </Box>
                 </Center>
 
               ) : (
