@@ -53,19 +53,7 @@ export const useTeamManagement = () => {
     emlApi('POST', '/team/disband', { teamId, captainDiscordId: user.id })
   ), [user, wrap]);
 
-  const registerProfile = useCallback((region) => wrap(() =>
-    emlApi('POST', '/player/register', {
-      discordId: user.id,
-      username: user.username,
-      globalName: user.globalName,
-      avatar: user.avatar,
-    const submitJoinRequest = useCallback((teamId) => wrap(() =>
-      emlApi('POST', '/team/join-request', { teamId, discordId: user.id, username: user.username })
-    ), [user, wrap]);
-
-    const getJoinRequests = useCallback((teamId) => emlApi('GET', `/team/join-requests/${teamId}`), []);
-
-    const respondToJoinRequest = useCallback((requestId, accept) => wrap(() =>
+  // Join-request helpers
   const submitJoinRequest = useCallback((teamId) => wrap(() =>
     emlApi('POST', '/team/join-request', { teamId, discordId: user.id, username: user.username })
   ), [user, wrap]);
@@ -75,9 +63,37 @@ export const useTeamManagement = () => {
   const respondToJoinRequest = useCallback((requestId, accept) => wrap(() =>
     emlApi('POST', '/team/join-request/respond', { requestId, captainDiscordId: user.id, accept })
   ), [user, wrap]);
+
+  const registerProfile = useCallback((region) => wrap(() => emlApi('POST', '/player/register', {
+    discordId: user.id,
+    username: user.username,
+    globalName: user.globalName,
+    avatar: user.avatar,
+    region,
+  })), [user, wrap]);
+
+  const unregisterProfile = useCallback(() => wrap(() =>
+    emlApi('POST', '/player/unregister', { discordId: user.id })
   ), [user, wrap]);
 
   const getProfile = useCallback((discordId) => emlApi('GET', `/player/${discordId || user?.id}`), [user]);
 
-  return { createTeam, getTeam, invitePlayer, respondToInvite, kickPlayer, leaveTeam, transferCaptain, disbandTeam, registerProfile, unregisterProfile, getProfile, loading, error };
+  return {
+    createTeam,
+    getTeam,
+    invitePlayer,
+    respondToInvite,
+    kickPlayer,
+    leaveTeam,
+    transferCaptain,
+    disbandTeam,
+    submitJoinRequest,
+    getJoinRequests,
+    respondToJoinRequest,
+    registerProfile,
+    unregisterProfile,
+    getProfile,
+    loading,
+    error,
+  };
 };
