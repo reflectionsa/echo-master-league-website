@@ -1,4 +1,4 @@
-import { Box, Dialog, Portal, CloseButton, HStack, Text, Input, InputGroup, Button, Spinner, Center } from '@chakra-ui/react';
+import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Input, InputGroup, Button, Spinner, Center } from '@chakra-ui/react';
 import { Users, Search, Shield, Crown } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
 import TeamProfileModal from './TeamProfileModal';
@@ -156,113 +156,74 @@ const TeamsView = ({ theme, open, onClose }) => {
                     <Text fontSize="sm" color={colors.textMuted}>No teams found</Text>
                   </Center>
                 ) : (
-                  <Box bg={colors.bgCard} border="1px solid" borderColor={colors.borderMedium} rounded="xl" overflow="hidden">
-                    {/* Column headers */}
-                    <Box
-                      display="grid"
-                      gridTemplateColumns={{ base: '1fr 80px', md: '1fr 200px 140px 80px' }}
-                      px="4" py="2"
-                      bg={colors.bgSecondary}
-                      borderBottom="1px solid"
-                      borderColor={colors.borderMedium}
-                    >
-                      {[
-                        { label: 'TEAM', show: 'all' },
-                        { label: 'CAPTAIN', show: 'md' },
-                        { label: 'PLAYERS', show: 'md' },
-                        { label: 'STATUS', show: 'all' },
-                      ].map(({ label, show }) => (
-                        <Text
-                          key={label}
-                          fontSize="10px"
-                          fontWeight="800"
-                          color={colors.textSecondary}
-                          letterSpacing="wider"
-                          textTransform="uppercase"
-                          display={show === 'md' ? { base: 'none', md: 'block' } : 'block'}
-                        >
-                          {label}
-                        </Text>
-                      ))}
-                    </Box>
+                  <Box bg={colors.bgCard} border="1px solid" borderColor={colors.borderMedium} rounded="xl" overflow="hidden" p="3">
+                    <VStack align="stretch" gap="2">
+                      {filtered.map((team) => {
+                        const base = getBaseTier(team.tier);
+                        const tInfo = tierInfo[base] || {};
+                        const avatarColor = tInfo.color || colors.accentOrange;
+                        const isActive = team.status === 'Active';
+                        const playerCount = [team.captain, team.coCaptain, ...(team.players || [])].filter(Boolean).length;
 
-                    {/* Rows */}
-                    {filtered.map((team) => {
-                      const base = getBaseTier(team.tier);
-                      const tInfo = tierInfo[base] || {};
-                      const avatarColor = tInfo.color || colors.accentOrange;
-                      const isActive = team.status === 'Active';
-                      const playerCount = [team.captain, team.coCaptain, ...(team.players || [])].filter(Boolean).length;
-
-                      return (
-                        <Box
-                          key={team.id || team.name}
-                          display="grid"
-                          gridTemplateColumns={{ base: '1fr 80px', md: '1fr 200px 140px 80px' }}
-                          px="4" py="3"
-                          borderBottom="1px solid"
-                          borderColor={`${colors.borderMedium}55`}
-                          opacity={isActive ? 1 : 0.5}
-                          _hover={{ bg: `${colors.textPrimary}0c`, cursor: 'pointer' }}
-                          transition="background 0.15s"
-                          _last={{ borderBottom: 'none' }}
-                          onClick={() => setSelectedTeam(team.name)}
-                        >
-                          {/* Team name + avatar */}
-                          <HStack gap="3" minW="0" overflow="hidden">
-                            <TeamAvatar name={team.name} color={avatarColor} />
-                            <Box minW="0">
-                              <Text fontSize="sm" fontWeight="700" color={colors.textPrimary} noOfLines={1} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-                                {team.name}
-                              </Text>
-                              {team.tier && (
-                                <HStack gap="1" mt="0.5">
-                                  <Box as="span" color={avatarColor} fontSize="9px">◆</Box>
-                                  <Text fontSize="10px" color={avatarColor} fontWeight="600">{team.tier}</Text>
-                                </HStack>
-                              )}
-                            </Box>
-                          </HStack>
-
-                          {/* Captain */}
-                          <Box display={{ base: 'none', md: 'flex' }} alignItems="center" gap="2" minW="0" overflow="hidden">
-                            {team.captain ? (
-                              <>
-                                <Crown size={12} color={colors.accentOrange} style={{ flexShrink: 0 }} />
-                                <Text fontSize="xs" color={colors.textSecondary} noOfLines={1} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-                                  {team.captain}
+                        return (
+                          <Box
+                            key={team.id || team.name}
+                            bg={colors.bgSecondary}
+                            border="1px solid"
+                            borderColor={`${colors.borderMedium}55`}
+                            rounded="lg"
+                            p="4"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            _hover={{ bg: `${colors.textPrimary}0c`, cursor: 'pointer' }}
+                            onClick={() => setSelectedTeam(team.name)}
+                          >
+                            <HStack gap="3" minW="0" overflow="hidden">
+                              <TeamAvatar name={team.name} color={avatarColor} />
+                              <Box minW="0">
+                                <Text fontSize="md" fontWeight="800" color={colors.textPrimary} noOfLines={1} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+                                  {team.name}
                                 </Text>
-                              </>
-                            ) : (
-                              <Text fontSize="xs" color={colors.textSubtle}>—</Text>
-                            )}
-                          </Box>
+                                {team.tier && (
+                                  <HStack gap="2" mt="1">
+                                    <Text fontSize="10px" color={avatarColor} fontWeight="700">{team.tier}</Text>
+                                    <Text fontSize="10px" color={colors.textMuted}>{playerCount} players</Text>
+                                  </HStack>
+                                )}
+                              </Box>
+                            </HStack>
 
-                          {/* Player count */}
-                          <Box display={{ base: 'none', md: 'flex' }} alignItems="center" gap="1.5">
-                            <Users size={12} color={colors.textMuted} />
-                            <Text fontSize="xs" fontWeight="700" color={colors.textSecondary}>{playerCount}</Text>
-                            <Text fontSize="xs" color={colors.textSubtle}>players</Text>
+                            <HStack gap="4">
+                              <Box display={{ base: 'none', md: 'block' }}>
+                                <HStack>
+                                  <Crown size={14} color={colors.accentOrange} />
+                                  <Text fontSize="sm" color={colors.textSecondary}>{team.captain || '—'}</Text>
+                                </HStack>
+                              </Box>
+                              <Box>
+                                <Text fontSize="sm" fontWeight="700" color={colors.textSecondary}>{playerCount}</Text>
+                                <Text fontSize="xs" color={colors.textMuted}>players</Text>
+                              </Box>
+                              <Box>
+                                <Box
+                                  px="3" py="1"
+                                  rounded="full"
+                                  fontSize="12px"
+                                  fontWeight="800"
+                                  bg={isActive ? '#22c55e22' : '#ef444422'}
+                                  color={isActive ? '#22c55e' : '#ef4444'}
+                                  border="1px solid"
+                                  borderColor={isActive ? '#22c55e44' : '#ef444444'}
+                                >
+                                  {team.status || 'Active'}
+                                </Box>
+                              </Box>
+                            </HStack>
                           </Box>
-
-                          {/* Status */}
-                          <Box display="flex" alignItems="center">
-                            <Box
-                              px="2" py="0.5"
-                              rounded="full"
-                              fontSize="10px"
-                              fontWeight="700"
-                              bg={isActive ? '#22c55e22' : '#ef444422'}
-                              color={isActive ? '#22c55e' : '#ef4444'}
-                              border="1px solid"
-                              borderColor={isActive ? '#22c55e44' : '#ef444444'}
-                            >
-                              {team.status || 'Active'}
-                            </Box>
-                          </Box>
-                        </Box>
-                      );
-                    })}
+                        );
+                      })}
+                    </VStack>
                   </Box>
                 )}
               </Box>

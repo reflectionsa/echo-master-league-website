@@ -309,47 +309,83 @@ const MembersView = ({ theme, open, onClose, initialCategory }) => {
                         </Table.Root>
                       </Box>
                     ) : (
-                      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="3">
-                        {categoryPlayers.map((player, idx) => (
-                          <Box
-                            key={idx}
-                            as="button"
-                            onClick={() => setSelectedPlayer(player.name)}
-                            bg={colors.bgElevated}
-                            border="1px solid"
-                            borderColor={colors.borderMedium}
-                            p="4"
-                            rounded="xl"
-                            textAlign="left"
-                            _hover={{ borderColor: colors.accentOrange, transform: 'translateY(-2px)' }}
-                            transition="all 0.2s"
-                          >
-                            <VStack align="start" gap="2">
-                              <Text fontWeight="700" fontSize="md" color={colors.textPrimary}
-                                fontVariant={['moderators','casters'].includes(selectedCategory) ? 'small-caps' : 'normal'}
-                              >
-                                {player.name}
-                              </Text>
-                              {player.subtitle && (
-                                <Text fontSize="xs" color={colors.accentOrange} fontWeight="600">
-                                  {player.subtitle}
-                                </Text>
-                              )}
-                              <Text fontSize="sm" color={colors.textMuted}>
-                                {player.team}
-                              </Text>
-                              <HStack gap="1" flexWrap="wrap">
-                                <Badge colorPalette={currentCategory.color} size="xs">
-                                  {player.role}
-                                </Badge>
-                                {player.onTeam && (
-                                  <Badge colorPalette="blue" size="xs">On Team</Badge>
-                                )}
+                      // For active/inactive player lists, render a simple vertical list
+                      (selectedCategory === 'active' || selectedCategory === 'inactive') ? (
+                        <VStack align="stretch" gap="2">
+                          {categoryPlayers.map((player, idx) => (
+                            <Box
+                              key={idx}
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="space-between"
+                              bg={colors.bgElevated}
+                              border="1px solid"
+                              borderColor={colors.borderMedium}
+                              p="3"
+                              rounded="lg"
+                              as="button"
+                              onClick={() => setSelectedPlayer(player.name)}
+                              _hover={{ borderColor: colors.accentOrange }}
+                            >
+                              <HStack gap="3">
+                                <Box w="44px" h="44px" bg={colors.bgPrimary} rounded="full" display="flex" alignItems="center" justifyContent="center">
+                                  <Text fontWeight="800">{(player.name || '?').slice(0,2).toUpperCase()}</Text>
+                                </Box>
+                                <VStack align="start" spacing="0">
+                                  <Text fontWeight="700" color={colors.textPrimary}>{player.name}</Text>
+                                  <Text fontSize="sm" color={colors.textMuted}>{player.team}</Text>
+                                </VStack>
                               </HStack>
-                            </VStack>
-                          </Box>
-                        ))}
-                      </SimpleGrid>
+                              <HStack gap="2">
+                                <Badge colorPalette={currentCategory?.color || 'gray'} size="sm">{player.role}</Badge>
+                                <Text color={colors.textMuted} fontSize="sm">{player.status}</Text>
+                              </HStack>
+                            </Box>
+                          ))}
+                        </VStack>
+                      ) : (
+                        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="3">
+                          {categoryPlayers.map((player, idx) => (
+                            <Box
+                              key={idx}
+                              as="button"
+                              onClick={() => setSelectedPlayer(player.name)}
+                              bg={colors.bgElevated}
+                              border="1px solid"
+                              borderColor={colors.borderMedium}
+                              p="4"
+                              rounded="xl"
+                              textAlign="left"
+                              _hover={{ borderColor: colors.accentOrange, transform: 'translateY(-2px)' }}
+                              transition="all 0.2s"
+                            >
+                              <VStack align="start" gap="2">
+                                <Text fontWeight="700" fontSize="md" color={colors.textPrimary}
+                                  fontVariant={['moderators','casters'].includes(selectedCategory) ? 'small-caps' : 'normal'}
+                                >
+                                  {player.name}
+                                </Text>
+                                {player.subtitle && (
+                                  <Text fontSize="xs" color={colors.accentOrange} fontWeight="600">
+                                    {player.subtitle}
+                                  </Text>
+                                )}
+                                <Text fontSize="sm" color={colors.textMuted}>
+                                  {player.team}
+                                </Text>
+                                <HStack gap="1" flexWrap="wrap">
+                                  <Badge colorPalette={currentCategory.color} size="xs">
+                                    {player.role}
+                                  </Badge>
+                                  {player.onTeam && (
+                                    <Badge colorPalette="blue" size="xs">On Team</Badge>
+                                  )}
+                                </HStack>
+                              </VStack>
+                            </Box>
+                          ))}
+                        </SimpleGrid>
+                      )
                     )
                   ) : (
                     <SimpleGrid columns={{ base: 1, lg: 2 }} gap="6">
