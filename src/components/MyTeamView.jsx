@@ -160,7 +160,7 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
   const colors = getThemedColors(theme);
   const { user } = useAuth();
   const { team, myRole, isOnTeam, standingsData, matchHistory, loading } = useMyTeam();
-  const { disbandTeam } = useTeamManagement();
+  const { disbandTeam, getJoinRequests, respondToJoinRequest } = useTeamManagement();
 
   const isCaptain = myRole === 'Captain' || myRole === 'Co-Captain';
 
@@ -174,6 +174,8 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
   const [recruiting, setRecruiting] = useState(false);
   const [socials, setSocials] = useState({ discord: '', twitch: '', youtube: '', twitter: '' });
   const [editingSocials, setEditingSocials] = useState(false);
+  const [joinRequests, setJoinRequests] = useState([]);
+  const [requestsLoading, setRequestsLoading] = useState(false);
 
   // Load persisted data when team changes — prefer worker KV, fallback to localStorage
   useEffect(() => {
@@ -194,6 +196,25 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
       })
       .catch(() => {});
   }, [team?.name]);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchRequests = async () => {
+      if (!team?.id) return;
+      setRequestsLoading(true);
+      try {
+        const res = await getJoinRequests(team.id);
+        if (mounted) setJoinRequests(res.requests || []);
+      } catch (err) {
+        console.error('Failed to fetch join requests', err);
+      } finally {
+        if (mounted) setRequestsLoading(false);
+      }
+    };
+    fetchRequests();
+    const iv = setInterval(fetchRequests, 30000);
+    return () => { mounted = false; clearInterval(iv); };
+  }, [team?.id, getJoinRequests]);
 
   const handleLogoUpload = (dataUrl) => {
     setTeamAsset(team.name, 'logo', dataUrl);
@@ -482,7 +503,7 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
                         <HStack gap="2">
                           <Users size={15} color={colors.accentOrange} />
                           <Text fontWeight="800" fontSize="sm" color={colors.textPrimary} textTransform="uppercase" letterSpacing="wider">Join Requests</Text>
-                          <Badge bg="rgba(255,255,255,0.04)" color={colors.textMuted} fontSize="2xs">0</Badge>
+                          <Badge bg="rgba(255,255,255,0.04)" color={colors.textMuted} fontSize="2xs">{joinRequests.length}</Badge>
                         </HStack>
                         <HStack gap="3">
                           <Box display="flex" alignItems="center" gap="2">
@@ -491,10 +512,51 @@ const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
                           </Box>
                         </HStack>
                       </HStack>
-                      <Box bg={colors.bgPrimary} rounded="lg" border="1px dashed" borderColor={colors.borderLight} p="8" textAlign="center">
-                        <Box mb="2"><Users size={28} color="rgba(255,255,255,0.06)" /></Box>
-                        <Text color={colors.textMuted}>No pending join requests</Text>
-                      </Box>
+
+                      {requestsLoading ? (
+                        <Box p="8" textAlign="center"><Spinner color="#ff6b2b" /></Box>
+                      ) : joinRequests.length === 0 ? (
+                        <Box bg={colors.bgPrimary} rounded="lg" border="1px dashed" borderColor={colors.borderLight} p="8" textAlign="center">
+                          <Box mb="2"><Users size={28} color="rgba(255,255,255,0.06)" /></Box>
+                          <Text color={colors.textMuted}>No pending join requests</Text>
+                        </Box>
+                      ) : (
+                        <VStack align="stretch" gap="3">
+                          {joinRequests.map((r) => (
+                            <HStack key={r.id} bg={colors.bgPrimary} p="3" rounded="lg" border="1px solid" borderColor={colors.borderLight} justify="space-between">
+                              <HStack>
+                                <Box w="40px" h="40px" bg={colors.bgElevated} rounded="full" display="flex" alignItems="center" justifyContent="center">
+                                  <Text fontWeight="800">{(r.username || '?').slice(0,2).toUpperCase()}</Text>
+                                </Box>
+                                <VStack align="start" spacing="0">
+                                  <Text fontWeight="700" color={colors.textPrimary}>{r.username}</Text>
+                                  <Text fontSize="2xs" color={colors.textMuted}>{new Date(r.requestedAt).toLocaleString()}</Text>
+                                </VStack>
+                              </HStack>
+                              <HStack>
+                                {isCaptain ? (
+                                  <>
+                                    <Button size="sm" colorScheme="green" onClick={async () => {
+                                      try {
+                                        await respondToJoinRequest(r.id, true);
+                                        setJoinRequests(prev => prev.filter(x => x.id !== r.id));
+                                      } catch (err) { console.error(err); alert('Failed to approve.'); }
+                                    }}>Approve</Button>
+                                    <Button size="sm" colorScheme="red" variant="ghost" onClick={async () => {
+                                      try {
+                                        await respondToJoinRequest(r.id, false);
+                                        setJoinRequests(prev => prev.filter(x => x.id !== r.id));
+                                      } catch (err) { console.error(err); alert('Failed to reject.'); }
+                                    }}>Reject</Button>
+                                  </>
+                                ) : (
+                                  <Text color={colors.textMuted} fontSize="sm">Pending approval</Text>
+                                )}
+                              </HStack>
+                            </HStack>
+                          ))}
+                        </VStack>
+                      )}
                     </Box>
                   </Box>
 

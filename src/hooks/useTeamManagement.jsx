@@ -59,14 +59,22 @@ export const useTeamManagement = () => {
       username: user.username,
       globalName: user.globalName,
       avatar: user.avatar,
-      region,
-    })
+    const submitJoinRequest = useCallback((teamId) => wrap(() =>
+      emlApi('POST', '/team/join-request', { teamId, discordId: user.id, username: user.username })
+    ), [user, wrap]);
+
+    const getJoinRequests = useCallback((teamId) => emlApi('GET', `/team/join-requests/${teamId}`), []);
+
+    const respondToJoinRequest = useCallback((requestId, accept) => wrap(() =>
+  const submitJoinRequest = useCallback((teamId) => wrap(() =>
+    emlApi('POST', '/team/join-request', { teamId, discordId: user.id, username: user.username })
   ), [user, wrap]);
 
-  const unregisterProfile = useCallback(() => wrap(() =>
-    emlApi('POST', '/player/unregister', {
-      discordId: user.id,
-    })
+  const getJoinRequests = useCallback((teamId) => emlApi('GET', `/team/join-requests/${teamId}`), []);
+
+  const respondToJoinRequest = useCallback((requestId, accept) => wrap(() =>
+    emlApi('POST', '/team/join-request/respond', { requestId, captainDiscordId: user.id, accept })
+  ), [user, wrap]);
   ), [user, wrap]);
 
   const getProfile = useCallback((discordId) => emlApi('GET', `/player/${discordId || user?.id}`), [user]);
