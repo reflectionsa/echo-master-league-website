@@ -10,6 +10,7 @@
  *   POST /production/caster-stats
  *   POST /production/camera-stats
  *   POST /player/register        — register player profile (region, etc.)
+ *   POST /player/unregister      — unregister player profile
  *   GET  /player/:discordId      — fetch player profile
  *   POST /team/create            — create a team
  *   GET  /team/:teamId           — fetch team data
@@ -471,6 +472,24 @@ async function appendAuditLog(env, entry) {
   await kvPut(env, key, log.slice(0, 500));
 }
 
+async function sendDiscordLog(env, message) {
+  const channelId = env.DISCORD_LOG_CHANNEL_ID || env.EML_LOG_CHANNEL_ID || env.ACTION_LOG_CHANNEL_ID;
+  if (!env.DISCORD_BOT_TOKEN || !channelId) return;
+
+  try {
+    await fetch(`${DISCORD_API}/channels/${channelId}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content: message, allowed_mentions: { parse: [] } }),
+    });
+  } catch (err) {
+    console.error('Failed to send Discord log message:', err.message || err);
+  }
+}
+
 // ─── Player Routes ────────────────────────────────────────────────────────────
 
 async function handlePlayerRegister(request, env, cors) {
@@ -495,7 +514,32 @@ async function handlePlayerRegister(request, env, cors) {
     banReason: existing.banReason || null,
   };
   await kvPut(env, key, player);
+  await appendAuditLog(env, { action: 'player_register', actorId: discordId, region });
+  await sendDiscordLog(env, `🟢 <@${discordId}> registered for EML in region **${region}**.`);
   return jsonResponse({ success: true, player }, 200, cors);
+}
+
+async function handlePlayerUnregister(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch { return jsonResponse({ error: 'Invalid JSON' }, 400, cors); }
+  const { discordId } = body;
+  if (!discordId) return jsonResponse({ error: 'Missing required fields' }, 400, cors);
+
+  const key = `player:${discordId}`;
+  const player = await kvGet(env, key);
+  if (!player) return jsonResponse({ error: 'Player not found' }, 404, cors);
+  if (player.teamId) return jsonResponse({ error: 'Leave your current team before unregistering' }, 400, cors);
+
+  const updated = {
+    ...player,
+    teamId: null,
+    unregisteredAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  await kvPut(env, key, updated);
+  await appendAuditLog(env, { action: 'player_unregister', actorId: discordId });
+  await sendDiscordLog(env, `⛔ <@${discordId}> unregistered from EML.`);
+  return jsonResponse({ success: true, player: updated }, 200, cors);
 }
 
 async function handlePlayerGet(discordId, env, cors) {
@@ -1113,6 +1157,7 @@ export default {
 
     // Players
     if (request.method === 'POST' && path === '/player/register') return handlePlayerRegister(request, env, cors);
+    if (request.method === 'POST' && path === '/player/unregister') return handlePlayerUnregister(request, env, cors);
     // Player avatar (custom profile picture, keyed by name slug)
     const playerAvatarGet = path.match(/^\/player\/avatar\/([^/]+)$/);
     if (request.method === 'GET' && playerAvatarGet) return handlePlayerAvatarGet(decodeURIComponent(playerAvatarGet[1]), env, cors);

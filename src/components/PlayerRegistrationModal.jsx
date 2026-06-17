@@ -13,7 +13,7 @@ const REGIONS = [
 
 const PlayerRegistrationModal = ({ open, onClose, theme, onSuccess }) => {
   const colors = getThemedColors(theme);
-  const { user } = useAuth();
+  const { user, playerProfile } = useAuth();
   const { registerProfile, loading, error } = useTeamManagement();
   const [region, setRegion] = useState('');
   const [done, setDone] = useState(false);
@@ -32,6 +32,12 @@ const PlayerRegistrationModal = ({ open, onClose, theme, onSuccess }) => {
       setTimeout(onClose, 1800);
     } catch { /* error shown via hook */ }
   };
+
+  useEffect(() => {
+    if (open && playerProfile?.region) {
+      setRegion(playerProfile.region);
+    }
+  }, [open, playerProfile?.region]);
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="md">

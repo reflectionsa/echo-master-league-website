@@ -12,8 +12,8 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCreateTicketClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
-  const { user, logout, isAdmin, isMod, isCaster, isPlayer } = useAuth();
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onUnregisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCreateTicketClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+  const { user, logout, isAdmin, isMod, isCaster, isPlayer, isRegistered, isOnTeam } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
 
@@ -34,6 +34,8 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'create-ticket') onCreateTicketClick?.();
     if (details.value === 'captains-dash') onCaptainsDashClick?.();
     if (details.value === 'caster-greenroom') onCasterGreenRoomClick?.();
+    if (details.value === 'register') onRegisterClick?.();
+    if (details.value === 'unregister') onUnregisterClick?.();
     if (details.value === 'logout') logout();
   };
 
@@ -162,6 +164,21 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
                 <Text fontSize="sm">Register / Set Region</Text>
               </HStack>
             </Menu.Item>
+
+            {isRegistered && !isOnTeam && (
+              <Menu.Item
+                value="unregister"
+                rounded="lg"
+                color="#ff6b2b"
+                _hover={{ bg: colors.bgHover }}
+                cursor="pointer"
+              >
+                <HStack gap="2">
+                  <LogOut size={14} />
+                  <Text fontSize="sm">Unregister from League</Text>
+                </HStack>
+              </Menu.Item>
+            )}
 
             {/* My Team */}
             <Menu.Item

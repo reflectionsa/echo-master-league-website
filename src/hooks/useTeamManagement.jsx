@@ -63,7 +63,13 @@ export const useTeamManagement = () => {
     })
   ), [user, wrap]);
 
+  const unregisterProfile = useCallback(() => wrap(() =>
+    emlApi('POST', '/player/unregister', {
+      discordId: user.id,
+    })
+  ), [user, wrap]);
+
   const getProfile = useCallback((discordId) => emlApi('GET', `/player/${discordId || user?.id}`), [user]);
 
-  return { createTeam, getTeam, invitePlayer, respondToInvite, kickPlayer, leaveTeam, transferCaptain, disbandTeam, registerProfile, getProfile, loading, error };
+  return { createTeam, getTeam, invitePlayer, respondToInvite, kickPlayer, leaveTeam, transferCaptain, disbandTeam, registerProfile, unregisterProfile, getProfile, loading, error };
 };

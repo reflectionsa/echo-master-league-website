@@ -410,6 +410,18 @@ const Navigation = ({
                   onMyTeamClick={() => setMyTeamOpen(true)}
                   onMyProfileClick={() => setMyProfileOpen(true)}
                   onRegisterClick={() => setPlayerRegOpen(true)}
+                  onUnregisterClick={async () => {
+                    if (!confirm('Unregister from the league? You can register again later.')) return;
+                    try {
+                      await emlApi('POST', '/player/unregister', { discordId: user.id });
+                      setPlayerRegOpen(false);
+                      refreshProfile();
+                      alert('Unregistered successfully.');
+                    } catch (err) {
+                      console.error(err);
+                      alert(err.message || 'Failed to unregister.');
+                    }
+                  }}
                   onNotificationsClick={() => setNotificationsOpen(true)}
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
@@ -445,7 +457,7 @@ const Navigation = ({
         <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
         <TeamsView theme={theme} open={teamsOpen} onClose={() => setTeamsOpen(false)} />
         <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
-        <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} />
+        <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} onRegisterClick={() => setPlayerRegOpen(true)} />
         <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
         {(isAdmin || isMod) && (
           <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
@@ -483,7 +495,7 @@ const Navigation = ({
           <CreateTicketModal theme={theme} open={createTicketOpen} onClose={() => setCreateTicketOpen(false)} />
         )}
         {isLoggedIn && (
-          <MyTeamView theme={theme} open={myTeamOpen} onClose={() => setMyTeamOpen(false)} />
+          <MyTeamView theme={theme} open={myTeamOpen} onClose={() => setMyTeamOpen(false)} onCreateTeam={() => setTeamCreateOpen(true)} />
         )}
         {isLoggedIn && (
           <MyProfileModal theme={theme} open={myProfileOpen} onClose={() => setMyProfileOpen(false)} />

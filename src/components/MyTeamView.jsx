@@ -8,6 +8,7 @@ import {
   CheckCircle, Globe, MessageCircle, Shield,
 } from 'lucide-react';
 import { useMyTeam } from '../hooks/useMyTeam';
+import { useTeamManagement } from '../hooks/useTeamManagement';
 import { useAuth } from '../hooks/useAuth';
 import { getThemedColors } from '../theme/colors';
 import { getBaseTier, tierInfo } from '../utils/tierUtils';
@@ -82,7 +83,7 @@ const ROLE_META = {
   Player: { Icon: User, color: '#9ca3af', label: 'Player' },
 };
 
-const PlayerCard = ({ name, role, isMe, colors }) => {
+const PlayerCard = ({ name, role, isMe, colors, joinedAt }) => {
   const { Icon, color, label } = ROLE_META[role] || ROLE_META.Player;
   const initials = (name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
@@ -138,19 +139,28 @@ const PlayerCard = ({ name, role, isMe, colors }) => {
       </Text>
 
       {/* Role badge */}
-      <HStack gap="1">
+      <HStack gap="1" align="center">
         <Icon size={10} color={color} />
         <Text fontSize="2xs" color={color} fontWeight="600">{label}</Text>
       </HStack>
+      {role === 'Captain' && (
+        <Box mt="2" px="2" py="1" bg="rgba(255,215,0,0.08)" border="1px solid rgba(255,215,0,0.15)" rounded="full">
+          <Text fontSize="2xs" color="#ffd700" fontWeight="800">CAPTAIN</Text>
+        </Box>
+      )}
+      {joinedAt && (
+        <Text fontSize="2xs" color={colors.textMuted} mt="1">Joined {new Date(joinedAt).toLocaleString(undefined, { month: 'short', year: 'numeric' })}</Text>
+      )}
     </Box>
   );
 };
 
 // ─── Main component ────────────────────────────────────────────────────────────
-const MyTeamView = ({ theme, open, onClose }) => {
+const MyTeamView = ({ theme, open, onClose, onCreateTeam }) => {
   const colors = getThemedColors(theme);
   const { user } = useAuth();
   const { team, myRole, isOnTeam, standingsData, matchHistory, loading } = useMyTeam();
+  const { disbandTeam } = useTeamManagement();
 
   const isCaptain = myRole === 'Captain' || myRole === 'Co-Captain';
 
@@ -230,9 +240,16 @@ const MyTeamView = ({ theme, open, onClose }) => {
   // Build ordered roster (captain first)
   const roster = [];
   if (team) {
-    if (team.captain) roster.push({ name: team.captain, role: 'Captain' });
-    if (team.coCaptain) roster.push({ name: team.coCaptain, role: 'Co-Captain' });
-    (team.players || []).forEach(p => roster.push({ name: p, role: 'Player' }));
+    const pushMember = (m, role) => {
+      if (!m) return;
+      if (typeof m === 'string') return roster.push({ name: m, role });
+      const name = m.username || m.name || m.displayName || (m.discordName);
+      const joinedAt = m.joinedAt || m.joined || m.joinDate || null;
+      roster.push({ name: name || 'Unknown', role, joinedAt });
+    };
+    pushMember(team.captain, 'Captain');
+    pushMember(team.coCaptain, 'Co-Captain');
+    (team.players || []).forEach(p => pushMember(p, 'Player'));
   }
 
   return (
@@ -271,11 +288,25 @@ const MyTeamView = ({ theme, open, onClose }) => {
                 /* ─── NO TEAM STATE ─────────────────────────────────────────────── */
                 <Center h="420px" flexDirection="column" gap="4" p="8">
                   <Box fontSize="5xl" opacity="0.2" lineHeight="1">⚔️</Box>
-                  <Text fontSize="2xl" fontWeight="900" color={colors.textPrimary}>No Team Yet</Text>
+                  <Text fontSize="2xl" fontWeight="900" color={colors.textPrimary}>You're not on a team yet</Text>
                   <Text color={colors.textMuted} textAlign="center" maxW="360px" lineHeight="1.6">
-                    You're not currently on a roster. Ask your captain to make sure your Discord
-                    display name matches what's listed in the team sheet.
+                    Create your first team and invite your squad to compete in the league.
+                    Once your team is created, you'll see your roster, stats, and join requests here.
                   </Text>
+                  {onCreateTeam ? (
+                    <Button
+                      size="md"
+                      bg="linear-gradient(135deg, #2f6fff 0%, #1c8dff 100%)"
+                      color="white"
+                      rounded="full"
+                      px="8"
+                      py="4"
+                      onClick={onCreateTeam}
+                      _hover={{ opacity: 0.95 }}
+                    >
+                      + Create Your First Team
+                    </Button>
+                  ) : null}
                 </Center>
 
               ) : (
@@ -375,6 +406,28 @@ const MyTeamView = ({ theme, open, onClose }) => {
                       </VStack>
                     </HStack>
 
+                    {/* Top-right actions: Disband team (captain) */}
+                    {isCaptain && (
+                      <Box position="absolute" top="6" right="6" zIndex="5">
+                        <Button
+                          size="sm"
+                          bg="#ef4444"
+                          color="white"
+                          _hover={{ bg: '#dc2626' }}
+                          onClick={async () => {
+                            if (!confirm('Disband team? This cannot be undone.')) return;
+                            try {
+                              await disbandTeam(team.id);
+                            } catch (err) {
+                              console.error('Failed to disband', err);
+                            }
+                          }}
+                        >
+                          Disband Team
+                        </Button>
+                      </Box>
+                    )}
+
                     {/* Stats strip */}
                     <HStack gap="0" bg={colors.bgElevated} rounded="xl" border="1px solid" borderColor={colors.borderLight} overflow="hidden" w="fit-content">
                       {[
@@ -393,28 +446,57 @@ const MyTeamView = ({ theme, open, onClose }) => {
 
                   <Box h="1px" bg={colors.borderLight} mx="6" />
 
-                  {/* ─── ROSTER ───────────────────────────────────────────────────── */}
+                  {/* ─── ROSTER (card) ───────────────────────────────────────────── */}
                   <Box px="6" py="5">
-                    <HStack mb="4" gap="2">
-                      <Users size={15} color={colors.accentOrange} />
-                      <Text fontWeight="800" fontSize="sm" color={colors.textPrimary} textTransform="uppercase" letterSpacing="wider">
-                        Roster ({roster.length})
-                      </Text>
-                    </HStack>
-                    <SimpleGrid columns={{ base: 3, sm: 4, md: 6 }} gap="3">
-                      {roster.map((member) => (
-                        <PlayerCard
-                          key={member.name}
-                          name={member.name}
-                          role={member.role}
-                          isMe={member.name.toLowerCase() === myName}
-                          colors={colors}
-                        />
-                      ))}
-                    </SimpleGrid>
+                    <Box bg={colors.bgElevated} rounded="2xl" border="1px solid" borderColor={colors.borderLight} p="4" position="relative">
+                      <Box position="absolute" top="4" right="4">
+                        <Badge bg="#0b1220" color={colors.textMuted} border="1px solid rgba(255,255,255,0.04)" rounded="full" px="3" py="1" fontSize="2xs">
+                          {roster.length} member{roster.length !== 1 ? 's' : ''}
+                        </Badge>
+                      </Box>
+                      <HStack mb="4" gap="2" align="center">
+                        <Users size={15} color={colors.accentOrange} />
+                        <Text fontWeight="800" fontSize="sm" color={colors.textPrimary} textTransform="uppercase" letterSpacing="wider">Roster</Text>
+                      </HStack>
+                      <SimpleGrid columns={{ base: 3, sm: 4, md: 6 }} gap="3">
+                        {roster.map((member) => (
+                          <PlayerCard
+                            key={member.name}
+                            name={member.name}
+                            role={member.role}
+                            isMe={member.name.toLowerCase() === myName}
+                            colors={colors}
+                            joinedAt={member.joinedAt}
+                          />
+                        ))}
+                      </SimpleGrid>
+                    </Box>
                   </Box>
 
                   <Box h="1px" bg={colors.borderLight} mx="6" />
+
+                  {/* ─── JOIN REQUESTS ───────────────────────────────────────────── */}
+                  <Box px="6" py="5">
+                    <Box bg={colors.bgElevated} rounded="2xl" border="1px solid" borderColor={colors.borderLight} p="4">
+                      <HStack mb="4" justify="space-between">
+                        <HStack gap="2">
+                          <Users size={15} color={colors.accentOrange} />
+                          <Text fontWeight="800" fontSize="sm" color={colors.textPrimary} textTransform="uppercase" letterSpacing="wider">Join Requests</Text>
+                          <Badge bg="rgba(255,255,255,0.04)" color={colors.textMuted} fontSize="2xs">0</Badge>
+                        </HStack>
+                        <HStack gap="3">
+                          <Box display="flex" alignItems="center" gap="2">
+                            <Box w="8px" h="8px" bg={recruiting ? '#10b981' : 'rgba(255,255,255,0.06)'} rounded="full" />
+                            <Button size="xs" variant="ghost" color={recruiting ? '#10b981' : colors.textMuted} onClick={toggleRecruiting}>{recruiting ? 'ACCEPTING REQUESTS' : 'NOT ACCEPTING'}</Button>
+                          </Box>
+                        </HStack>
+                      </HStack>
+                      <Box bg={colors.bgPrimary} rounded="lg" border="1px dashed" borderColor={colors.borderLight} p="8" textAlign="center">
+                        <Box mb="2"><Users size={28} color="rgba(255,255,255,0.06)" /></Box>
+                        <Text color={colors.textMuted}>No pending join requests</Text>
+                      </Box>
+                    </Box>
+                  </Box>
 
                   {/* ─── RECENT RESULTS ───────────────────────────────────────────── */}
                   {matchHistory.length > 0 && (

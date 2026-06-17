@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Accordion, Code } from '@chakra-ui/react';
 import { Bot, Terminal, ExternalLink, Calendar, Users, Trophy, Search, BookOpen, Shield } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { useMyTeam } from '../hooks/useMyTeam';
+import { useTeamManagement } from '../hooks/useTeamManagement';
 import { getThemedColors } from '../theme/colors';
 
 const commandCategories = [
@@ -52,8 +56,36 @@ const commandCategories = [
   }
 ];
 
-const BotView = ({ theme, open, onClose }) => {
+const BotView = ({ theme, open, onClose, onRegisterClick }) => {
   const emlColors = getThemedColors(theme);
+  const { user, isLoggedIn, isRegistered } = useAuth();
+  const { team, myRole, isOnTeam } = useMyTeam();
+  const { disbandTeam, unregisterProfile, loading } = useTeamManagement();
+  const [actionMessage, setActionMessage] = useState(null);
+
+  const isCaptain = myRole === 'Captain' || myRole === 'Co-Captain';
+
+  const handleDisband = async () => {
+    if (!team?.id || !isCaptain) return;
+    if (!confirm('Disband your team? This cannot be undone.')) return;
+    try {
+      await disbandTeam(team.id);
+      setActionMessage('Team disbanded successfully.');
+    } catch (err) {
+      setActionMessage(err.message || 'Failed to disband team.');
+    }
+  };
+
+  const handleUnregister = async () => {
+    if (!isLoggedIn) return;
+    if (!confirm('Unregister from the league? You can register again later.')) return;
+    try {
+      await unregisterProfile();
+      setActionMessage('You have been unregistered successfully.');
+    } catch (err) {
+      setActionMessage(err.message || 'Failed to unregister.');
+    }
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
@@ -87,6 +119,53 @@ const BotView = ({ theme, open, onClose }) => {
                 <Text fontSize="md" color={emlColors.textMuted}>
                   Manage your team, schedule matches, and track standings directly through Discord. MMR starts at 800.
                 </Text>
+
+                {actionMessage && (
+                  <Box bg="rgba(16,185,129,0.12)" border="1px solid rgba(16,185,129,0.25)" rounded="xl" p="4">
+                    <Text color="#10b981" fontSize="sm">{actionMessage}</Text>
+                  </Box>
+                )}
+
+                <Box bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="2xl" p="4">
+                  <Text fontSize="sm" fontWeight="700" color={emlColors.textPrimary} mb="3">Quick Actions</Text>
+                  <HStack wrap="wrap" gap="3">
+                    <Button
+                      size="sm"
+                      variant="solid"
+                      bg="linear-gradient(135deg, #2f6fff 0%, #1c8dff 100%)"
+                      color="white"
+                      onClick={onRegisterClick}
+                    >
+                      Register / Set Region
+                    </Button>
+                    {isLoggedIn && isOnTeam && isCaptain && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        borderColor="#ef4444"
+                        color="#ef4444"
+                        _hover={{ bg: 'rgba(239,68,68,0.08)' }}
+                        onClick={handleDisband}
+                        isLoading={loading}
+                      >
+                        Disband Team
+                      </Button>
+                    )}
+                    {isLoggedIn && isRegistered && !isOnTeam && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        borderColor="#ffb703"
+                        color="#ffb703"
+                        _hover={{ bg: 'rgba(255,184,3,0.1)' }}
+                        onClick={handleUnregister}
+                        isLoading={loading}
+                      >
+                        Unregister from League
+                      </Button>
+                    )}
+                  </HStack>
+                </Box>
 
                 <Accordion.Root collapsible w="full">
                   <Accordion.Item value="bot-instructions" bg={emlColors.bgElevated} border="1px solid" borderColor={emlColors.borderMedium} rounded="xl" mb="3">
