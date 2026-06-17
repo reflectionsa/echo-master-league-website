@@ -12,7 +12,7 @@ const ROLE_CONFIG = {
   viewer: { label: 'Viewer', colorPalette: 'gray', Icon: User },
 };
 
-const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onUnregisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCreateTicketClick, onCaptainsDashClick, onCasterGreenRoomClick }) => {
+const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamClick, onMyProfileClick, onRegisterClick, onUnregisterClick, onNotificationsClick, onChallengeClick, onMatchReportClick, onCreateTicketClick, onCasterGreenRoomClick }) => {
   const { user, logout, isAdmin, isMod, isCaster, isPlayer, isRegistered, isOnTeam } = useAuth();
   const { unreadCount } = useNotifications();
   const colors = getThemedColors(theme);
@@ -32,7 +32,6 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
     if (details.value === 'challenge') onChallengeClick?.();
     if (details.value === 'match-report') onMatchReportClick?.();
     if (details.value === 'create-ticket') onCreateTicketClick?.();
-    if (details.value === 'captains-dash') onCaptainsDashClick?.();
     if (details.value === 'caster-greenroom') onCasterGreenRoomClick?.();
     if (details.value === 'register') onRegisterClick?.();
     if (details.value === 'unregister') onUnregisterClick?.();
@@ -195,21 +194,6 @@ const UserMenu = ({ theme, onProductionSignupClick, onAdminPanelClick, onMyTeamC
             </Menu.Item>
 
             {/* Player actions */}
-            {isPlayer && (
-              <Menu.Item
-                value="captains-dash"
-                rounded="lg"
-                color={colors.accentOrange}
-                _hover={{ bg: colors.bgHover }}
-                cursor="pointer"
-              >
-                <HStack gap="2">
-                  <Shield size={14} />
-                  <Text fontSize="sm">Captain's Dashboard</Text>
-                </HStack>
-              </Menu.Item>
-            )}
-
             {isPlayer && (
               <Menu.Item
                 value="challenge"

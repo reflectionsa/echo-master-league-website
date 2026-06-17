@@ -27,7 +27,6 @@ const RulesView = lazy(() => import('./RulesView'));
 const BotView = lazy(() => import('./BotView'));
 const MediaView = lazy(() => import('./MediaView'));
 const LeaderboardView = lazy(() => import('./LeaderboardView'));
-const CaptainsDashboard = lazy(() => import('./CaptainsDashboard'));
 const CasterGreenRoom = lazy(() => import('./CasterGreenRoom'));
 const NotificationsPanel = lazy(() => import('./NotificationsPanel'));
 const TeamCreationModal = lazy(() => import('./TeamCreationModal'));
@@ -72,7 +71,6 @@ const Navigation = ({
   const [productionSignupOpen, setProductionSignupOpen] = useState(false);
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
-  const [captainsDashOpen, setCaptainsDashOpen] = useState(false);
   const [casterGreenRoomOpen, setCasterGreenRoomOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [teamCreateOpen, setTeamCreateOpen] = useState(false);
@@ -426,7 +424,6 @@ const Navigation = ({
                   onChallengeClick={() => setChallengeOpen(true)}
                   onMatchReportClick={() => setMatchReportOpen(true)}
                   onCreateTicketClick={() => setCreateTicketOpen(true)}
-                  onCaptainsDashClick={() => setCaptainsDashOpen(true)}
                   onCasterGreenRoomClick={() => setCasterGreenRoomOpen(true)}
                 />
               ) : (
@@ -461,9 +458,6 @@ const Navigation = ({
         <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
         {(isAdmin || isMod) && (
           <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
-        )}
-        {isLoggedIn && (
-          <CaptainsDashboard theme={theme} open={captainsDashOpen} onClose={() => setCaptainsDashOpen(false)} />
         )}
         {(isCaster || isAdmin) && (
           <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
