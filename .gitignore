@@ -13,4 +13,5 @@ coverage/
 /.cache/
 dev.log
 tmpclaude-*
-worker/tmpclaude-*
+worker/tmpclaude-*'old/'  
+old/
