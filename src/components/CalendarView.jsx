@@ -1,63 +1,48 @@
 import { Box, Dialog, Portal, CloseButton, HStack, Image } from '@chakra-ui/react';
 import { Calendar } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
+import RoutePageLayout from './RoutePageLayout';
 
-const CalendarView = ({ theme, open, onClose }) => {
+const CalendarView = ({ theme }) => {
   const emlColors = getThemedColors(theme);
 
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="full">
-      <Portal>
-        <Dialog.Backdrop bg="blackAlpha.700" backdropFilter="blur(10px)" />
-        <Dialog.Positioner>
-          <Dialog.Content
-            maxW="1100px"
-            w="96vw"
-            maxH="92vh"
-            bg={emlColors.bgPrimary}
-            border="1px solid"
-            borderColor={emlColors.borderMedium}
-            rounded="2xl"
-            overflow="hidden"
-            display="flex"
-            flexDirection="column"
-          >
-            <Dialog.Header bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium} py="3">
-              <HStack justify="space-between">
-                <HStack gap="2">
-                  <Calendar size={18} color={emlColors.accentOrange} />
-                  <Dialog.Title fontSize="lg" fontWeight="800" color={emlColors.textPrimary}>
-                    League Calendar
-                  </Dialog.Title>
-                </HStack>
-                <Dialog.CloseTrigger asChild>
-                  <CloseButton size="sm" color={emlColors.textSecondary} _hover={{ color: emlColors.textPrimary }} />
-                </Dialog.CloseTrigger>
-              </HStack>
-            </Dialog.Header>
-            <Dialog.Body p="4" overflowY="auto" flex="1">
-              <Box
-                w="full"
-                bg={emlColors.bgElevated}
-                border="2px solid"
-                borderColor={emlColors.accentOrange}
-                rounded="xl"
-                overflow="hidden"
-                boxShadow={`0 0 20px ${emlColors.accentOrange}44`}
-              >
-                <Image
-                  src="https://echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png"
-                  alt="EML League Calendar"
-                  w="full"
-                  h="auto"
-                  objectFit="contain"
-                />
-              </Box>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+    <RoutePageLayout
+      maxW="1100px"
+      bg={emlColors.bgPrimary}
+      border="1px solid"
+      borderColor={emlColors.borderMedium}
+      rounded="2xl"
+      overflow="hidden"
+    >
+      <Box bg={`${emlColors.bgPrimary}dd`} borderBottom="1px solid" borderColor={emlColors.borderMedium} py="3" px="5">
+        <HStack gap="2">
+          <Calendar size={18} color={emlColors.accentOrange} />
+          <Box as="span" fontSize="lg" fontWeight="800" color={emlColors.textPrimary}>
+            League Calendar
+          </Box>
+        </HStack>
+      </Box>
+      <Box p="4" overflowY="auto" flex="1">
+        <Box
+          w="full"
+          bg={emlColors.bgElevated}
+          border="2px solid"
+          borderColor={emlColors.accentOrange}
+          rounded="xl"
+          overflow="hidden"
+          boxShadow={`0 0 20px ${emlColors.accentOrange}44`}
+        >
+          <Image
+            src="https://echomasterleague.com/wp-content/uploads/2026/01/nacalendar.png"
+            alt="EML League Calendar"
+            w="full"
+            h="auto"
+            objectFit="contain"
+          />
+        </Box>
+      </Box>
+    </RoutePageLayout>
   );
 };
 

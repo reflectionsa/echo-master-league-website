@@ -1,7 +1,7 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
 import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import ThemePicker from './ThemePicker';
 import { getThemedColors } from '../theme/colors';
@@ -13,21 +13,9 @@ import { useMyTeam } from '../hooks/useMyTeam';
 import { useSchedule } from '../hooks/useSchedule';
 import { emlApi } from '../hooks/useEmlApi';
 
-// Lazy-load all modal/panel/view components so they don't bloat the initial bundle
+// Lazy-load modal-only panels so they don't bloat the initial bundle
 const ProductionSignup = lazy(() => import('./ProductionSignup'));
 const AdminPanel = lazy(() => import('./AdminPanel'));
-const AnnouncementsView = lazy(() => import('./AnnouncementsView'));
-const AboutView = lazy(() => import('./AboutView'));
-const CalendarView = lazy(() => import('./CalendarView'));
-const ResourcesView = lazy(() => import('./ResourcesView'));
-const StandingsView = lazy(() => import('./StandingsView'));
-const MatchesView = lazy(() => import('./MatchesView'));
-const MembersView = lazy(() => import('./MembersView'));
-const TeamsView = lazy(() => import('./TeamsView'));
-const RulesView = lazy(() => import('./RulesView'));
-const BotView = lazy(() => import('./BotView'));
-const MediaView = lazy(() => import('./MediaView'));
-const LeaderboardView = lazy(() => import('./LeaderboardView'));
 const CasterGreenRoom = lazy(() => import('./CasterGreenRoom'));
 const NotificationsPanel = lazy(() => import('./NotificationsPanel'));
 const TeamCreationModal = lazy(() => import('./TeamCreationModal'));
@@ -45,15 +33,7 @@ const Navigation = ({
   colorScheme,
   mode,
   onColorSchemeChange,
-  onModeChange,
-  teamsOpen,
-  setTeamsOpen,
-  membersOpen,
-  setMembersOpen,
-  membersCategory,
-  setMembersCategory,
-  standingsOpen,
-  setStandingsOpen
+  onModeChange
 }) => {
   const colors = getThemedColors(theme);
   const navigate = useNavigate();
@@ -62,17 +42,8 @@ const Navigation = ({
   const { team: myTeamData, isOnTeam: rosterIsOnTeam, loading: teamsLoading } = useMyTeam();
   const isOnTeam = authIsOnTeam || rosterIsOnTeam;
   const { matches: schedule } = useSchedule();
-  const [announcementsOpen, setAnnouncementsOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
-  const [matchesOpen, setMatchesOpen] = useState(false);
-  const [rulesOpen, setRulesOpen] = useState(false);
-  const [botOpen, setBotOpen] = useState(false);
-  const [mediaOpen, setMediaOpen] = useState(false);
   const [productionSignupOpen, setProductionSignupOpen] = useState(false);
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
-  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [casterGreenRoomOpen, setCasterGreenRoomOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [teamCreateOpen, setTeamCreateOpen] = useState(false);
@@ -445,22 +416,8 @@ const Navigation = ({
         </Container>
       </Box>
 
-      {/* Overlay Views — wrapped in Suspense so lazy chunks load on demand */}
+      {/* Modal-only panels */}
       <Suspense fallback={null}>
-        <AnnouncementsView theme={theme} open={announcementsOpen} onClose={() => setAnnouncementsOpen(false)} />
-        <AboutView theme={theme} open={aboutOpen} onClose={() => setAboutOpen(false)} />
-        <CalendarView theme={theme} open={calendarOpen} onClose={() => setCalendarOpen(false)} />
-        <ResourcesView theme={theme} open={resourcesOpen} onClose={() => setResourcesOpen(false)} />
-        <StandingsView theme={theme} open={standingsOpen} onClose={() => setStandingsOpen(false)} />
-        <MatchesView theme={theme} open={matchesOpen} onClose={() => setMatchesOpen(false)} />
-        <MembersView theme={theme} open={membersOpen} onClose={() => setMembersOpen(false)} initialCategory={membersCategory} />
-        <TeamsView theme={theme} open={teamsOpen} onClose={() => setTeamsOpen(false)} />
-        <RulesView theme={theme} open={rulesOpen} onClose={() => setRulesOpen(false)} />
-        <BotView theme={theme} open={botOpen} onClose={() => setBotOpen(false)} onRegisterClick={() => setPlayerRegOpen(true)} />
-        <MediaView theme={theme} open={mediaOpen} onClose={() => setMediaOpen(false)} />
-        {(isAdmin || isMod) && (
-          <LeaderboardView theme={theme} open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
-        )}
         {(isCaster || isAdmin) && (
           <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
         )}

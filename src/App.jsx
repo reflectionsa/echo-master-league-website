@@ -1,9 +1,10 @@
 import { Box } from '@chakra-ui/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ParticlesProvider } from '@tsparticles/react';
 import { useTheme } from './hooks/useTheme';
 import { getThemedColors } from './theme/colors';
 import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 import { particlesInit } from './utils/particlesInit';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -16,6 +17,7 @@ import SeasonCountdown from './components/SeasonCountdown';
 import MatchesView from './components/MatchesView';
 import TeamsView from './components/TeamsView';
 import MembersView from './components/MembersView';
+import StandingsView from './components/StandingsView';
 import LeaderboardView from './components/LeaderboardView';
 import AnnouncementsView from './components/AnnouncementsView';
 import AboutView from './components/AboutView';
@@ -35,6 +37,16 @@ const HomePage = ({ theme }) => (
     <SeasonCountdown theme={theme} />
   </>
 );
+
+const ProtectedLeaderboardRoute = ({ theme }) => {
+  const { isAdmin, isMod } = useAuth();
+
+  if (!isAdmin && !isMod) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <LeaderboardView theme={theme} />;
+};
 
 const App = () => {
   const { theme, toggleTheme, colorScheme, mode, setColorScheme, setMode } = useTheme();
@@ -67,7 +79,7 @@ const App = () => {
             <Route path="/matches" element={<MatchesView theme={theme} />} />
             <Route path="/teams" element={<TeamsView theme={theme} />} />
             <Route path="/members" element={<MembersView theme={theme} />} />
-            <Route path="/standings" element={<LeaderboardView theme={theme} />} />
+            <Route path="/standings" element={<StandingsView theme={theme} />} />
             <Route path="/announcements" element={<AnnouncementsView theme={theme} />} />
             <Route path="/about" element={<AboutView theme={theme} />} />
             <Route path="/calendar" element={<CalendarView theme={theme} />} />
@@ -75,7 +87,8 @@ const App = () => {
             <Route path="/rules" element={<RulesView theme={theme} />} />
             <Route path="/bot" element={<BotView theme={theme} />} />
             <Route path="/media" element={<MediaView theme={theme} />} />
-            <Route path="/leaderboard" element={<LeaderboardView theme={theme} />} />
+            <Route path="/leaderboard" element={<ProtectedLeaderboardRoute theme={theme} />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Box>
         </Box>

@@ -1,8 +1,9 @@
 import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Button, Grid, Center } from '@chakra-ui/react';
 import { Video, Youtube, Music2 } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
+import RoutePageLayout from './RoutePageLayout';
 
-const MediaView = ({ theme, open, onClose }) => {
+const MediaView = ({ theme }) => {
   const emlColors = getThemedColors(theme);
 
   const platforms = [
@@ -12,70 +13,58 @@ const MediaView = ({ theme, open, onClose }) => {
   ];
 
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">
-      <Portal>
-        <Dialog.Backdrop bg={`${emlColors.bgPrimary}b3`} backdropFilter="blur(10px)" />
-        <Dialog.Positioner>
-          <Dialog.Content
-            maxW="900px"
-            bg={emlColors.bgSecondary}
-            border="1px solid"
-            borderColor={emlColors.borderMedium}
-            rounded="2xl"
-            overflow="hidden"
-          >
-            <Dialog.Header bg={emlColors.bgTertiary} borderBottom="1px solid" borderColor={emlColors.borderMedium}>
-              <HStack justify="space-between">
-                <HStack gap="2">
-                  <Video size={24} color={emlColors.accentOrange} />
-                  <Dialog.Title fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
-                    Highlights & Content
-                  </Dialog.Title>
-                </HStack>
-                <Dialog.CloseTrigger asChild>
-                  <CloseButton size="lg" color={emlColors.textPrimary} _hover={{ color: emlColors.accentOrange }} />
-                </Dialog.CloseTrigger>
-              </HStack>
-            </Dialog.Header>
-            <Dialog.Body p="6" overflowY="auto">
-              <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="6">
-                {platforms.map(item => (
-                  <Box
-                    key={item.label}
-                    bg={`${emlColors.textPrimary}08`}
-                    border="1px solid"
-                    borderColor={emlColors.borderMedium}
-                    rounded="2xl"
-                    overflow="hidden"
-                    _hover={{ transform: 'translateY(-4px)', borderColor: emlColors.accentOrange }}
-                    transition="all 0.3s"
-                  >
-                    <Center h="160px" bg={`${emlColors.textPrimary}0c`}>
-                      <item.icon size={48} color={item.color} />
-                    </Center>
-                    <VStack p="5" align="stretch" gap="3">
-                      <VStack align="start" gap="1">
-                        <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{item.label}</Text>
-                        <Text fontSize="sm" color={emlColors.textMuted}>{item.desc}</Text>
-                      </VStack>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        colorPalette="orange"
-                        onClick={() => window.open(item.url, '_blank')}
-                        w="full"
-                      >
-                        Visit Channel
-                      </Button>
-                    </VStack>
-                  </Box>
-                ))}
-              </Grid>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+    <RoutePageLayout
+      maxW="900px"
+      bg={emlColors.bgSecondary}
+      border="1px solid"
+      borderColor={emlColors.borderMedium}
+      rounded="2xl"
+      overflow="hidden"
+    >
+      <Box bg={emlColors.bgTertiary} borderBottom="1px solid" borderColor={emlColors.borderMedium} px="6" py="5">
+        <HStack gap="2">
+          <Video size={24} color={emlColors.accentOrange} />
+          <Text fontSize="2xl" fontWeight="800" color={emlColors.textPrimary}>
+            Highlights & Content
+          </Text>
+        </HStack>
+      </Box>
+      <Box p="6" overflowY="auto" flex="1">
+        <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="6">
+          {platforms.map(item => (
+            <Box
+              key={item.label}
+              bg={`${emlColors.textPrimary}08`}
+              border="1px solid"
+              borderColor={emlColors.borderMedium}
+              rounded="2xl"
+              overflow="hidden"
+              _hover={{ transform: 'translateY(-4px)', borderColor: emlColors.accentOrange }}
+              transition="all 0.3s"
+            >
+              <Center h="160px" bg={`${emlColors.textPrimary}0c`}>
+                <item.icon size={48} color={item.color} />
+              </Center>
+              <VStack p="5" align="stretch" gap="3">
+                <VStack align="start" gap="1">
+                  <Text fontSize="lg" fontWeight="700" color={emlColors.textPrimary}>{item.label}</Text>
+                  <Text fontSize="sm" color={emlColors.textMuted}>{item.desc}</Text>
+                </VStack>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  colorPalette="orange"
+                  onClick={() => window.open(item.url, '_blank')}
+                  w="full"
+                >
+                  Visit Channel
+                </Button>
+              </VStack>
+            </Box>
+          ))}
+        </Grid>
+      </Box>
+    </RoutePageLayout>
   );
 };
 

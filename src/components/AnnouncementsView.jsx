@@ -2,6 +2,7 @@ import { Box, Dialog, Portal, CloseButton, HStack, VStack, Text, Badge, Image, S
 import { Bell, Calendar, RefreshCw, AlertCircle } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 import { useAnnouncements } from '../hooks/useAnnouncements';
+import RoutePageLayout from './RoutePageLayout';
 
 const formatRelativeTime = (isoStr) => {
   const diff = Date.now() - new Date(isoStr).getTime();
@@ -92,90 +93,74 @@ const FallbackAnnouncement = ({ colors }) => {
   );
 };
 
-const AnnouncementsView = ({ theme, open, onClose }) => {
+const AnnouncementsView = ({ theme }) => {
   const colors = getThemedColors(theme);
   const { announcements, loading, error, refresh } = useAnnouncements();
 
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => !e.open && onClose()} size="lg">
-      <Portal>
-        <Dialog.Backdrop bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
-        <Dialog.Positioner>
-          <Dialog.Content
-            maxW="800px"
-            maxH="90vh"
-            bg={colors.bgPrimary}
-            border="1px solid"
-            borderColor={colors.borderLight}
-            rounded="2xl"
-            overflow="hidden"
-            display="flex"
-            flexDir="column"
-          >
-            <Dialog.Header bg={colors.bgCard} borderBottom="1px solid" borderColor={colors.borderLight} px="6" py="4">
-              <HStack justify="space-between">
-                <HStack gap="3">
-                  <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="2" rounded="lg">
-                    <Bell size={18} color="#ff6b2b" />
-                  </Box>
-                  <Dialog.Title fontSize="lg" fontWeight="800" color={colors.textPrimary}>Announcements</Dialog.Title>
-                  {announcements.length > 0 && (
-                    <Badge bg="rgba(255,107,43,0.12)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.25)" fontSize="xs">{announcements.length}</Badge>
-                  )}
-                </HStack>
-                <HStack gap="2">
-                  <Box as="button" onClick={refresh} p="1.5" rounded="lg" color={colors.textMuted} _hover={{ color: '#ff6b2b', bg: 'rgba(255,107,43,0.1)' }} transition="all 0.15s">
-                    <RefreshCw size={14} />
-                  </Box>
-                  <Dialog.CloseTrigger asChild>
-                    <CloseButton size="sm" color={colors.textPrimary} _hover={{ color: colors.accentOrange }} />
-                  </Dialog.CloseTrigger>
-                </HStack>
+    <RoutePageLayout
+      maxW="800px"
+      bg={colors.bgPrimary}
+      border="1px solid"
+      borderColor={colors.borderLight}
+      rounded="2xl"
+      overflow="hidden"
+    >
+      <Box bg={colors.bgCard} borderBottom="1px solid" borderColor={colors.borderLight} px="6" py="4">
+        <HStack justify="space-between">
+          <HStack gap="3">
+            <Box bg="rgba(255,107,43,0.15)" border="1px solid rgba(255,107,43,0.3)" p="2" rounded="lg">
+              <Bell size={18} color="#ff6b2b" />
+            </Box>
+            <Text fontSize="lg" fontWeight="800" color={colors.textPrimary}>Announcements</Text>
+            {announcements.length > 0 && (
+              <Badge bg="rgba(255,107,43,0.12)" color="#ff6b2b" border="1px solid rgba(255,107,43,0.25)" fontSize="xs">{announcements.length}</Badge>
+            )}
+          </HStack>
+          <Box as="button" onClick={refresh} p="1.5" rounded="lg" color={colors.textMuted} _hover={{ color: '#ff6b2b', bg: 'rgba(255,107,43,0.1)' }} transition="all 0.15s">
+            <RefreshCw size={14} />
+          </Box>
+        </HStack>
+      </Box>
+
+      <Box p="5" overflowY="auto" flex="1">
+        {loading && (
+          <Center py="16">
+            <VStack gap="3">
+              <Spinner size="lg" color="#ff6b2b" />
+              <Text fontSize="sm" color={colors.textMuted}>Loading announcements…</Text>
+            </VStack>
+          </Center>
+        )}
+
+        {!loading && error && (
+          <VStack gap="4">
+            <Box bg="rgba(239,68,68,0.07)" border="1px solid rgba(239,68,68,0.2)" rounded="xl" p="4" w="full">
+              <HStack gap="2">
+                <AlertCircle size={14} color="#ef4444" />
+                <Text fontSize="xs" color="#ef4444">Could not load live announcements — showing cached content.</Text>
               </HStack>
-            </Dialog.Header>
+            </Box>
+            <FallbackAnnouncement colors={colors} />
+          </VStack>
+        )}
 
-            <Dialog.Body p="5" overflowY="auto" flex="1">
-              {loading && (
-                <Center py="16">
-                  <VStack gap="3">
-                    <Spinner size="lg" color="#ff6b2b" />
-                    <Text fontSize="sm" color={colors.textMuted}>Loading announcements…</Text>
-                  </VStack>
-                </Center>
-              )}
+        {!loading && !error && announcements.length === 0 && (
+          <VStack gap="4">
+            <FallbackAnnouncement colors={colors} />
+          </VStack>
+        )}
 
-              {!loading && error && (
-                <VStack gap="4">
-                  <Box bg="rgba(239,68,68,0.07)" border="1px solid rgba(239,68,68,0.2)" rounded="xl" p="4" w="full">
-                    <HStack gap="2">
-                      <AlertCircle size={14} color="#ef4444" />
-                      <Text fontSize="xs" color="#ef4444">Could not load live announcements — showing cached content.</Text>
-                    </HStack>
-                  </Box>
-                  <FallbackAnnouncement colors={colors} />
-                </VStack>
-              )}
-
-              {!loading && !error && announcements.length === 0 && (
-                <VStack gap="4">
-                  <FallbackAnnouncement colors={colors} />
-                </VStack>
-              )}
-
-              {!loading && !error && announcements.length > 0 && (
-                <VStack gap="4" align="stretch">
-                  {announcements.map((a, i) => (
-                    <AnnouncementCard key={a.id} announcement={a} colors={colors} index={i} />
-                  ))}
-                </VStack>
-              )}
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+        {!loading && !error && announcements.length > 0 && (
+          <VStack gap="4" align="stretch">
+            {announcements.map((a, i) => (
+              <AnnouncementCard key={a.id} announcement={a} colors={colors} index={i} />
+            ))}
+          </VStack>
+        )}
+      </Box>
+    </RoutePageLayout>
   );
 };
 
 export default AnnouncementsView;
-
