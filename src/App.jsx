@@ -17,6 +17,13 @@ import MatchesView from './components/MatchesView';
 import TeamsView from './components/TeamsView';
 import MembersView from './components/MembersView';
 import LeaderboardView from './components/LeaderboardView';
+import AnnouncementsView from './components/AnnouncementsView';
+import AboutView from './components/AboutView';
+import CalendarView from './components/CalendarView';
+import ResourcesView from './components/ResourcesView';
+import RulesView from './components/RulesView';
+import BotView from './components/BotView';
+import MediaView from './components/MediaView';
 
 // Homepage sections
 const HomePage = ({ theme }) => (
@@ -61,6 +68,14 @@ const App = () => {
             <Route path="/teams" element={<TeamsView theme={theme} />} />
             <Route path="/members" element={<MembersView theme={theme} />} />
             <Route path="/standings" element={<LeaderboardView theme={theme} />} />
+            <Route path="/announcements" element={<AnnouncementsView theme={theme} />} />
+            <Route path="/about" element={<AboutView theme={theme} />} />
+            <Route path="/calendar" element={<CalendarView theme={theme} />} />
+            <Route path="/resources" element={<ResourcesView theme={theme} />} />
+            <Route path="/rules" element={<RulesView theme={theme} />} />
+            <Route path="/bot" element={<BotView theme={theme} />} />
+            <Route path="/media" element={<MediaView theme={theme} />} />
+            <Route path="/leaderboard" element={<LeaderboardView theme={theme} />} />
           </Routes>
         </Box>
         </Box>

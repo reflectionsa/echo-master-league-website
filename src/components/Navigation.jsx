@@ -227,7 +227,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setResourcesOpen(true)}
+                      onClick={() => navigate('/resources')}
                     >
                       <HStack gap="2"><CalendarDays size={14} /><span>Resources</span></HStack>
                     </Menu.Item>
@@ -252,7 +252,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => navigate('/rules'))
+                      onClick={() => navigate('/rules')}
                     >
                       <HStack gap="2"><BookOpen size={14} /><span>League Rules</span></HStack>
                     </Menu.Item>
@@ -264,7 +264,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setBotOpen(true)}
+                      onClick={() => navigate('/bot')}
                     >
                       <HStack gap="2"><Bot size={14} /><span>EML Discord Bot</span></HStack>
                     </Menu.Item>
@@ -305,7 +305,7 @@ const Navigation = ({
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => setStandingsOpen(true)}
+                onClick={() => navigate('/standings')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
                 _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
@@ -315,7 +315,7 @@ const Navigation = ({
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => setMatchesOpen(true)}
+                onClick={() => navigate('/matches')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
                 _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
@@ -325,7 +325,7 @@ const Navigation = ({
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => setMembersOpen(true)}
+                onClick={() => navigate('/members')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
                 _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
@@ -538,7 +538,7 @@ const Navigation = ({
               h="auto"
               py="2"
               px="2"
-              onClick={() => setStandingsOpen(true)}
+              onClick={() => navigate('/standings')}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
@@ -552,7 +552,7 @@ const Navigation = ({
               h="auto"
               py="2"
               px="2"
-              onClick={() => setMatchesOpen(true)}
+              onClick={() => navigate('/matches')}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
@@ -566,7 +566,7 @@ const Navigation = ({
               h="auto"
               py="2"
               px="2"
-              onClick={() => setMembersOpen(true)}
+              onClick={() => navigate('/members')}
               color={colors.textSecondary}
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
