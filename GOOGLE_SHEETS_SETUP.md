@@ -27,7 +27,7 @@ The Echo Master League site pulls live data from Google Sheets for teams, matche
 
 2. Edit `.env` and add your API key:
 
-   ```
+   ```bash
    VITE_GOOGLE_SHEETS_API_KEY=your_api_key_here
    ```
 
@@ -69,7 +69,7 @@ The application is configured to pull from these Google Sheets:
 
 ## Expected Data Format
 
-### Teams (_RosterWide sheet)
+### Teams (\_RosterWide sheet)
 
 Columns (flexible header names):
 
@@ -127,7 +127,7 @@ The system will automatically parse these formats and display them correctly.
 Columns:
 
 - Match Date / Date
-- Match Time / Time  
+- Match Time / Time
 - Team 1 / Home Team
 - Team 2 / Away Team
 - Score / Final Score
@@ -174,13 +174,13 @@ To modify which sheets are used, edit `config/sheets.js`:
 ```javascript
 export const GOOGLE_SHEETS_CONFIG = {
   spreadsheets: {
-    roster: 'YOUR_ROSTER_SHEET_ID',
-    tournament: 'YOUR_TOURNAMENT_SHEET_ID',
+    roster: "YOUR_ROSTER_SHEET_ID",
+    tournament: "YOUR_TOURNAMENT_SHEET_ID",
   },
   ranges: {
-    rosterWide: 'Sheet Name!A:Z',
+    rosterWide: "Sheet Name!A:Z",
     // ... other ranges
-  }
+  },
 };
 ```
 

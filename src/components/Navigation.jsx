@@ -1,6 +1,7 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
 import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import ThemePicker from './ThemePicker';
 import { getThemedColors } from '../theme/colors';
@@ -55,6 +56,7 @@ const Navigation = ({
   setStandingsOpen
 }) => {
   const colors = getThemedColors(theme);
+  const navigate = useNavigate();
   const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, playerProfile, isOnTeam: authIsOnTeam, refreshProfile } = useAuth();
   const { unreadCount } = useNotifications();
   const { team: myTeamData, isOnTeam: rosterIsOnTeam, loading: teamsLoading } = useMyTeam();
@@ -201,7 +203,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setAnnouncementsOpen(true)}
+                      onClick={() => navigate('/announcements')}
                     >
                       <HStack gap="2"><Megaphone size={14} /><span>Announcements</span></HStack>
                     </Menu.Item>
@@ -213,7 +215,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setAboutOpen(true)}
+                      onClick={() => navigate('/about')}
                     >
                       <HStack gap="2"><Info size={14} /><span>About EML</span></HStack>
                     </Menu.Item>
@@ -238,7 +240,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setTeamsOpen(true)}
+                      onClick={() => navigate('/teams')}
                     >
                       <HStack gap="2"><Users size={14} /><span>League Teams</span></HStack>
                     </Menu.Item>
@@ -250,7 +252,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setRulesOpen(true)}
+                      onClick={() => navigate('/rules'))
                     >
                       <HStack gap="2"><BookOpen size={14} /><span>League Rules</span></HStack>
                     </Menu.Item>
@@ -274,7 +276,7 @@ const Navigation = ({
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
-                      onClick={() => setMediaOpen(true)}
+                      onClick={() => navigate('/media')}
                     >
                       <HStack gap="2"><Film size={14} /><span>Highlights & Content</span></HStack>
                     </Menu.Item>
@@ -288,7 +290,7 @@ const Navigation = ({
                         color={colors.accentOrange}
                         _hover={{ bg: colors.bgHover }}
                         transition="all 0.15s ease"
-                        onClick={() => setLeaderboardOpen(true)}
+                        onClick={() => navigate('/leaderboard')}
                       >
                         <HStack gap="2"><BarChart2 size={14} /><span>Player Leaderboard</span></HStack>
                       </Menu.Item>
