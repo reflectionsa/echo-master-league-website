@@ -91,7 +91,19 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, POLL_INTERVAL_MS);
-    return () => clearInterval(interval);
+
+    // Revalidate instantly when the tab/window regains focus, so data feels live.
+    const revalidate = () => {
+      if (document.visibilityState === 'visible') fetchData();
+    };
+    window.addEventListener('focus', revalidate);
+    document.addEventListener('visibilitychange', revalidate);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', revalidate);
+      document.removeEventListener('visibilitychange', revalidate);
+    };
   }, [spreadsheetId, range, apiKey]);
 
   return { data, loading, error, refetch: fetchData };

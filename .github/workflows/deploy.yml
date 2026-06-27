@@ -21,8 +21,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
         run: rm -f package-lock.json && npm install
@@ -31,9 +31,9 @@ jobs:
         run: npm run build
         env:
           VITE_GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
-          VITE_DISCORD_CLIENT_ID: "1477115120759996667"
-          VITE_DISCORD_REDIRECT_URI: "https://echo-master-league-website.pages.dev/"
-          VITE_WORKER_URL: "https://eml-discord-oauth.aaliyahkarol101.workers.dev"
+          VITE_DISCORD_CLIENT_ID: '1477115120759996667'
+          VITE_DISCORD_REDIRECT_URI: 'https://echo-master-league-website.pages.dev/'
+          VITE_WORKER_URL: 'https://eml-discord-oauth.aaliyahkarol101.workers.dev'
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
