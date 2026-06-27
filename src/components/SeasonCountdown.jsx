@@ -13,14 +13,14 @@ const NEXT_SEASON_DATE = new Date('2026-07-13T00:00:00-05:00'); // Jul 13 2026
 const NEXT_SEASON_LABEL = 'Season 5';
 // ─────────────────────────────────────────────────────────────────────────────
 
-const pad = (n) => String(n).padStart(2, '0');
+const pad = n => String(n).padStart(2, '0');
 
 const calcRemaining = () => {
   const diff = NEXT_SEASON_DATE.getTime() - Date.now();
   if (diff <= 0) return null;
   const totalSecs = Math.floor(diff / 1000);
-  const days    = Math.floor(totalSecs / 86400);
-  const hours   = Math.floor((totalSecs % 86400) / 3600);
+  const days = Math.floor(totalSecs / 86400);
+  const hours = Math.floor((totalSecs % 86400) / 3600);
   const minutes = Math.floor((totalSecs % 3600) / 60);
   const seconds = totalSecs % 60;
   return { days, hours, minutes, seconds };
@@ -50,7 +50,13 @@ const TimeUnit = ({ value, label, colors }) => (
         {pad(value)}
       </Text>
     </Box>
-    <Text fontSize="2xs" fontWeight="700" color={colors.textSubtle} textTransform="uppercase" letterSpacing="wider">
+    <Text
+      fontSize="2xs"
+      fontWeight="700"
+      color={colors.textSubtle}
+      textTransform="uppercase"
+      letterSpacing="wider"
+    >
       {label}
     </Text>
   </VStack>
@@ -60,7 +66,8 @@ const SeasonCountdown = ({ theme }) => {
   const colors = getThemedColors(theme);
   const [remaining, setRemaining] = useState(calcRemaining);
 
-  useEffect(() => {    const t = setInterval(() => setRemaining(calcRemaining()), 1000);
+  useEffect(() => {
+    const t = setInterval(() => setRemaining(calcRemaining()), 1000);
     return () => clearInterval(t);
   }, []);
 
@@ -72,7 +79,10 @@ const SeasonCountdown = ({ theme }) => {
   if (remaining.days < 0) return null;
 
   const dateStr = NEXT_SEASON_DATE.toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York'
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'America/New_York',
   });
 
   return (
@@ -90,8 +100,18 @@ const SeasonCountdown = ({ theme }) => {
         .eml-countdown-card { animation: eml-countdown-glow 3s ease-in-out infinite; }
       `}</style>
       {/* Ambient glow */}
-      <Box position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)"
-        w="600px" h="300px" bg={`${colors.accentOrange}10`} rounded="full" filter="blur(80px)" pointerEvents="none" />
+      <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%,-50%)"
+        w="600px"
+        h="300px"
+        bg={`${colors.accentOrange}10`}
+        rounded="full"
+        filter="blur(80px)"
+        pointerEvents="none"
+      />
 
       <Container maxW="4xl" position="relative" zIndex="1">
         <VStack gap="10" textAlign="center">
@@ -99,7 +119,13 @@ const SeasonCountdown = ({ theme }) => {
           <VStack gap="3">
             <HStack gap="2" justify="center">
               <Zap size={18} color={colors.accentOrange} />
-              <Text fontSize="xs" fontWeight="800" color={colors.accentOrange} textTransform="uppercase" letterSpacing="wider">
+              <Text
+                fontSize="xs"
+                fontWeight="800"
+                color={colors.accentOrange}
+                textTransform="uppercase"
+                letterSpacing="wider"
+              >
                 Coming Soon
               </Text>
             </HStack>
@@ -124,17 +150,42 @@ const SeasonCountdown = ({ theme }) => {
 
           {/* Countdown tiles */}
           <HStack gap={{ base: '3', md: '6' }} justify="center" flexWrap="wrap">
-            <TimeUnit value={remaining.days}    label="Days"    colors={colors} />
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={`${colors.accentOrange}66`} mt="-8px">:</Text>
-            <TimeUnit value={remaining.hours}   label="Hours"   colors={colors} />
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={`${colors.accentOrange}66`} mt="-8px">:</Text>
+            <TimeUnit value={remaining.days} label="Days" colors={colors} />
+            <Text
+              fontSize={{ base: '2xl', md: '4xl' }}
+              fontWeight="900"
+              color={`${colors.accentOrange}66`}
+              mt="-8px"
+            >
+              :
+            </Text>
+            <TimeUnit value={remaining.hours} label="Hours" colors={colors} />
+            <Text
+              fontSize={{ base: '2xl', md: '4xl' }}
+              fontWeight="900"
+              color={`${colors.accentOrange}66`}
+              mt="-8px"
+            >
+              :
+            </Text>
             <TimeUnit value={remaining.minutes} label="Minutes" colors={colors} />
-            <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={`${colors.accentOrange}66`} mt="-8px">:</Text>
+            <Text
+              fontSize={{ base: '2xl', md: '4xl' }}
+              fontWeight="900"
+              color={`${colors.accentOrange}66`}
+              mt="-8px"
+            >
+              :
+            </Text>
             <TimeUnit value={remaining.seconds} label="Seconds" colors={colors} />
           </HStack>
 
           <Text fontSize="xs" color={colors.textSubtle}>
-            Date subject to change — follow <Text as="span" color={colors.accentOrange} fontWeight="700">#announcements</Text> in Discord for updates
+            Date subject to change — follow{' '}
+            <Text as="span" color={colors.accentOrange} fontWeight="700">
+              #announcements
+            </Text>{' '}
+            in Discord for updates
           </Text>
         </VStack>
       </Container>

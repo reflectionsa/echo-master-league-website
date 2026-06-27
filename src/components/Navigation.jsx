@@ -1,5 +1,5 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
-import { ChevronDown, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
+import { ChevronDown, Home, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
@@ -166,6 +166,18 @@ const Navigation = ({
                     p="2"
                     style={{ animation: 'fadeIn 0.15s ease' }}
                   >
+                    <Menu.Item
+                      value="home"
+                      rounded="lg"
+                      py="1" px="3"
+                      fontSize="sm"
+                      color={colors.textPrimary}
+                      _hover={{ bg: colors.bgHover }}
+                      transition="all 0.15s ease"
+                      onClick={() => navigate('/')}
+                    >
+                      <HStack gap="2"><Home size={14} /><span>Home</span></HStack>
+                    </Menu.Item>
                     <Menu.Item
                       value="announcements"
                       rounded="lg"
