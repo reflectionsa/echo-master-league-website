@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './hooks/useAuth';
 import { particlesInit } from './utils/particlesInit';
 import Navigation from './components/Navigation';
+import ScrollToTop from './components/ScrollToTop';
 import Hero from './components/Hero';
 import DataChangeNotifier from './components/DataChangeNotifier';
 import FloatingShapes from './components/FloatingShapes';
@@ -54,6 +55,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    <ScrollToTop />
     <ParticlesProvider init={particlesInit}>
     <AuthProvider>
       <Box
