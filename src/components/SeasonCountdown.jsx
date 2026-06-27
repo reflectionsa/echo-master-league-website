@@ -9,7 +9,7 @@ import { Zap, Calendar } from 'lucide-react';
 import { getThemedColors } from '../theme/colors';
 
 // ── Update this when Season 5 is announced ────────────────────────────────────
-const NEXT_SEASON_DATE = new Date('2026-06-29T00:00:00-05:00'); // Jun 29 2026
+const NEXT_SEASON_DATE = new Date('2026-07-13T00:00:00-05:00'); // Jul 13 2026
 const NEXT_SEASON_LABEL = 'Season 5';
 // ─────────────────────────────────────────────────────────────────────────────
 
