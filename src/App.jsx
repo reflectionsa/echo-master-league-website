@@ -8,6 +8,7 @@ import { useAuth } from './hooks/useAuth';
 import { particlesInit } from './utils/particlesInit';
 import Navigation from './components/Navigation';
 import ScrollToTop from './components/ScrollToTop';
+import PageTransition from './components/PageTransition';
 import Hero from './components/Hero';
 import DataChangeNotifier from './components/DataChangeNotifier';
 import FloatingShapes from './components/FloatingShapes';
@@ -76,6 +77,7 @@ const App = () => {
         />
 
         <Box pt="60px" pb={{ base: '72px', md: '0' }}>
+          <PageTransition>
           <Routes>
             <Route path="/" element={<HomePage theme={theme} />} />
             <Route path="/matches" element={<MatchesView theme={theme} />} />
@@ -92,6 +94,7 @@ const App = () => {
             <Route path="/leaderboard" element={<ProtectedLeaderboardRoute theme={theme} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          </PageTransition>
         </Box>
         </Box>
       </Box>
