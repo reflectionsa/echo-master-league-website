@@ -137,6 +137,18 @@ const Navigation = ({
         <Container maxW="7xl" py="3" px={{ base: '3', md: '6' }}>
           <HStack justify="space-between" gap={{ base: '2', md: '4' }}>
             {/* EML Dropdown */}
+            <Button
+              size="md"
+              variant="ghost"
+              color={colors.textPrimary}
+              _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
+              onClick={() => navigate('/')}
+              aria-label="Home"
+              px="2"
+              mr="1"
+            >
+              <Home size={22} />
+            </Button>
             <Menu.Root positioning={{ placement: 'bottom-start' }}>
               <Menu.Trigger asChild>
                 <Button
@@ -166,18 +178,6 @@ const Navigation = ({
                     p="2"
                     style={{ animation: 'fadeIn 0.15s ease' }}
                   >
-                    <Menu.Item
-                      value="home"
-                      rounded="lg"
-                      py="1" px="3"
-                      fontSize="sm"
-                      color={colors.textPrimary}
-                      _hover={{ bg: colors.bgHover }}
-                      transition="all 0.15s ease"
-                      onClick={() => navigate('/')}
-                    >
-                      <HStack gap="2"><Home size={14} /><span>Home</span></HStack>
-                    </Menu.Item>
                     <Menu.Item
                       value="announcements"
                       rounded="lg"
