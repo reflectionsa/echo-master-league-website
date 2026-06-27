@@ -1,5 +1,24 @@
 import { Box, Container, HStack, Button, Menu, Portal, Image, Text, Badge } from '@chakra-ui/react';
-import { ChevronDown, Home, Trophy, Calendar, Users, MessageCircle, Shield, Tv, Bell, Swords, ClipboardList, Megaphone, Info, CalendarDays, BookOpen, Bot, Film, BarChart2 } from 'lucide-react';
+import {
+  ChevronDown,
+  Home,
+  Trophy,
+  Calendar,
+  Users,
+  MessageCircle,
+  Shield,
+  Tv,
+  Bell,
+  Swords,
+  ClipboardList,
+  Megaphone,
+  Info,
+  CalendarDays,
+  BookOpen,
+  Bot,
+  Film,
+  BarChart2,
+} from 'lucide-react';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
@@ -33,11 +52,23 @@ const Navigation = ({
   colorScheme,
   mode,
   onColorSchemeChange,
-  onModeChange
+  onModeChange,
 }) => {
   const colors = getThemedColors(theme);
   const navigate = useNavigate();
-  const { isLoggedIn, isCaster, isAdmin, isMod, isPlayer, user, error: authError, isRegistered, playerProfile, isOnTeam: authIsOnTeam, refreshProfile } = useAuth();
+  const {
+    isLoggedIn,
+    isCaster,
+    isAdmin,
+    isMod,
+    isPlayer,
+    user,
+    error: authError,
+    isRegistered,
+    playerProfile,
+    isOnTeam: authIsOnTeam,
+    refreshProfile,
+  } = useAuth();
   const { unreadCount } = useNotifications();
   const { team: myTeamData, isOnTeam: rosterIsOnTeam, loading: teamsLoading } = useMyTeam();
   const isOnTeam = authIsOnTeam || rosterIsOnTeam;
@@ -82,7 +113,11 @@ const Navigation = ({
 
     // Don't send the same reminder twice in one day
     const reminderKey = `eml_sat_reminder_${user.id}_${now.toISOString().slice(0, 10)}`;
-    try { if (localStorage.getItem(reminderKey)) return; } catch { return; }
+    try {
+      if (localStorage.getItem(reminderKey)) return;
+    } catch {
+      return;
+    }
 
     // Find this week's Mon–Fri matches involving my team that have no confirmed result
     const weekStart = new Date(now);
@@ -111,7 +146,11 @@ const Navigation = ({
       },
     }).catch(() => {});
 
-    try { localStorage.setItem(reminderKey, '1'); } catch { /* ignore */ }
+    try {
+      localStorage.setItem(reminderKey, '1');
+    } catch {
+      /* ignore */
+    }
   }, [isLoggedIn, isPlayer, user?.id, myTeamData, schedule]);
 
   return (
@@ -160,7 +199,7 @@ const Navigation = ({
                   _hover={{ bg: colors.bgHover }}
                   _open={{
                     color: colors.accentOrange,
-                    bg: colors.bgHover
+                    bg: colors.bgHover,
                   }}
                 >
                   EML <ChevronDown size={18} />
@@ -181,101 +220,133 @@ const Navigation = ({
                     <Menu.Item
                       value="announcements"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/announcements')}
                     >
-                      <HStack gap="2"><Megaphone size={14} /><span>Announcements</span></HStack>
+                      <HStack gap="2">
+                        <Megaphone size={14} />
+                        <span>Announcements</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="about"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/about')}
                     >
-                      <HStack gap="2"><Info size={14} /><span>About EML</span></HStack>
+                      <HStack gap="2">
+                        <Info size={14} />
+                        <span>About EML</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="resources"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/resources')}
                     >
-                      <HStack gap="2"><CalendarDays size={14} /><span>Resources</span></HStack>
+                      <HStack gap="2">
+                        <CalendarDays size={14} />
+                        <span>Resources</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Separator />
                     <Menu.Item
                       value="teams"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/teams')}
                     >
-                      <HStack gap="2"><Users size={14} /><span>League Teams</span></HStack>
+                      <HStack gap="2">
+                        <Users size={14} />
+                        <span>League Teams</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="rules"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/rules')}
                     >
-                      <HStack gap="2"><BookOpen size={14} /><span>League Rules</span></HStack>
+                      <HStack gap="2">
+                        <BookOpen size={14} />
+                        <span>League Rules</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="bot"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/bot')}
                     >
-                      <HStack gap="2"><Bot size={14} /><span>EML Discord Bot</span></HStack>
+                      <HStack gap="2">
+                        <Bot size={14} />
+                        <span>EML Discord Bot</span>
+                      </HStack>
                     </Menu.Item>
                     <Menu.Item
                       value="media"
                       rounded="lg"
-                      py="1" px="3"
+                      py="1"
+                      px="3"
                       fontSize="sm"
                       color={colors.textPrimary}
                       _hover={{ bg: colors.bgHover }}
                       transition="all 0.15s ease"
                       onClick={() => navigate('/media')}
                     >
-                      <HStack gap="2"><Film size={14} /><span>Highlights & Content</span></HStack>
+                      <HStack gap="2">
+                        <Film size={14} />
+                        <span>Highlights & Content</span>
+                      </HStack>
                     </Menu.Item>
                     {(isAdmin || isMod) && <Menu.Separator />}
                     {(isAdmin || isMod) && (
                       <Menu.Item
                         value="leaderboard"
                         rounded="lg"
-                        py="1" px="3"
+                        py="1"
+                        px="3"
                         fontSize="sm"
                         color={colors.accentOrange}
                         _hover={{ bg: colors.bgHover }}
                         transition="all 0.15s ease"
                         onClick={() => navigate('/leaderboard')}
                       >
-                        <HStack gap="2"><BarChart2 size={14} /><span>Player Leaderboard</span></HStack>
+                        <HStack gap="2">
+                          <BarChart2 size={14} />
+                          <span>Player Leaderboard</span>
+                        </HStack>
                       </Menu.Item>
                     )}
                   </Menu.Content>
@@ -291,7 +362,11 @@ const Navigation = ({
                 onClick={() => navigate('/standings')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
+                _hover={{
+                  bg: colors.bgHover,
+                  color: colors.accentOrange,
+                  transform: 'scale(1.02)',
+                }}
               >
                 <Trophy size={14} /> Standings
               </Button>
@@ -301,7 +376,11 @@ const Navigation = ({
                 onClick={() => navigate('/matches')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
+                _hover={{
+                  bg: colors.bgHover,
+                  color: colors.accentOrange,
+                  transform: 'scale(1.02)',
+                }}
               >
                 <Calendar size={14} /> Matches
               </Button>
@@ -311,7 +390,11 @@ const Navigation = ({
                 onClick={() => navigate('/members')}
                 color={colors.textSecondary}
                 transition="all 0.15s ease"
-                _hover={{ bg: colors.bgHover, color: colors.accentOrange, transform: 'scale(1.02)' }}
+                _hover={{
+                  bg: colors.bgHover,
+                  color: colors.accentOrange,
+                  transform: 'scale(1.02)',
+                }}
               >
                 <Users size={14} /> Members
               </Button>
@@ -394,7 +477,8 @@ const Navigation = ({
                   onMyProfileClick={() => setMyProfileOpen(true)}
                   onRegisterClick={() => setPlayerRegOpen(true)}
                   onUnregisterClick={async () => {
-                    if (!confirm('Unregister from the league? You can register again later.')) return;
+                    if (!confirm('Unregister from the league? You can register again later.'))
+                      return;
                     try {
                       await emlApi('POST', '/player/unregister', { discordId: user.id });
                       setPlayerRegOpen(false);
@@ -431,16 +515,37 @@ const Navigation = ({
       {/* Modal-only panels */}
       <Suspense fallback={null}>
         {(isCaster || isAdmin) && (
-          <CasterGreenRoom theme={theme} open={casterGreenRoomOpen} onClose={() => setCasterGreenRoomOpen(false)} />
+          <CasterGreenRoom
+            theme={theme}
+            open={casterGreenRoomOpen}
+            onClose={() => setCasterGreenRoomOpen(false)}
+          />
         )}
         {isLoggedIn && (
-          <NotificationsPanel theme={theme} open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
+          <NotificationsPanel
+            theme={theme}
+            open={notificationsOpen}
+            onClose={() => setNotificationsOpen(false)}
+          />
         )}
         {isLoggedIn && (
-          <TeamCreationModal theme={theme} open={teamCreateOpen} onClose={() => setTeamCreateOpen(false)} onCreated={(t) => { setMyTeamId(t.id); setTeamCreateOpen(false); }} />
+          <TeamCreationModal
+            theme={theme}
+            open={teamCreateOpen}
+            onClose={() => setTeamCreateOpen(false)}
+            onCreated={t => {
+              setMyTeamId(t.id);
+              setTeamCreateOpen(false);
+            }}
+          />
         )}
         {isLoggedIn && myTeamId && (
-          <TeamManagementPanel theme={theme} open={teamManageOpen} onClose={() => setTeamManageOpen(false)} teamId={myTeamId} />
+          <TeamManagementPanel
+            theme={theme}
+            open={teamManageOpen}
+            onClose={() => setTeamManageOpen(false)}
+            teamId={myTeamId}
+          />
         )}
         {isLoggedIn && (
           <PlayerRegistrationModal
@@ -451,19 +556,40 @@ const Navigation = ({
           />
         )}
         {isLoggedIn && (
-          <ChallengeSystem theme={theme} open={challengeOpen} onClose={() => setChallengeOpen(false)} />
+          <ChallengeSystem
+            theme={theme}
+            open={challengeOpen}
+            onClose={() => setChallengeOpen(false)}
+          />
         )}
         {isLoggedIn && (
-          <MatchReportModal theme={theme} open={matchReportOpen} onClose={() => setMatchReportOpen(false)} />
+          <MatchReportModal
+            theme={theme}
+            open={matchReportOpen}
+            onClose={() => setMatchReportOpen(false)}
+          />
         )}
         {isLoggedIn && (
-          <CreateTicketModal theme={theme} open={createTicketOpen} onClose={() => setCreateTicketOpen(false)} />
+          <CreateTicketModal
+            theme={theme}
+            open={createTicketOpen}
+            onClose={() => setCreateTicketOpen(false)}
+          />
         )}
         {isLoggedIn && (
-          <MyTeamView theme={theme} open={myTeamOpen} onClose={() => setMyTeamOpen(false)} onCreateTeam={() => setTeamCreateOpen(true)} />
+          <MyTeamView
+            theme={theme}
+            open={myTeamOpen}
+            onClose={() => setMyTeamOpen(false)}
+            onCreateTeam={() => setTeamCreateOpen(true)}
+          />
         )}
         {isLoggedIn && (
-          <MyProfileModal theme={theme} open={myProfileOpen} onClose={() => setMyProfileOpen(false)} />
+          <MyProfileModal
+            theme={theme}
+            open={myProfileOpen}
+            onClose={() => setMyProfileOpen(false)}
+          />
         )}
 
         {/* Auth-gated Modals */}
@@ -512,7 +638,9 @@ const Navigation = ({
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Trophy size={18} />
-              <Box fontSize="xs" mt="1">Standings</Box>
+              <Box fontSize="xs" mt="1">
+                Standings
+              </Box>
             </Button>
             <Button
               size="sm"
@@ -526,7 +654,9 @@ const Navigation = ({
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Calendar size={18} />
-              <Box fontSize="xs" mt="1">Matches</Box>
+              <Box fontSize="xs" mt="1">
+                Matches
+              </Box>
             </Button>
             <Button
               size="sm"
@@ -540,7 +670,9 @@ const Navigation = ({
               _hover={{ bg: colors.bgHover, color: colors.accentOrange }}
             >
               <Users size={18} />
-              <Box fontSize="xs" mt="1">Members</Box>
+              <Box fontSize="xs" mt="1">
+                Members
+              </Box>
             </Button>
             <Menu.Root positioning={{ placement: 'top-end' }}>
               <Menu.Trigger asChild>
@@ -555,7 +687,9 @@ const Navigation = ({
                   _hover={{ bg: colors.bgHover, color: colors.accentBlue }}
                 >
                   <MessageCircle size={18} />
-                  <Box fontSize="xs" mt="1">Discord</Box>
+                  <Box fontSize="xs" mt="1">
+                    Discord
+                  </Box>
                 </Button>
               </Menu.Trigger>
               <Portal>
