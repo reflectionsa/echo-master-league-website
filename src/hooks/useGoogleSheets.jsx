@@ -75,13 +75,18 @@ export const useGoogleSheets = (spreadsheetId, range, apiKey) => {
       const newDataStr = JSON.stringify(transformedData);
       if (prevDataRef.current !== undefined && prevDataRef.current !== newDataStr) {
         const sheetLabel = range?.split('!')?.[0] || 'Data';
-        window.dispatchEvent(new CustomEvent('eml:datachanged', { detail: { section: sheetLabel } }));
+        window.dispatchEvent(
+          new CustomEvent('eml:datachanged', { detail: { section: sheetLabel } })
+        );
       }
       prevDataRef.current = newDataStr;
 
       setData(transformedData);
     } catch (err) {
-      console.warn('[EML] Google Sheets unavailable (check API key domain restrictions):', err.message);
+      console.warn(
+        '[EML] Google Sheets unavailable (check API key domain restrictions):',
+        err.message
+      );
       setError(err.message);
     } finally {
       setLoading(false);

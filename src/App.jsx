@@ -56,51 +56,54 @@ const App = () => {
 
   return (
     <BrowserRouter>
-    <ScrollToTop />
-    <ParticlesProvider init={particlesInit}>
-    <AuthProvider>
-      <Box
-        minH="100vh"
-        transition="background-color 0.3s ease"
-        style={{ backgroundColor: colors.bgPrimary }}
-      >
-        <FloatingShapes colorScheme={colorScheme} mode={mode} />
+      <ScrollToTop />
+      <ParticlesProvider init={particlesInit}>
+        <AuthProvider>
+          <Box
+            minH="100vh"
+            transition="background-color 0.3s ease"
+            style={{ backgroundColor: colors.bgPrimary }}
+          >
+            <FloatingShapes colorScheme={colorScheme} mode={mode} />
 
-        <Box position="relative" zIndex="1">
-        <Navigation
-          theme={theme}
-          onThemeToggle={toggleTheme}
-          colorScheme={colorScheme}
-          mode={mode}
-          onColorSchemeChange={setColorScheme}
-          onModeChange={setMode}
-        />
+            <Box position="relative" zIndex="1">
+              <Navigation
+                theme={theme}
+                onThemeToggle={toggleTheme}
+                colorScheme={colorScheme}
+                mode={mode}
+                onColorSchemeChange={setColorScheme}
+                onModeChange={setMode}
+              />
 
-        <Box pt="60px" pb={{ base: '72px', md: '0' }}>
-          <PageTransition>
-          <Routes>
-            <Route path="/" element={<HomePage theme={theme} />} />
-            <Route path="/matches" element={<MatchesView theme={theme} />} />
-            <Route path="/teams" element={<TeamsView theme={theme} />} />
-            <Route path="/members" element={<MembersView theme={theme} />} />
-            <Route path="/standings" element={<StandingsView theme={theme} />} />
-            <Route path="/announcements" element={<AnnouncementsView theme={theme} />} />
-            <Route path="/about" element={<AboutView theme={theme} />} />
-            <Route path="/calendar" element={<CalendarView theme={theme} />} />
-            <Route path="/resources" element={<ResourcesView theme={theme} />} />
-            <Route path="/rules" element={<RulesView theme={theme} />} />
-            <Route path="/bot" element={<BotView theme={theme} />} />
-            <Route path="/media" element={<MediaView theme={theme} />} />
-            <Route path="/leaderboard" element={<ProtectedLeaderboardRoute theme={theme} />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-          </PageTransition>
-        </Box>
-        </Box>
-      </Box>
-      <DataChangeNotifier theme={theme} />
-    </AuthProvider>
-    </ParticlesProvider>
+              <Box pt="60px" pb={{ base: '72px', md: '0' }}>
+                <PageTransition>
+                  <Routes>
+                    <Route path="/" element={<HomePage theme={theme} />} />
+                    <Route path="/matches" element={<MatchesView theme={theme} />} />
+                    <Route path="/teams" element={<TeamsView theme={theme} />} />
+                    <Route path="/members" element={<MembersView theme={theme} />} />
+                    <Route path="/standings" element={<StandingsView theme={theme} />} />
+                    <Route path="/announcements" element={<AnnouncementsView theme={theme} />} />
+                    <Route path="/about" element={<AboutView theme={theme} />} />
+                    <Route path="/calendar" element={<CalendarView theme={theme} />} />
+                    <Route path="/resources" element={<ResourcesView theme={theme} />} />
+                    <Route path="/rules" element={<RulesView theme={theme} />} />
+                    <Route path="/bot" element={<BotView theme={theme} />} />
+                    <Route path="/media" element={<MediaView theme={theme} />} />
+                    <Route
+                      path="/leaderboard"
+                      element={<ProtectedLeaderboardRoute theme={theme} />}
+                    />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </PageTransition>
+              </Box>
+            </Box>
+          </Box>
+          <DataChangeNotifier theme={theme} />
+        </AuthProvider>
+      </ParticlesProvider>
     </BrowserRouter>
   );
 };
